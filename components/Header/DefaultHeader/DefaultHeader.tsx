@@ -7,7 +7,7 @@ import Container from '../../UiElements/Container/Container';
 import TopMenu from '../HeaderMenu/TopMenu/TopMenu';
 import MainMenu from '../HeaderMenu/MainMenu/MainMenu';
 import AvatarMenu from '../HeaderMenu/AvatarMenu/AvatarMenu';
-import { useCartState } from '../../../contexts/cart/cart.provider';
+import { useCartState } from '@/contexts/cart/cart.provider';
 import HeaderWrapper, {
 	TopBar,
 	MenuRight,
