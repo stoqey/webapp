@@ -8,6 +8,7 @@
     "migrate": "node scripts/migrate-db.js"
   },
   "dependencies": {
+    "@apollo/client": "^3.3.7",
     "@stoqey/serverless-couchbase": "^0.0.4",
     "bad-words": "^3.0.4",
     "clsx": "^1.1.1",
