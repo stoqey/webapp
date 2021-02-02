@@ -2,10 +2,10 @@ import React from 'react';
 import { AppProps } from 'next/app';
 import { Provider as StyletronProvider } from 'styletron-react';
 import { BaseProvider, LightTheme, DarkTheme } from 'baseui';
-import { styletron } from '@/styletron';
+import { styletron } from '../styletron';
 import Layout from 'components/Layout/Layout';
-import { ThemeSwitcherProvider, THEME } from '@/contexts/theme/theme.provider';
-import { CartProvider } from '@/contexts/cart/cart.provider';
+import { ThemeSwitcherProvider, THEME } from '../contexts/theme/theme.provider';
+import { CartProvider } from '../contexts/cart/cart.provider';
 import { ApolloProvider } from '@apollo/client';
 import { useApollo } from '@/lib/apollo.client';
 // external css

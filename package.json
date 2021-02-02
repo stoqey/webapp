@@ -30,6 +30,7 @@
     "styletron": "^3.0.4",
     "styletron-engine-atomic": "^1.4.6",
     "styletron-react": "^5.2.7",
+    "subscriptions-transport-ws": "^0.9.18",
     "swr": "^0.3.9",
     "typeface-open-sans": "^1.1.13"
   },

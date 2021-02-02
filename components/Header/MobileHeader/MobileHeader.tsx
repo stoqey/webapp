@@ -14,8 +14,8 @@ import AvatarMenu from '../HeaderMenu/AvatarMenu/AvatarMenu';
 import {
 	useThemeSwitcherCtx,
 	THEME,
-} from '@/contexts/theme/theme.provider';
-import { useCartState } from '@/contexts/cart/cart.provider';
+} from '../../../contexts/theme/theme.provider';
+import { useCartState } from '../../../contexts/cart/cart.provider';
 import HeaderWrapper, {
 	PageTitle,
 	TopMenuWrapper,
