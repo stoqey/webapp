@@ -8,6 +8,7 @@
     "migrate": "node scripts/migrate-db.js"
   },
   "dependencies": {
+    "@stoqey/serverless-couchbase": "^0.0.4",
     "bad-words": "^3.0.4",
     "clsx": "^1.1.1",
     "dotenv": "^8.2.0",

@@ -1,23 +1,14 @@
-import mysql from 'serverless-mysql'
+import { startCouchbase, query } from '@stoqey/serverless-couchbase'
 
-export const db = mysql({
-  config: {
-    host: process.env.MYSQL_HOST,
-    database: process.env.MYSQL_DATABASE,
-    user: process.env.MYSQL_USERNAME,
-    password: process.env.MYSQL_PASSWORD,
-  },
-})
+/**
+ * Start Couchbase from here
+ */
+startCouchbase({
+    connectionString: 'couchbase://localhost',
+    bucketName: 'stq',
+    username: 'admin',
+    password: '123456',
+});
 
-export async function query(
-  q: string,
-  values: (string | number)[] | string | number = []
-) {
-  try {
-    const results = await db.query(q, values)
-    await db.end()
-    return results
-  } catch (e) {
-    throw Error(e.message)
-  }
-}
+export { query }; 
+
