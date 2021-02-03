@@ -26,7 +26,7 @@ export default class CustomDocument extends Document<any> {
           <meta name="theme-color" content="#000000" />
           <meta
             name="Description"
-            content="Inst is a GraphQL based server side dashboard template"
+            content="Beat wallstreet from anywhere"
           />
           <link rel="icon" href={favicon} type="image/png" sizes="16x16" />
           {stylesheets.length && stylesheets.map((sheet, i) => (
