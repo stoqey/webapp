@@ -45,8 +45,8 @@ const DefaultHeader: React.FC<{}> = () => {
 							count={cartItems.length}
 						/>
 						<AvatarMenu
-							name="Jane Doe"
-							src={require('../../../assets/images/avatar.jpg')}
+							name="Stoqey Bot"
+							src={require('../../../assets/images/STQ.png')}
 						/>
 					</MenuRight>
 				</TopBar>
@@ -78,8 +78,8 @@ const DefaultHeader: React.FC<{}> = () => {
 									count={cartItems.length}
 								/>
 								<AvatarMenu
-									name="Jane Doe"
-									src={require('../../../assets/images/avatar.jpg')}
+									name="Stoqey Bot"
+									src={require('../../../assets/images/STQ.png')}
 								/>
 							</NavRight>
 						</StickyNav>
