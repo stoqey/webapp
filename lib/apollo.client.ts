@@ -12,7 +12,7 @@ function createApolloClient() {
 
   const isDev = process.env.NODE_ENV === 'development'? true : false;
 
-  const devBaseUrl = `://192.168.2.26:3066/graphql`; // only for dev
+  const devBaseUrl = `://192.168.2.26:3099/graphql`; // only for dev
 
   const backendUrl = !isDev? 'https://app.stoqey.com/graphql' : `http${devBaseUrl}`;
   const wsUrl = !isDev? 'wss://app.stoqey.com/graphql' : `ws${devBaseUrl}`;
