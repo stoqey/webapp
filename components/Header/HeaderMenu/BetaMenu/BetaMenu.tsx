@@ -15,8 +15,8 @@ const menuItems = [
   },
   {
     id: 3,
-    label: 'About',
-    path: '/about',
+    label: 'Portfolio',
+    path: '/portfolio',
   },
 ];
 
