@@ -1,29 +1,29 @@
 import { ApolloClient } from '@apollo/react-hooks';
 import { LoginResponseType, PHONE_LOGIN_MUTATION } from '@stoqey/client-graphql';
 
-interface LoginCreds {
+export interface PhoneAuthCreds {
   phone: string;
   firebaseToken: string;
   createNew: boolean;
 }
 
 export const phoneLoginApi = async ({
-  creds,
+  args,
   client,
   error,
   success,
 }: {
-  creds: LoginCreds;
+  args: PhoneAuthCreds;
   client: ApolloClient<any>;
   error?: (error: Error) => Promise<any>;
   success?: (data: LoginResponseType) => Promise<any>;
 }) => {
-  console.log('phoneLoginApi', JSON.stringify(creds));
+  console.log('phoneLoginApi', JSON.stringify(args));
 
   try {
     const { data: dataResponse }: any = await client.mutate({
       mutation: PHONE_LOGIN_MUTATION,
-      variables: creds,
+      variables: args,
       fetchPolicy: 'no-cache',
     });
 
