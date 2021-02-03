@@ -6,6 +6,7 @@ import Document, {
   DocumentContext,
 } from 'next/document';
 import { styletron, isServer } from 'styletron';
+import  isEmpty from 'lodash/isEmpty';
 import favicon from 'assets/images/favicon.png';
 export default class CustomDocument extends Document<any> {
   static async getInitialProps(ctx: DocumentContext) {
@@ -29,7 +30,7 @@ export default class CustomDocument extends Document<any> {
             content="Beat Wall Street from anywhere"
           />
           <link rel="icon" href={favicon} type="image/png" sizes="16x16" />
-          {stylesheets.length && stylesheets.map((sheet, i) => (
+          {!isEmpty(stylesheets) && stylesheets.map((sheet, i) => (
             <style
               className="_styletron_hydrate_"
               dangerouslySetInnerHTML={{ __html: sheet.css }}
@@ -39,7 +40,7 @@ export default class CustomDocument extends Document<any> {
             />
           ))}
         </Head>
-        <body dir="ltr">
+        <body>
           <Main />
           <NextScript />
         </body>
