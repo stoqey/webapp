@@ -28,8 +28,8 @@ const Pricing: NextPage<{}> = () => {
 	return (
 		<>
 			<Head>
-				<title>{title} | INST.</title>
-				<meta name="Description" content="Inst pricing plan page" />
+				<title>{title} | Stoqey.</title>
+				<meta name="Description" content="Stoqey Beta" />
 			</Head>
 
 			<PageTitle title={title} subtitle={subtitle} />

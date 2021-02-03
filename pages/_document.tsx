@@ -5,7 +5,6 @@ import Document, {
   NextScript,
   DocumentContext,
 } from 'next/document';
-import { Provider as StyletronProvider } from 'styletron-react';
 import { styletron, isServer } from 'styletron';
 import favicon from 'assets/images/favicon.png';
 export default class CustomDocument extends Document<any> {
@@ -13,7 +12,6 @@ export default class CustomDocument extends Document<any> {
     const page = await ctx.renderPage((App) => (props) => (
         <App {...props} />
     ))
-
 
     const stylesheets = !isServer ? styletron && (styletron as any).getStylesheets() : [];
     return { ...page, stylesheets };
