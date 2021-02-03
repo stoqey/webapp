@@ -72,6 +72,32 @@
     tslib "^1.10.0"
     zen-observable "^0.8.14"
 
+"@apollo/client@latest":
+  version "3.3.7"
+  resolved "https://registry.yarnpkg.com/@apollo/client/-/client-3.3.7.tgz#f15bf961dc0c2bee37a47bf86b8881fdc6183810"
+  integrity sha512-Cb0OqqvlehlRHtHIXRIS/Pe5WYU4hHl1FznXTRSxBAN42WmBUM3zy/Unvw183RdWMyV6Kc2pFKOEuaG1K7JTAQ==
+  dependencies:
+    "@graphql-typed-document-node/core" "^3.0.0"
+    "@types/zen-observable" "^0.8.0"
+    "@wry/context" "^0.5.2"
+    "@wry/equality" "^0.3.0"
+    fast-json-stable-stringify "^2.0.0"
+    graphql-tag "^2.11.0"
+    hoist-non-react-statics "^3.3.2"
+    optimism "^0.14.0"
+    prop-types "^15.7.2"
+    symbol-observable "^2.0.0"
+    ts-invariant "^0.6.0"
+    tslib "^1.10.0"
+    zen-observable "^0.8.14"
+
+"@apollo/react-hooks@^4.0.0":
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/@apollo/react-hooks/-/react-hooks-4.0.0.tgz#7bf7b320c90d276f637d9a84b503e17b840dd4e6"
+  integrity sha512-fCu0cbne3gbUl0QbA8X4L33iuuFVQbC5Jo2MIKRK8CyawR6PoxDpFdFA1kc6033ODZuZZ9Eo4RdeJFlFIIYcLA==
+  dependencies:
+    "@apollo/client" latest
+
 "@babel/code-frame@7.12.11", "@babel/code-frame@^7.0.0":
   version "7.12.11"
   resolved "https://registry.yarnpkg.com/@babel/code-frame/-/code-frame-7.12.11.tgz"
@@ -625,6 +651,14 @@
   version "0.7.0"
   resolved "https://registry.yarnpkg.com/@sindresorhus/is/-/is-0.7.0.tgz"
   integrity sha512-ONhaKPIufzzrlNbqtWFFd+jlnemX6lJAgq9ZeiZtS7I1PIf/la7CW4m83rTXRnVnsMbW2k56pGYu7AUFJD9Pow==
+
+"@stoqey/client-graphql@^0.0.9":
+  version "0.0.9"
+  resolved "https://registry.yarnpkg.com/@stoqey/client-graphql/-/client-graphql-0.0.9.tgz#ed12459ff9165179feb4450d10a65e56ec5e6c18"
+  integrity sha512-OxZ1qL7uOr8sLSBRgn9PkjA683LEMKtz9GSNRJphlcvJYtXyyN8z0KVgvRl+cZSC4eGED/TYBf4dRZmv7QMKvw==
+  dependencies:
+    graphql "^15.4.0"
+    graphql-tag "^2.11.0"
 
 "@stoqey/serverless-couchbase@^0.0.4":
   version "0.0.4"
@@ -3217,7 +3251,7 @@ graphql-tag@^2.11.0:
   resolved "https://registry.yarnpkg.com/graphql-tag/-/graphql-tag-2.11.0.tgz"
   integrity sha512-VmsD5pJqWJnQZMUeRwrDhfgoyqcfwEkvtpANqcoUG8/tOLkwNgU9mzub/Mc78OJMhHjx7gfAMTxzdG43VGg3bA==
 
-graphql@^15.3.0:
+graphql@^15.3.0, graphql@^15.4.0:
   version "15.5.0"
   resolved "https://registry.yarnpkg.com/graphql/-/graphql-15.5.0.tgz"
   integrity sha512-OmaM7y0kaK31NKG31q4YbD2beNYa6jBBKtMFT6gLYJljHLJr42IqJ8KX08u3Li/0ifzTU5HjmoOOrwa5BRLeDA==
