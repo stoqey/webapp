@@ -26,7 +26,7 @@ const Pricing: NextPage<{}> = () => {
 	return (
 		<>
 			<Head>
-				<title>{title} | Stoqey.</title>
+				<title>{title} | Stoqey</title>
 				<meta name="Description" content="Stoqey Beta" />
 			</Head>
 
@@ -35,7 +35,7 @@ const Pricing: NextPage<{}> = () => {
 			<Container>
 				<Block marginLeft="-11px" marginRight="-11px">
 
-					
+
 					<Grid gridColumns={12} gridGutters={22} gridMargins={0}>
 						{plans.map((plan) => (
 							<Cell span={[12, 6, 4]} key={`pricing-plan--key${plan.id}`}>
