@@ -25,8 +25,8 @@ import {
 	useThemeSwitcherCtx,
 } from 'contexts/theme/theme.provider';
 
-const TITLE = 'Checkout';
-const SUB_TITLE = 'Stoqey checkout page';
+const TITLE = 'Portfolio';
+const SUB_TITLE = 'Stocks bought';
 
 const Checkout: NextPage<{}> = () => {
 	const [step, setStep] = useState(1);
