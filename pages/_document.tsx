@@ -7,7 +7,8 @@ import Document, {
 } from 'next/document';
 import { styletron, isServer } from 'styletron';
 import isEmpty from 'lodash/isEmpty';
-import favicon from 'assets/images/favicon.png';
+
+const favicon = require('assets/images/favicon.png');
 export default class CustomDocument extends Document<any> {
   static async getInitialProps(ctx: DocumentContext) {
     const page = await ctx.renderPage((App) => (props) => (

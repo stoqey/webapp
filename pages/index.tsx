@@ -37,9 +37,10 @@ const Pricing: NextPage<{}> = () => {
 
 			<PageTitle title={'Stoqey Beta'} subtitle={'Invest in Stoqey PRE-IPO'} />
 
-			<PhoneLogin />
+
 
 			<Container>
+				<PhoneLogin />
 				<Block marginLeft="-11px" marginRight="-11px">
 
 

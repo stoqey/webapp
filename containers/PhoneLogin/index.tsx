@@ -21,7 +21,7 @@ export const PhoneLogin = (props: Props) => {
     privacyPolicyUrl: "https://www.google.com",
 
     // Opens IDP Providers sign-in flow in a popup.
-    signInFlow: "popup",
+    // signInFlow: "popup",
     callbacks: {
       // Called when the user has been successfully signed in.
       signInSuccessWithAuthResult: function (authResult, redirectUrl) {
