@@ -6,20 +6,22 @@ import Document, {
   DocumentContext,
 } from 'next/document';
 import { Provider as StyletronProvider } from 'styletron-react';
-import { styletron } from 'styletron';
+import { styletron, isServer } from 'styletron';
 import favicon from 'assets/images/favicon.png';
 export default class CustomDocument extends Document<any> {
   static async getInitialProps(ctx: DocumentContext) {
     const page = await ctx.renderPage((App) => (props) => (
-      <StyletronProvider value={styletron}>
         <App {...props} />
-      </StyletronProvider>
-    ));
-    const stylesheets = (styletron as any).getStylesheets() || [];
+    ))
+
+
+    const stylesheets = !isServer ? styletron && (styletron as any).getStylesheets() : [];
     return { ...page, stylesheets };
   }
 
   render() {
+    const { stylesheets = [] } = this.props;
+
     return (
       <Html lang="en-US">
         <Head>
@@ -29,7 +31,7 @@ export default class CustomDocument extends Document<any> {
             content="Inst is a GraphQL based server side dashboard template"
           />
           <link rel="icon" href={favicon} type="image/png" sizes="16x16" />
-          {this.props.stylesheets.map((sheet, i) => (
+          {stylesheets.length && stylesheets.map((sheet, i) => (
             <style
               className="_styletron_hydrate_"
               dangerouslySetInnerHTML={{ __html: sheet.css }}
