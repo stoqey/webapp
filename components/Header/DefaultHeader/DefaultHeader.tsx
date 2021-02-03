@@ -5,7 +5,7 @@ import Logo from '../../UiElements/Logo/Logo';
 import SvgIcon from '../../UiElements/SvgIcon/SvgIcon';
 import Container from '../../UiElements/Container/Container';
 import TopMenu from '../HeaderMenu/TopMenu/TopMenu';
-import MainMenu from '../HeaderMenu/MainMenu/MainMenu';
+import BetaMenu from '../HeaderMenu/BetaMenu/BetaMenu';
 import AvatarMenu from '../HeaderMenu/AvatarMenu/AvatarMenu';
 import { useCartState } from '../../../contexts/cart/cart.provider';
 import HeaderWrapper, {
@@ -65,7 +65,7 @@ const DefaultHeader: React.FC<{}> = () => {
 										/>
 									}
 								/>
-								<MainMenu className="main-nav" />
+								<BetaMenu className="main-nav" />
 							</NavLeft>
 							<NavRight className="cart-and-avatar">
 								<Badge

@@ -1,6 +1,6 @@
 const pricingPageData = {
   title: 'Pricing Plan',
-  subtitle: 'INST. has three different pricing plan',
+  subtitle: 'STQ. has three different pricing plan',
   plans: [
     {
       id: 1,

@@ -26,7 +26,7 @@ import {
 } from 'contexts/theme/theme.provider';
 
 const TITLE = 'Checkout';
-const SUB_TITLE = 'Inst checkout page';
+const SUB_TITLE = 'Stoqey checkout page';
 
 const Checkout: NextPage<{}> = () => {
 	const [step, setStep] = useState(1);
@@ -54,7 +54,7 @@ const Checkout: NextPage<{}> = () => {
 	return (
 		<>
 			<Head>
-				<title>{TITLE} | INST.</title>
+				<title>{TITLE} | Stoqey.</title>
 				<meta name="Description" content={SUB_TITLE} />
 			</Head>
 
