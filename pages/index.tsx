@@ -6,9 +6,8 @@ import { Block } from 'baseui/block';
 import { Grid, Cell } from 'baseui/layout-grid';
 import PageTitle from '@/components/UiElements/PageTitle/PageTitle';
 import Container from '@/components/UiElements/Container/Container';
-import PricingCard from '@/components/UiElements/PricingCard/PricingCard';
-
 import pricingPageData from '../data/pricingPage';
+import HighlightChart from 'containers/Chart/HighlightChart';
 
 const PhoneLogin = dynamic(() => import('containers/PhoneLogin'), {
 	ssr: false,
@@ -35,30 +34,21 @@ const Pricing: NextPage<{}> = () => {
 				<meta name="Description" content="Stoqey Beta" />
 			</Head>
 
-			<PageTitle title={'Stoqey Beta'} subtitle={'Invest in Stoqey PRE-IPO'} />
-
+			<PageTitle backdrop={false} title={'Stoqey Beta'} subtitle={'Invest in Stoqey PRE-IPO'} />
 
 
 			<Container>
+
+				{/* Phone Login */}
 				<PhoneLogin />
+
 				<Block marginLeft="-11px" marginRight="-11px">
 
+					<HighlightChart />
 
-					<Grid gridColumns={12} gridGutters={22} gridMargins={0}>
-						{plans.map((plan) => (
-							<Cell span={[12, 6, 4]} key={`pricing-plan--key${plan.id}`}>
-								<PricingCard
-									title={plan.title}
-									type={plan.type}
-									items={plan.items}
-									price={plan.price}
-									btn={plan.btnText}
-									isLoading={loading && pricingPlan === plan.type}
-									onClick={() => handlePricingPlan(plan.type)}
-								/>
-							</Cell>
-						))}
-					</Grid>
+					{/* <Grid gridColumns={12} gridGutters={22} gridMargins={0}>
+						
+					</Grid> */}
 				</Block>
 			</Container>
 		</>
