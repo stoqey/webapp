@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { NextPage } from 'next';
 import Head from 'next/head';
+import dynamic from 'next/dynamic';
 import { Grid, Cell } from 'baseui/layout-grid';
 import { FaShoppingBag, FaMapMarkerAlt, FaMoneyCheckAlt, FaDollarSign, FaChartLine } from 'react-icons/fa';
 import { Button } from 'baseui/button';
@@ -25,6 +26,8 @@ import {
 	useThemeSwitcherCtx,
 } from 'contexts/theme/theme.provider';
 
+import LazyChart from 'containers/Chart';
+
 const TITLE = 'Stoqey';
 const SUB_TITLE = 'Beat Wall Street from anywhere';
 
@@ -47,7 +50,7 @@ const Checkout: NextPage<{}> = () => {
 			component = <Address />;
 			break;
 		case 3:
-			component = <Payment />;
+			component = <LazyChart />;
 			break;
 	}
 
@@ -108,6 +111,27 @@ const Checkout: NextPage<{}> = () => {
 							}}
 						>
 							Data
+						</Block>
+					</ListItem>
+					<ListItem
+						className={step === 3 ? 'active' : ''}
+						onClick={() => setStep(3)}
+					>
+						<FaChartLine />
+						<Block
+							overrides={{
+								Block: {
+									style: ({ $theme }) => {
+										return {
+											paddingLeft: '5px',
+											paddingRight: '5px',
+											color: $theme.colors.primaryA,
+										};
+									},
+								},
+							}}
+						>
+							Chart
 						</Block>
 					</ListItem>
 				</MenuStep>
