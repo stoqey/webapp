@@ -1,8 +1,7 @@
 import React from 'react';
 import { CURRENCY_SUBSCRIPTION } from "@stoqey/client-graphql";
-import { useSubscription, useApolloClient } from "@apollo/client";
-import { AsyncStorageDB } from '@/lib/AsyncStorageDB';
-import { Ap} from "@/events";
+import { useApolloClient } from "@apollo/client";
+import { AppEvents, APPEVENTS } from '@/lib/AppEvent';
 
 interface Props {
     symbol: string;
@@ -17,13 +16,16 @@ export const CurrencySub = (props: Props) => {
     const client = useApolloClient();
 
     React.useEffect(() => {
+
+        const events = AppEvents.Instance;
         const subscription = client.subscribe({
             query: CURRENCY_SUBSCRIPTION,
             variables: { symbol }
         })
 
-        const results = subscription.subscribe(da => {
+        const results = subscription.subscribe(data => {
             // Post data from here
+            events.emit(APPEVENTS.CURRENCY, data);
         });
 
         return () => { results.unsubscribe() }
