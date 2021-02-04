@@ -24,6 +24,8 @@ export const CurrencySub = (props: Props) => {
         })
 
         const results = subscription.subscribe(data => {
+
+            console.log('on subscribe', data);
             // Post data from here
             events.emit(APPEVENTS.CURRENCY, data);
         });
