@@ -1,4 +1,5 @@
 import isEmpty from 'lodash/isEmpty';
+import { LoginResponseType } from '@stoqey/client-graphql'
 
 export const USER_DB_PATH = 'USER_DB_PATH';
 
@@ -44,9 +45,9 @@ const setItem = async function (key: string, value: Record<string, any>) {
   return localStorage.setItem(key, JSON.stringify(value));
 }
 
-const getAuthItem =  async (): Promise<any> => {
+const getAuthItem =  async (): Promise<LoginResponseType> => {
   const item = await localStorage.getItem(USER_DB_PATH);
-  return JSONDATA(item);
+  return JSONDATA(item) as LoginResponseType;
 }
 
 const updateAuthItem = async (data: any) => {
