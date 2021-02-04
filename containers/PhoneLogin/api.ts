@@ -37,13 +37,14 @@ export const phoneLoginApi = async ({
 
     if (data.success) {
       //   Successful
+      console.log('Login successful', JSON.stringify(data));
       await success(data);
-      return console.log('Login successful', JSON.stringify(data));
+      return;
     }
 
     throw new Error('error logging in, please try again later');
   } catch (err) {
-    console.error(err);
+    console.error('error logging in with phone', err);
     await error(err);
   }
 };

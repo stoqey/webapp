@@ -24,6 +24,10 @@ const PayPalForm = (props: Props) => {
       amount={amount}
       shippingPreference="NO_SHIPPING" // default is "GET_FROM_FILE"
       onSuccess={(details, data) => {
+
+        // Run graphql api here with paypal data
+        // data.orderID
+        
         alert("Transaction completed by " + details.payer.name.given_name);
 
         // OPTIONAL: Call your server to save the transaction

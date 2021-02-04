@@ -1,25 +1,32 @@
 import React from 'react';
 import firebaseConfig from 'keys/config';
+import router from 'next/router'
 import _ from 'lodash';
 import * as firebaseui from "firebaseui";
 import firebase from "firebase";
 import { PhoneAuthResults } from './firebase.phonauthresults';
 import { useApolloClient } from '@apollo/client';
 import { phoneLoginApi, PhoneAuthCreds } from './api';
+import AsyncStorageDB, { JSONDATA } from '@/lib/AsyncStorageDB';
 
-export const PhoneLogin = (props: Props) => {
+export const PhoneLogin = () => {
 
+  const db = AsyncStorageDB;
   const client = useApolloClient();
 
   const phoneLoginApiCall = (args: PhoneAuthCreds): Promise<any> => phoneLoginApi({
     args,
     client,
-    error: async () => {
+    error: async (error) => {
+      // Show error
+
 
     },
-    success: async () => {
-      // TODO save login todata in client browser
-      // 
+    success: async (data) => {
+      // save login data in client browser
+      await db.updateAuthItem(data);
+      await router.push('/home');
+      // send send user to home
     }
   });
 
@@ -42,10 +49,18 @@ export const PhoneLogin = (props: Props) => {
 
 
         if (authResult.user) {
-          const phone = _.get(authResult, 'user.phoneNumber', '');
-          const firebaseToken = _.get(authResult, 'user.stsTokenManager.accessToken', '');
-          const createNew: boolean = _.get(authResult, 'additionalUserInfo.isNewUser', false);
+          console.log('login', JSON.stringify(authResult))
 
+          const resData: PhoneAuthResults = JSONDATA(JSON.stringify(authResult)) as any;
+          console.log('login', resData)
+          const phone =  resData.user.phoneNumber // _.get(authResult, 'user.phoneNumber', '');
+          const firebaseToken = resData.user.stsTokenManager.accessToken // _.get(authResult, 'user.stsTokenManager.accessToken', '');
+      
+          let createNew: boolean = false;
+          if(resData.additionalUserInfo && resData.additionalUserInfo.isNewUser){
+            createNew = resData.additionalUserInfo.isNewUser;
+          }
+  
           // Login without creating new account
           phoneLoginApiCall({
             phone,
