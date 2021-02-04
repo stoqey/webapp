@@ -5,15 +5,23 @@ import { Button } from 'baseui/button';
 import { Modal, ModalBody } from 'baseui/modal';
 import { PayPalButton } from "react-paypal-button-v2";
 
-const PayPalForm = () => {
-  console.log('PayPal form', process.env.NEXT_PUBLIC_PAYPAL_CLIENT);
+interface Props {
+  userId: string;
+  amount: number;
+};
+
+const PayPalForm = (props: Props) => {
+  const { userId, amount = 30 }  = props;
+  const clientId = process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID || "AeTaBjLsajBbU4SSXYu1DIH7MOaA6hNRcqKZuhOdfGz4YKv2TxNufduBnmlUN0TNwsrM_3VAnfN2MJew";
+  console.log('PayPal client id', {clientId, userId, amount });
   return (
     <PayPalButton
-      // options={
-
-      // }
+      options={{
+        clientId,
+        debug: true
+      }}
       currency="USD"
-      amount="0.01"
+      amount={amount}
       shippingPreference="NO_SHIPPING" // default is "GET_FROM_FILE"
       onSuccess={(details, data) => {
         alert("Transaction completed by " + details.payer.name.given_name);
