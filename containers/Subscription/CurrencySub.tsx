@@ -1,6 +1,8 @@
 import React from 'react';
-import { CURRENCY_SUBSCRIPTION } from "@stoqey/client-graphql"
-import { useSubscription, useApolloClient } from "@apollo/client"
+import { CURRENCY_SUBSCRIPTION } from "@stoqey/client-graphql";
+import { useSubscription, useApolloClient } from "@apollo/client";
+import { AsyncStorageDB } from '@/lib/AsyncStorageDB';
+import { Ap} from "@/events";
 
 interface Props {
     symbol: string;
