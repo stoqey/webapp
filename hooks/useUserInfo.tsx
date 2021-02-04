@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect} from 'react';
 import { LoginResponseType } from '@stoqey/client-graphql'
 import AsyncStorageDB from 'lib/AsyncStorageDB';
 
@@ -10,9 +10,11 @@ export function useUserInfo(): LoginResponseType {
 
   const [userInfo, setUserInfo] = useState<LoginResponseType>(null);
 
-  if (!userInfo) {
-    db.getAuthItem().then(dbData => setUserInfo(dbData));
-  }
-
+  useEffect(() => {
+    if (!userInfo) {
+      db.getAuthItem().then(dbData => setUserInfo(dbData));
+    }  
+  }, [userInfo])
+  
   return !userInfo ? ({} as any) : userInfo;
 }

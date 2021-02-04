@@ -1,13 +1,14 @@
 import React from 'react';
 import firebaseConfig from 'keys/config';
 import router from 'next/router'
-import _ from 'lodash';
+import _, { isEmpty } from 'lodash';
 import * as firebaseui from "firebaseui";
 import firebase from "firebase";
 import { PhoneAuthResults } from './firebase.phonauthresults';
 import { useApolloClient } from '@apollo/client';
 import { phoneLoginApi, PhoneAuthCreds } from './api';
 import AsyncStorageDB, { JSONDATA } from '@/lib/AsyncStorageDB';
+import { useUserInfo } from 'hooks/useUserInfo';
 
 export const PhoneLogin = () => {
 
@@ -79,8 +80,16 @@ export const PhoneLogin = () => {
   };
 
   React.useEffect(() => {
+
     const ui = new firebaseui.auth.AuthUI(firebase.auth());
-    ui.start("#firebaseui-auth-container", uiConfig)
+
+    async function checkIfUserExists() {
+      const user = await AsyncStorageDB.getAuthItem();
+      if(isEmpty(user && user.accessToken)){
+        ui.start("#firebaseui-auth-container", uiConfig)
+      }
+    }
+    checkIfUserExists();
     return () => { ui.delete() }
   }, []);
 
