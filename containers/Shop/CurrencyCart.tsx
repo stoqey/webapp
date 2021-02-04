@@ -16,7 +16,7 @@ import { useCartDispatch } from '../../contexts/cart/cart.provider';
 import { FaDonate } from 'react-icons/fa';
 
 type CartType = {
-  products: {
+  products?: {
     id?: string;
     thumbnail?: string;
     name?: string;
@@ -24,27 +24,27 @@ type CartType = {
     price?: string;
     color?: any;
   }[];
+
+  quantity: number;
+  price: number;
 };
 
-const CurrencyCart = ({ products }: CartType) => {
-  const totalPrice = calcCartItemsTotal(products);
-  const dispatch = useCartDispatch();
+const CurrencyCart = ({ products, price, quantity }: CartType) => {
+  const total = price * quantity;
   const router = useRouter();
   return (
     <>
       <Header>
         <Title>Amount to invest</Title>
-        <Price>Total: $ {totalPrice}</Price>
+        <Price>Total: $ {total}</Price>
       </Header>
       <>
         <CartProduct
           thumbUrl={'https://storage.googleapis.com/stqnetwork.appspot.com/symbols/STQ.png'}
           title={'STQ'}
-          price={'100'}
-          quantity={`Qty`}
-          color={'red'}
-          removable={true}
-
+          price={''+total}
+          quantity={''+quantity}
+          removable={false}
         />
       </>
       <Block

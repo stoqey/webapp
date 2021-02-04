@@ -23,15 +23,18 @@ import {
 	THEME,
 	useThemeSwitcherCtx,
 } from 'contexts/theme/theme.provider';
+import { useUserInfo } from 'hooks/useUserInfo';
 
 const TITLE = 'Invest';
 const SUB_TITLE = 'Invest in Stoqey';
 
 const Checkout: NextPage<{}> = () => {
+	const [amount, setAmount] = useState(3);
 	const [step, setStep] = useState(1);
 	const cartItems = useCartState('cartItems');
 	const totalPrice = calcCartItemsTotal(cartItems);
 	const { theme } = useThemeSwitcherCtx();
+	const user = useUserInfo();
 
 	const handleStep = () => {
 		setStep(step + 1);
@@ -43,7 +46,7 @@ const Checkout: NextPage<{}> = () => {
 			component = <CurrencyCart products={cartItems} />;
 			break;
 		case 2:
-			component = <PayPalPayment />;
+			component = <PayPalPayment amount={amount} userId={user && user.accessToken}/>;
 			break;
 	}
 
@@ -122,7 +125,9 @@ const Checkout: NextPage<{}> = () => {
 								<Block paddingTop={['30px', '40px', '0']}>
 									<Title>Amount Details</Title>
 									<Input
-										onChange={(e: any) => console.log(e.target.value)}
+									    disabled={step !== 1}
+										type={"number"}
+										onChange={(e: any) => setAmount(e.target.value)}
 										placeholder="Enter size/quantity"
 										overrides={{
 											InputContainer: {
@@ -134,7 +139,7 @@ const Checkout: NextPage<{}> = () => {
 									/>
 									<PriceList>
 										<PriceItem>
-											<span>Per share</span> <span>$ {totalPrice}</span>
+											<span>Per share</span> <span>$ {amount}</span>
 										</PriceItem>
 										<PriceItem>
 											<span>Tax</span> <span> + 0.5%</span>
@@ -143,22 +148,25 @@ const Checkout: NextPage<{}> = () => {
 											<span>Total</span> <span> + 0.5%</span>
 										</PriceItem>
 									</PriceList>
-									<Button
-										size="large"
-										onClick={handleStep}
-										overrides={{
-											BaseButton: {
-												style: ({ $theme }) => {
-													return {
-														width: '100%',
-														...$theme.typography.font250,
-													};
+									{step === 1 && (
+										<Button
+											size="large"
+											onClick={handleStep}
+											overrides={{
+												BaseButton: {
+													style: ({ $theme }) => {
+														return {
+															width: '100%',
+															...$theme.typography.font250,
+														};
+													},
 												},
-											},
-										}}
-									>
-										Next
-									</Button>
+											}}
+										>
+											Next
+										</Button>
+									)}
+
 								</Block>
 							</Cell>
 						)}

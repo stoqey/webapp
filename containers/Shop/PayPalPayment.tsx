@@ -27,7 +27,7 @@ const PayPalForm = (props: Props) => {
 
         // Run graphql api here with paypal data
         // data.orderID
-        
+
         alert("Transaction completed by " + details.payer.name.given_name);
 
         // OPTIONAL: Call your server to save the transaction
@@ -42,20 +42,10 @@ const PayPalForm = (props: Props) => {
   );
 }
 
-const PayPalPayment = () => {
+const PayPalPayment = (props:  Props) => {
   const [visible, setVisible] = useState(false);
   const [loading, setLoading] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState('paypal');
-
-  const handlePayment = (type: string) => {
-    setLoading(true);
-    setPaymentMethod(type);
-
-    setTimeout(() => {
-      setLoading(false);
-      setVisible(true);
-    }, 600);
-  };
 
   return (
     <Block marginLeft="-16px" marginRight="-16px">
@@ -87,7 +77,7 @@ const PayPalPayment = () => {
         <img src={require('../../assets/images/payment/visa.png')} alt="visa" />
       </Button> */}
 
-      <PayPalForm />
+      <PayPalForm {...props}/>
 
 
       {/* Model success */}
