@@ -1,3 +1,4 @@
+require('dotenv/config');
 const withPlugins = require('next-compose-plugins');
 const withOptimizedImages = require('next-optimized-images');
 const withFonts = require('next-fonts');
@@ -7,6 +8,9 @@ const nextConfiguration = {
     config.externals = config.externals || {};
     config.externals['styletron-server'] = 'styletron-server';
     return config;
+  },
+  env: {
+    clientId: process.env.PAYPAL_CLIENT,
   },
 };
 

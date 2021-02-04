@@ -19,6 +19,8 @@ export default class CustomDocument extends Document<any> {
     return { ...page, stylesheets };
   }
 
+  // console.log('_document PayPal form', process.env.NEXT_PUBLIC_PAYPAL_CLIENT);
+
   render() {
     const { stylesheets = [] } = this.props;
 
@@ -36,6 +38,9 @@ export default class CustomDocument extends Document<any> {
           <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.5.0/firebase-ui-auth.css" />
           <script src="https://www.gstatic.com/firebasejs/7.13.1/firebase-app.js"></script>
           <script src="https://www.gstatic.com/firebasejs/7.13.1/firebase-analytics.js"></script>
+
+          {/* PayPal script */}
+          <script src="https://www.paypal.com/sdk/js?client-id=PRODUCTION_CLIENT_ID" />
 
           {!isEmpty(stylesheets) && stylesheets.map((sheet, i) => (
             <style

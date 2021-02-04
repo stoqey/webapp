@@ -2,14 +2,15 @@ import React, { useState } from 'react';
 import { NextPage } from 'next';
 import Head from 'next/head';
 import { Grid, Cell } from 'baseui/layout-grid';
-import { FaShoppingBag, FaMapMarkerAlt, FaMoneyCheckAlt, FaMoneyBillWave, FaPaypal, FaCreditCard, FaPiggyBank, FaBitcoin } from 'react-icons/fa';
+import { FaShoppingBag, FaMapMarkerAlt, FaMoneyCheckAlt, FaDollarSign, FaChartLine } from 'react-icons/fa';
 import { Button } from 'baseui/button';
 import { Input } from 'baseui/input';
 import { Block } from 'baseui/block';
 import Container from 'components/UiElements/Container/Container';
 import PageTitle from 'components/UiElements/PageTitle/PageTitle';
-import CurrencyCart from 'containers/Shop/CurrencyCart';
-import PayPalPayment from 'containers/Shop/PayPalPayment';
+import Cart from 'containers/Shop/Cart';
+import Address from 'containers/Shop/Address';
+import Payment from 'containers/Shop/Payment';
 import {
 	MenuStep,
 	ListItem,
@@ -24,8 +25,8 @@ import {
 	useThemeSwitcherCtx,
 } from 'contexts/theme/theme.provider';
 
-const TITLE = 'Invest';
-const SUB_TITLE = 'Invest in Stoqey';
+const TITLE = 'Stoqey';
+const SUB_TITLE = 'Beat Wall Street from anywhere';
 
 const Checkout: NextPage<{}> = () => {
 	const [step, setStep] = useState(1);
@@ -40,10 +41,13 @@ const Checkout: NextPage<{}> = () => {
 	let component: React.ReactNode;
 	switch (step) {
 		case 1:
-			component = <CurrencyCart products={cartItems} />;
+			component = <Cart products={cartItems} />;
 			break;
 		case 2:
-			component = <PayPalPayment />;
+			component = <Address />;
+			break;
+		case 3:
+			component = <Payment />;
 			break;
 	}
 
@@ -63,11 +67,12 @@ const Checkout: NextPage<{}> = () => {
 
 			<Container>
 				<MenuStep className="step-menu">
+
 					<ListItem
 						className={step === 1 ? 'active' : ''}
 						onClick={() => setStep(1)}
 					>
-						<FaMoneyBillWave />
+						<FaDollarSign />
 						<Block
 							overrides={{
 								Block: {
@@ -81,16 +86,14 @@ const Checkout: NextPage<{}> = () => {
 								},
 							}}
 						>
-							Amount
+							Currency
 						</Block>
 					</ListItem>
 					<ListItem
 						className={step === 2 ? 'active' : ''}
 						onClick={() => setStep(2)}
 					>
-						<FaPaypal />
-						<FaCreditCard />
-						<FaBitcoin />
+						<FaChartLine />
 						<Block
 							overrides={{
 								Block: {
@@ -104,7 +107,7 @@ const Checkout: NextPage<{}> = () => {
 								},
 							}}
 						>
-							Payment
+							Data
 						</Block>
 					</ListItem>
 				</MenuStep>
@@ -117,51 +120,50 @@ const Checkout: NextPage<{}> = () => {
 						gridMargins={0}
 					>
 						<Cell span={[12, 12, 8]}>{component}</Cell>
-						{step !== 3 && (
-							<Cell span={[12, 12, 4]}>
-								<Block paddingTop={['30px', '40px', '0']}>
-									<Title>Amount Details</Title>
-									<Input
-										onChange={(e: any) => console.log(e.target.value)}
-										placeholder="Enter size/quantity"
-										overrides={{
-											InputContainer: {
-												style: () => {
-													return { backgroundColor: 'transparent' };
-												},
+						<Cell span={[12, 12, 4]}>
+							<Block paddingTop={['30px', '40px', '0']}>
+								<Title>Portfolios</Title>
+								<Input
+									onChange={(e: any) => console.log(e.target.value)}
+									placeholder="Start new position"
+									overrides={{
+										InputContainer: {
+											style: () => {
+												return { backgroundColor: 'transparent' };
 											},
-										}}
-									/>
-									<PriceList>
-										<PriceItem>
-											<span>Per share</span> <span>$ {totalPrice}</span>
-										</PriceItem>
-										<PriceItem>
-											<span>Tax</span> <span> + 0.5%</span>
-										</PriceItem>
-										<PriceItem>
-											<span>Total</span> <span> + 0.5%</span>
-										</PriceItem>
-									</PriceList>
-									<Button
-										size="large"
-										onClick={handleStep}
-										overrides={{
-											BaseButton: {
-												style: ({ $theme }) => {
-													return {
-														width: '100%',
-														...$theme.typography.font250,
-													};
-												},
+										},
+									}}
+								/>
+								<PriceList>
+									<PriceItem>
+										<span>Per share</span> <span>$ some price</span>
+									</PriceItem>
+									<PriceItem>
+										<span>Total Price</span> <span>$95</span>
+									</PriceItem>
+									<PriceItem>
+										<span>Coupon Discount</span> <span>0</span>
+									</PriceItem>
+								</PriceList>
+								<Button
+									size="large"
+									onClick={handleStep}
+									overrides={{
+										BaseButton: {
+											style: ({ $theme }) => {
+												return {
+													width: '100%',
+													...$theme.typography.font250,
+												};
 											},
-										}}
-									>
-										Next
+										},
+									}}
+								>
+									Buy
 									</Button>
-								</Block>
-							</Cell>
-						)}
+							</Block>
+						</Cell>
+
 					</Grid>
 				</Block>
 			</Container>

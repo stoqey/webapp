@@ -44,6 +44,7 @@
 				"react-icons": "^3.10.0",
 				"react-image": "^4.0.3",
 				"react-loading-skeleton": "^2.1.1",
+				"react-paypal-button-v2": "^2.6.2",
 				"react-phone-number-input": "^3.1.10",
 				"react-reveal": "^1.2.2",
 				"react-scrollspy": "^3.4.3",

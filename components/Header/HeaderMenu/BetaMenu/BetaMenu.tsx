@@ -4,9 +4,14 @@ import Menu, { MenuItem, MenuLink } from './BateMenu.styled';
 
 const menuItems = [
   {
+    id: 0,
+    label: 'Dash',
+    path: '/',
+  },
+  {
     id: 1,
     label: 'Home',
-    path: '/',
+    path: '/home',
   },
   {
     id: 2,
