@@ -3,6 +3,7 @@ import { AppProps } from 'next/app';
 import { Provider as StyletronProvider } from 'styletron-react';
 import { BaseProvider, LightTheme, DarkTheme } from 'baseui';
 import { ApolloProvider } from '@apollo/client';
+import dynamic from 'next/dynamic';
 import Layout from 'components/Layout/Layout';
 import { styletron } from '../styletron';
 import { ThemeSwitcherProvider, THEME } from '../contexts/theme/theme.provider';
@@ -14,6 +15,9 @@ import 'react-toastify/dist/ReactToastify.css';
 import 'assets/css/reset.css';
 import 'react-flexbox-grid/dist/react-flexbox-grid.css';
 import 'typeface-open-sans';
+
+const WebsocketSubscription = dynamic(() => import('containers/Subscription'), { ssr: false });
+
 export default function CustomApp({ Component, pageProps }: AppProps) {
   const [theme, setTheme] = React.useState(THEME.light);
   React.useEffect(() => {
@@ -27,6 +31,8 @@ export default function CustomApp({ Component, pageProps }: AppProps) {
 
   return (
     <ApolloProvider client={apolloClient}>
+      {/* Persistant websocket */}
+      <WebsocketSubscription />
       <ThemeSwitcherProvider value={{ theme, setTheme }}>
         <StyletronProvider value={styletron} debugAfterHydration>
           <BaseProvider
