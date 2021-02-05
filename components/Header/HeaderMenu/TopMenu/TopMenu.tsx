@@ -3,21 +3,21 @@ import Link from 'next/link';
 import Menu, { MenuItem, MenuLink } from './TopMenu.style';
 
 const menuItems = [
-  {
-    id: 1,
-    label: 'Blog',
-    path: '#',
-  },
-  {
-    id: 2,
-    label: 'Privacy',
-    path: '/privacy',
-  },
-  {
-    id: 3,
-    label: 'Terms',
-    path: '/terms',
-  },
+  // {
+  //   id: 1,
+  //   label: 'Blog',
+  //   path: '#',
+  // },
+  // {
+  //   id: 2,
+  //   label: 'Privacy',
+  //   path: '/privacy',
+  // },
+  // {
+  //   id: 3,
+  //   label: 'Terms',
+  //   path: '/terms',
+  // },
 ];
 
 type MenuProps = {

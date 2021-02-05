@@ -8,11 +8,11 @@ const menuItems = [
     label: 'Dash',
     path: '/',
   },
-  {
-    id: 1,
-    label: 'Home',
-    path: '/home',
-  },
+  // {
+  //   id: 1,
+  //   label: 'Home',
+  //   path: '/home',
+  // },
   {
     id: 2,
     label: 'Invest',

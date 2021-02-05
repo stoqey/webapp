@@ -26,7 +26,7 @@ const Menu = ({ onClick }: MenuType) => {
   const { theme, setTheme } = useThemeSwitcherCtx();
   return (
     <MenuWrapper>
-      <li>
+      {/* <li>
         <ActiveLink activeClassName="active" href="/">
           <MenuItem onClick={onClick}>Dashboard</MenuItem>
         </ActiveLink>
@@ -36,7 +36,7 @@ const Menu = ({ onClick }: MenuType) => {
         <ActiveLink activeClassName="active" href="/settings">
           <MenuItem onClick={onClick}>Settings</MenuItem>
         </ActiveLink>
-      </li>
+      </li> */}
       <Line></Line>
       <li>
         <MenuItem

@@ -35,7 +35,7 @@ const DefaultHeader: React.FC<{}> = () => {
 					<MenuRight className="menu-right">
 						<TopMenu />
 
-						<Badge
+						{/* <Badge
 							path="/shop/checkout"
 							icon={
 								<SvgIcon
@@ -43,7 +43,7 @@ const DefaultHeader: React.FC<{}> = () => {
 								/>
 							}
 							count={cartItems.length}
-						/>
+						/> */}
 						<AvatarMenu
 							name="Stoqey Bot"
 							src={require('../../../assets/images/STQ.png')}
@@ -68,7 +68,7 @@ const DefaultHeader: React.FC<{}> = () => {
 								<BetaMenu className="main-nav" />
 							</NavLeft>
 							<NavRight className="cart-and-avatar">
-								<Badge
+								{/* <Badge
 									path="/shop/checkout"
 									icon={
 										<SvgIcon
@@ -76,7 +76,7 @@ const DefaultHeader: React.FC<{}> = () => {
 										/>
 									}
 									count={cartItems.length}
-								/>
+								/> */}
 								<AvatarMenu
 									name="Stoqey Bot"
 									src={require('../../../assets/images/STQ.png')}
