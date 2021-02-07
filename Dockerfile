@@ -1,24 +1,30 @@
-# Dockerfile
+FROM mhart/alpine-node:10.19 AS builder
 
-# base image
-FROM node:10.23.0-stretch as builder
+ARG NPM_AUTH_TOKEN
 
-# create & set working directory
-RUN mkdir -p /usr/src
-WORKDIR /usr/src
+WORKDIR /srv
 
-# copy source files
-COPY . /usr/src
+COPY . .
+RUN apk update && apk upgrade && \
+    apk add --no-cache bash git openssh libc6-compat
+RUN npm config set @stoqeyx:registry https://npm.pkg.github.com
+RUN npm config set //npm.pkg.github.com/:_authToken=$NPM_AUTH_TOKEN
 
-# install dependencies
-RUN npm install
+RUN apk add --no-cache --virtual .gyp \
+        python \
+        make \
+        g++ \
+    && npm install \
+    && apk del .gyp
 
-ENV NODE_ENV=production
-# start app
+RUN mkdir -p src/keys && echo "{}" > src/keys/service.account.json
+
 RUN npm run build
 
 # use lighter image
-FROM pierrezemb/gostatic
-
-COPY --from=builder /usr/src/out /srv/http
-EXPOSE 80
+FROM mhart/alpine-node:slim-10.19
+RUN apk add libc6-compat
+COPY --from=builder /srv .
+ENV NODE_ENV=production
+EXPOSE 3000
+CMD ["node", "build/src/index.js"]
