@@ -1,15 +1,12 @@
 FROM mhart/alpine-node:10.19 AS builder
 
-ARG NPM_AUTH_TOKEN
 ARG FB_SA_KEY_TS
 
 WORKDIR /srv
 
 COPY . .
 RUN apk update && apk upgrade && \
-    apk add --no-cache bash git openssh libc6-compat
-RUN npm config set @stoqeyx:registry https://npm.pkg.github.com
-RUN npm config set //npm.pkg.github.com/:_authToken=$NPM_AUTH_TOKEN
+    apk add --no-cache bash git openssh libc6-compat autoconf automake libtool make tiff jpeg zlib zlib-dev pkgconf nasm file gcc musl-dev
 
 RUN apk add --no-cache --virtual .gyp \
         python \
@@ -18,7 +15,7 @@ RUN apk add --no-cache --virtual .gyp \
     && npm install \
     && apk del .gyp
 
-RUN mkdir -p src/keys && echo $FB_SA_KEY_TS > src/keys/config.ts
+RUN mkdir -p keys && echo $FB_SA_KEY_TS > keys/config.ts
 
 RUN npm run build
 
