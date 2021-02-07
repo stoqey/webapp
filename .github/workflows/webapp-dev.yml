@@ -69,4 +69,4 @@ jobs:
 
     # Deploy the Docker image to the GKE cluster
     - name: Deploy to k8s
-      run: kubectl set image deployment/$DEPLOYMENT $$DEPLOYMENT=gcr.io/$GKE_PROJECT/$IMAGE:${GITHUB_SHA:0:7}
+      run: kubectl set image deployment/$DEPLOYMENT $DEPLOYMENT=gcr.io/$GKE_PROJECT/$IMAGE:${GITHUB_SHA:0:7}
