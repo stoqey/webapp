@@ -1,7 +1,7 @@
-import slack from 'assets/images/applications/1.svg';
-import invision from 'assets/images/applications/2.svg';
-import jira from 'assets/images/applications/3.svg';
-import figma from 'assets/images/applications/4.svg';
+const slack = require('assets/images/applications/1.svg');
+const invision = require('assets/images/applications/2.svg');
+const jira = require('assets/images/applications/3.svg');
+const figma = require('assets/images/applications/4.svg');
 
 const applicationsPageData = {
   title: 'Authorized Applications',

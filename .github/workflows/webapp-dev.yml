@@ -9,6 +9,7 @@ env:
   GKE_PROJECT: ${{ secrets.GKE_PROJECT }}
   GKE_ZONE: ${{ secrets.GKE_ZONE }}
   NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }} 
+  FB_SA_KEY_TS: ${{ secrets.FB_SA_KEY_TS }}
   CLUSTER: cloudx
   DEPLOYMENT: stqwebapp
   IMAGE: stqwebapp-dev
@@ -41,6 +42,7 @@ jobs:
         docker build \
           --tag "gcr.io/$GKE_PROJECT/$IMAGE:${GITHUB_SHA:0:7}" \
           --build-arg GITHUB_SHA="$GITHUB_SHA" \
+          --build-arg FB_SA_KEY_TS="$FB_SA_KEY_TS" \
           --build-arg GITHUB_REF="$GITHUB_REF" \
           --build-arg NPM_AUTH_TOKEN="$NPM_AUTH_TOKEN" \
           .

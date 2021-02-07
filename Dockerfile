@@ -1,6 +1,7 @@
 FROM mhart/alpine-node:10.19 AS builder
 
 ARG NPM_AUTH_TOKEN
+ARG FB_SA_KEY_TS
 
 WORKDIR /srv
 
@@ -17,7 +18,7 @@ RUN apk add --no-cache --virtual .gyp \
     && npm install \
     && apk del .gyp
 
-RUN mkdir -p src/keys && echo "{}" > src/keys/service.account.json
+RUN mkdir -p src/keys && echo $FB_SA_KEY_TS > src/keys/config.ts
 
 RUN npm run build
 
@@ -27,4 +28,4 @@ RUN apk add libc6-compat
 COPY --from=builder /srv .
 ENV NODE_ENV=production
 EXPOSE 3000
-CMD ["node", "build/src/index.js"]
+CMD ["node","node_modules/.bin/next", "start"]

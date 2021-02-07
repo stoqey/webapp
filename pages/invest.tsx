@@ -43,7 +43,7 @@ const Checkout: NextPage<{}> = () => {
 	let component: React.ReactNode;
 	switch (step) {
 		case 1:
-			component = <CurrencyCart products={cartItems} />;
+			component = <CurrencyCart quantity={0} price={100} products={cartItems} />;
 			break;
 		case 2:
 			component = <PayPalPayment amount={amount} userId={user && user.accessToken}/>;

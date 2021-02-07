@@ -20,8 +20,8 @@ interface Props {
     data: MarketDataType[],
     width?: number,
     height?: number,
-    ratio: number,
-    type: "svg" | "hybrid",
+    ratio?: number,
+    type?: "svg" | "hybrid",
 }
 
 let AreaChart = (props: Props) => {

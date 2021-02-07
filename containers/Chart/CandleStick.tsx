@@ -17,9 +17,9 @@ import { last } from "react-stockcharts/lib/utils";
 
 interface Props {
 	data: MarketDataType[],
-	width: number,
-	ratio: number,
-	type: "svg" | "hybrid"
+	width?: number,
+	ratio?: number,
+	type?: "svg" | "hybrid"
 };
 export let CandleStickStockChartWithVolumeBar = (props: Props) => {
 	const { type = 'svg', data: initialData, width, ratio } = props;
