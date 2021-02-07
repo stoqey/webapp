@@ -37,8 +37,8 @@ jobs:
         gcloud --quiet auth configure-docker    
         
     - name: Add firebase file
-      run: mkdir -p ./keys && echo $FB_SA_KEY_TS > ./keys/config.ts
-
+      run: mkdir -p ./keys && echo $FB_SA_KEY_TS > ./keys/firebase.config.ts
+  
     # Build the Docker image
     - name: Build image
       run: |-

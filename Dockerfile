@@ -6,6 +6,8 @@ WORKDIR /srv
 
 COPY . .
 
+RUN ls keys && cat ./keys/firebase.config.ts
+
 RUN apk update && apk upgrade && \
     apk add --no-cache bash git openssh libc6-compat autoconf automake libtool make tiff jpeg zlib zlib-dev pkgconf nasm file gcc musl-dev
 
