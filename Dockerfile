@@ -5,6 +5,13 @@ ARG FB_SA_KEY_TS
 WORKDIR /srv
 
 COPY . .
+
+RUN mkdir -p ./keys && echo $FB_SA_KEY_TS > ./keys/config.ts
+
+RUN ls keys
+
+RUN cat ./keys/config.ts
+
 RUN apk update && apk upgrade && \
     apk add --no-cache bash git openssh libc6-compat autoconf automake libtool make tiff jpeg zlib zlib-dev pkgconf nasm file gcc musl-dev
 
@@ -15,7 +22,7 @@ RUN apk add --no-cache --virtual .gyp \
     && npm install \
     && apk del .gyp
 
-RUN mkdir -p keys && echo $FB_SA_KEY_TS > keys/config.ts
+# RUN mkdir -p ./keys && echo $FB_SA_KEY_TS > ./keys/config.ts
 
 RUN npm run build
 
