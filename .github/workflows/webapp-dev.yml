@@ -34,7 +34,10 @@ jobs:
     # helper for authentication
     - name: Save docker configure 
       run: |-
-        gcloud --quiet auth configure-docker        
+        gcloud --quiet auth configure-docker    
+        
+    - name: Add firebase file
+      run: mkdir -p ./keys && echo $FB_SA_KEY_TS > ./keys/config.ts
 
     # Build the Docker image
     - name: Build image
@@ -42,7 +45,6 @@ jobs:
         docker build \
           --tag "gcr.io/$GKE_PROJECT/$IMAGE:${GITHUB_SHA:0:7}" \
           --build-arg GITHUB_SHA="$GITHUB_SHA" \
-          --build-arg FB_SA_KEY_TS="$FB_SA_KEY_TS" \
           --build-arg GITHUB_REF="$GITHUB_REF" \
           --build-arg NPM_AUTH_TOKEN="$NPM_AUTH_TOKEN" \
           .
