@@ -33,4 +33,9 @@ yarn-error.log*
 
 # vercel
 .vercel
-keys/
+serviceAccountKey.json*
+firebase.config.js*
+firebase.config.ts*
+*secret.js*
+*secret.ts*
+service.account.json*
