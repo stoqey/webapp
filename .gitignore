@@ -36,6 +36,7 @@ yarn-error.log*
 serviceAccountKey.json*
 firebase.config.js*
 firebase.config.ts*
+firebase.config.json*
 *secret.js*
 *secret.ts*
 service.account.json*

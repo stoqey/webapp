@@ -1,5 +1,5 @@
 import React from 'react';
-import firebaseConfig from 'keys/firebase.config';
+import firebaseConfig from 'keys/firebase.config.json';
 import router from 'next/router'
 import _, { isEmpty } from 'lodash';
 import * as firebaseui from "firebaseui";
