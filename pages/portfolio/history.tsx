@@ -1,25 +1,19 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { NextPage } from 'next';
 import Head from 'next/head';
 import { Grid, Cell } from 'baseui/layout-grid';
 import { Block } from 'baseui/block';
-import { StyledTable, StyledBodyCell } from 'baseui/table-grid';
-import { MdCloudDownload } from 'react-icons/md';
 import Container from 'components/UiElements/Container/Container';
 import PortfolioMenu from 'components/SideMenu/PortfolioMenu';
-import SvgIcon from 'components/UiElements/SvgIcon/SvgIcon';
 import TransactionsTable from 'containers/Transactions'
-import { TextButton } from 'components/PageStyles/Settings.styled';
-import { StyledTableHeadAlt } from 'components/PageStyles/Apps.styled';
 
-import billingPageData from '../../data/billingPage';
 
-const Billing: NextPage<{}> = () => {
+const TransactionsHistory: NextPage<{}> = () => {
 	return (
 		<>
 			<Head>
-				<title>Billing | INST.</title>
-				<meta name="Description" content="Inst billing setting page" />
+				<title>Transactions history | Stoqey.</title>
+				<meta name="Description" content="Stoqey transactions history page" />
 			</Head>
 
 			<Container>
@@ -38,4 +32,4 @@ const Billing: NextPage<{}> = () => {
 	);
 };
 
-export default Billing;
+export default TransactionsHistory;
