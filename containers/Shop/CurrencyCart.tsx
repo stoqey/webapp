@@ -25,13 +25,12 @@ type CartType = {
     color?: any;
   }[];
 
-  quantity: number;
-  price: number;
+  amount: number;
 };
 
-const CurrencyCart = ({ products, price, quantity }: CartType) => {
-  const total = price * quantity;
-  
+const CurrencyCart = ({ products, amount }: CartType) => {
+  const total = amount;
+
   return (
     <>
       <Header>
@@ -43,7 +42,7 @@ const CurrencyCart = ({ products, price, quantity }: CartType) => {
           thumbUrl={'https://storage.googleapis.com/stqnetwork.appspot.com/symbols/STQ.png'}
           title={'STQ'}
           price={''+total}
-          quantity={''+quantity}
+          quantity={''}
           removable={false}
         />
       </>
