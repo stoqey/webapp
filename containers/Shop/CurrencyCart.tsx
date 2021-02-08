@@ -31,7 +31,7 @@ type CartType = {
 
 const CurrencyCart = ({ products, price, quantity }: CartType) => {
   const total = price * quantity;
-  const router = useRouter();
+  
   return (
     <>
       <Header>
