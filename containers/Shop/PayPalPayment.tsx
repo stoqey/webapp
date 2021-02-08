@@ -10,23 +10,28 @@ import { useApolloClient } from '@apollo/client';
 interface Props {
   userId: string;
   amount: number;
+};
+
+interface PayPalFormProps {
+  userId: string;
+  amount: number;
   onSuccess: (orderId: string) => Promise<any>;
 };
 
-const PayPalForm = (props: Props) => {
+const PayPalForm = (props: PayPalFormProps) => {
   const { userId, amount = 30, onSuccess } = props;
   const clientId = process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID || "AeTaBjLsajBbU4SSXYu1DIH7MOaA6hNRcqKZuhOdfGz4YKv2TxNufduBnmlUN0TNwsrM_3VAnfN2MJew";
   console.log('PayPal client id', { clientId, userId, amount });
   return (
     <PayPalButton
       options={{
-        clientId,
-        debug: true
+        clientId
       }}
       currency="USD"
       amount={amount}
       shippingPreference="NO_SHIPPING" // default is "GET_FROM_FILE"
       onSuccess={async (details, data) => {
+        console.log('Paypal success', data);
         return await onSuccess(data && data.orderID);
       }}
     />
@@ -41,7 +46,7 @@ const PayPalPayment = (props: Props) => {
 
   const paymentApi = async (orderId: string) => await processPayment({
     client,
-    args: { orderId, owner: userId, amount },
+    args: { orderId, owner: userId, amount: +amount },
     success: async (data: any) => {
       console.log('successfuly processed payment', data);
       setVisible(true); // show success

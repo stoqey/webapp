@@ -53,7 +53,7 @@ const Checkout: NextPage<{}> = () => {
 			component = <CurrencyCart amount={amount} products={cartItems} />;
 			break;
 		case 2:
-			component = <PayPalPayment amount={amount} userId={user && user.accessToken}/>;
+			component = <PayPalPayment amount={amount} userId={user && user.user && user.user.id}/>;
 			break;
 	}
 
