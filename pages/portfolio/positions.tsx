@@ -8,6 +8,7 @@ import { Select } from 'baseui/select';
 import Container from 'components/UiElements/Container/Container';
 import PortfolioMenu from 'components/SideMenu/PortfolioMenu';
 import ListGridCard from 'components/UiElements/ListGridCard/ListGridCard';
+import Portfolios from 'containers/Portfolio'
 import {
 	Title,
 	Subtitle,
@@ -56,7 +57,7 @@ const Positions: NextPage<{}> = () => {
 	return (
 		<>
 			<Head>
-				<title>{title} | Positions.</title>
+				<title>{title} | Stoqey.</title>
 				<meta name="Description" content="Stoqey positions" />
 			</Head>
 
@@ -122,35 +123,7 @@ const Positions: NextPage<{}> = () => {
 									</Button> */}
 								</SpaceBetween>
 
-								{positions.map((item: any) => (
-									<SpaceBetween key={`application-key${item.id}`}>
-										<ListGridCard
-											variant="list"
-											thumbWidth={`50px`}
-											thumb={item.thumb}
-											title={item.title}
-											description={item.description}
-										/>
-
-										<Button
-											onClick={() => handleRemoveApplication(item.id)}
-											kind="secondary"
-											shape="pill"
-											overrides={{
-												BaseButton: {
-													style: ({ $theme }) => {
-														return {
-															...$theme.typography.font250,
-															minWidth: '82px',
-														};
-													},
-												},
-											}}
-										>
-											Close position
-										</Button>
-									</SpaceBetween>
-								))}
+								<Portfolios />
 							</Block>
 						</Cell>
 					</Grid>

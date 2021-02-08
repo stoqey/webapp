@@ -6,14 +6,9 @@ import MenuWrapper, { Menu, MenuItem, MenuLink } from './SideMenu.styled';
 
 const menuItems = [
 	{
-		id: 1,
-		label: 'Portfolio',
-		path: '/portfolio',
-	},
-	{
 		id: 2,
 		label: 'Positions',
-		path: '/portfolio/positions',
+		path: '/portfolio',
 	},
 	{
 		id: 3,

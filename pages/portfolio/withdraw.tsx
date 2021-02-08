@@ -12,18 +12,16 @@ import PortfolioMenu from 'components/SideMenu/PortfolioMenu';
 import { ButtonGroup } from 'components/PageStyles/Settings.styled';
 
 type FormData = {
-	newPassword: string;
-	confirmPassword: string;
+	amount: string;
 };
 
-const Password: NextPage<{}> = () => {
+const Withdraw: NextPage<{}> = () => {
 	const { register, setValue, handleSubmit, reset, errors } = useForm<
 		FormData
 	>();
 	const [feedback, setFeedback] = useState(false);
 	const [state, setState] = useState<FormData>({
-		newPassword: '',
-		confirmPassword: '',
+		amount: '',
 	});
 
 	const handleOnChange = (e: any) => {
@@ -35,25 +33,25 @@ const Password: NextPage<{}> = () => {
 	};
 
 	const handleOnSubmit = handleSubmit((data) => {
-		if (state.newPassword === state.confirmPassword) {
+		// if (state.newPassword === state.confirmPassword) {
 			setFeedback(false);
 			console.log('Form data: ', data);
 			alert(JSON.stringify(data, null, 4));
-		} else {
-			setFeedback(true);
-		}
+		// } else {
+		// 	setFeedback(true);
+		// }
 	});
 
 	const handleOnReset = () => {
-		setState({ newPassword: '', confirmPassword: '' });
+		setState({ amount: '' });
 		reset();
 	};
 
 	return (
 		<>
 			<Head>
-				<title>Password | INST.</title>
-				<meta name="Description" content="Inst password setting page" />
+				<title>Withdraw | Stoqey.</title>
+				<meta name="Description" content="Stoqey withdraw money page" />
 			</Head>
 
 			<Container>
@@ -67,8 +65,9 @@ const Password: NextPage<{}> = () => {
 								<form onSubmit={handleOnSubmit}>
 									<Block marginBottom="30px">
 										<FormControl
-											label="Set New Password"
-											caption="Please use 20 characters at maximum"
+											label="Amount"
+											caption="Please enter amount to withdraw"
+											error={feedback && 'Amount is invalid'}
 											overrides={{
 												Label: {
 													style: ({ $theme }) => {
@@ -78,39 +77,9 @@ const Password: NextPage<{}> = () => {
 											}}
 										>
 											<Input
-												type="password"
-												name="newPassword"
-												value={state.newPassword}
-												onChange={handleOnChange}
-												inputRef={register({ required: true, maxLength: 20 })}
-												overrides={{
-													InputContainer: {
-														style: () => {
-															return { backgroundColor: 'transparent' };
-														},
-													},
-												}}
-											/>
-										</FormControl>
-									</Block>
-
-									<Block marginBottom="30px">
-										<FormControl
-											label="Confirm Password"
-											caption="Please enter same password"
-											error={feedback && 'Password is not matching'}
-											overrides={{
-												Label: {
-													style: ({ $theme }) => {
-														return { ...$theme.typography.font350 };
-													},
-												},
-											}}
-										>
-											<Input
-												type="password"
-												name="confirmPassword"
-												value={state.confirmPassword}
+												type="number"
+												name="amount"
+												value={state.amount}
 												onChange={handleOnChange}
 												inputRef={register({ required: true, maxLength: 20 })}
 												overrides={{
@@ -139,7 +108,7 @@ const Password: NextPage<{}> = () => {
 												},
 											}}
 										>
-											Change
+											Submit
 										</Button>
 										<Button
 											type="reset"
@@ -170,4 +139,4 @@ const Password: NextPage<{}> = () => {
 	);
 };
 
-export default Password;
+export default Withdraw;
