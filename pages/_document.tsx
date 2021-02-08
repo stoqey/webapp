@@ -18,6 +18,7 @@ export default class CustomDocument extends Document<any> {
     const stylesheets = !isServer ? styletron && (styletron as any).getStylesheets() : [];
     return { ...page, stylesheets };
   }
+  
 
   // console.log('_document PayPal form', process.env.NEXT_PUBLIC_PAYPAL_CLIENT);
 
