@@ -8,6 +8,7 @@ import { MdCloudDownload } from 'react-icons/md';
 import Container from 'components/UiElements/Container/Container';
 import PortfolioMenu from 'components/SideMenu/PortfolioMenu';
 import SvgIcon from 'components/UiElements/SvgIcon/SvgIcon';
+import TransactionsTable from 'containers/Transactions'
 import { TextButton } from 'components/PageStyles/Settings.styled';
 import { StyledTableHeadAlt } from 'components/PageStyles/Apps.styled';
 
@@ -28,45 +29,7 @@ const Billing: NextPage<{}> = () => {
 							<PortfolioMenu />
 						</Cell>
 						<Cell span={[12, 12, 9]}>
-							<Block
-								paddingTop={['10px', '20px', '30px', '0']}
-								overrides={{ Block: { style: { minHeight: '150px' } } }}
-							>
-								<StyledTable $gridTemplateColumns="max-content auto auto auto max-content">
-									<StyledTableHeadAlt>ID</StyledTableHeadAlt>
-									<StyledTableHeadAlt>Date</StyledTableHeadAlt>
-									<StyledTableHeadAlt>Payment method</StyledTableHeadAlt>
-									<StyledTableHeadAlt>Amount</StyledTableHeadAlt>
-									<StyledTableHeadAlt>Receipt</StyledTableHeadAlt>
-									{billingPageData.map((item, index) => {
-										const striped = index % 2 === 0;
-										return (
-											<Fragment key={index}>
-												<StyledBodyCell $striped={striped}>
-													<SvgIcon
-														src={require('../../assets/images/check.svg?include')}
-													/>{' '}
-													{item.id}
-												</StyledBodyCell>
-												<StyledBodyCell $striped={striped}>
-													{item.date}
-												</StyledBodyCell>
-												<StyledBodyCell $striped={striped}>
-													{item.paymentMethod}
-												</StyledBodyCell>
-												<StyledBodyCell $striped={striped}>
-													{item.price}
-												</StyledBodyCell>
-												<StyledBodyCell $striped={striped}>
-													<TextButton onClick={() => alert('click')}>
-														<MdCloudDownload size="1.2rem" color="#545454" />
-													</TextButton>
-												</StyledBodyCell>
-											</Fragment>
-										);
-									})}
-								</StyledTable>
-							</Block>
+							<TransactionsTable />
 						</Cell>
 					</Grid>
 				</Block>
