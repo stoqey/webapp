@@ -3,13 +3,36 @@ import { NextPage } from 'next';
 import { Block } from 'baseui/block';
 import { StyledTable, StyledBodyCell } from 'baseui/table-grid';
 import { MdCloudDownload } from 'react-icons/md';
+import { TransactionType } from '@stoqey/client-graphql';
 import SvgIcon from 'components/UiElements/SvgIcon/SvgIcon';
 import { TextButton } from 'components/PageStyles/Settings.styled';
 import { StyledTableHeadAlt } from 'components/PageStyles/Apps.styled';
+import { getTransactionsPaginationApi } from './transaction.api';
 
 import billingPageData from '../../data/billingPage';
+import { useApolloClient } from '@apollo/client';
+import { isEmpty } from 'lodash';
 
 const TransactionsTable: NextPage<{}> = () => {
+	const client = useApolloClient();
+	const [transactions, setTransactions] = React.useState<TransactionType[]>([]);
+
+	React.useEffect(() => {
+	
+		getTransactionsPaginationApi({
+			client,
+			args: {
+
+			},
+			success: async (trans: any[]) => {
+				setTransactions(trans);
+			},
+			error: async () => {
+
+			}	
+		});
+
+	}, [])
 	return (
 		<>
 			<Block
@@ -22,7 +45,7 @@ const TransactionsTable: NextPage<{}> = () => {
 					<StyledTableHeadAlt>Payment method</StyledTableHeadAlt>
 					<StyledTableHeadAlt>Amount</StyledTableHeadAlt>
 					<StyledTableHeadAlt>Receipt</StyledTableHeadAlt>
-					{billingPageData.map((item, index) => {
+					{transactions.map((item, index) => {
 						const striped = index % 2 === 0;
 						return (
 							<Fragment key={index}>
@@ -33,13 +56,13 @@ const TransactionsTable: NextPage<{}> = () => {
 									{item.id}
 								</StyledBodyCell>
 								<StyledBodyCell $striped={striped}>
-									{item.date}
+									{item.createdAt}
 								</StyledBodyCell>
 								<StyledBodyCell $striped={striped}>
-									{item.paymentMethod}
+									{item.source}
 								</StyledBodyCell>
 								<StyledBodyCell $striped={striped}>
-									{item.price}
+									{item.amount}
 								</StyledBodyCell>
 								<StyledBodyCell $striped={striped}>
 									<TextButton onClick={() => alert('click')}>

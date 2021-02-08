@@ -1,24 +1,36 @@
 import { ApolloClient } from '@apollo/react-hooks';
 import isEmpty from 'lodash/isEmpty';
+import _get from 'lodash/get';
 import { GET_MY_TRANSACTIONS, TransactionType } from '@stoqey/client-graphql';
+import AsyncStorageDB from '@/lib/AsyncStorageDB';
 
 export const getTransactionsPaginationApi = async ({
   args,
   client,
-  err,
-  done,
+  error,
+  success,
 }: {
-  args: { owner: string; limit: number; page: number; filter?: string };
+  args: { limit?: number; page?: number; filter?: string };
   client: ApolloClient<any>;
-  err?: (error: Error) => Promise<any>;
-  done?: (data: any[]) => Promise<any>;
+  error?: (error: Error) => Promise<any>;
+  success?: (data: any[]) => Promise<any>;
 }) => {
   console.log('transactions are', JSON.stringify(args));
 
   try {
+
+    const user = await AsyncStorageDB.getAuthItem();
+    const userId = _get(user, 'user.id', '');
+
+    const argsToPass = {
+      limit: 100,
+      owner: userId,
+      ...args,
+    };
+    
     const { data: dataResponse }: any = await client.query({
       query: GET_MY_TRANSACTIONS,
-      variables: args,
+      variables: argsToPass,
       fetchPolicy: 'network-only',
     });
 
@@ -32,12 +44,12 @@ export const getTransactionsPaginationApi = async ({
 
     if (!isEmpty(data)) {
       //   Successful
-      await done(data);
+      await success(data);
       return console.log(`transactions data is successful ${data && data.length}`);
     }
     throw new Error('error getting transactions data, please try again later');
-  } catch (error) {
-    console.error(error);
-    await err(error);
+  } catch (err) {
+    console.error(err);
+    await error(err);
   }
 };

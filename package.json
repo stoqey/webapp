@@ -11,7 +11,7 @@
 				"@apollo/client": "^3.2.5",
 				"@apollo/react-hooks": "^4.0.0",
 				"@glidejs/glide": "^3.4.1",
-				"@stoqey/client-graphql": "^0.0.13",
+				"@stoqey/client-graphql": "^0.0.15",
 				"@stoqey/serverless-couchbase": "^0.0.4",
 				"apexcharts": "^3.19.2",
 				"bad-words": "^3.0.4",
