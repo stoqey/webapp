@@ -7,6 +7,7 @@ import {
 } from '../../components/PageStyles/Settings.styled';
 
 import applicationsPageData from '../../data/applicationsPage';
+import StartPortfolio from './StartPortfolio';
 
 const stoqeyLogo = require('assets/images/STQ.png');
 
@@ -20,6 +21,8 @@ const positions = [
 ];
 
 const Positions: NextPage<{}> = () => {
+	const [showNew, setShowNew] = useState(false);
+
 	const [, setValue] = useState([]);
 
 
@@ -30,6 +33,7 @@ const Positions: NextPage<{}> = () => {
 
 	return (
 		<>
+			<StartPortfolio show={showNew} hide={() => setShowNew(false)} />
 			{positions.map((item: any) => (
 				<SpaceBetween key={`application-key${item.id}`}>
 					<ListGridCard
@@ -57,6 +61,25 @@ const Positions: NextPage<{}> = () => {
 					>Close position</Button>
 				</SpaceBetween>
 			))}
+
+			{/* Start new portfolio */}
+			<SpaceBetween key={`start-new-portfolio`}>
+				<Button
+					onClick={() => setShowNew(true)}
+					kind="secondary"
+					shape="pill"
+					overrides={{
+						BaseButton: {
+							style: ({ $theme }) => {
+								return {
+									...$theme.typography.font250,
+									minWidth: '82px',
+								};
+							},
+						},
+					}}
+				>Buy/Sell Stoqey</Button>
+			</SpaceBetween>
 		</>
 	);
 };
