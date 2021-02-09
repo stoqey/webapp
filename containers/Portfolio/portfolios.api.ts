@@ -110,10 +110,10 @@ export const closePortfolioMutation = async ({
   error,
   success,
 }: {
-  args: { limit?: number; page?: number; filter?: string };
+  args: { id: string };
   client: ApolloClient<any>;
   error?: (error: Error) => Promise<any>;
-  success?: (data: any[]) => Promise<any>;
+  success?: (success: boolean) => Promise<any>;
 }) => {
   console.log('portfolios are', JSON.stringify(args));
 
@@ -123,33 +123,33 @@ export const closePortfolioMutation = async ({
     const userId = _get(user, 'user.id', '');
 
     const argsToPass = {
-      limit: 100,
       owner: userId,
       ...args,
     };
     
-    const { data: dataResponse }: any = await client.query({
-      query: GET_MY_PORTFOLIOS_PAGINATION,
+    const { data: dataResponse }: any = await client.mutate({
+      mutation: START_PORTFOLIO_MUTATION,
       variables: argsToPass,
-      fetchPolicy: 'network-only',
+      fetchPolicy: 'no-cache',
     });
 
     if (!dataResponse) {
-      throw new Error('error getting portfolio data');
+      throw new Error('error closing portfolio');
     }
 
-    const { data }: { data?: PortfolioType[] } = dataResponse;
+    const { data }: { data?: ResType } = dataResponse;
 
-    console.log(`data response portfolios ${data && data.length}`);
+    console.log(`data response closing portfolio ${JSON.stringify(data)}`);
 
-    if (!isEmpty(data)) {
+    if (data.success) {
       //   Successful
-      await success(data);
-      return console.log(`portfolios data is successful ${data && data.length}`);
+      await success(true);
+      return console.log(`closing portfolios is successful ${data && data}`);
     }
-    throw new Error('error getting portfolios data, please try again later');
+    throw new Error('error closing portfolios, please try again later');
   } catch (err) {
     console.error(err);
     await error(err);
   }
 };
+
