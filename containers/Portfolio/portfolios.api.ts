@@ -1,10 +1,10 @@
 import { ApolloClient } from '@apollo/react-hooks';
 import isEmpty from 'lodash/isEmpty';
 import _get from 'lodash/get';
-import { GET_MY_TRANSACTIONS, TransactionType } from '@stoqey/client-graphql';
+import { PortfolioType, GET_MY_PORTFOLIOS_PAGINATION } from '@stoqey/client-graphql';
 import AsyncStorageDB from '@/lib/AsyncStorageDB';
 
-export const getTransactionsPaginationApi = async ({
+export const getPortfoliosPaginationApi = async ({
   args,
   client,
   error,
@@ -15,7 +15,7 @@ export const getTransactionsPaginationApi = async ({
   error?: (error: Error) => Promise<any>;
   success?: (data: any[]) => Promise<any>;
 }) => {
-  console.log('transactions are', JSON.stringify(args));
+  console.log('portfolios are', JSON.stringify(args));
 
   try {
 
@@ -29,25 +29,25 @@ export const getTransactionsPaginationApi = async ({
     };
     
     const { data: dataResponse }: any = await client.query({
-      query: GET_MY_TRANSACTIONS,
+      query: GET_MY_PORTFOLIOS_PAGINATION,
       variables: argsToPass,
       fetchPolicy: 'network-only',
     });
 
     if (!dataResponse) {
-      throw new Error('error getting transactions data');
+      throw new Error('error getting portfolio data');
     }
 
-    const { data }: { data?: TransactionType[] } = dataResponse;
+    const { data }: { data?: PortfolioType[] } = dataResponse;
 
-    console.log(`data response transactions ${data && data.length}`);
+    console.log(`data response portfolios ${data && data.length}`);
 
     if (!isEmpty(data)) {
       //   Successful
       await success(data);
-      return console.log(`transactions data is successful ${data && data.length}`);
+      return console.log(`portfolios data is successful ${data && data.length}`);
     }
-    throw new Error('error getting transactions data, please try again later');
+    throw new Error('error getting portfolios data, please try again later');
   } catch (err) {
     console.error(err);
     await error(err);
