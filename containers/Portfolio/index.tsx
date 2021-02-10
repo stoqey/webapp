@@ -7,7 +7,8 @@ import {
 } from '../../components/PageStyles/Settings.styled';
 
 import applicationsPageData from '../../data/applicationsPage';
-import StartPortfolio from './StartPortfolio';
+import StartPortfolio from './StartPortfolio.modal';
+import ClosePortfolio from './ClosePortfolio.modal';
 
 const stoqeyLogo = require('assets/images/STQ.png');
 
@@ -22,8 +23,9 @@ const positions = [
 
 const Positions: NextPage<{}> = () => {
 	const [showNew, setShowNew] = useState(false);
+	const [showClose, setShowClose] = useState(false);
 
-	const [, setValue] = useState([]);
+	const [selectedPosition, setSelectedPosition] = useState("");
 
 
 
@@ -34,6 +36,8 @@ const Positions: NextPage<{}> = () => {
 	return (
 		<>
 			<StartPortfolio show={showNew} hide={() => setShowNew(false)} />
+			<ClosePortfolio show={showClose} hide={() => setShowClose(false)} />
+			
 			{positions.map((item: any) => (
 				<SpaceBetween key={`application-key${item.id}`}>
 					<ListGridCard
@@ -45,7 +49,10 @@ const Positions: NextPage<{}> = () => {
 					/>
 
 					<Button
-						onClick={() => handleRemoveApplication(item.id)}
+						onClick={() => {
+							setSelectedPosition(item.id);
+							setShowClose(true);
+						}}
 						kind="secondary"
 						shape="pill"
 						overrides={{
