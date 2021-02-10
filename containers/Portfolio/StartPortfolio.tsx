@@ -4,6 +4,23 @@ import { Block } from 'baseui/block';
 import { Modal, ModalBody } from 'baseui/modal';
 import { useApolloClient } from '@apollo/client';
 
+import { Grid, Cell } from 'baseui/layout-grid';
+import { MarketDataType } from '@stoqey/client-graphql';
+import { FaShoppingBag, FaMapMarkerAlt, FaMoneyCheckAlt, FaMoneyBillWave, FaPaypal, FaCreditCard, FaPiggyBank, FaBitcoin } from 'react-icons/fa';
+import { Button } from 'baseui/button';
+import { Input } from 'baseui/input';
+import Container from 'components/UiElements/Container/Container';
+import PageTitle from 'components/UiElements/PageTitle/PageTitle';
+import CurrencyCart from 'containers/Shop/CurrencyCart';
+import PayPalPayment from 'containers/Shop/PayPalPayment';
+import {
+  MenuStep,
+  ListItem,
+  Title,
+  PriceList,
+  PriceItem,
+} from 'components/PageStyles/Checkout.styled';
+
 interface Props {
   show: boolean;
   hide: () => void
@@ -11,7 +28,8 @@ interface Props {
 
 
 const StartPortfolio = (props: Props) => {
-  const {  show, hide } = props;
+  const { show, hide } = props;
+  const [amount, setAmount] = useState(3);
 
   return (
     <>
@@ -42,7 +60,7 @@ const StartPortfolio = (props: Props) => {
                   flexDirection: 'column',
                   alignItems: 'center',
                   textAlign: 'center',
-                  padding: '45px 30px',
+                  // padding: '30px 30px',
                 },
               },
             }}
@@ -71,59 +89,93 @@ const StartPortfolio = (props: Props) => {
                 },
               }}
             >
-              Order Placed
+              BUY/SELL STQ
             </Block>
 
-            <Block as="p" marginBottom="15px">
-              <Block
-                as="strong"
+            {/* Form */}
+            <Block paddingTop={['30px', '40px', '0']}>
+              <Title>Amount Details</Title>
+              <Input
+                type={"number"}
+                onChange={(e: any) => setAmount(e.target.value)}
+                placeholder="Enter amount"
                 overrides={{
-                  Block: {
+                  InputContainer: {
+                    style: () => {
+                      return { backgroundColor: 'transparent' };
+                    },
+                  },
+                }}
+              />
+              <PriceList>
+                <PriceItem>
+                  <span>Per share</span> <span>$ XXXX</span>
+                </PriceItem>
+                <PriceItem>
+                  <span>Total</span> <span> + 0.5%</span>
+                </PriceItem>
+              </PriceList>
+              <Button
+                size="large"
+                onClick={() => { }}
+                overrides={{
+                  BaseButton: {
                     style: ({ $theme }) => {
-                      return { color: $theme.colors.primary };
+                      return {
+                        width: '100%',
+                        ...$theme.typography.font250,
+                      };
                     },
                   },
                 }}
               >
-                Order ID :{' '}
-              </Block>
-              <Block as="span">xxxxx</Block>
+                Next
+										</Button>
             </Block>
 
-            <Block as="p" marginBottom="15px">
-              <Block
-                as="strong"
-                overrides={{
-                  Block: {
-                    style: ({ $theme }) => {
-                      return { color: $theme.colors.primary };
+
+            {/* Confirm amount for trade */}
+            <Block paddingTop={['30px', '40px', '0']}>
+
+              {/* Confirm  amount */}
+              <Title>{`You're about to BUY ${'100'} of STQ`}</Title>
+
+              {/* Confirm */}
+              <p style={{ display: 'flex' }}>
+                <Button
+                  size="default"
+                  onClick={() => { }}
+                  overrides={{
+                    BaseButton: {
+                      style: ({ $theme }) => {
+                        return {
+                          width: '50%',
+                          ...$theme.typography.font250,
+                        };
+                      },
                     },
-                  },
-                }}
-              >
-                Delivery :{' '}
-              </Block>
-              <Block as="span">instant</Block>
+                  }}
+                > Process </Button>
+
+                <div style={{ width: '10px' }} />
+
+                <Button
+                  size="default"
+                  onClick={() => { }}
+                  overrides={{
+                    BaseButton: {
+                      style: ({ $theme }) => {
+                        return {
+                          width: '50%',
+                          ...$theme.typography.font250,
+                        };
+                      },
+                    },
+                  }}
+                > Cancel </Button>
+              </p>
             </Block>
 
-            <Block as="p" marginBottom="15px">
-              <Block
-                as="strong"
-                overrides={{
-                  Block: {
-                    style: ({ $theme }) => {
-                      return { color: $theme.colors.primary };
-                    },
-                  },
-                }}
-              >
-                Thanks for your investing in Stoqey {' '}
-              </Block>
-              <Block as="span">
-                Now you can go to the portfolio screen and buy shares in Stoqey
-                Happy investing with Stoqey
-              </Block>
-            </Block>
           </Block>
         </ModalBody>
       </Modal>
