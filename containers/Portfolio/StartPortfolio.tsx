@@ -160,6 +160,7 @@ const StartPortfolio = (props: Props) => {
                 <div style={{ width: '10px' }} />
 
                 <Button
+                  kind="secondary"
                   size="default"
                   onClick={() => { }}
                   overrides={{
