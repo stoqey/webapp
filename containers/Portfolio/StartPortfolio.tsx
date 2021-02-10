@@ -29,6 +29,7 @@ interface Props {
 
 const StartPortfolio = (props: Props) => {
   const { show, hide } = props;
+  const [steps, setSteps] = useState(0);
   const [amount, setAmount] = useState(3);
 
   return (
@@ -93,89 +94,89 @@ const StartPortfolio = (props: Props) => {
             </Block>
 
             {/* Form */}
-            <Block paddingTop={['30px', '40px', '0']}>
-              <Title>Amount Details</Title>
-              <Input
-                type={"number"}
-                onChange={(e: any) => setAmount(e.target.value)}
-                placeholder="Enter amount"
-                overrides={{
-                  InputContainer: {
-                    style: () => {
-                      return { backgroundColor: 'transparent' };
+            {steps === 0 && (
+              <Block paddingTop={['30px', '40px', '0']}>
+                <Title>Amount Details</Title>
+                <Input
+                  type={"number"}
+                  onChange={(e: any) => setAmount(e.target.value)}
+                  placeholder="Enter amount"
+                  overrides={{
+                    InputContainer: {
+                      style: () => {
+                        return { backgroundColor: 'transparent' };
+                      },
                     },
-                  },
-                }}
-              />
-              <PriceList>
-                <PriceItem>
-                  <span>Per share</span> <span>$ XXXX</span>
-                </PriceItem>
-                <PriceItem>
-                  <span>Total</span> <span> + 0.5%</span>
-                </PriceItem>
-              </PriceList>
-              <Button
-                size="large"
-                onClick={() => { }}
-                overrides={{
-                  BaseButton: {
-                    style: ({ $theme }) => {
-                      return {
-                        width: '100%',
-                        ...$theme.typography.font250,
-                      };
+                  }}
+                />
+                <PriceList>
+                  <PriceItem>
+                    <span>Per share</span> <span>$ XXXX</span>
+                  </PriceItem>
+                  <PriceItem>
+                    <span>Total shares</span> <span> 1.2 </span>
+                  </PriceItem>
+                </PriceList>
+                <Button
+                  size="large"
+                  onClick={() => setSteps(1)}
+                  overrides={{
+                    BaseButton: {
+                      style: ({ $theme }) => {
+                        return {
+                          width: '100%',
+                          ...$theme.typography.font250,
+                        };
+                      },
                     },
-                  },
-                }}
-              >
-                Next
-										</Button>
-            </Block>
-
+                  }}
+                > Next </Button>
+              </Block>
+            )}
 
             {/* Confirm amount for trade */}
-            <Block paddingTop={['30px', '40px', '0']}>
+            {steps === 1 && (
+              <Block paddingTop={['30px', '40px', '0']}>
+                {/* Confirm  amount */}
+                <Title>{`You're about to BUY ${'100'} of STQ`}</Title>
 
-              {/* Confirm  amount */}
-              <Title>{`You're about to BUY ${'100'} of STQ`}</Title>
-
-              {/* Confirm */}
-              <p style={{ display: 'flex' }}>
-                <Button
-                  size="default"
-                  onClick={() => { }}
-                  overrides={{
-                    BaseButton: {
-                      style: ({ $theme }) => {
-                        return {
-                          width: '50%',
-                          ...$theme.typography.font250,
-                        };
+                {/* Confirm */}
+                <p style={{ display: 'flex' }}>
+                  <Button
+                    size="default"
+                    onClick={() => { }}
+                    overrides={{
+                      BaseButton: {
+                        style: ({ $theme }) => {
+                          return {
+                            width: '50%',
+                            ...$theme.typography.font250,
+                          };
+                        },
                       },
-                    },
-                  }}
-                > Process </Button>
+                    }}
+                  > Continue </Button>
 
-                <div style={{ width: '10px' }} />
+                  <div style={{ width: '10px' }} />
 
-                <Button
-                  kind="secondary"
-                  size="default"
-                  onClick={() => { }}
-                  overrides={{
-                    BaseButton: {
-                      style: ({ $theme }) => {
-                        return {
-                          width: '50%',
-                          ...$theme.typography.font250,
-                        };
+                  <Button
+                    kind="secondary"
+                    size="default"
+                    onClick={() => setSteps(0)}
+                    overrides={{
+                      BaseButton: {
+                        style: ({ $theme }) => {
+                          return {
+                            width: '50%',
+                            ...$theme.typography.font250,
+                          };
+                        },
                       },
-                    },
-                  }}
-                > Cancel </Button>
-              </p>
-            </Block>
+                    }}
+                  > Cancel </Button>
+                </p>
+              </Block>
+            )}
 
           </Block>
         </ModalBody>
