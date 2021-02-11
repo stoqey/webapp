@@ -16,6 +16,7 @@ import {
 } from '../../components/PageStyles/Settings.styled';
 
 import applicationsPageData from '../../data/applicationsPage';
+import CurrencyPill from '@/components/Currency';
 
 const stoqeyLogo = require('assets/images/STQ.png');
 
@@ -70,19 +71,7 @@ const Positions: NextPage<{}> = () => {
 
 						<Cell span={[12, 12, 9]}>
 
-							<Cell span={[12, 12, 12]}>
-								<Block display="block" justifyContent="center" width="100%">
-									<p style={{ display: 'flex', justifyContent: 'center' }}>
-										<h1>2000</h1>
-										<h2 style={{ color: "#3AA76D" }}>+2</h2>
-									</p>
-									<Subtitle style={{ textAlign: 'center' }}>My wallet</Subtitle>
-								</Block>
-							</Cell>
-
-
-
-
+							<CurrencyPill amount={2000} change={-1} name={'my wallet'} />
 
 
 							<Block paddingTop={['10px', '15px', '30px', '0']}>

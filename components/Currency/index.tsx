@@ -23,7 +23,7 @@ export const CurrencyPill = (props: Props) => {
             <Block display="block" justifyContent="center" width="100%">
                 <p style={{ display: 'flex', justifyContent: 'center' }}>
                     <H1Title>{amount}</H1Title>
-                    {change && <h2 style={{ color: change? "#3AA76D" : "red" }}>{change}</h2>}
+                    {change && <h2 style={{ color: change > 0? "#3AA76D" : "red" }}>{change}</h2>}
                 </p>
                 <Subtitle style={{ textAlign: 'center' }}>{name}</Subtitle>
             </Block>

@@ -7,7 +7,7 @@ export const Title = styled('h3', ({ $theme }) => ({
 }));
 
 export const Subtitle = styled('p', ({ $theme }) => ({
-	...$theme.typography.font200,
+	...$theme.typography.font450,
 	color: $theme.colors.contentTertiary,
 }));
 
