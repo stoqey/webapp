@@ -128,7 +128,7 @@ export const closePortfolioMutation = async ({
     };
     
     const { data: dataResponse }: any = await client.mutate({
-      mutation: START_PORTFOLIO_MUTATION,
+      mutation: CLOSE_PORTFOLIO_MUTATION,
       variables: argsToPass,
       fetchPolicy: 'no-cache',
     });

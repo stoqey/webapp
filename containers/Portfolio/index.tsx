@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { NextPage } from 'next';
 import { Button } from 'baseui/button';
+import { PortfolioType } from '@stoqey/client-graphql'
 import ListGridCard from 'components/UiElements/ListGridCard/ListGridCard';
 import {
 	SpaceBetween,
@@ -28,6 +29,7 @@ const Positions: NextPage<{}> = () => {
 	const [showNew, setShowNew] = useState(false);
 	const [showClose, setShowClose] = useState(false);
 
+	const [selectedPortfolio, setSelectedPortfolio] = useState<PortfolioType>(null);
 	const [portfolios, setPortfolios] = useState<PortfolioItem[]>([]);
 
 
@@ -51,7 +53,7 @@ const Positions: NextPage<{}> = () => {
 	return (
 		<>
 			<StartPortfolio show={showNew} hide={() => setShowNew(false)} />
-			<ClosePortfolio show={showClose} hide={() => setShowClose(false)} />
+			<ClosePortfolio show={showClose} hide={() => setShowClose(false)} portfolio={selectedPortfolio} />
 
 			{portfolios.map((item: any) => (
 				<SpaceBetween key={`application-key${item.id}`}>
@@ -65,6 +67,7 @@ const Positions: NextPage<{}> = () => {
 
 					<Button
 						onClick={() => {
+							setSelectedPortfolio(item);
 							// setSelectedPosition(item.id);
 							setShowClose(true);
 						}}

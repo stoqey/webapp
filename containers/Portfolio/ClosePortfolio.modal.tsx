@@ -5,7 +5,7 @@ import { Modal, ModalBody } from 'baseui/modal';
 import { useApolloClient } from '@apollo/client';
 
 import { Grid, Cell } from 'baseui/layout-grid';
-import { MarketDataType } from '@stoqey/client-graphql';
+import { MarketDataType, PortfolioType } from '@stoqey/client-graphql';
 import { FaShoppingBag, FaMapMarkerAlt, FaMoneyCheckAlt, FaMoneyBillWave, FaPaypal, FaCreditCard, FaPiggyBank, FaBitcoin } from 'react-icons/fa';
 import { Button } from 'baseui/button';
 import { Input } from 'baseui/input';
@@ -21,14 +21,35 @@ import {
   PriceItem,
 } from 'components/PageStyles/Checkout.styled';
 
+import { closePortfolioMutation } from './portfolios.api'
+
 interface Props {
   show: boolean;
-  hide: () => void
+  hide: () => void;
+  portfolio: PortfolioType;
 };
 
 
 const ClosePortfolio = (props: Props) => {
-  const { show, hide } = props;
+  const { show, hide, portfolio } = props;
+
+  const portfolioId = portfolio && portfolio.id;
+
+  console.log('portfolio to close', portfolioId)
+
+  const client = useApolloClient();
+
+  const closePortfolio  = async () => {
+    await closePortfolioMutation({
+      client,
+      args: { id: portfolioId },
+      success: async (d: any) => {
+        console.log('success ending portfolio', d)
+        hide();
+      },
+      error: async () => {},
+    })
+  }
 
   return (
     <>
@@ -99,7 +120,7 @@ const ClosePortfolio = (props: Props) => {
               <p style={{ display: 'flex' }}>
                 <Button
                   size="default"
-                  onClick={() => { }}
+                  onClick={() => closePortfolio()}
                   overrides={{
                     BaseButton: {
                       style: ({ $theme }) => {
