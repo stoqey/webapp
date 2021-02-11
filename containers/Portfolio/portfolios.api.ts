@@ -10,10 +10,10 @@ export const getPortfoliosPaginationApi = async ({
   error,
   success,
 }: {
-  args: { limit?: number; page?: number; filter?: string };
+  args?: { limit?: number; page?: number; filter?: string };
   client: ApolloClient<any>;
   error?: (error: Error) => Promise<any>;
-  success?: (data: any[]) => Promise<any>;
+  success?: (data: PortfolioType[]) => Promise<any>;
 }) => {
   console.log('portfolios are', JSON.stringify(args));
 
@@ -50,7 +50,7 @@ export const getPortfoliosPaginationApi = async ({
     throw new Error('error getting portfolios data, please try again later');
   } catch (err) {
     console.error(err);
-    await error(err);
+    error && await error(err);
   }
 };
 

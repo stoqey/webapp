@@ -5,7 +5,7 @@ import { Modal, ModalBody } from 'baseui/modal';
 import { useApolloClient } from '@apollo/client';
 
 import { Grid, Cell } from 'baseui/layout-grid';
-import { MarketDataType } from '@stoqey/client-graphql';
+import { ActionType, MarketDataType } from '@stoqey/client-graphql';
 import { FaShoppingBag, FaMapMarkerAlt, FaMoneyCheckAlt, FaMoneyBillWave, FaPaypal, FaCreditCard, FaPiggyBank, FaBitcoin } from 'react-icons/fa';
 import { Button } from 'baseui/button';
 import { Input } from 'baseui/input';
@@ -21,6 +21,8 @@ import {
   PriceItem,
 } from 'components/PageStyles/Checkout.styled';
 
+import { startPortfolioMutation } from './portfolios.api'
+
 interface Props {
   show: boolean;
   hide: () => void
@@ -28,9 +30,27 @@ interface Props {
 
 
 const StartPortfolio = (props: Props) => {
+  const client = useApolloClient();
   const { show, hide } = props;
   const [steps, setSteps] = useState(0);
-  const [amount, setAmount] = useState(3);
+  const [amount, setAmount] = useState(0);
+
+  const startPortfolio  = async () => {
+    // TODO substract from price
+    const size = amount; 
+    await startPortfolioMutation({
+      client,
+      args: {
+        action: ActionType.BUY,
+        size
+      },
+      success: async (d: any) => {
+        console.log('success starting portfolio', d)
+        hide();
+      },
+      error: async () => {},
+    })
+  }
 
   return (
     <>
@@ -138,13 +158,13 @@ const StartPortfolio = (props: Props) => {
             {steps === 1 && (
               <Block paddingTop={['30px', '40px', '0']}>
                 {/* Confirm  amount */}
-                <Title>{`You're about to BUY ${'100'} of STQ`}</Title>
+                <Title>{`You're about to BUY ${amount} of STQ`}</Title>
 
                 {/* Confirm */}
                 <p style={{ display: 'flex' }}>
                   <Button
                     size="default"
-                    onClick={() => { }}
+                    onClick={() => startPortfolio()}
                     overrides={{
                       BaseButton: {
                         style: ({ $theme }) => {
