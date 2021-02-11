@@ -35,7 +35,7 @@ const positions = [
 		thumb: stoqeyLogo,
 		title: 'Stoqey',
 		description: 'Number of shares',
-	  },
+	},
 ];
 
 const Positions: NextPage<{}> = () => {
@@ -67,7 +67,24 @@ const Positions: NextPage<{}> = () => {
 						<Cell span={[12, 12, 3]}>
 							<PortfolioMenu />
 						</Cell>
+
 						<Cell span={[12, 12, 9]}>
+
+							<Cell span={[12, 12, 12]}>
+								<Block display="block" justifyContent="center" width="100%">
+									<p style={{ display: 'flex', justifyContent: 'center' }}>
+										<h1>2000</h1>
+										<h2 style={{ color: "#3AA76D" }}>+2</h2>
+									</p>
+									<Subtitle style={{ textAlign: 'center' }}>My wallet</Subtitle>
+								</Block>
+							</Cell>
+
+
+
+
+
+
 							<Block paddingTop={['10px', '15px', '30px', '0']}>
 								<Title>{title}</Title>
 								<Subtitle>{subtitle}</Subtitle>
