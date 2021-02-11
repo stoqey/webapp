@@ -37,7 +37,7 @@ const StartPortfolio = (props: Props) => {
 
   const startPortfolio  = async () => {
     // TODO substract from price
-    const size = amount; 
+    const size = +amount; 
     await startPortfolioMutation({
       client,
       args: {
