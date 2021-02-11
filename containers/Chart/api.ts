@@ -16,9 +16,32 @@ function parseData(parse) {
 
 const parseDate = timeParse("%Y-%m-%d");
 
+// export function getData() {
+// 	const promiseMSFT = fetch("https://cdn.rawgit.com/rrag/react-stockcharts/master/docs/data/MSFT.tsv")
+// 		.then(response => response.text())
+// 		.then(data => {
+// 			const results  = tsvParse(data, parseData(parseDate));
+// 			console.log('results', results);
+// 			return results;
+// 		})
+// 	return promiseMSFT;
+// }
+
 export function getData() {
-	const promiseMSFT = fetch("https://cdn.rawgit.com/rrag/react-stockcharts/master/docs/data/MSFT.tsv")
-		.then(response => response.text())
-		.then(data => tsvParse(data, parseData(parseDate)))
+	const promiseMSFT = fetch("http://192.168.2.26:3090/v1/query?symbol=STQP&startDate=2021-01-03T12:38:00Z&endDate=2021-01-05T12:38:00Z&range=1m")
+		.then(response => response.json())
+		.then(data => {
+			const results = data.map(d => {
+				return {
+					...d,
+					date: new Date(d.date)
+				}
+			});
+
+			console.log('results', results);
+			return results;
+		})
 	return promiseMSFT;
 }
+
+// 

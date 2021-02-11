@@ -33,7 +33,7 @@ let AreaChart = (props: Props) => {
             data={data} type={type}
             xAccessor={d => d.date}
             xScale={scaleTime()}
-            xExtents={[new Date(2011, 0, 1), new Date(2013, 0, 2)]}
+            xExtents={[data[0].date, data[data.length - 1].date]}
         >
             <Chart id={0} yExtents={d => d.close}>
                 <defs>
