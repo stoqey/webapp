@@ -7,7 +7,7 @@ import Button from '../button';
 
 interface Props {
     amount: number;
-    change: number;
+    change?: number;
     name: string;
     RightButton?: React.FunctionComponent
     LeftButton?: React.FunctionComponent
@@ -26,7 +26,7 @@ export const CurrencyPill = (props: Props) => {
             <div style={{ display: 'flex', justifyContent: 'center' }}>
 
                 {RightButton && <RightButton />}
-                
+
                 {/* Amount and wallet name */}
                 <Block padding="5px">
                     <p style={{ display: 'flex', justifyContent: 'center' }}>

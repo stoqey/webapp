@@ -19,6 +19,7 @@ import applicationsPageData from '../../data/applicationsPage';
 import CurrencyPill from '@/components/Currency';
 import { useQuery } from '@apollo/client';
 import { GET_ME } from "@stoqey/client-graphql";
+import { useUserInfo } from 'hooks/useUserInfo';
 
 const stoqeyLogo = require('assets/images/STQ.png');
 
@@ -45,9 +46,7 @@ const Positions: NextPage<{}> = () => {
 	const { applications } = applicationsPageData;
 	const [value, setValue] = useState([]);
 
-	const {data } = useQuery(GET_ME, { fetchPolicy: 'network-only'});
-
-	console.log('data from api', data);
+	const { user } = useUserInfo();
 
 	const handleSort = (e: any) => {
 		setValue(e.value);
@@ -77,7 +76,7 @@ const Positions: NextPage<{}> = () => {
 
 						<Cell span={[12, 12, 9]}>
 
-							<CurrencyPill amount={2000} change={-1} name={'my wallet'} />
+							<CurrencyPill amount={user && user.balance} name={'my wallet'} />
 
 
 							<Block paddingTop={['10px', '15px', '30px', '0']}>
