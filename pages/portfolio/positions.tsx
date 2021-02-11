@@ -17,6 +17,8 @@ import {
 
 import applicationsPageData from '../../data/applicationsPage';
 import CurrencyPill from '@/components/Currency';
+import { useQuery } from '@apollo/client';
+import { GET_ME } from "@stoqey/client-graphql";
 
 const stoqeyLogo = require('assets/images/STQ.png');
 
@@ -42,6 +44,10 @@ const positions = [
 const Positions: NextPage<{}> = () => {
 	const { applications } = applicationsPageData;
 	const [value, setValue] = useState([]);
+
+	const {data } = useQuery(GET_ME, { fetchPolicy: 'network-only'});
+
+	console.log('data from api', data);
 
 	const handleSort = (e: any) => {
 		setValue(e.value);

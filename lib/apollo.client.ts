@@ -11,6 +11,7 @@ import { WebSocketLink } from "@apollo/client/link/ws";
 import { getMainDefinition } from "@apollo/client/utilities";
 import includes from "lodash/includes";
 import urlFromJson from "keys/url.json";
+import AsyncStorageDB from "./AsyncStorageDB";
 
 let apolloClient;
 
@@ -36,13 +37,17 @@ function createApolloClient() {
     uri: backendUrl, // Server URL (must be absolute)
   });
 
-  const authLink = setContext((_, ctx) => {
+  const authLink = setContext(async (_, ctx) => {
     const headers = (ctx && ctx.headers) || {};
+     // console.log('<-----------> AuthContext <-----------> BEGIN ', getLastChar(token))
+     const authorization = await AsyncStorageDB.getAuthToken();
+     console.log('<-----------> AuthContext <-----------> END ', authorization);
+ 
     // return the headers to the context so httpLink can read them
     return {
       headers: {
         ...headers,
-        authorization: demoToken,
+        authorization: `Bearer ${authorization}`,
       },
     };
   });

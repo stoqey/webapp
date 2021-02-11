@@ -15,6 +15,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import 'assets/css/reset.css';
 import 'react-flexbox-grid/dist/react-flexbox-grid.css';
 import 'typeface-open-sans';
+import AuthChecker from 'containers/AuthChecker';
 
 const WebsocketSubscription = dynamic(() => import('containers/Subscription'), { ssr: false });
 
@@ -33,6 +34,7 @@ export default function CustomApp({ Component, pageProps }: AppProps) {
     <ApolloProvider client={apolloClient}>
       {/* Persistant websocket */}
       <WebsocketSubscription />
+      <AuthChecker />
       <ThemeSwitcherProvider value={{ theme, setTheme }}>
         <StyletronProvider value={styletron} debugAfterHydration>
           <BaseProvider
