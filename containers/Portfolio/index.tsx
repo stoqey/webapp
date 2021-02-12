@@ -50,7 +50,7 @@ const Positions: NextPage<{}> = () => {
 				setPortfolios(portfoliosToSave);
 			},
 		})
-	}, [showNew, showClose])
+	}, [!showNew, !showClose])
 
 	const onSuccess = (message: string) => {
 		toastKey = toaster.positive(<>{message}</>, {
@@ -84,7 +84,6 @@ const Positions: NextPage<{}> = () => {
 					<Button
 						onClick={() => {
 							setSelectedPortfolio(item);
-							// setSelectedPosition(item.id);
 							setShowClose(true);
 						}}
 						kind="secondary"

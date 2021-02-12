@@ -1,7 +1,7 @@
 import { ApolloClient } from '@apollo/react-hooks';
 import isEmpty from 'lodash/isEmpty';
 import _get from 'lodash/get';
-import { ResType, ActionType, PortfolioType, GET_MY_PORTFOLIOS_PAGINATION, CLOSE_PORTFOLIO_MUTATION, START_PORTFOLIO_MUTATION } from '@stoqey/client-graphql';
+import { ResType, ActionType, PortfolioType, GET_MY_PORTFOLIOS_PAGINATION, CLOSE_PORTFOLIO_MUTATION, START_PORTFOLIO_MUTATION, TradingStatusType } from '@stoqey/client-graphql';
 import AsyncStorageDB from '@/lib/AsyncStorageDB';
 
 export const getPortfoliosPaginationApi = async ({
@@ -23,6 +23,7 @@ export const getPortfoliosPaginationApi = async ({
     const userId = _get(user, 'user.id', '');
 
     const argsToPass = {
+      filter: TradingStatusType.LIVE,
       limit: 100,
       owner: userId,
       ...args,
