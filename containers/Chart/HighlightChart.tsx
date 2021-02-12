@@ -16,7 +16,7 @@ function HighlightChart() {
 	if (!state.data.length) {
 		return <div>Loading...</div>
 	}
-	return <CandleStick data={state.data} />
+	return <AreaChart data={state.data} />
 
 
 }

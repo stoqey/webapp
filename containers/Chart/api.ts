@@ -37,8 +37,6 @@ export function getData() {
 					date: new Date(d.date)
 				}
 			});
-
-			console.log('results', results);
 			return results;
 		})
 	return promiseMSFT;
