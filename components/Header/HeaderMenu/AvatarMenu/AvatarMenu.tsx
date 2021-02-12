@@ -9,6 +9,7 @@ import {
   useThemeSwitcherCtx,
   THEME,
 } from '../../../../contexts/theme/theme.provider';
+import AsyncStorageDB from '@/lib/AsyncStorageDB';
 
 type AvatarMenuType = {
   name?: string;
@@ -50,7 +51,10 @@ const Menu = ({ onClick }: MenuType) => {
         </MenuItem>
       </li>
       <Line></Line>
-      <li onClick={() => Router.push('/login')}>
+      <li onClick={async () => {
+        await AsyncStorageDB.deleteAuthItem();
+        Router.push('/login');
+      }}>
         <MenuItem onClick={onClick}>Logout</MenuItem>
       </li>
     </MenuWrapper>
@@ -69,25 +73,25 @@ const AvatarMenu = ({
       {showOnlyMenu ? (
         <Menu onClick={onClick} />
       ) : (
-        <StatefulPopover
-          content={<Menu onClick={onClick} />}
-          placement={placement ? placement : 'bottomRight'}
-          overrides={{
-            Inner: {
-              style: ({ $theme }) => {
-                return {
-                  backgroundColor: $theme.colors.primaryB,
-                };
+          <StatefulPopover
+            content={<Menu onClick={onClick} />}
+            placement={placement ? placement : 'bottomRight'}
+            overrides={{
+              Inner: {
+                style: ({ $theme }) => {
+                  return {
+                    backgroundColor: $theme.colors.primaryB,
+                  };
+                },
               },
-            },
-          }}
-          showArrow
-        >
-          <Block overrides={{ Block: { style: { cursor: 'pointer' } } }}>
-            <Avatar src={src} name={name ? name : 'Jon Doe'} size="scale1000" />
-          </Block>
-        </StatefulPopover>
-      )}
+            }}
+            showArrow
+          >
+            <Block overrides={{ Block: { style: { cursor: 'pointer' } } }}>
+              <Avatar src={src} name={name ? name : 'Jon Doe'} size="scale1000" />
+            </Block>
+          </StatefulPopover>
+        )}
     </>
   );
 };
