@@ -1,6 +1,7 @@
 
 import React from 'react';
 import AreaChart from './AreaChart';
+import CandleStick from './CandleStick';
 import { getData } from "./api"
 
 function HighlightChart() {
@@ -15,7 +16,7 @@ function HighlightChart() {
 	if (!state.data.length) {
 		return <div>Loading...</div>
 	}
-	return <AreaChart data={state.data} />
+	return <CandleStick data={state.data} />
 
 
 }

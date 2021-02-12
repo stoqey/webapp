@@ -21,7 +21,7 @@ interface Props {
 	ratio?: number,
 	type?: "svg" | "hybrid"
 };
-export let CandleStickStockChartWithVolumeBar = (props: Props) => {
+let CandleStickStockChartWithVolumeBar = (props: Props) => {
 	const { type = 'svg', data: initialData, width, ratio } = props;
 	const xScaleProvider = discontinuousTimeScaleProvider
 		.inputDateAccessor(d => d.date);
