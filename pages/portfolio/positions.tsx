@@ -20,6 +20,7 @@ import CurrencyPill from '@/components/Currency';
 import { useQuery } from '@apollo/client';
 import { GET_ME } from "@stoqey/client-graphql";
 import { useUserInfo } from 'hooks/useUserInfo';
+import Toaster from '@/components/UiElements/Toaster/Toaster';
 
 const stoqeyLogo = require('assets/images/STQ.png');
 
@@ -43,6 +44,7 @@ const positions = [
 ];
 
 const Positions: NextPage<{}> = () => {
+	let to
 	const { applications } = applicationsPageData;
 	const [value, setValue] = useState([]);
 

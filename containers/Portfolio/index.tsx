@@ -6,13 +6,14 @@ import ListGridCard from 'components/UiElements/ListGridCard/ListGridCard';
 import {
 	SpaceBetween,
 } from '../../components/PageStyles/Settings.styled';
-
+import { toaster } from 'baseui/toast';
 import applicationsPageData from '../../data/applicationsPage';
 import StartPortfolio from './StartPortfolio.modal';
 import ClosePortfolio from './ClosePortfolio.modal';
 
 import { getPortfoliosPaginationApi } from './portfolios.api';
 import { useApolloClient } from '@apollo/client';
+import Toaster from '@/components/UiElements/Toaster/Toaster';
 
 const stoqeyLogo = require('assets/images/STQ.png');
 
@@ -25,6 +26,7 @@ interface PortfolioItem {
 };
 
 const Positions: NextPage<{}> = () => {
+	let toastKey = null;
 	const client = useApolloClient();
 	const [showNew, setShowNew] = useState(false);
 	const [showClose, setShowClose] = useState(false);
@@ -44,16 +46,30 @@ const Positions: NextPage<{}> = () => {
 					description: `${port.action} ${port.size} @${port.averageCost}`,
 				}));
 
+				
 				setPortfolios(portfoliosToSave);
 			},
 		})
 	}, [showNew, showClose])
 
+	const onSuccess = (message: string) => {
+		toastKey = toaster.positive(<>{message}</>, {
+			autoHideDuration: 4000
+		})
+	}
+
+	const onError = (message: string) => {
+		toastKey = toaster.negative(<>{message}</>, {
+			autoHideDuration: 5000
+		})
+	}
+
 
 	return (
 		<>
-			<StartPortfolio show={showNew} hide={() => setShowNew(false)} />
-			<ClosePortfolio show={showClose} hide={() => setShowClose(false)} portfolio={selectedPortfolio} />
+			<Toaster toastKey={toastKey} />
+			<StartPortfolio onError={onError} onSuccess={onSuccess} show={showNew} hide={() => setShowNew(false)} />
+			<ClosePortfolio onError={onError} onSuccess={onSuccess} show={showClose} hide={() => setShowClose(false)} portfolio={selectedPortfolio} />
 
 			{portfolios.map((item: any) => (
 				<SpaceBetween key={`application-key${item.id}`}>

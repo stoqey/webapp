@@ -8,6 +8,7 @@ import PageTitle from '@/components/UiElements/PageTitle/PageTitle';
 import Container from '@/components/UiElements/Container/Container';
 import pricingPageData from '../data/pricingPage';
 import HighlightChart from 'containers/Chart/HighlightChart';
+import CurrencyPill from '@/components/Currency';
 
 const PhoneLogin = dynamic(() => import('containers/PhoneLogin'), {
 	ssr: false,
@@ -34,14 +35,16 @@ const Pricing: NextPage<{}> = () => {
 				<meta name="Description" content="Stoqey Beta" />
 			</Head>
 
-			<PageTitle backdrop={false} title={'Stoqey Beta'} subtitle={'Invest in Stoqey PRE-IPO'} />
+			<PageTitle backdrop={false} title={'Stoqey Beta'}  />
 
+
+			<div style={{ position: 'absolute', width: '100%'}}>
+				<CurrencyPill name={"STQ"} amount={1000} />
+			</div>
+
+			
 
 			<Container>
-
-				{/* Phone Login */}
-				<PhoneLogin />
-
 				<Block marginLeft="-11px" marginRight="-11px">
 
 					<HighlightChart />

@@ -1,10 +1,15 @@
 import React from 'react';
-import { toaster, ToasterContainer } from 'baseui/toast';
+import { toaster, ToasterContainer, PLACEMENT } from 'baseui/toast';
 
-const Toaster = ({ toastKey }) => {
+interface Props {
+  toastKey: any;
+  placement?: PLACEMENT[keyof PLACEMENT]
+};
+
+const Toaster = ({ toastKey, placement = "top" }: Props) => {
   return (
     <ToasterContainer
-      placement="bottomRight"
+      placement={placement}
       overrides={{
         Root: {
           style: () => {
@@ -13,13 +18,14 @@ const Toaster = ({ toastKey }) => {
             };
           },
         },
-        ToastBody: {
-          style: ({ $theme }) => {
-            return {
-              backgroundColor: $theme.colors.primaryA,
-            };
-          },
-        },
+        // ToastBody: {
+        //   style: ({ $theme }) => {
+        //     return {
+        //       backgroundColor: $theme.colors.primaryA,
+        //       color: $theme.colors.primary
+        //     };
+        //   },
+        // },
       }}
     >
       {toastKey}

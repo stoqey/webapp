@@ -27,15 +27,15 @@ interface Props {
   show: boolean;
   hide: () => void;
   portfolio: PortfolioType;
+  onError?: (message: string) => void;
+  onSuccess?: (message: string) => void;
 };
 
 
 const ClosePortfolio = (props: Props) => {
-  const { show, hide, portfolio } = props;
+  const { show, hide, portfolio, onError, onSuccess } = props;
 
   const portfolioId = portfolio && portfolio.id;
-
-  console.log('portfolio to close', portfolioId)
 
   const client = useApolloClient();
 
@@ -44,10 +44,12 @@ const ClosePortfolio = (props: Props) => {
       client,
       args: { id: portfolioId },
       success: async (d: any) => {
-        console.log('success ending portfolio', d)
+        onSuccess(`Successfully close position`)
         hide();
       },
-      error: async () => {},
+      error: async (e: Error) => {
+        onError(e && e.message)
+      },
     })
   }
 

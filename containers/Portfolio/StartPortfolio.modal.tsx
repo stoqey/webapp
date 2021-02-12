@@ -25,13 +25,15 @@ import { startPortfolioMutation } from './portfolios.api'
 
 interface Props {
   show: boolean;
-  hide: () => void
+  hide: () => void;
+  onError?: (message: string) => void;
+  onSuccess?: (message: string) => void;
 };
 
 
 const StartPortfolio = (props: Props) => {
   const client = useApolloClient();
-  const { show, hide } = props;
+  const { show, hide, onError, onSuccess } = props;
   const [steps, setSteps] = useState(0);
   const [amount, setAmount] = useState(0);
 
@@ -45,10 +47,13 @@ const StartPortfolio = (props: Props) => {
         size
       },
       success: async (d: any) => {
-        console.log('success starting portfolio', d)
+        console.log('success starting portfolio', d);
+        onSuccess(`Successfully started portfolio for ${size} shares`)
         hide();
       },
-      error: async () => {},
+      error: async (e: Error) => {
+        onError(e && e.message)
+      },
     })
   }
 
