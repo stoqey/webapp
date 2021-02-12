@@ -14,31 +14,16 @@ const PhoneLogin = dynamic(() => import('containers/PhoneLogin'), {
 });
 
 const Pricing: NextPage<{}> = () => {
-	const { title, subtitle, plans } = pricingPageData;
-	const [loading, setLoading] = useState(false);
-	const [pricingPlan, setPricingPlan] = useState('Free');
-
-	const handlePricingPlan = (type: string) => {
-		setLoading(true);
-		setPricingPlan(type);
-
-		setTimeout(() => {
-			setLoading(false);
-		}, 600);
-	};
-
 	return (
 		<>
 			<Head>
-				<title>{title} | Stoqey</title>
+				<title>Login | Stoqey</title>
 				<meta name="Description" content="Stoqey Beta" />
 			</Head>
 
-			<PageTitle backdrop={false} title={'Stoqey Beta'} subtitle={'Invest in Stoqey PRE-IPO'} />
-
+			<PageTitle backdrop={true} title={'Stoqey'} subtitle={'Invest in the Stoqey IPO'} />
 
 			<Container>
-
 				{/* Phone Login */}
 				<PhoneLogin />
 			</Container>
