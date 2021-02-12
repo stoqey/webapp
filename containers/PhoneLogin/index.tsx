@@ -34,7 +34,7 @@ export const PhoneLogin = () => {
     },
     success: async (data) => {
 
-      toastKey = toaster.negative(<>Successfully logged in using phone</>, {
+      toastKey = toaster.positive(<>Successfully logged in using phone</>, {
         autoHideDuration: 4000
       });
 
