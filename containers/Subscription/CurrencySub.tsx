@@ -1,19 +1,9 @@
 import React from 'react';
 import gql from 'graphql-tag';
-import { MarketDataTypeFragment } from "@stoqey/client-graphql";
+import _ from 'lodash';
+import { CURRENCY_SUBSCRIPTION} from "@stoqey/client-graphql";
 import { useApolloClient, useSubscription } from "@apollo/client";
 import { AppEvents, APPEVENTS } from '@/lib/AppEvent';
-
-
-export const CURRENCY_SUBSCRIPTION = gql`
-    subscription GetCurrency($symbol: String!) {
-        data: onCurrency(symbol: $symbol) {
-            ...MarketDataTypeFragment
-        }
-    }
-    ${MarketDataTypeFragment}
-`;
-
 
 interface Props {
     symbol: string;
@@ -36,9 +26,11 @@ export const CurrencySub = (props: Props) => {
         })
 
         const results = subscription.subscribe(data => {
-            console.log('on subscribe', data);
+
+            const dataToSend = _.get(data, 'data.data', {});
+            console.log('on subscribe', dataToSend);
             // Post data from here
-            events.emit(APPEVENTS.CURRENCY, data);
+            events.emit(APPEVENTS.CURRENCY, dataToSend);
         });
 
         return () => { results.unsubscribe() }

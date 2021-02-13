@@ -1,6 +1,7 @@
 
 import React from 'react';
 import AreaChart from './AreaChart';
+import CandleStick from './CandleStick';
 import { getData } from "./api"
 
 function HighlightChart() {

@@ -23,6 +23,11 @@ const menuItems = [
     label: 'Portfolio',
     path: '/portfolio',
   },
+  {
+    id: 4,
+    label: 'Account',
+    path: '/account',
+  },
 ];
 
 type MenuProps = {

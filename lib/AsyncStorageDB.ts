@@ -50,6 +50,11 @@ const getAuthItem =  async (): Promise<LoginResponseType> => {
   return JSONDATA(item) as LoginResponseType;
 }
 
+export const getAuthToken = async (): Promise<string> => {
+  const user = await getAuthItem();
+  return user && user.accessToken;
+}
+
 const updateAuthItem = async (data: any) => {
   try {
     const existingData = await getAuthItem();
@@ -68,14 +73,18 @@ const updateAuthItem = async (data: any) => {
   }
 }
 
-const deleteItem = async (path:string): Promise<any> => localStorage.removeItem(path)
+const deleteItem = async (path:string): Promise<any> => localStorage.removeItem(path);
+
+const deleteAuthItem = async (): Promise<any> => localStorage.removeItem(USER_DB_PATH);
 
 export const AsyncStorageDB = {
   getItem,
   setItem,
   getAuthItem,
   updateAuthItem,
-  deleteItem
+  deleteItem,
+  getAuthToken,
+  deleteAuthItem
 };
 
 export default AsyncStorageDB;

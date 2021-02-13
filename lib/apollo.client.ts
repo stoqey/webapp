@@ -1,63 +1,84 @@
-import { useMemo } from 'react';
-import { ApolloClient, HttpLink, InMemoryCache, ApolloLink, split } from '@apollo/client';
-import { setContext } from '@apollo/client/link/context';
-import { WebSocketLink } from '@apollo/client/link/ws';
-import { getMainDefinition } from '@apollo/client/utilities';
+import { useMemo } from "react";
+import {
+  ApolloClient,
+  HttpLink,
+  InMemoryCache,
+  ApolloLink,
+  split,
+} from "@apollo/client";
+import { setContext } from "@apollo/client/link/context";
+import { WebSocketLink } from "@apollo/client/link/ws";
+import { getMainDefinition } from "@apollo/client/utilities";
+import includes from "lodash/includes";
+import urlFromJson from "keys/url.json";
+import AsyncStorageDB from "./AsyncStorageDB";
 
 let apolloClient;
 
-const demoToken = 'stoqey.api.token.demo.hash';
+const demoToken = "stoqey.api.token.demo.hash";
 
 function createApolloClient() {
+  console.log("json url is simply", urlFromJson);
 
-  const isDev = process.env.NODE_ENV === 'development'? true : false;
+  let useHttps = false;
 
-  const devBaseUrl = `://192.168.2.26:3099/graphql`; // only for dev
+  if (includes(urlFromJson, ".co")) {
+    useHttps = true;
+  }
 
-  const backendUrl = !isDev? 'https://app.stoqey.com/graphql' : `http${devBaseUrl}`;
-  const wsUrl = !isDev? 'wss://app.stoqey.com/graphql' : `ws${devBaseUrl}`;
-  
-  console.log('backend url is ', backendUrl);
+  const devBaseUrl = `://${urlFromJson}/graphql`;
+  const backendUrl = `http${useHttps? 's': ''}${devBaseUrl}`;
+
+  const wsUrl = `ws${useHttps? 's': ''}${devBaseUrl}`;
+
+  console.log("backend url is", backendUrl);
 
   const httpLink = new HttpLink({
     uri: backendUrl, // Server URL (must be absolute)
   });
 
-
-  const authLink = setContext((_, ctx) => {
-    const headers = ctx && ctx.headers || {};
+  const authLink = setContext(async (_, ctx) => {
+    const headers = (ctx && ctx.headers) || {};
+     // console.log('<-----------> AuthContext <-----------> BEGIN ', getLastChar(token))
+     const authorization = await AsyncStorageDB.getAuthToken();
+     console.log('<-----------> AuthContext <-----------> END ', authorization);
+ 
     // return the headers to the context so httpLink can read them
     return {
       headers: {
         ...headers,
-        authorization: demoToken,
-      }
-    }
+        authorization: `Bearer ${authorization}`,
+      },
+    };
   });
 
-  const wsLink = process.browser ? new WebSocketLink({ // if you instantiate in the server, the error will be thrown
-    uri: wsUrl,
-    options: {
-      reconnect: true
-    }
-  }) : null;
+  const wsLink = process.browser
+    ? new WebSocketLink({
+        // if you instantiate in the server, the error will be thrown
+        uri: wsUrl,
+        options: {
+          reconnect: true,
+        },
+      })
+    : null;
 
-  const link = process.browser ? split( 
-    ({ query }) => {
-      // @ts-ignore
-      const { kind, operation } = getMainDefinition(query);
-      return kind === 'OperationDefinition' && operation === 'subscription';
-    },
-    wsLink,
-    authLink.concat(httpLink),
-  ) : authLink.concat(httpLink);
+  const link = process.browser
+    ? split(
+        ({ query }) => {
+          // @ts-ignore
+          const { kind, operation } = getMainDefinition(query);
+          return kind === "OperationDefinition" && operation === "subscription";
+        },
+        wsLink,
+        authLink.concat(httpLink)
+      )
+    : authLink.concat(httpLink);
 
   return new ApolloClient({
-    ssrMode: typeof window === 'undefined',
+    ssrMode: typeof window === "undefined",
     link,
     cache: new InMemoryCache(),
   });
-
 }
 
 export function initializeApollo(initialState = null) {
@@ -73,7 +94,7 @@ export function initializeApollo(initialState = null) {
     _apolloClient.cache.restore({ ...existingCache, ...initialState });
   }
   // For SSG and SSR always create a new Apollo Client
-  if (typeof window === 'undefined') return _apolloClient;
+  if (typeof window === "undefined") return _apolloClient;
   // Create the Apollo Client once in the client
   if (!apolloClient) apolloClient = _apolloClient;
 

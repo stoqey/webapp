@@ -4,80 +4,64 @@ import { Block } from 'baseui/block';
 import { Button } from 'baseui/button';
 import { Modal, ModalBody } from 'baseui/modal';
 import { PayPalButton } from "react-paypal-button-v2";
+import { processPayment } from './api';
+import { useApolloClient } from '@apollo/client';
 
 interface Props {
   userId: string;
   amount: number;
 };
 
-const PayPalForm = (props: Props) => {
-  const { userId, amount = 30 }  = props;
+interface PayPalFormProps {
+  userId: string;
+  amount: number;
+  onSuccess: (orderId: string) => Promise<any>;
+};
+
+const PayPalForm = (props: PayPalFormProps) => {
+  const { userId, amount = 30, onSuccess } = props;
   const clientId = process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID || "AeTaBjLsajBbU4SSXYu1DIH7MOaA6hNRcqKZuhOdfGz4YKv2TxNufduBnmlUN0TNwsrM_3VAnfN2MJew";
-  console.log('PayPal client id', {clientId, userId, amount });
+  console.log('PayPal client id', { clientId, userId, amount });
   return (
     <PayPalButton
       options={{
-        clientId,
-        debug: true
+        clientId
       }}
       currency="USD"
       amount={amount}
       shippingPreference="NO_SHIPPING" // default is "GET_FROM_FILE"
-      onSuccess={(details, data) => {
-
-        // Run graphql api here with paypal data
-        // data.orderID
-
-        alert("Transaction completed by " + details.payer.name.given_name);
-
-        // OPTIONAL: Call your server to save the transaction
-        return fetch("/paypal-transaction-complete", {
-          method: "post",
-          body: JSON.stringify({
-            orderID: data.orderID
-          })
-        });
+      onSuccess={async (details, data) => {
+        console.log('Paypal success', data);
+        return await onSuccess(data && data.orderID);
       }}
     />
   );
 }
 
-const PayPalPayment = (props:  Props) => {
+const PayPalPayment = (props: Props) => {
+  const { userId, amount } = props;
+  const client = useApolloClient();
   const [visible, setVisible] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [paymentMethod, setPaymentMethod] = useState('paypal');
+
+
+  const paymentApi = async (orderId: string) => await processPayment({
+    client,
+    args: { orderId, owner: userId, amount: +amount },
+    success: async (data: any) => {
+      console.log('successfuly processed payment', data);
+      setVisible(true); // show success
+    },
+    error: async (error: Error) => {
+      console.log('error submitting payment', error);
+    }
+  })
+
 
   return (
     <Block marginLeft="-16px" marginRight="-16px">
-      {/* <Button
-        kind="minimal"
-        isLoading={loading && paymentMethod === 'paypal'}
-        onClick={() => handlePayment('paypal')}
-      >
-        <img
-          src={require('../../assets/images/payment/paypal.png')}
-          alt="paypal"
-        />
-      </Button>
-      <Button
-        kind="minimal"
-        isLoading={loading && paymentMethod === 'mastercard'}
-        onClick={() => handlePayment('mastercard')}
-      >
-        <img
-          src={require('../../assets/images/payment/mastercard.png')}
-          alt="mastercard"
-        />
-      </Button>
-      <Button
-        kind="minimal"
-        isLoading={loading && paymentMethod === 'visa'}
-        onClick={() => handlePayment('visa')}
-      >
-        <img src={require('../../assets/images/payment/visa.png')} alt="visa" />
-      </Button> */}
 
-      <PayPalForm {...props}/>
+      {/* PayPal form */}
+      <PayPalForm {...props} onSuccess={paymentApi} />
 
 
       {/* Model success */}
@@ -153,7 +137,7 @@ const PayPalPayment = (props:  Props) => {
               >
                 Order ID :{' '}
               </Block>
-              <Block as="span">123djbre4</Block>
+              <Block as="span">xxxxx</Block>
             </Block>
 
             <Block as="p" marginBottom="15px">
@@ -169,7 +153,7 @@ const PayPalPayment = (props:  Props) => {
               >
                 Delivery :{' '}
               </Block>
-              <Block as="span">within 3-5 working days</Block>
+              <Block as="span">instant</Block>
             </Block>
 
             <Block as="p" marginBottom="15px">
@@ -183,11 +167,11 @@ const PayPalPayment = (props:  Props) => {
                   },
                 }}
               >
-                Thanks for your order :{' '}
+                Thanks for your investing in Stoqey {' '}
               </Block>
               <Block as="span">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis
-                aliquid beatae ipsam quisquam voluptatem tenetur.
+                Now you can go to the portfolio screen and buy shares in Stoqey
+                Happy investing with Stoqey
               </Block>
             </Block>
           </Block>

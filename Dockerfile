@@ -1,15 +1,21 @@
 FROM mhart/alpine-node:10.19 AS builder
 
-ARG NPM_AUTH_TOKEN
-ARG FB_SA_KEY_TS
+ARG FB_SA_KEY
+ARG BACKEND
 
 WORKDIR /srv
 
 COPY . .
+
+# Add backend path
+RUN rm -rf keys/url.json
+RUN echo "\"$BACKEND"\" > keys/url.json
+
+# Add firebase config
+RUN mkdir -p ./keys && echo $FB_SA_KEY > ./keys/firebase.config.json
+
 RUN apk update && apk upgrade && \
-    apk add --no-cache bash git openssh libc6-compat
-RUN npm config set @stoqeyx:registry https://npm.pkg.github.com
-RUN npm config set //npm.pkg.github.com/:_authToken=$NPM_AUTH_TOKEN
+    apk add --no-cache bash git openssh libc6-compat autoconf automake libtool make tiff jpeg zlib zlib-dev pkgconf nasm file gcc musl-dev
 
 RUN apk add --no-cache --virtual .gyp \
         python \
@@ -17,8 +23,6 @@ RUN apk add --no-cache --virtual .gyp \
         g++ \
     && npm install \
     && apk del .gyp
-
-RUN mkdir -p src/keys && echo $FB_SA_KEY_TS > src/keys/config.ts
 
 RUN npm run build
 

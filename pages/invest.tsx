@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { NextPage } from 'next';
 import Head from 'next/head';
 import { Grid, Cell } from 'baseui/layout-grid';
+import { MarketDataType } from '@stoqey/client-graphql';
 import { FaShoppingBag, FaMapMarkerAlt, FaMoneyCheckAlt, FaMoneyBillWave, FaPaypal, FaCreditCard, FaPiggyBank, FaBitcoin } from 'react-icons/fa';
 import { Button } from 'baseui/button';
 import { Input } from 'baseui/input';
@@ -24,6 +25,8 @@ import {
 	useThemeSwitcherCtx,
 } from 'contexts/theme/theme.provider';
 import { useUserInfo } from 'hooks/useUserInfo';
+import { useAppEvent } from 'hooks/useAppEvent';
+import { APPEVENTS } from '@/lib/AppEvent';
 
 const TITLE = 'Invest';
 const SUB_TITLE = 'Invest in Stoqey';
@@ -36,6 +39,10 @@ const Checkout: NextPage<{}> = () => {
 	const { theme } = useThemeSwitcherCtx();
 	const user = useUserInfo();
 
+	const qoute: MarketDataType = useAppEvent(APPEVENTS.CURRENCY);
+
+	const currencyPrice = qoute && qoute.close || 0;
+
 	const handleStep = () => {
 		setStep(step + 1);
 	};
@@ -43,10 +50,10 @@ const Checkout: NextPage<{}> = () => {
 	let component: React.ReactNode;
 	switch (step) {
 		case 1:
-			component = <CurrencyCart quantity={0} price={100} products={cartItems} />;
+			component = <CurrencyCart amount={amount} products={cartItems} />;
 			break;
 		case 2:
-			component = <PayPalPayment amount={amount} userId={user && user.accessToken}/>;
+			component = <PayPalPayment amount={amount} userId={user && user.user && user.user.id}/>;
 			break;
 	}
 
@@ -128,7 +135,7 @@ const Checkout: NextPage<{}> = () => {
 									    disabled={step !== 1}
 										type={"number"}
 										onChange={(e: any) => setAmount(e.target.value)}
-										placeholder="Enter size/quantity"
+										placeholder="Enter amount"
 										overrides={{
 											InputContainer: {
 												style: () => {
@@ -139,14 +146,14 @@ const Checkout: NextPage<{}> = () => {
 									/>
 									<PriceList>
 										<PriceItem>
-											<span>Per share</span> <span>$ {amount}</span>
+											<span>Per share</span> <span>$ {currencyPrice}</span>
 										</PriceItem>
-										<PriceItem>
+										{/* <PriceItem>
 											<span>Tax</span> <span> + 0.5%</span>
 										</PriceItem>
 										<PriceItem>
 											<span>Total</span> <span> + 0.5%</span>
-										</PriceItem>
+										</PriceItem> */}
 									</PriceList>
 									{step === 1 && (
 										<Button
