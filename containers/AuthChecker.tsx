@@ -15,7 +15,6 @@ export const AuthChecker = () => {
     const router = useRouter();
     const client = useApolloClient();
 
-    console.log(router.pathname)
     React.useEffect(() => {
 
         const logout = async () => {
@@ -24,11 +23,24 @@ export const AuthChecker = () => {
         }
         const getMe = async () => {
             try {
-                const { errors } = await client.query({
+                const { errors, data } = await client.query({
                     query: GET_ME,
                     fetchPolicy: 'network-only'
                 });
 
+                // update user object from here
+                if(data && data.me){
+                    const user = data.me;
+                    const userAuthObject =  await AsyncStorageDB.getAuthItem();
+                
+                    // update user object
+                    await AsyncStorageDB.updateAuthItem({
+                        ...userAuthObject,
+                        user
+                    })
+                }
+
+                // Check if there are any errors
                 for (const e of errors) {
                     const message = e.message;
                     if (includes(message, 'not authenticated')) {
@@ -36,6 +48,8 @@ export const AuthChecker = () => {
                         break;
                     }
                 }
+
+                
             }
             catch (error) {
                 const message = error && error.message;
