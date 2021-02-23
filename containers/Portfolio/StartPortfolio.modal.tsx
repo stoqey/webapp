@@ -141,7 +141,7 @@ const StartPortfolio = (props: Props) => {
                 },
               }}
             >
-              BUY/SELL STQ
+              INVEST IN STQ™
             </Block>
 
             {/* Form */}
@@ -218,6 +218,7 @@ const StartPortfolio = (props: Props) => {
 
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                   <Input
+                    disabled={type === "market"}
                     value={price}
                     type={"number"}
                     onChange={(e: any) => handleState("price")(e.target.value)}
