@@ -2,8 +2,9 @@ import { styled } from "baseui"
 import BannerBG from 'assets/images/bg/main_bg.svg';
 
 export const BannerWrapper = styled('section', ({ $theme }) => ({
+  width: '100%',
   paddingTop: '210px',
-  paddingBottom: '400px',
+  // paddingBottom: '400px',
   backgroundImage: `url(${BannerBG})`,
   backgroundSize: 'cover',
   backgroundPosition: 'top-center',
