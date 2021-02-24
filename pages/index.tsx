@@ -6,9 +6,11 @@ import { Block } from 'baseui/block';
 import { Grid, Cell } from 'baseui/layout-grid';
 import PageTitle from '@/components/UiElements/PageTitle/PageTitle';
 import Container from '@/components/UiElements/Container/Container';
+import BannerSection from '@/components/BannerSection'
 import pricingPageData from '../data/pricingPage';
 import HighlightChart from 'containers/Chart/HighlightChart';
 import CurrencyPill from '@/components/Currency';
+import FeatureBlock from '@/components/FeatureBlock';
 
 const PhoneLogin = dynamic(() => import('containers/PhoneLogin'), {
 	ssr: false,
@@ -35,25 +37,29 @@ const Pricing: NextPage<{}> = () => {
 				<meta name="Description" content="Stoqey Beta" />
 			</Head>
 
-			<PageTitle backdrop={false} title={'Stoqey Beta'}  />
+			{/* <PageTitle backdrop={false} title={'Stoqey Beta'} /> */}
 
 
-			<div style={{ position: 'absolute', width: '100%'}}>
+			{/* <div style={{ position: 'absolute', width: '100%' }}> */}
 				{/* <CurrencyPill name={"STQ"} amount={1000} /> */}
-			</div>
+			{/* </div> */}
 
-			
 
-			<Container>
-				<Block marginLeft="-11px" marginRight="-11px">
+			<BannerSection />
 
-					{/* <HighlightChart /> */}
+			{/* <BannerSection> */}
+			{/* <Container>
+					<Block marginLeft="-11px" marginRight="-11px"> */}
 
-					{/* <Grid gridColumns={12} gridGutters={22} gridMargins={0}>
+			{/* <HighlightChart /> */}
+
+			{/* <Grid gridColumns={12} gridGutters={22} gridMargins={0}>
 						
 					</Grid> */}
-				</Block>
-			</Container>
+			{/* </Block>
+				</Container> */}
+			{/* </BannerSection> */}
+
 		</>
 	);
 };

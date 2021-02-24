@@ -16,6 +16,7 @@ import 'assets/css/reset.css';
 import 'react-flexbox-grid/dist/react-flexbox-grid.css';
 import 'typeface-open-sans';
 import AuthChecker from 'containers/AuthChecker';
+import { defaultTheme } from 'theme';
 
 const WebsocketSubscription = dynamic(() => import('containers/Subscription'), { ssr: false });
 
@@ -40,8 +41,8 @@ export default function CustomApp({ Component, pageProps }: AppProps) {
           <BaseProvider
             theme={
               theme === THEME.light
-                ? { ...LightTheme, direction: 'ltr' }
-                : { ...DarkTheme, direction: 'ltr' }
+                ? { ...LightTheme, ...defaultTheme, direction: 'ltr' }
+                : { ...DarkTheme, ...defaultTheme, direction: 'ltr' }
             }
           >
             <CartProvider>

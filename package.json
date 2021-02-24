@@ -54,6 +54,8 @@
 				"react-stockcharts": "^0.7.8",
 				"react-toastify": "^6.0.8",
 				"resize-observer-polyfill": "^1.5.1",
+				"styled-components": "^5.2.1",
+				"styled-system": "^5.1.5",
 				"styletron": "^3.0.4",
 				"styletron-engine-atomic": "^1.4.6",
 				"styletron-react": "^5.2.7",
