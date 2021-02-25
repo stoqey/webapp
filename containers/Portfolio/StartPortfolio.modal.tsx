@@ -54,7 +54,7 @@ const StartPortfolio = (props: Props) => {
     qty: 1,
   });
 
-  const { type, action, price, qty, stopPrice } = state;
+  const { type, action, price = close, qty, stopPrice } = state;
 
   const handleState = (field: string) => {
     return (value) => {
@@ -225,7 +225,7 @@ const StartPortfolio = (props: Props) => {
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                   <Input
                     disabled={type === "market"}
-                    value={price}
+                    value={type === "market"? close : price}
                     type={"number"}
                     onChange={(e: any) => handleState("price")(e.target.value)}
                     placeholder="Price"
