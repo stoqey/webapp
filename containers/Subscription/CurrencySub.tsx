@@ -28,9 +28,7 @@ export const CurrencySub = (props: Props) => {
         const results = subscription.subscribe(data => {
 
             const dataToSend = _.get(data, 'data.data', {});
-            console.log('on subscribe', dataToSend);
             events.setCurrency(dataToSend);
-            // Post data from here
             events.emit(APPEVENTS.CURRENCY, dataToSend);
         });
 
