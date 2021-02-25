@@ -1,7 +1,7 @@
 import { ApolloClient } from '@apollo/react-hooks';
 import isEmpty from 'lodash/isEmpty';
 import _get from 'lodash/get';
-import { ResType, ActionType, PortfolioType, GET_MY_PORTFOLIOS_PAGINATION, CLOSE_PORTFOLIO_MUTATION, START_PORTFOLIO_MUTATION, TradingStatusType } from '@stoqey/client-graphql';
+import { ResType, ActionType, PortfolioType, GET_MY_PORTFOLIOS_PAGINATION, CLOSE_PORTFOLIO_MUTATION, START_PORTFOLIO_MUTATION, CREATE_ORDER_MUTATION, TradingStatusType, IOrderType } from '@stoqey/client-graphql';
 import AsyncStorageDB from '@/lib/AsyncStorageDB';
 
 export const getPortfoliosPaginationApi = async ({
@@ -56,54 +56,54 @@ export const getPortfoliosPaginationApi = async ({
 };
 
 
-export const startPortfolioMutation = async ({
-  args,
-  client,
-  error,
-  success,
-}: {
-  args: { size: number; action: ActionType; };
-  client: ApolloClient<any>;
-  error?: (error: Error) => Promise<any>;
-  success?: (success: boolean) => Promise<any>;
-}) => {
-  console.log('portfolios are', JSON.stringify(args));
+// export const startPortfolioMutation = async ({
+//   args,
+//   client,
+//   error,
+//   success,
+// }: {
+//   args: { size: number; action: ActionType; };
+//   client: ApolloClient<any>;
+//   error?: (error: Error) => Promise<any>;
+//   success?: (success: boolean) => Promise<any>;
+// }) => {
+//   console.log('portfolios are', JSON.stringify(args));
 
-  try {
+//   try {
 
-    const user = await AsyncStorageDB.getAuthItem();
-    const userId = _get(user, 'user.id', '');
+//     const user = await AsyncStorageDB.getAuthItem();
+//     const userId = _get(user, 'user.id', '');
 
-    const argsToPass = {
-      owner: userId,
-      ...args,
-    };
+//     const argsToPass = {
+//       owner: userId,
+//       ...args,
+//     };
     
-    const { data: dataResponse }: any = await client.mutate({
-      mutation: START_PORTFOLIO_MUTATION,
-      variables: argsToPass,
-      fetchPolicy: 'no-cache',
-    });
+//     const { data: dataResponse }: any = await client.mutate({
+//       mutation: START_PORTFOLIO_MUTATION,
+//       variables: argsToPass,
+//       fetchPolicy: 'no-cache',
+//     });
 
-    if (!dataResponse) {
-      throw new Error('error starting data');
-    }
+//     if (!dataResponse) {
+//       throw new Error('error starting data');
+//     }
 
-    const { data }: { data?: ResType } = dataResponse;
+//     const { data }: { data?: ResType } = dataResponse;
 
-    console.log(`data response starting portfolio ${JSON.stringify(data)}`);
+//     console.log(`data response starting portfolio ${JSON.stringify(data)}`);
 
-    if (data.success) {
-      //   Successful
-      await success(true);
-      return console.log(`starting portfolios is successful ${data && data}`);
-    }
-    throw new Error('error starting portfolios, please try again later');
-  } catch (err) {
-    console.error(err);
-    await error(err);
-  }
-};
+//     if (data.success) {
+//       //   Successful
+//       await success(true);
+//       return console.log(`starting portfolios is successful ${data && data}`);
+//     }
+//     throw new Error('error starting portfolios, please try again later');
+//   } catch (err) {
+//     console.error(err);
+//     await error(err);
+//   }
+// };
 
 export const createOrderMutation = async ({
   args,
@@ -111,7 +111,13 @@ export const createOrderMutation = async ({
   error,
   success,
 }: {
-  args: { size: number; action: ActionType; };
+  args: { 
+    size: number; 
+    action: ActionType;
+    type?: IOrderType;
+    price?: number;
+    stopPrice?: number;
+   };
   client: ApolloClient<any>;
   error?: (error: Error) => Promise<any>;
   success?: (success: boolean) => Promise<any>;
@@ -129,7 +135,7 @@ export const createOrderMutation = async ({
     };
     
     const { data: dataResponse }: any = await client.mutate({
-      mutation: START_PORTFOLIO_MUTATION,
+      mutation: CREATE_ORDER_MUTATION,
       variables: argsToPass,
       fetchPolicy: 'no-cache',
     });
@@ -147,6 +153,12 @@ export const createOrderMutation = async ({
       await success(true);
       return console.log(`starting portfolios is successful ${data && data}`);
     }
+
+    if(data.message){
+      const err = new Error(data.message);
+      return await error(err);
+    };
+  
     throw new Error('error starting portfolios, please try again later');
   } catch (err) {
     console.error(err);

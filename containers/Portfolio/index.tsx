@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { NextPage } from 'next';
 import { Button } from 'baseui/button';
-import { PortfolioType } from '@stoqey/client-graphql'
+import { MarketDataType, PortfolioType } from '@stoqey/client-graphql'
 import ListGridCard from 'components/UiElements/ListGridCard/ListGridCard';
 import {
 	SpaceBetween,
@@ -14,6 +14,8 @@ import ClosePortfolio from './ClosePortfolio.modal';
 import { getPortfoliosPaginationApi } from './portfolios.api';
 import { useApolloClient } from '@apollo/client';
 import Toaster from '@/components/UiElements/Toaster/Toaster';
+import { useAppEvent } from 'hooks/useAppEvent';
+import { APPEVENTS } from '@/lib/AppEvent';
 
 const stoqeyLogo = require('assets/images/STQ.png');
 
@@ -30,7 +32,7 @@ const Positions: NextPage<{}> = () => {
 	const client = useApolloClient();
 	const [showNew, setShowNew] = useState(false);
 	const [showClose, setShowClose] = useState(false);
-
+	const quote: MarketDataType = useAppEvent(APPEVENTS.CURRENCY);
 	const [selectedPortfolio, setSelectedPortfolio] = useState<PortfolioType>(null);
 	const [portfolios, setPortfolios] = useState<PortfolioItem[]>([]);
 
@@ -68,7 +70,7 @@ const Positions: NextPage<{}> = () => {
 	return (
 		<>
 			<Toaster toastKey={toastKey} />
-			<StartPortfolio onError={onError} onSuccess={onSuccess} show={showNew} hide={() => setShowNew(false)} />
+			<StartPortfolio quote={quote} onError={onError} onSuccess={onSuccess} show={showNew} hide={() => setShowNew(false)} />
 			<ClosePortfolio onError={onError} onSuccess={onSuccess} show={showClose} hide={() => setShowClose(false)} portfolio={selectedPortfolio} />
 
 			{portfolios.map((item: any) => (

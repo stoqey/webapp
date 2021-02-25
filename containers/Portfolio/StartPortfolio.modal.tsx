@@ -3,7 +3,6 @@ import { IoIosCheckmarkCircleOutline } from 'react-icons/io';
 import { Block } from 'baseui/block';
 import { Modal, ModalBody } from 'baseui/modal';
 import { useApolloClient } from '@apollo/client';
-
 import { Grid, Cell } from 'baseui/layout-grid';
 import { ActionType, MarketDataType, IOrderType } from '@stoqey/client-graphql';
 import { FaShoppingBag, FaMapMarkerAlt, FaMoneyCheckAlt, FaMoneyBillWave, FaPaypal, FaCreditCard, FaPiggyBank, FaBitcoin } from 'react-icons/fa';
@@ -21,9 +20,11 @@ import {
   PriceItem,
 } from 'components/PageStyles/Checkout.styled';
 
-import { startPortfolioMutation } from './portfolios.api'
+import { createOrderMutation } from './portfolios.api'
+import { niceDec } from 'utils/number';
 
 interface Props {
+  quote: MarketDataType;
   show: boolean;
   hide: () => void;
   onError?: (message: string) => void;
@@ -37,20 +38,24 @@ interface State {
   type: IOrderType;
   price: number;
   qty: number;
+  stopPrice?: number;
 }
 const StartPortfolio = (props: Props) => {
   const client = useApolloClient();
-  const { show, hide, onError, onSuccess } = props;
+  const { show, hide, onError, onSuccess, quote } = props;
   const [steps, setSteps] = useState(0);
   const [amount, setAmount] = useState(0);
 
+  const close = quote && quote.close;
   const [state, setState] = useState<State>({
     steps: 1,
     type: IOrderType.MARKET,
     action: ActionType.BUY,
-    price: 3,
+    price: close,
     qty: 1,
   });
+
+  const { type, action, price = close, qty, stopPrice } = state;
 
   const handleState = (field: string) => {
     return (value) => {
@@ -62,17 +67,18 @@ const StartPortfolio = (props: Props) => {
   }
 
   const startPortfolio = async () => {
-    // TODO substract from price
-    const size = +amount;
-    await startPortfolioMutation({
+    await createOrderMutation({
       client,
       args: {
-        action: ActionType.BUY,
-        size
+        action,// : ActionType.BUY,
+        size: Math.abs(qty),
+        type,
+        price: Math.abs(type === "market" ? close : price),
+        stopPrice: Math.abs(stopPrice),
       },
       success: async (d: any) => {
         console.log('success starting portfolio', d);
-        onSuccess(`Successfully started portfolio for ${size} shares`)
+        onSuccess(`Successfully started portfolio for ${qty} shares`)
         hide();
       },
       error: async (e: Error) => {
@@ -81,8 +87,9 @@ const StartPortfolio = (props: Props) => {
     })
   }
 
-  const { type, action, price, qty } = state;
 
+
+  const finalPrice = niceDec(type === "limit" ? qty * price : qty * close);
   return (
     <>
 
@@ -219,7 +226,7 @@ const StartPortfolio = (props: Props) => {
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                   <Input
                     disabled={type === "market"}
-                    value={price}
+                    value={type === "market" ? close : price}
                     type={"number"}
                     onChange={(e: any) => handleState("price")(e.target.value)}
                     placeholder="Price"
@@ -260,10 +267,18 @@ const StartPortfolio = (props: Props) => {
 
                 <PriceList>
                   <PriceItem>
-                    <span>Market Price</span> <span>$ XXXX</span>
+                    <span>Market Price</span> <span>${niceDec(close)}</span>
                   </PriceItem>
+
+                  {/* Limit price */}
+                  {type === "limit" && (
+                    <PriceItem>
+                      <span>Limit Price</span> <span>${niceDec(+price)}</span>
+                    </PriceItem>
+                  )}
+
                   <PriceItem>
-                    <span>Total amount</span> <span> 1.2 </span>
+                    <span>Total amount</span> <span> {finalPrice} </span>
                   </PriceItem>
                 </PriceList>
                 <Button
@@ -287,7 +302,7 @@ const StartPortfolio = (props: Props) => {
             {steps === 1 && (
               <Block paddingTop={['30px', '40px', '0']}>
                 {/* Confirm  amount */}
-                <Title>{`You're about to BUY ${amount} of STQ`}</Title>
+                <Title>{`You're about to BUY ${qty} of STQ`}</Title>
 
                 {/* Confirm */}
                 <p style={{ display: 'flex' }}>

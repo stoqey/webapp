@@ -60,7 +60,7 @@ export const AuthChecker = () => {
 
         }
 
-        if(!['/login', '/404'].includes(router.pathname)){
+        if(!['/', '/login', '/404'].includes(router.pathname)){
             getMe();
         }
     }, []);

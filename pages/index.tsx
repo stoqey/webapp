@@ -39,7 +39,7 @@ const Pricing: NextPage<{}> = () => {
 
 
 			<div style={{ position: 'absolute', width: '100%'}}>
-				<CurrencyPill name={"STQ"} amount={1000} />
+				{/* <CurrencyPill name={"STQ"} amount={1000} /> */}
 			</div>
 
 			
@@ -47,7 +47,7 @@ const Pricing: NextPage<{}> = () => {
 			<Container>
 				<Block marginLeft="-11px" marginRight="-11px">
 
-					<HighlightChart />
+					{/* <HighlightChart /> */}
 
 					{/* <Grid gridColumns={12} gridGutters={22} gridMargins={0}>
 						

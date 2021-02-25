@@ -16,20 +16,27 @@ import HeaderWrapper, {
 	NavLeft,
 	NavRight,
 } from './DefaultHeader.styled';
+import { useStyletron } from 'styletron-react';
+import StqRoboIcon from '@/components/logo/icon';
+import { CurrencyNumberContainer } from 'containers/Currency/CurrencyNumber';
 
 const DefaultHeader: React.FC<{}> = () => {
 	const cartItems = useCartState('cartItems');
 
+	const Currency = () => <CurrencyNumberContainer />;
 	return (
 		<HeaderWrapper className="default">
 			<Container>
 				<TopBar className="top-bar">
+
+					{/* Stoqey logo */}
 					<Logo
 						path="/"
 						src={
-							<SvgIcon
-								src={require('../../../assets/images/logo.svg?include')}
-							/>
+							<>
+								<StqRoboIcon />
+								<Currency />
+							</>
 						}
 					/>
 					<MenuRight className="menu-right">
@@ -60,11 +67,13 @@ const DefaultHeader: React.FC<{}> = () => {
 								<Logo
 									path="/"
 									src={
-										<SvgIcon
-											src={require('../../../assets/images/logo.svg?include')}
-										/>
+										<>
+											<StqRoboIcon />
+											<Currency />
+										</>
 									}
 								/>
+
 								<BetaMenu className="main-nav" />
 							</NavLeft>
 							<NavRight className="cart-and-avatar">

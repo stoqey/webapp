@@ -1,3 +1,4 @@
+import { MarketDataType } from '@stoqey/client-graphql';
 import EventEmitter from 'events';
 
 export enum APPEVENTS {
@@ -10,6 +11,8 @@ export class AppEvents extends EventEmitter.EventEmitter {
   private cache = {};
   private static _instance: AppEvents;
 
+  public currency: MarketDataType;
+
   public static get Instance() {
     return this._instance || (this._instance = new this());
   }
@@ -17,5 +20,19 @@ export class AppEvents extends EventEmitter.EventEmitter {
   private constructor() {
     super();
     this.setMaxListeners(0); // set a maximum of 50 event listners
+  }
+
+  /**
+   * setCurrency
+   */
+  public setCurrency(currency: MarketDataType) {
+    this.currency = currency;
+  }
+
+  /**
+   * getCurrency
+   */
+  public getCurrency(): MarketDataType {
+    return this.currency;
   }
 }
