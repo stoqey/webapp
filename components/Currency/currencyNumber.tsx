@@ -1,15 +1,19 @@
 import React from 'react';
 import { styled } from 'baseui';
-import { H2 } from 'baseui/typography';
+import { H2, H3, Paragraph1 } from 'baseui/typography';
 import { niceDec } from 'utils/number';
 
 interface Props {
-   close: number;
-   change: number;
-   changePtc: number;
+	close: number;
+	change: number;
+	changePtc: number;
 };
 export const CurrencyNumber = (props: Props) => {
 	const { close, change, changePtc } = props;
+
+	const changeStyleColor = change >= 0 ? 'green' : 'red';
+
+	const changeSign = change >= 0 ? '+' : '-';
 
 	return (
 		<div style={{ display: 'flex', justifyContent: 'center' }}>
@@ -17,11 +21,14 @@ export const CurrencyNumber = (props: Props) => {
 
 				{/*  */}
 				<div style={{ display: 'flex' }}>
-					<H2>${niceDec(close)}</H2>
-					<p style={{ fontSize: '12px' }}>USD</p>
+					<H3>${niceDec(close)}</H3>
+					<Paragraph1 style={{ fontSize: '12px' }}>USD</Paragraph1>
 				</div>
 
-				<p style={{ color: 'red' }}>-0.51 (0.40%)</p>
+				{change && (
+					<p style={{ color: changeStyleColor }}>{changeSign}{niceDec(change)} ({niceDec(changePtc)}%)</p>
+				)}
+
 			</div>
 		</div>
 	)
