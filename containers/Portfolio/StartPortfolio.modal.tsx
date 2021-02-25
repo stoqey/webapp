@@ -21,6 +21,7 @@ import {
 } from 'components/PageStyles/Checkout.styled';
 
 import { createOrderMutation } from './portfolios.api'
+import { niceDec } from 'utils/number';
 
 interface Props {
   quote: MarketDataType;
@@ -70,10 +71,10 @@ const StartPortfolio = (props: Props) => {
       client,
       args: {
         action,// : ActionType.BUY,
-        size: qty,
+        size: Math.abs(qty),
         type,
-        price: type === "market" ? close : price,
-        stopPrice,
+        price: Math.abs(type === "market" ? close : price),
+        stopPrice: Math.abs(stopPrice),
       },
       success: async (d: any) => {
         console.log('success starting portfolio', d);
@@ -88,7 +89,7 @@ const StartPortfolio = (props: Props) => {
 
 
 
-  const finalPrice = type === "limit"? qty * price : qty * close;
+  const finalPrice = niceDec(type === "limit" ? qty * price : qty * close);
   return (
     <>
 
@@ -225,7 +226,7 @@ const StartPortfolio = (props: Props) => {
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                   <Input
                     disabled={type === "market"}
-                    value={type === "market"? close : price}
+                    value={type === "market" ? close : price}
                     type={"number"}
                     onChange={(e: any) => handleState("price")(e.target.value)}
                     placeholder="Price"
@@ -266,18 +267,18 @@ const StartPortfolio = (props: Props) => {
 
                 <PriceList>
                   <PriceItem>
-                    <span>Market Price</span> <span>${close}</span>
+                    <span>Market Price</span> <span>${niceDec(close)}</span>
                   </PriceItem>
 
                   {/* Limit price */}
                   {type === "limit" && (
                     <PriceItem>
-                      <span>Limit Price</span> <span>${price}</span>
+                      <span>Limit Price</span> <span>${niceDec(+price)}</span>
                     </PriceItem>
                   )}
 
                   <PriceItem>
-                    <span>Total amount</span> <span> {type === "market" ? qty * close : qty * price} </span>
+                    <span>Total amount</span> <span> {finalPrice} </span>
                   </PriceItem>
                 </PriceList>
                 <Button
