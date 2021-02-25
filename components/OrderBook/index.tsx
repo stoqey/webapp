@@ -4,6 +4,8 @@ import { OrderType } from '@stoqey/client-graphql';
 import { CurrencyNumberContainer } from 'containers/Currency/CurrencyNumber';
 import { styled } from 'baseui';
 import { H6 } from 'baseui/typography';
+import { isEmpty } from 'lodash';
+import { sortBuyOrders, sortSellOrders } from 'utils/orders.utils'
 
 export const Block = styled('div', ({ $theme }) => ({
 	backgroundColor: $theme.colors.primaryB,
@@ -17,7 +19,15 @@ interface Props {
 const OrderBook: NextPage<Props> = (props: Props) => {
 	const { orders = [] } = props;
 
+	let bids = [];
+	let asks = [];
 	console.log('orders are', orders.length);
+
+	if (!isEmpty(orders)) {
+		bids = orders.filter((i) => i.action === 'BUY').sort(sortBuyOrders);
+		asks = orders.filter((i) => i.action === 'SELL').sort(sortSellOrders);
+	}
+
 	return (
 		<>
 			{/* Currency amount */}
@@ -36,10 +46,21 @@ const OrderBook: NextPage<Props> = (props: Props) => {
 					</Block>
 
 					{/* Bid Cell */}
-					<div style={{ padding: '10px', background: 'rgba(49, 242, 161, 0.39)', display: 'flex', justifyContent: 'space-between', width: '100%' }}>
-						<H6>2,333</H6>
-						<H6>3.5</H6>
-					</div>
+					{bids.map(i => {
+						const { price, qty } = i
+						return (
+							<div key={i.id}
+								style={{
+									padding: '10px',
+									background: 'rgba(49, 242, 161, 0.39)',
+									display: 'flex', justifyContent: 'space-between', width: '100%'
+								}}>
+								<H6>${qty}</H6>
+								<H6>${price}</H6>
+							</div>
+						)
+					})}
+
 
 				</div>
 
@@ -52,10 +73,16 @@ const OrderBook: NextPage<Props> = (props: Props) => {
 					</Block>
 
 					{/* Ask Cell */}
-					<div style={{ padding: '10px', background: 'rgb(216 33 33 / 38%)', display: 'flex', justifyContent: 'space-between', width: '100%' }}>
-						<H6>3.5</H6>
-						<H6>2,333</H6>
-					</div>
+					{asks.map(i => {
+						const { price, qty } = i
+						return (
+							<div key={i.id} style={{ padding: '10px', background: 'rgb(216 33 33 / 38%)', display: 'flex', justifyContent: 'space-between', width: '100%' }}>
+								<H6>${price}</H6>
+								<H6>{qty}</H6>
+							</div>
+						)
+					})}
+
 				</div>
 				<div></div>
 			</div>
