@@ -5,8 +5,9 @@ import Sticky from 'react-stickynode';
 import MenuWrapper, { Menu, MenuItem, MenuLink } from './SideMenu.styled';
 
 const menuItems = [
+	
 	{
-		id: 2,
+		id: 1,
 		label: 'Positions',
 		path: '/portfolio',
 	},
