@@ -11,11 +11,13 @@ export const Block = styled('div', ({ $theme }) => ({
 }));
 
 interface Props {
-	close: number;
 	orders: OrderType[];
 };
 
-const OrderBook: NextPage<{}> = () => {
+const OrderBook: NextPage<Props> = (props: Props) => {
+	const { orders = [] } = props;
+
+	console.log('orders are', orders.length);
 	return (
 		<>
 			{/* Currency amount */}
