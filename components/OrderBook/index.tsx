@@ -21,7 +21,6 @@ const OrderBook: NextPage<Props> = (props: Props) => {
 
 	let bids = [];
 	let asks = [];
-	console.log('orders are', orders.length);
 
 	if (!isEmpty(orders)) {
 		bids = orders.filter((i) => i.action === 'BUY').sort(sortBuyOrders);
