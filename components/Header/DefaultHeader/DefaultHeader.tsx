@@ -16,6 +16,8 @@ import HeaderWrapper, {
 	NavLeft,
 	NavRight,
 } from './DefaultHeader.styled';
+import { useStyletron } from 'styletron-react';
+import StqRoboIcon from '@/components/logo/icon';
 
 const DefaultHeader: React.FC<{}> = () => {
 	const cartItems = useCartState('cartItems');
@@ -28,11 +30,7 @@ const DefaultHeader: React.FC<{}> = () => {
 					{/* Stoqey logo */}
 					<Logo
 						path="/"
-						src={
-							<SvgIcon
-								src={require('../../../assets/images/logo.svg?include')}
-							/>
-						}
+						src={<StqRoboIcon />}
 					/>
 					<MenuRight className="menu-right">
 						<TopMenu />
