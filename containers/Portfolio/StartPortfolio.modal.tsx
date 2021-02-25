@@ -3,7 +3,6 @@ import { IoIosCheckmarkCircleOutline } from 'react-icons/io';
 import { Block } from 'baseui/block';
 import { Modal, ModalBody } from 'baseui/modal';
 import { useApolloClient } from '@apollo/client';
-
 import { Grid, Cell } from 'baseui/layout-grid';
 import { ActionType, MarketDataType, IOrderType } from '@stoqey/client-graphql';
 import { FaShoppingBag, FaMapMarkerAlt, FaMoneyCheckAlt, FaMoneyBillWave, FaPaypal, FaCreditCard, FaPiggyBank, FaBitcoin } from 'react-icons/fa';
@@ -24,6 +23,7 @@ import {
 import { createOrderMutation } from './portfolios.api'
 
 interface Props {
+  quote: MarketDataType;
   show: boolean;
   hide: () => void;
   onError?: (message: string) => void;
@@ -41,15 +41,16 @@ interface State {
 }
 const StartPortfolio = (props: Props) => {
   const client = useApolloClient();
-  const { show, hide, onError, onSuccess } = props;
+  const { show, hide, onError, onSuccess, quote } = props;
   const [steps, setSteps] = useState(0);
   const [amount, setAmount] = useState(0);
 
+  const close = quote && quote.close;
   const [state, setState] = useState<State>({
     steps: 1,
     type: IOrderType.MARKET,
     action: ActionType.BUY,
-    price: 3,
+    price: close,
     qty: 1,
   });
 
@@ -65,20 +66,18 @@ const StartPortfolio = (props: Props) => {
   }
 
   const startPortfolio = async () => {
-    // TODO substract from price
-    const size = +amount;
     await createOrderMutation({
       client,
       args: {
         action,// : ActionType.BUY,
-        size,
+        size: qty,
         type,
-        price,
+        price: type === "market" ? close : price,
         stopPrice,
       },
       success: async (d: any) => {
         console.log('success starting portfolio', d);
-        onSuccess(`Successfully started portfolio for ${size} shares`)
+        onSuccess(`Successfully started portfolio for ${qty} shares`)
         hide();
       },
       error: async (e: Error) => {
@@ -89,6 +88,7 @@ const StartPortfolio = (props: Props) => {
 
 
 
+  const finalPrice = type === "limit"? qty * price : qty * close;
   return (
     <>
 
@@ -266,10 +266,18 @@ const StartPortfolio = (props: Props) => {
 
                 <PriceList>
                   <PriceItem>
-                    <span>Market Price</span> <span>$ XXXX</span>
+                    <span>Market Price</span> <span>${close}</span>
                   </PriceItem>
+
+                  {/* Limit price */}
+                  {type === "limit" && (
+                    <PriceItem>
+                      <span>Limit Price</span> <span>${price}</span>
+                    </PriceItem>
+                  )}
+
                   <PriceItem>
-                    <span>Total amount</span> <span> 1.2 </span>
+                    <span>Total amount</span> <span> {type === "market" ? qty * close : qty * price} </span>
                   </PriceItem>
                 </PriceList>
                 <Button
@@ -293,7 +301,7 @@ const StartPortfolio = (props: Props) => {
             {steps === 1 && (
               <Block paddingTop={['30px', '40px', '0']}>
                 {/* Confirm  amount */}
-                <Title>{`You're about to BUY ${amount} of STQ`}</Title>
+                <Title>{`You're about to BUY ${qty} of STQ`}</Title>
 
                 {/* Confirm */}
                 <p style={{ display: 'flex' }}>
