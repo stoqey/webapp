@@ -1,6 +1,11 @@
 import React from 'react';
 import { NextPage } from 'next';
+import { OrderType } from '@stoqey/client-graphql';
 
+interface Props {
+	close: number;
+	orders: OrderType[];
+};
 
 const OrderBook: NextPage<{}> = () => {
 	return (
