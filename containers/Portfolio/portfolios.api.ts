@@ -1,7 +1,7 @@
 import { ApolloClient } from '@apollo/react-hooks';
 import isEmpty from 'lodash/isEmpty';
 import _get from 'lodash/get';
-import { ResType, ActionType, PortfolioType, GET_MY_PORTFOLIOS_PAGINATION, CLOSE_PORTFOLIO_MUTATION, START_PORTFOLIO_MUTATION, TradingStatusType } from '@stoqey/client-graphql';
+import { ResType, ActionType, PortfolioType, GET_MY_PORTFOLIOS_PAGINATION, CLOSE_PORTFOLIO_MUTATION, START_PORTFOLIO_MUTATION, TradingStatusType, IOrderType } from '@stoqey/client-graphql';
 import AsyncStorageDB from '@/lib/AsyncStorageDB';
 
 export const getPortfoliosPaginationApi = async ({
@@ -111,7 +111,13 @@ export const createOrderMutation = async ({
   error,
   success,
 }: {
-  args: { size: number; action: ActionType; };
+  args: { 
+    size: number; 
+    action: ActionType;
+    type?: IOrderType;
+    price?: number;
+    stopPrice?: number;
+   };
   client: ApolloClient<any>;
   error?: (error: Error) => Promise<any>;
   success?: (success: boolean) => Promise<any>;

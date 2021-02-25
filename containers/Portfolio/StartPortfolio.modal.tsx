@@ -21,7 +21,7 @@ import {
   PriceItem,
 } from 'components/PageStyles/Checkout.styled';
 
-import { startPortfolioMutation } from './portfolios.api'
+import { createOrderMutation } from './portfolios.api'
 
 interface Props {
   show: boolean;
@@ -37,6 +37,7 @@ interface State {
   type: IOrderType;
   price: number;
   qty: number;
+  stopPrice?: number;
 }
 const StartPortfolio = (props: Props) => {
   const client = useApolloClient();
@@ -52,6 +53,8 @@ const StartPortfolio = (props: Props) => {
     qty: 1,
   });
 
+  const { type, action, price, qty, stopPrice } = state;
+
   const handleState = (field: string) => {
     return (value) => {
       setState({
@@ -64,11 +67,14 @@ const StartPortfolio = (props: Props) => {
   const startPortfolio = async () => {
     // TODO substract from price
     const size = +amount;
-    await startPortfolioMutation({
+    await createOrderMutation({
       client,
       args: {
-        action: ActionType.BUY,
-        size
+        action,// : ActionType.BUY,
+        size,
+        type,
+        price,
+        stopPrice,
       },
       success: async (d: any) => {
         console.log('success starting portfolio', d);
@@ -81,7 +87,7 @@ const StartPortfolio = (props: Props) => {
     })
   }
 
-  const { type, action, price, qty } = state;
+
 
   return (
     <>
