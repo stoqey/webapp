@@ -36,7 +36,7 @@ const OrderBook: NextPage<Props> = (props: Props) => {
 			<div style={{ display: 'flex' }}>
 
 				{/* BID side */}
-				<div style={{ flex: 0.5, height: '100px' }}>
+				<div style={{ flex: 0.5 }}>
 
 					{/* title */}
 					<Block style={{ display: 'flex', justifyContent: 'space-between', padding: '6px' }}>
@@ -64,7 +64,7 @@ const OrderBook: NextPage<Props> = (props: Props) => {
 				</div>
 
 				{/* Ask side */}
-				<div style={{ flex: 0.5, height: '100px' }}>
+				<div style={{ flex: 0.5 }}>
 					{/* title */}
 					<Block style={{ display: 'flex', justifyContent: 'space-between', padding: '6px' }}>
 						<H6>Ask</H6>
