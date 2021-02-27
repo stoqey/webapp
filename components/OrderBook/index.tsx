@@ -46,7 +46,8 @@ const OrderBook: NextPage<Props> = (props: Props) => {
 
 					{/* Bid Cell */}
 					{bids.map(i => {
-						const { price, qty } = i
+						const { price, qty: totalQty, filledQty } = i;
+						const qty = totalQty - filledQty;
 						return (
 							<div key={i.id}
 								style={{
@@ -73,7 +74,8 @@ const OrderBook: NextPage<Props> = (props: Props) => {
 
 					{/* Ask Cell */}
 					{asks.map(i => {
-						const { price, qty } = i
+						const { price, qty: totalQty, filledQty } = i;
+						const qty = totalQty - filledQty;
 						return (
 							<div key={i.id} style={{ padding: '10px', background: 'rgb(216 33 33 / 38%)', display: 'flex', justifyContent: 'space-between', width: '100%' }}>
 								<H6>${price}</H6>
