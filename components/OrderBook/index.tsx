@@ -49,7 +49,7 @@ const OrderBook: NextPage<Props> = (props: Props) => {
 						const { price, qty: totalQty, filledQty } = i;
 						const qty = totalQty - filledQty;
 						return (
-							<div key={i.id}
+							<div key={i.id + qty}
 								style={{
 									padding: '10px',
 									background: 'rgba(49, 242, 161, 0.39)',
@@ -77,7 +77,7 @@ const OrderBook: NextPage<Props> = (props: Props) => {
 						const { price, qty: totalQty, filledQty } = i;
 						const qty = totalQty - filledQty;
 						return (
-							<div key={i.id} style={{ padding: '10px', background: 'rgb(216 33 33 / 38%)', display: 'flex', justifyContent: 'space-between', width: '100%' }}>
+							<div key={i.id + qty} style={{ padding: '10px', background: 'rgb(216 33 33 / 38%)', display: 'flex', justifyContent: 'space-between', width: '100%' }}>
 								<H6>${price}</H6>
 								<H6>{qty}</H6>
 							</div>

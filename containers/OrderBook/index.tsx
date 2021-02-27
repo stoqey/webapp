@@ -10,10 +10,9 @@ import { isEmpty } from 'lodash';
 export const OrderBookContainer = () => {
 
     const client = useApolloClient();
-    const { data: initData } = useQuery(GET_ALL_ORDERS, {
-        fetchPolicy: 'network-only'
-    });
-    const defualOrders = _get(initData, 'data', []);
+    // const { data: initData } = useQuery(GET_ALL_ORDERS, {
+    //     fetchPolicy: 'network-only'
+    // });
     const [orders, setOrders] = React.useState<OrderType[]>();
     // console.log('initial data is ', defualOrders);
 
@@ -42,7 +41,7 @@ export const OrderBookContainer = () => {
 
     }, []);
 
-    return <OrderBook orders={isEmpty(orders)? defualOrders: orders} />;
+    return <OrderBook orders={orders} />;
 }
 
 export default OrderBookContainer;
