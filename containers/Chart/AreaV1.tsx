@@ -395,51 +395,50 @@ const AreaV1: NextPage<{}> = () => {
     return (
         <>
             <Cell span={[12, 12, 12]}>
-                <Block>
+                <Block justifyContent="center" alignContent="center" display="flex" width="100%">
                     <Button
                         onClick={() => updateData('one_month')}
                         kind={selection === 'one_month' ? 'primary' : 'secondary'}
-                        size="large"
+                        size="compact"
                     >
                         1M
 								</Button>
                     <Button
                         onClick={() => updateData('six_months')}
                         kind={selection === 'six_months' ? 'primary' : 'secondary'}
-                        size="large"
+                        size="compact"
                     >
                         6M
 								</Button>
                     <Button
                         onClick={() => updateData('one_year')}
                         kind={selection === 'one_year' ? 'primary' : 'secondary'}
-                        size="large"
+                        size="compact"
                     >
                         1Y
 								</Button>
                     <Button
                         onClick={() => updateData('ytd')}
                         kind={selection === 'ytd' ? 'primary' : 'secondary'}
-                        size="large"
+                        size="compact"
                     >
                         YTD
 								</Button>
                     <Button
                         onClick={() => updateData('all')}
                         kind={selection === 'all' ? 'primary' : 'secondary'}
-                        size="large"
+                        size="compact"
                     >
                         ALL
 								</Button>
-
-                    <Block paddingTop="20px">
-                        <ApexChart
-                            options={state.options}
-                            series={state.series}
-                            type="area"
-                            height={420}
-                        />
-                    </Block>
+                </Block>
+                <Block paddingTop="20px">
+                    <ApexChart
+                        options={state.options}
+                        series={state.series}
+                        type="area"
+                        height={420}
+                    />
                 </Block>
             </Cell>
 
