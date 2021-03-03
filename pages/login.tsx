@@ -17,11 +17,11 @@ const Pricing: NextPage<{}> = () => {
 	return (
 		<>
 			<Head>
-				<title>Login | Stoqey</title>
-				<meta name="Description" content="Stoqey Beta" />
+				<title>Login/Signup | Stoqey</title>
+				<meta name="Description" content="Login/Signup | Stoqey" />
 			</Head>
 
-			<PageTitle backdrop={true} title={'Stoqey'} subtitle={'Invest in the Stoqey IPO'} />
+			<PageTitle backdrop={true} title={'Login/Signup'} subtitle={'Stoqey IPO/ICO'} />
 
 			<Container>
 				{/* Phone Login */}

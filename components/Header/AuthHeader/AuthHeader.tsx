@@ -5,6 +5,8 @@ import { Button } from 'baseui/button';
 import Logo from '../../UiElements/Logo/Logo';
 import SvgIcon from '../../UiElements/SvgIcon/SvgIcon';
 import Container from '../../UiElements/Container/Container';
+import StqRoboIcon from '@/components/logo/icon';
+import { CurrencyNumberContainer } from 'containers/Currency/CurrencyNumber';
 
 type AuthHeaderType = {
   pathname?: string;
@@ -19,7 +21,7 @@ const AuthHeader = ({ pathname }: AuthHeaderType) => {
             style: {
               display: 'flex',
               alignItems: 'center',
-              justifyContent: 'space-between',
+              justifyContent: 'center',
               padding: '23px 0',
             },
           },
@@ -28,7 +30,10 @@ const AuthHeader = ({ pathname }: AuthHeaderType) => {
         <Logo
           path={pathname}
           src={
-            <SvgIcon src={require('../../../assets/images/logo.svg?include')} />
+            <>
+              <StqRoboIcon />
+              <CurrencyNumberContainer />
+            </>
           }
         />
 
