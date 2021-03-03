@@ -22,7 +22,7 @@ const Pricing: NextPage<{}> = () => {
 				<meta name="Description" content="Login/Signup | Stoqey" />
 			</Head>
 
-			<PageTitle backdrop={true} title={'Login/Signup'} subtitle={'Stoqey IPO/ICO'} />
+			<PageTitle backdrop={true} title={'Sup 👋, enter your phone'} subtitle={'to continue to Stoqey, new or existing investors'} />
 
 			<Container>
 				<Block paddingTop={['0', '0', '0', '40px']}>

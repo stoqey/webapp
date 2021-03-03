@@ -11,9 +11,12 @@ import { useApolloClient } from '@apollo/client';
 import { phoneLoginApi, PhoneAuthCreds } from './api';
 import AsyncStorageDB, { JSONDATA } from '@/lib/AsyncStorageDB';
 import Toaster from '@/components/UiElements/Toaster/Toaster';
-import PhoneInput from './PhoneInput';
+import { PhoneInput, SIZE } from "baseui/phone-input";
 
 export const PhoneLogin = () => {
+
+  const [country, setCountry] = React.useState(undefined);
+  const [text, setText] = React.useState("");
 
   let ui: firebaseui.auth.AuthUI = null;
   let toastKey = null;
@@ -120,8 +123,17 @@ export const PhoneLogin = () => {
   return (
     <>
       <Toaster toastKey={toastKey} />
+
+      {/* Phone input right here */}
       <div style={{ display: "flex", justifyContent: "center", alignItems: "center", flexDirection: 'column', padding: '20px' }}>
-        <PhoneInput />
+        <PhoneInput
+          country={country}
+          onCountryChange={({ option }) => setCountry(option)}
+          text={text}
+          onTextChange={e => setText(e.currentTarget.value)}
+          size={SIZE.default}
+        />
+
         <Button
           size="large"
           shape="pill"
