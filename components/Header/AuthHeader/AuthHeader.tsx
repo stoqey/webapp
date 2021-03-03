@@ -32,42 +32,45 @@ const AuthHeader = ({ pathname }: AuthHeaderType) => {
           }
         />
 
-        <Block>
-          <Button
-            kind="minimal"
-            disabled={pathname === '/login'}
-            onClick={() => Router.push('/login')}
-            overrides={{
-              BaseButton: {
-                style: ({ $theme }) => {
-                  return {
-                    ...$theme.typography.font250,
-                    ':disabled': {
-                      backgroundColor: 'transparent',
-                    },
-                  };
+        {pathname !== '/login' && (
+          <Block>
+            <Button
+              kind="minimal"
+              disabled={pathname === '/login'}
+              onClick={() => Router.push('/login')}
+              overrides={{
+                BaseButton: {
+                  style: ({ $theme }) => {
+                    return {
+                      ...$theme.typography.font250,
+                      ':disabled': {
+                        backgroundColor: 'transparent',
+                      },
+                    };
+                  },
                 },
-              },
-            }}
-          >
-            Login
-          </Button>
-          <Button
-            disabled={pathname === '/signup'}
-            onClick={() => Router.push('/signup')}
-            overrides={{
-              BaseButton: {
-                style: ({ $theme }) => {
-                  return {
-                    ...$theme.typography.font250,
-                  };
+              }}
+            >
+              Login
+            </Button>
+            <Button
+              disabled={pathname === '/login'}
+              onClick={() => Router.push('/login')}
+              overrides={{
+                BaseButton: {
+                  style: ({ $theme }) => {
+                    return {
+                      ...$theme.typography.font250,
+                    };
+                  },
                 },
-              },
-            }}
-          >
-            Join Free
-          </Button>
-        </Block>
+              }}
+            >
+              Join Free
+            </Button>
+          </Block>
+        )}
+
       </Block>
     </Container>
   );
