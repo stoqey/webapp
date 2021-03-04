@@ -37,12 +37,11 @@ const Layout: React.FunctionComponent<{ router?: any }> = ({
       {pathname === '/login' || pathname === '/signup' ? (
         <AuthHeader pathname={pathname} />
       ) : (
-        <Header />
-      )}
+          <Header />
+        )}
 
       <ContentWrapper>{children}</ContentWrapper>
-
-      {pathname === '/login' || pathname === '/signup' ? '' : <Footer />}
+      <Footer />
     </AppWrapper>
   );
 };
