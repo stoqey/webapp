@@ -127,10 +127,13 @@ export const PhoneLogin = () => {
   async function codeVerification() {
     const allCodes = codes.join("");
     try {
-      //at this line i am facing issue.
-      const credential = firebase.auth.PhoneAuthProvider.credential(verificationId, allCodes);
-      const loginUsingCred = await firebase.auth().signInWithCredential(credential);
-      console.log('login results', loginUsingCred);
+      if (!loading) {
+        //at this line i am facing issue.
+        const credential = firebase.auth.PhoneAuthProvider.credential(verificationId, allCodes);
+        const loginUsingCred = await firebase.auth().signInWithCredential(credential);
+        console.log('login results', loginUsingCred);
+      }
+
       // var result = userLocal.updatePhoneNumber(credential);
     } catch (error) {
       console.log(error);
@@ -141,9 +144,9 @@ export const PhoneLogin = () => {
   // Code verification listener
   useEffect(() => {
     const allCodesStatus = codes.filter(c => !isEmpty(c))
-    if(allCodesStatus.length >= 6 && !loading){
-      codeVerification(); // run verification code
+    if (allCodesStatus.length >= 6 && !loading) {
       setLoading(true);
+      codeVerification(); // run verification code
     }
   }, [codes, loading])
 
@@ -177,7 +180,7 @@ export const PhoneLogin = () => {
           <PinCode
             values={codes}
             onChange={({ values }) => setCodes(values)}
-            // clearOnEscape
+          // clearOnEscape
           />
 
           <Button
