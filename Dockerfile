@@ -1,35 +1,41 @@
-FROM mhart/alpine-node:10.19 AS builder
+# base image
+FROM node:10.23.0-stretch as builder
 
+# ### ARGS ------------------>
+# ### ARGS ------------------>
 ARG FB_SA_KEY
 ARG BACKEND
+ARG PAYPAL_ID
 
-WORKDIR /srv
+# create & set working directory
+RUN mkdir -p /usr/src
+WORKDIR /usr/src
 
-COPY . .
-
-# Add backend path
-RUN rm -rf keys/url.json
-RUN echo "\"$BACKEND"\" > keys/url.json
+# copy source files
+COPY . /usr/src
 
 # Add firebase config
-RUN mkdir -p ./keys && echo $FB_SA_KEY > ./keys/firebase.config.json
+RUN mkdir -p /usr/src/keys && echo $FB_SA_KEY > /usr/src/keys/firebase.config.json
 
-RUN apk update && apk upgrade && \
-    apk add --no-cache bash git openssh libc6-compat autoconf automake libtool make tiff jpeg zlib zlib-dev pkgconf nasm file gcc musl-dev
+# install dependencies
+RUN npm i yarn -g & yarn
 
-RUN apk add --no-cache --virtual .gyp \
-        python \
-        make \
-        g++ \
-    && npm install \
-    && apk del .gyp
-
-RUN npm run build
-
-# use lighter image
-FROM mhart/alpine-node:slim-10.19
-RUN apk add libc6-compat
-COPY --from=builder /srv .
+# Backend url
+ENV NEXT_PUBLIC_API_URL=$BACKEND
+ENV NEXT_PUBLIC_PAYPAL_ID=$PAYPAL_ID
 ENV NODE_ENV=production
-EXPOSE 3000
-CMD ["node","node_modules/.bin/next", "start"]
+
+# Save all env to dotenv
+RUN printenv | sed 's/\([^=]*=\)\(.*\)/\1"\2"/' > /usr/src/.env
+
+# Build app
+RUN yarn build
+
+# Export static HTML
+RUN yarn export
+
+FROM mhart/alpine-node:slim-10.19
+COPY --from=builder /usr/src .
+ENV NODE_ENV=production
+EXPOSE 80
+CMD ["node","node_modules/.bin/serve", "-d", "out", "-p", "80"]

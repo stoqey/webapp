@@ -12,9 +12,9 @@ import {
 	Title,
 	Subtitle,
 	SpaceBetween,
-} from '../../components/PageStyles/Settings.styled';
+} from '../../../components/PageStyles/Settings.styled';
 
-import applicationsPageData from '../../data/applicationsPage';
+import applicationsPageData from '../../../data/applicationsPage';
 
 const sortOptions = [
 	{ label: 'Sort by A', value: 'a' },

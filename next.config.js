@@ -10,7 +10,7 @@ const nextConfiguration = {
     return config;
   },
   env: {
-    clientId: process.env.PAYPAL_CLIENT,
+    paypalId: process.env.PAYPAL_CLIENT,
   },
 };
 

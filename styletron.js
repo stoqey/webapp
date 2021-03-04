@@ -1,9 +1,6 @@
 import { Client, Server } from 'styletron-engine-atomic';
 import { DebugEngine } from 'styletron-react';
 
-export const isServer =
-  typeof window === 'undefined'
-
 const getHydrateClass = () =>
   document.getElementsByClassName('_styletron_hydrate_');
 
@@ -11,7 +8,7 @@ export const styletron =
   typeof window === 'undefined'
     ? new Server()
     : new Client({
-        hydrate: document.getElementsByClassName('_styletron_hydrate_') as any,
+        hydrate: getHydrateClass(),
       });
 
 // export const debug =

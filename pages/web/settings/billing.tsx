@@ -11,7 +11,7 @@ import SvgIcon from 'components/UiElements/SvgIcon/SvgIcon';
 import { TextButton } from 'components/PageStyles/Settings.styled';
 import { StyledTableHeadAlt } from 'components/PageStyles/Apps.styled';
 
-import billingPageData from '../../data/billingPage';
+import billingPageData from '../../../data/billingPage';
 
 const Billing: NextPage<{}> = () => {
 	return (
@@ -44,7 +44,7 @@ const Billing: NextPage<{}> = () => {
 											<Fragment key={index}>
 												<StyledBodyCell $striped={striped}>
 													<SvgIcon
-														src={require('../../assets/images/check.svg?include')}
+														src={require('assets/images/check.svg?include')}
 													/>{' '}
 													{item.id}
 												</StyledBodyCell>

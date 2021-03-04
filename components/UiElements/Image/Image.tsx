@@ -3,7 +3,7 @@ import { Img } from 'react-image';
 
 const Placeholder = () => (
   <img
-    src={require('../../../assets/images/placeholder.jpg')}
+    src={require('assets/images/placeholder.jpg')}
     alt="product img loder"
   />
 );

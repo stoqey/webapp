@@ -5,14 +5,16 @@
 				"dev": "next -p 3036",
 				"build": "next build",
 				"start": "next start",
-				"migrate": "node scripts/migrate-db.js"
+				"export": "next export",
+				"migrate": "node scripts/migrate-db.js",
+				"all": "yarn build && yarn export && serve -d out"
 		},
 		"dependencies": {
 				"@apollo/client": "^3.2.5",
 				"@apollo/react-hooks": "^4.0.0",
 				"@glidejs/glide": "^3.4.1",
-				"@stoqey/client-graphql": "^0.2.1",
-				"@stoqey/serverless-couchbase": "^0.0.4",
+				"@react-firebase/auth": "^0.2.10",
+				"@stoqey/client-graphql": "^0.2.2",
 				"apexcharts": "^3.19.2",
 				"bad-words": "^3.0.4",
 				"baseui": "^9.84.0",
@@ -54,15 +56,18 @@
 				"react-stockcharts": "^0.7.8",
 				"react-toastify": "^6.0.8",
 				"resize-observer-polyfill": "^1.5.1",
+				"serve": "^11.3.2",
 				"styletron": "^3.0.4",
 				"styletron-engine-atomic": "^1.4.6",
 				"styletron-react": "^5.2.7",
 				"subscriptions-transport-ws": "^0.9.18",
 				"swr": "^0.3.9",
 				"typeface-open-sans": "^0.0.75",
-				"uuid": "^8.3.0"
+				"uuid": "^8.3.0",
+				"validator": "^13.5.2"
 		},
 		"devDependencies": {
+				"@types/firebase": "^3.2.1",
 				"@types/lodash": "^4.14.164",
 				"@types/node": "^14.0.27",
 				"@types/react": "^16.9.45",

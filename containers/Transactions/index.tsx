@@ -51,7 +51,7 @@ const TransactionsTable: NextPage<{}> = () => {
 							<Fragment key={index}>
 								<StyledBodyCell $striped={striped}>
 									<SvgIcon
-										src={require('../../assets/images/check.svg?include')}
+										src={require('assets/images/check.svg?include')}
 									/>{' '}
 									{item.id}
 								</StyledBodyCell>

@@ -10,7 +10,8 @@ env:
   GKE_ZONE: ${{ secrets.GKE_ZONE }}
   NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }} 
   FB_SA_KEY: ${{ secrets.FB_SA_KEY_JSON }}
-  BACKEND: stqwebapp.cloudaxe.co
+  PAYPAL_ID: ${{ secrets.DEV_PAYPAL_ID }}
+  BACKEND: ${{ secrets.DEV_STQ_BACKEND }} 
   CLUSTER: cloudx
   DEPLOYMENT: stqwebapp
   IMAGE: stqwebapp-dev
@@ -43,6 +44,7 @@ jobs:
         docker build \
           --tag "gcr.io/$GKE_PROJECT/$IMAGE:${GITHUB_SHA:0:7}" \
           --build-arg BACKEND="$BACKEND" \
+          --build-arg PAYPAL_ID="$PAYPAL_ID" \
           --build-arg FB_SA_KEY="$FB_SA_KEY" \
           --build-arg GITHUB_SHA="$GITHUB_SHA" \
           --build-arg GITHUB_REF="$GITHUB_REF" \

@@ -7,6 +7,7 @@ import Container from 'components/UiElements/Container/Container';
 import PortfolioMenu from 'components/SideMenu/PortfolioMenu';
 import TransactionsTable from 'containers/Transactions'
 import OrderBook from '@/components/OrderBook';
+import OrderBookContainer from 'containers/OrderBook';
 
 
 const TransactionsHistory: NextPage<{}> = () => {
@@ -24,7 +25,7 @@ const TransactionsHistory: NextPage<{}> = () => {
 							<PortfolioMenu />
 						</Cell>
 						<Cell span={[12, 12, 9]}>
-							<OrderBook />
+							<OrderBookContainer />
 						</Cell>
 					</Grid>
 				</Block>

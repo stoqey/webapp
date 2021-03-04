@@ -31,7 +31,7 @@ const DefaultHeader: React.FC<{}> = () => {
 
 					{/* Stoqey logo */}
 					<Logo
-						path="/"
+						path="/web"
 						src={
 							<>
 								<StqRoboIcon />
@@ -46,14 +46,14 @@ const DefaultHeader: React.FC<{}> = () => {
 							path="/shop/checkout"
 							icon={
 								<SvgIcon
-									src={require('../../../assets/images/cart-bag.svg?include')}
+									src={require('assets/images/cart-bag.svg?include')}
 								/>
 							}
 							count={cartItems.length}
 						/> */}
 						<AvatarMenu
 							name="Stoqey Bot"
-							src={require('../../../assets/images/STQ.png')}
+							src={require('assets/images/STQ.png')}
 						/>
 					</MenuRight>
 				</TopBar>
@@ -65,7 +65,7 @@ const DefaultHeader: React.FC<{}> = () => {
 						<StickyNav>
 							<NavLeft>
 								<Logo
-									path="/"
+									path="/web"
 									src={
 										<>
 											<StqRoboIcon />
@@ -81,14 +81,14 @@ const DefaultHeader: React.FC<{}> = () => {
 									path="/shop/checkout"
 									icon={
 										<SvgIcon
-											src={require('../../../assets/images/cart-bag.svg?include')}
+											src={require('assets/images/cart-bag.svg?include')}
 										/>
 									}
 									count={cartItems.length}
 								/> */}
 								<AvatarMenu
 									name="Stoqey Bot"
-									src={require('../../../assets/images/STQ.png')}
+									src={require('assets/images/STQ.png')}
 								/>
 							</NavRight>
 						</StickyNav>

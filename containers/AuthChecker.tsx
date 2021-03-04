@@ -19,7 +19,7 @@ export const AuthChecker = () => {
 
         const logout = async () => {
             await AsyncStorageDB.deleteAuthItem();
-            router.push('/login');
+            router.push('/web/login');
         }
         const getMe = async () => {
             try {
@@ -60,7 +60,7 @@ export const AuthChecker = () => {
 
         }
 
-        if(!['/', '/login', '/404'].includes(router.pathname)){
+        if(!['/', '/login', '/404', '/web/login'].includes(router.pathname)){
             getMe();
         }
     }, []);
