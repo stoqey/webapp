@@ -9,6 +9,8 @@ import Container from '@/components/UiElements/Container/Container';
 import pricingPageData from '../data/pricingPage';
 import HighlightChart from 'containers/Chart/HighlightChart';
 import CurrencyPill from '@/components/Currency';
+import OrderBookContainer from 'containers/OrderBook';
+import AreaV1 from 'containers/Chart/AreaV1';
 
 const PhoneLogin = dynamic(() => import('containers/PhoneLogin'), {
 	ssr: false,
@@ -31,27 +33,22 @@ const Pricing: NextPage<{}> = () => {
 	return (
 		<>
 			<Head>
-				<title>{title} | Stoqey</title>
+				<title>Home | Stoqey</title>
 				<meta name="Description" content="Stoqey Beta" />
 			</Head>
 
-			<PageTitle backdrop={false} title={'Stoqey Beta'}  />
-
-
-			<div style={{ position: 'absolute', width: '100%'}}>
-				{/* <CurrencyPill name={"STQ"} amount={1000} /> */}
-			</div>
-
-			
+			<PageTitle backdrop={false} title={'Beta'} />
 
 			<Container>
-				<Block marginLeft="-11px" marginRight="-11px">
-
-					{/* <HighlightChart /> */}
-
-					{/* <Grid gridColumns={12} gridGutters={22} gridMargins={0}>
-						
-					</Grid> */}
+				<Block paddingTop={['0', '0', '0', '40px']}>
+					<Grid gridColumns={12} gridGutters={0} gridMargins={0}>
+						<Cell span={[12, 12, 6]}>
+							<OrderBookContainer />
+						</Cell>
+						<Cell span={[12, 12, 6]}>
+							<AreaV1 />
+						</Cell>
+					</Grid>
 				</Block>
 			</Container>
 		</>
