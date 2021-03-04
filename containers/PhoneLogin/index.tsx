@@ -42,8 +42,6 @@ export const PhoneLogin = () => {
 
   // const app: app.app.App | null = app.initializeApp();
   const captchaRef = React.useRef(null);
-
-  let ui: firebaseui.auth.AuthUI = null;
   let toastKey = null;
   const db = AsyncStorageDB;
   const client = useApolloClient();
@@ -74,55 +72,6 @@ export const PhoneLogin = () => {
       // send send user to home
     }
   });
-
-  // if (firebase.apps.length <= 0) {
-  //   firebase.initializeApp(firebaseConfig);
-  // }
-
-  const uiConfig = {
-    signInOptions: [firebase.auth.PhoneAuthProvider.PROVIDER_ID],
-    // Terms of service url.
-    tosUrl: "/terms",
-    // Privacy policy url.
-    privacyPolicyUrl: "/privacy",
-
-    // Opens IDP Providers sign-in flow in a popup.
-    // signInFlow: "popup",
-    callbacks: {
-      // Called when the user has been successfully signed in.
-      signInSuccessWithAuthResult: function (authResult: PhoneAuthResults, redirectUrl) {
-
-        if (authResult.user) {
-          // console.log('login', JSON.stringify(authResult))
-          const resData: PhoneAuthResults = JSONDATA(JSON.stringify(authResult)) as any;
-          // console.log('login', resData)
-          const phone = resData.user.phoneNumber // _.get(authResult, 'user.phoneNumber', '');
-          const firebaseToken = resData.user.stsTokenManager.accessToken // _.get(authResult, 'user.stsTokenManager.accessToken', '');
-
-          let createNew: boolean = false;
-          if (resData.additionalUserInfo && resData.additionalUserInfo.isNewUser) {
-            createNew = resData.additionalUserInfo.isNewUser;
-          }
-
-          // Login without creating new account
-          phoneLoginApiCall({
-            phone,
-            firebaseToken,
-            createNew
-          });
-
-        } else {
-          // Show error from here
-          toastKey = toaster.negative(<>Error logging in with phone number, please try again</>, {
-            autoHideDuration: 6000
-          })
-        }
-
-        // Do not redirect.
-        return false;
-      }
-    },
-  };
 
   async function codeVerification() {
     const allCodes = codes.join("");
