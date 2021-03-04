@@ -14,14 +14,8 @@ WORKDIR /usr/src
 # copy source files
 COPY . /usr/src
 
-# # Add backend path
-# RUN rm -rf keys/url.json
-# RUN echo "\"$BACKEND"\" > keys/url.json
-
-# Add paypal production
-
 # Add firebase config
-RUN mkdir -p ./keys && echo $FB_SA_KEY > ./keys/firebase.config.json
+RUN mkdir -p /usr/src/keys && echo $FB_SA_KEY > /usr/src/keys/firebase.config.json
 
 # install dependencies
 RUN npm install
@@ -30,6 +24,10 @@ RUN npm install
 ENV NEXT_PUBLIC_API_URL=$BACKEND
 ENV NEXT_PUBLIC_PAYPAL_ID=$PAYPAL_ID
 ENV NODE_ENV=production
+
+# Save all env to dotenv
+RUN printenv | sed 's/\([^=]*=\)\(.*\)/\1"\2"/' > /usr/src/.env
+
 # Build app
 RUN npm run build
 
