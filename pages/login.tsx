@@ -35,8 +35,6 @@ const Pricing: NextPage<{}> = () => {
 						</Cell>
 					</Grid>
 				</Block>
-				{/* Phone Login */}
-
 			</Container>
 		</>
 	);
