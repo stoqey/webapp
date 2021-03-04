@@ -51,9 +51,9 @@ export const PhoneLogin = () => {
         autoHideDuration: 2500
       });
 
-      return setTimeout(() => {
-        router.reload();
-      }, 2500);
+      // return setTimeout(() => {
+      //   router.reload();
+      // }, 2500);
     },
     success: async (data) => {
 
