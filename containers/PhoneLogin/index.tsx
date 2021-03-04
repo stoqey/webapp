@@ -118,7 +118,7 @@ export const PhoneLogin = () => {
   return (
     <>
       <Toaster toastKey={toastKey} />
-      <FirebaseAuthProvider {...config} firebase={firebase}>
+      <FirebaseAuthProvider {...config as any} firebase={firebase}>
         <div style={{ display: "flex", justifyContent: "center", alignItems: "center", flexDirection: 'column', padding: '20px' }}>
 
           {/* RE-captchaRef */}
