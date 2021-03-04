@@ -32,24 +32,10 @@ const MobileHeader: React.FC<{}> = () => {
 	const { theme } = useThemeSwitcherCtx();
 	const cartItems = useCartState('cartItems');
 
-	let pageName: React.ReactNode = pathname.split('/').slice(1, 2);
 	let titleColor = '#000000';
 	if (theme === THEME.dark) {
 		titleColor = '#ffffff';
 	}
-
-	pageName =
-		pathname !== '/' && pathname !== '/_error' ? (
-			<PageTitle $style={{ color: titleColor }}>{pageName}</PageTitle>
-		) : (
-				<Logo
-					style={{ marginTop: '3px' }}
-					path="/"
-					src={
-						<SvgIcon src={require('../../../assets/images/logo.svg?include')} />
-					}
-				/>
-			);
 
 	let placement;
 	if (menu === 'main') {
