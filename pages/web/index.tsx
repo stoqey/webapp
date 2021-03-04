@@ -6,7 +6,6 @@ import { Block } from 'baseui/block';
 import { Grid, Cell } from 'baseui/layout-grid';
 import PageTitle from '@/components/UiElements/PageTitle/PageTitle';
 import Container from '@/components/UiElements/Container/Container';
-import pricingPageData from '../data/pricingPage';
 import HighlightChart from 'containers/Chart/HighlightChart';
 import CurrencyPill from '@/components/Currency';
 import OrderBookContainer from 'containers/OrderBook';
@@ -17,7 +16,6 @@ const PhoneLogin = dynamic(() => import('containers/PhoneLogin'), {
 });
 
 const Pricing: NextPage<{}> = () => {
-	const { title, subtitle, plans } = pricingPageData;
 	const [loading, setLoading] = useState(false);
 	const [pricingPlan, setPricingPlan] = useState('Free');
 
