@@ -73,8 +73,9 @@ export const PhoneLogin = () => {
     }
   });
 
-  async function codeVerification() {
-    const allCodes = codes.join("");
+  const codeVerification = async (allCodes: string) => {
+
+    console.log('all credintials', { allCodes, verificationId })
     try {
       if (!loading) {
 
@@ -152,7 +153,7 @@ export const PhoneLogin = () => {
               const allCodesStatus = values.filter(c => !isEmpty(c))
               if (allCodesStatus.length >= 6 && !loading) {
                 setLoading(true);
-                codeVerification(); // run verification code
+                codeVerification(values.join("")); // run verification code
               }
             }}
           // clearOnEscape
@@ -169,7 +170,7 @@ export const PhoneLogin = () => {
 
               firebase.auth().signInWithPhoneNumber(fullPhoneNumber, appVerifier)
                 .then(function (confirmationResult) {
-                  setVerificationId(confirmationResult.verificationId);
+                  return setVerificationId(confirmationResult.verificationId);
                 }).catch(function (error) {
                   // TODO error loggin in with phone
                 });
