@@ -12,11 +12,29 @@ import { phoneLoginApi, PhoneAuthCreds } from './api';
 import AsyncStorageDB, { JSONDATA } from '@/lib/AsyncStorageDB';
 import Toaster from '@/components/UiElements/Toaster/Toaster';
 import { PhoneInput, SIZE } from "baseui/phone-input";
+import { PinCode } from "baseui/pin-code";
+import "firebase/auth";
+import {
+    FirebaseAuthProvider,
+    FirebaseAuthConsumer,
+    IfFirebaseAuthed,
+    IfFirebaseAuthedAnd
+} from "@react-firebase/auth";
+import config from 'keys/firebase.config.json';
+
 
 export const PhoneLogin = () => {
 
   const [country, setCountry] = React.useState(undefined);
   const [text, setText] = React.useState("");
+  const [codes, setCodes] = React.useState([
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+  ]);
 
   let ui: firebaseui.auth.AuthUI = null;
   let toastKey = null;
@@ -124,6 +142,9 @@ export const PhoneLogin = () => {
     <>
       <Toaster toastKey={toastKey} />
 
+
+      {/* Firebae container here */}
+      
       {/* Phone input right here */}
       <div style={{ display: "flex", justifyContent: "center", alignItems: "center", flexDirection: 'column', padding: '20px' }}>
         <PhoneInput
@@ -132,6 +153,12 @@ export const PhoneLogin = () => {
           text={text}
           onTextChange={e => setText(e.currentTarget.value)}
           size={SIZE.default}
+        />
+
+        <PinCode
+          values={codes}
+          onChange={({ values }) => setCodes(values)}
+          clearOnEscape
         />
 
         <Button
@@ -150,7 +177,6 @@ export const PhoneLogin = () => {
             },
           }}
         > Continue </Button>
-
       </div>
       {/* <div id="firebaseui-auth-container"></div> */}
     </>
