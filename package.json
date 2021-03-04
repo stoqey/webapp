@@ -61,7 +61,8 @@
 				"subscriptions-transport-ws": "^0.9.18",
 				"swr": "^0.3.9",
 				"typeface-open-sans": "^0.0.75",
-				"uuid": "^8.3.0"
+				"uuid": "^8.3.0",
+				"validator": "^13.5.2"
 		},
 		"devDependencies": {
 				"@types/firebase": "^3.2.1",

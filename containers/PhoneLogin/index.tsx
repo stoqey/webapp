@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import validator from 'validator';
 import firebaseConfig from 'keys/firebase.config.json';
 import router from 'next/router';
 import { toaster } from 'baseui/toast';
@@ -25,8 +26,11 @@ import config from 'keys/firebase.config.json';
 
 export const PhoneLogin = () => {
 
-  const [country, setCountry] = React.useState(undefined);
+  const [country, setCountry] = React.useState({ label: "Canada", id: "CA", dialCode: "+1" });
   const [phone, setPhone] = React.useState("");
+  const [verificationId, setVerificationId] = React.useState(undefined);
+  const [loading, setLoading] = React.useState(false);
+
   const [codes, setCodes] = React.useState([
     "",
     "",
@@ -35,6 +39,9 @@ export const PhoneLogin = () => {
     "",
     ""
   ]);
+
+  // const app: app.app.App | null = app.initializeApp();
+  const captchaRef = React.useRef(null);
 
   let ui: firebaseui.auth.AuthUI = null;
   let toastKey = null;
@@ -117,30 +124,31 @@ export const PhoneLogin = () => {
     },
   };
 
-  React.useEffect(() => {
-
-    // check if firebase ui exists
-    // if (firebaseui.auth.AuthUI.getInstance()) {
-    //   ui = firebaseui.auth.AuthUI.getInstance()
-    // } else {
-    //   ui = new firebaseui.auth.AuthUI(firebase.auth())
-    // }
-
-    async function checkIfUserExists() {
-      const user = await AsyncStorageDB.getAuthItem();
-      if (isEmpty(user && user.accessToken)) {
-        ui.start("#firebaseui-auth-container", uiConfig)
-      }
+  async function codeVerification() {
+    const allCodes = codes.join("");
+    try {
+      //at this line i am facing issue.
+      const credential = firebase.auth.PhoneAuthProvider.credential(verificationId, allCodes);
+      const loginUsingCred = await firebase.auth().signInWithCredential(credential);
+      console.log('login results', loginUsingCred);
+      // var result = userLocal.updatePhoneNumber(credential);
+    } catch (error) {
+      console.log(error);
     }
-    // checkIfUserExists();
-    // return () => {
-    //   ui.delete()
-    // }
-  }, []);
+    setLoading(false);
+  }
 
-  console.log('phone number is', {
-    phone, country
-  })
+  // Code verification listener
+  useEffect(() => {
+    const allCodesStatus = codes.filter(c => !isEmpty(c))
+    if(allCodesStatus.length >= 6 && !loading){
+      codeVerification(); // run verification code
+      setLoading(true);
+    }
+  }, [codes, loading])
+
+  const fullPhoneNumber = `${country.dialCode}${phone}`;
+  const isValid = validator.isMobilePhone(fullPhoneNumber);
 
   return (
     <>
@@ -149,25 +157,46 @@ export const PhoneLogin = () => {
       <FirebaseAuthProvider {...config} firebase={firebase}>
         <div style={{ display: "flex", justifyContent: "center", alignItems: "center", flexDirection: 'column', padding: '20px' }}>
 
-          <PhoneInput
-            country={country}
-            onCountryChange={({ option }) => setCountry(option)}
-            text={phone}
-            onTextChange={e => setPhone(e.currentTarget.value)}
-            size={SIZE.default}
-            clearable
-          />
+          {/* RE-captchaRef */}
+          <div id="recaptcha-container" ref={captchaRef}></div>
+
+          {(isEmpty(verificationId)) && (
+            <PhoneInput
+              country={country}
+              onCountryChange={({ option }) => setCountry(option)}
+              text={phone}
+              onTextChange={e => setPhone(e.currentTarget.value)}
+              size={SIZE.default}
+              clearable
+              positive={isValid}
+              error={!isValid}
+            />
+          )}
+
 
           <PinCode
             values={codes}
             onChange={({ values }) => setCodes(values)}
-            clearOnEscape
+            // clearOnEscape
           />
 
           <Button
             size="large"
             shape="pill"
-            onClick={() => { }}
+            onClick={() => {
+              const appVerifier = new firebase.auth.RecaptchaVerifier(captchaRef.current, {
+                size: 'invisible',
+                callback: (response: any) => { },
+              });
+
+              firebase.auth().signInWithPhoneNumber(fullPhoneNumber, appVerifier)
+                .then(function (confirmationResult) {
+                  setVerificationId(confirmationResult.verificationId);
+                }).catch(function (error) {
+                  // TODO error loggin in with phone
+                });
+
+            }}
             overrides={{
               BaseButton: {
                 style: ({ $theme }) => {
@@ -182,8 +211,6 @@ export const PhoneLogin = () => {
           > Continue </Button>
         </div>
       </FirebaseAuthProvider>
-
-      {/* <div id="firebaseui-auth-container"></div> */}
     </>
   )
 }
