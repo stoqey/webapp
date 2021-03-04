@@ -11,7 +11,7 @@ env:
   NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }} 
   FB_SA_KEY: ${{ secrets.FB_SA_KEY_JSON }}
   PAYPAL_ID: ${{ secrets.DEV_PAYPAL_ID }}
-  BACKEND: stqwebapp.cloudaxe.co
+  BACKEND: ${{ secrets.DEV_STQ_BACKEND }} 
   CLUSTER: cloudx
   DEPLOYMENT: stqwebapp
   IMAGE: stqwebapp-dev
