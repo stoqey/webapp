@@ -34,7 +34,7 @@ const Layout: React.FunctionComponent<{ router?: any }> = ({
 
   return (
     <AppWrapper className={theme} style={{ backgroundColor: layoutBg }}>
-      {pathname === '/login' || pathname === '/signup' ? (
+      {pathname === '/web/login' || pathname === '/login' || pathname === '/signup' ? (
         <AuthHeader pathname={pathname} />
       ) : (
           <Header />
