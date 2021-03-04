@@ -88,7 +88,7 @@ const MobileHeader: React.FC<{}> = () => {
 						style={{ margin: '0 20px' }}
 						icon={
 							<SvgIcon
-								src={require('../../../assets/images/cart-bag.svg?include')}
+								src={require('assets/images/cart-bag.svg?include')}
 							/>
 						}
 						count={cartItems.length}

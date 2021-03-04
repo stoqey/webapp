@@ -80,7 +80,7 @@ const Settings: NextPage<{}> = () => {
 												height={150}
 												onCrop={handleOnCrop}
 												onBeforeFileLoad={handleBeforeFileLoad}
-												src={require('../../assets/images/avatar.jpg')}
+												src={require('assets/images/avatar.jpg')}
 											/>
 										</AvatarWrapper>
 									</Block>

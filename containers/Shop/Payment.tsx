@@ -27,7 +27,7 @@ const Payment = () => {
         onClick={() => handlePayment('paypal')}
       >
         <img
-          src={require('../../assets/images/payment/paypal.png')}
+          src={require('assets/images/payment/paypal.png')}
           alt="paypal"
         />
       </Button>
@@ -37,7 +37,7 @@ const Payment = () => {
         onClick={() => handlePayment('mastercard')}
       >
         <img
-          src={require('../../assets/images/payment/mastercard.png')}
+          src={require('assets/images/payment/mastercard.png')}
           alt="mastercard"
         />
       </Button>
@@ -46,7 +46,7 @@ const Payment = () => {
         isLoading={loading && paymentMethod === 'visa'}
         onClick={() => handlePayment('visa')}
       >
-        <img src={require('../../assets/images/payment/visa.png')} alt="visa" />
+        <img src={require('assets/images/payment/visa.png')} alt="visa" />
       </Button>
 
       <Modal

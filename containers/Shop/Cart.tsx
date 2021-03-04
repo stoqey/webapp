@@ -76,7 +76,7 @@ const Cart = ({ products }: CartType) => {
           },
         }}
       >
-        <SvgIcon src={require('../../assets/images/truck.svg?include')} />
+        <SvgIcon src={require('assets/images/truck.svg?include')} />
         <Message>
           <Strong>Free Delivery</Strong> on this order
         </Message>
