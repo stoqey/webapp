@@ -1,18 +1,14 @@
+import { useRouter } from 'next/router';
 import React from 'react';
 import ActiveLink from '../../../UiElements/NavLink/NavLink';
 import Menu, { MenuItem, MenuLink } from './BateMenu.styled';
 
 const menuItems = [
   {
-    id: 0,
-    label: 'Dash',
-    path: '/web',
+    id: 1,
+    label: 'Home',
+    path: '/web/home',
   },
-  // {
-  //   id: 1,
-  //   label: 'Home',
-  //   path: '/home',
-  // },
   {
     id: 2,
     label: 'Invest',
@@ -23,16 +19,16 @@ const menuItems = [
     label: 'Portfolio',
     path: '/web/portfolio',
   },
-  {
-    id: 4,
-    label: 'Account',
-    path: '/web/account',
-  },
-  {
-    id: 5,
-    label: 'OrderBook',
-    path: '/web/orderbook',
-  },
+  // {
+  //   id: 4,
+  //   label: 'Account',
+  //   path: '/web/account',
+  // },
+  // {
+  //   id: 5,
+  //   label: 'OrderBook',
+  //   path: '/web/orderbook',
+  // },
 ];
 
 type MenuProps = {
@@ -40,13 +36,14 @@ type MenuProps = {
   onClick?: () => void;
 };
 
-const MainMenu = ({ className, onClick }: MenuProps) => {
+const BetaMenu = ({ className, onClick }: MenuProps) => {
+  const { pathname } = useRouter();
   return (
     <Menu className={className}>
       {menuItems.map(item => (
         <MenuItem key={`top-menu--item${item.id}`} onClick={onClick}>
           <ActiveLink activeClassName="active" href={item.path}>
-            <MenuLink>{item.label}</MenuLink>
+            <MenuLink className={pathname === item.path ? 'active' : ''}>{item.label}</MenuLink>
           </ActiveLink>
         </MenuItem>
       ))}
@@ -54,4 +51,4 @@ const MainMenu = ({ className, onClick }: MenuProps) => {
   );
 };
 
-export default MainMenu;
+export default BetaMenu;
