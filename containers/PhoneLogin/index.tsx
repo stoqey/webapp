@@ -74,8 +74,6 @@ export const PhoneLogin = () => {
   });
 
   const codeVerification = async (allCodes: string) => {
-
-    console.log('all credintials', { allCodes, verificationId })
     try {
       if (!loading) {
 
@@ -131,7 +129,7 @@ export const PhoneLogin = () => {
           {/* RE-captchaRef */}
           <div id="recaptcha-container" ref={captchaRef}></div>
 
-          {(isEmpty(verificationId)) && (
+          {(isEmpty(verificationId)) ? (
             <PhoneInput
               country={country}
               onCountryChange={({ option }) => setCountry(option)}
@@ -142,22 +140,18 @@ export const PhoneLogin = () => {
               positive={isValid}
               error={!isValid}
             />
-          )}
-
-
-          {/* Check if PinCode */}
-          <PinCode
-            values={codes}
-            onChange={({ values }) => {
-              setCodes(values)
-              const allCodesStatus = values.filter(c => !isEmpty(c))
-              if (allCodesStatus.length >= 6 && !loading) {
-                setLoading(true);
-                codeVerification(values.join("")); // run verification code
-              }
-            }}
-          // clearOnEscape
-          />
+          ) : <PinCode
+              values={codes}
+              onChange={({ values }) => {
+                setCodes(values)
+                const allCodesStatus = values.filter(c => !isEmpty(c))
+                if (allCodesStatus.length >= 6 && !loading) {
+                  setLoading(true);
+                  codeVerification(values.join("")); // run verification code
+                }
+              }}
+            />
+          }
 
           <Button
             size="large"
