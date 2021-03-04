@@ -2,7 +2,7 @@ require('dotenv/config');
 const withPlugins = require('next-compose-plugins');
 const withOptimizedImages = require('next-optimized-images');
 const withFonts = require('next-fonts');
-const isProd = process.env.NODE_ENV === 'production';
+// const isProd = process.env.NODE_ENV === 'production';
 
 const nextConfiguration = {
   webpack: (config) => {
@@ -13,7 +13,7 @@ const nextConfiguration = {
   env: {
     paypalId: process.env.PAYPAL_CLIENT,
   },
-  assetPrefix: isProd ? 'web/' : '',
+  // assetPrefix: isProd ? 'web/' : '',
 };
 
 module.exports = withPlugins(
