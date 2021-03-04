@@ -6,7 +6,7 @@ export const Svg = styled('svg', ({ $theme }) => ({
 }));
 
 export const Par = styled('p', ({ $theme }) => ({
-    paddingRight: '15px',
+    padding: '2px',
 }));
 
 function StqRoboIcon() {

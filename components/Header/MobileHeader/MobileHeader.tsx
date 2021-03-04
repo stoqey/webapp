@@ -22,6 +22,8 @@ import HeaderWrapper, {
 	PageTitle,
 	TopMenuWrapper,
 } from './MobileHeader.styled';
+import StqRoboIcon from '@/components/logo/icon';
+import { CurrencyNumberContainer } from 'containers/Currency/CurrencyNumber';
 
 const MobileHeader: React.FC<{}> = () => {
 	const [isOpen, setIsOpen] = useState(false);
@@ -40,14 +42,14 @@ const MobileHeader: React.FC<{}> = () => {
 		pathname !== '/' && pathname !== '/_error' ? (
 			<PageTitle $style={{ color: titleColor }}>{pageName}</PageTitle>
 		) : (
-			<Logo
-				style={{ marginTop: '3px' }}
-				path="/"
-				src={
-					<SvgIcon src={require('../../../assets/images/logo.svg?include')} />
-				}
-			/>
-		);
+				<Logo
+					style={{ marginTop: '3px' }}
+					path="/"
+					src={
+						<SvgIcon src={require('../../../assets/images/logo.svg?include')} />
+					}
+				/>
+			);
 
 	let placement;
 	if (menu === 'main') {
@@ -72,7 +74,7 @@ const MobileHeader: React.FC<{}> = () => {
 							style: ({ $theme }) => {
 								return {
 									fontSize: '22px',
-									width: '104px',
+									// width: '104px',
 									justifyContent: 'flex-start',
 									':hover': {
 										backgroundColor: $theme.colors.primaryB,
@@ -85,10 +87,10 @@ const MobileHeader: React.FC<{}> = () => {
 						},
 					}}
 				>
-					<FiMenu />
+					<StqRoboIcon />
 				</Button>
 
-				{pageName}
+				<CurrencyNumberContainer />
 
 				<Block
 					overrides={{
