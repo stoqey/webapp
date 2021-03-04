@@ -35,7 +35,8 @@ RUN npm run build
 RUN npm run export
 
 # use lighter image
-FROM pierrezemb/gostatic
-
+FROM joseluisq/static-web-server
+ENV SERVER_ROOT=/srv/http
+ENV SERVER_PORT=80
 COPY --from=builder /usr/src/out /srv/http
 EXPOSE 80
