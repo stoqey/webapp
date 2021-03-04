@@ -1,11 +1,10 @@
 import React, { useEffect } from 'react';
 import validator from 'validator';
-import firebaseConfig from 'keys/firebase.config.json';
+import config from 'keys/firebase.config.json';
 import router from 'next/router';
 import { toaster } from 'baseui/toast';
 import { Button } from 'baseui/button';
 import { isEmpty } from 'lodash';
-import * as firebaseui from "firebaseui";
 import firebase from "firebase";
 import { PhoneAuthResults } from './firebase.phonauthresults';
 import { useApolloClient } from '@apollo/client';
@@ -21,7 +20,7 @@ import {
   IfFirebaseAuthed,
   IfFirebaseAuthedAnd
 } from "@react-firebase/auth";
-import config from 'keys/firebase.config.json';
+
 
 
 export const PhoneLogin = () => {
@@ -153,35 +152,38 @@ export const PhoneLogin = () => {
             />
           }
 
-          <Button
-            size="large"
-            shape="pill"
-            onClick={() => {
-              const appVerifier = new firebase.auth.RecaptchaVerifier(captchaRef.current, {
-                size: 'invisible',
-                callback: (response: any) => { },
-              });
-
-              firebase.auth().signInWithPhoneNumber(fullPhoneNumber, appVerifier)
-                .then(function (confirmationResult) {
-                  return setVerificationId(confirmationResult.verificationId);
-                }).catch(function (error) {
-                  // TODO error loggin in with phone
+          {isEmpty(verificationId) && (
+            <Button
+              size="large"
+              shape="pill"
+              onClick={() => {
+                const appVerifier = new firebase.auth.RecaptchaVerifier(captchaRef.current, {
+                  size: 'invisible',
+                  callback: (response: any) => { },
                 });
 
-            }}
-            overrides={{
-              BaseButton: {
-                style: ({ $theme }) => {
-                  return {
-                    margin: '15px',
-                    width: '60%',
-                    ...$theme.typography.font450,
-                  };
+                firebase.auth().signInWithPhoneNumber(fullPhoneNumber, appVerifier)
+                  .then(function (confirmationResult) {
+                    return setVerificationId(confirmationResult.verificationId);
+                  }).catch(function (error) {
+                    // TODO error loggin in with phone
+                  });
+
+              }}
+              overrides={{
+                BaseButton: {
+                  style: ({ $theme }) => {
+                    return {
+                      margin: '15px',
+                      width: '60%',
+                      ...$theme.typography.font450,
+                    };
+                  },
                 },
-              },
-            }}
-          > Continue </Button>
+              }}
+            > Send code </Button>
+          )}
+
         </div>
       </FirebaseAuthProvider>
     </>
