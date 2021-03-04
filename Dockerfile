@@ -18,7 +18,7 @@ COPY . /usr/src
 RUN mkdir -p /usr/src/keys && echo $FB_SA_KEY > /usr/src/keys/firebase.config.json
 
 # install dependencies
-RUN npm install
+RUN npm i yarn -g & yarn
 
 # Backend url
 ENV NEXT_PUBLIC_API_URL=$BACKEND
@@ -29,14 +29,13 @@ ENV NODE_ENV=production
 RUN printenv | sed 's/\([^=]*=\)\(.*\)/\1"\2"/' > /usr/src/.env
 
 # Build app
-RUN npm run build
+RUN yarn build
 
 # Export static HTML
-RUN npm run export
+RUN yarn export
 
-# use lighter image
-FROM joseluisq/static-web-server
-ENV SERVER_ROOT=/srv/http
-ENV SERVER_PORT=80
-COPY --from=builder /usr/src/out /srv/http
+FROM mhart/alpine-node:slim-10.19
+COPY --from=builder /usr/src .
+ENV NODE_ENV=production
 EXPOSE 80
+CMD ["node","node_modules/.bin/serve", "-d", "out", "-p", "80"]
