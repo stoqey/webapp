@@ -18,7 +18,7 @@ COPY . /usr/src
 RUN mkdir -p /usr/src/keys && echo $FB_SA_KEY > /usr/src/keys/firebase.config.json
 
 # install dependencies
-RUN npm i yarn -g & yarn
+RUN yarn
 
 # Backend url
 ENV NEXT_PUBLIC_API_URL=$BACKEND
