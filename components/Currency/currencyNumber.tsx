@@ -17,7 +17,7 @@ export const CurrencyNumber = (props: Props) => {
 
 	return (
 		<div style={{ display: 'flex', justifyContent: 'center' }}>
-			<div style={{ textAlign: 'center', padding: '4px' }}>
+			<div style={{ textAlign: 'center', padding: '10px' }}>
 
 				{/*  */}
 				<div style={{ display: 'flex' }}>
