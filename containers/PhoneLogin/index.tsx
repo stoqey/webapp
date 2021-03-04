@@ -19,7 +19,6 @@ import {
 } from "@react-firebase/auth";
 
 
-
 export const PhoneLogin = () => {
 
   const [country, setCountry] = React.useState({ label: "Canada", id: "CA", dialCode: "+1" });
@@ -119,7 +118,7 @@ export const PhoneLogin = () => {
   return (
     <>
       <Toaster toastKey={toastKey} />
-      <FirebaseAuthProvider {...config as any} firebase={firebase}>
+      <FirebaseAuthProvider {...config} firebase={firebase}>
         <div style={{ display: "flex", justifyContent: "center", alignItems: "center", flexDirection: 'column', padding: '20px' }}>
 
           {/* RE-captchaRef */}

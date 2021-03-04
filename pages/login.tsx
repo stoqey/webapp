@@ -3,18 +3,23 @@ import { NextPage } from 'next';
 import Head from 'next/head';
 import dynamic from 'next/dynamic';
 import { Block } from 'baseui/block';
+import firebase from "firebase";
+import firebaseConfig from 'keys/firebase.config.json';
 import { Grid, Cell } from 'baseui/layout-grid';
 import PageTitle from '@/components/UiElements/PageTitle/PageTitle';
 import Container from '@/components/UiElements/Container/Container';
-import pricingPageData from '../data/pricingPage';
-import HighlightChart from 'containers/Chart/HighlightChart';
 import AreaV1 from 'containers/Chart/AreaV1';
 
 const PhoneLogin = dynamic(() => import('containers/PhoneLogin'), {
 	ssr: false,
 });
 
-const Pricing: NextPage<{}> = () => {
+const LoginPage: NextPage<{}> = () => {
+
+	if (firebase.apps.length <= 0) {
+		firebase.initializeApp(firebaseConfig);
+	}
+
 	return (
 		<>
 			<Head>
@@ -40,4 +45,4 @@ const Pricing: NextPage<{}> = () => {
 	);
 };
 
-export default Pricing;
+export default LoginPage;

@@ -5,26 +5,21 @@ import Document, {
   NextScript,
   DocumentContext,
 } from 'next/document';
-import { styletron, isServer } from 'styletron';
-import isEmpty from 'lodash/isEmpty';
-
-const favicon = require('assets/images/favicon.png');
+import { Provider as StyletronProvider } from 'styletron-react';
+import { styletron } from '../styletron';
+import favicon from 'assets/images/favicon.png';
 export default class CustomDocument extends Document<any> {
   static async getInitialProps(ctx: DocumentContext) {
     const page = await ctx.renderPage((App) => (props) => (
-      <App {...props} />
-    ))
-
-    const stylesheets = !isServer ? styletron && (styletron as any).getStylesheets() : [];
+      <StyletronProvider value={styletron}>
+        <App {...props} />
+      </StyletronProvider>
+    ));
+    const stylesheets = styletron && (styletron as any).getStylesheets() || [];
     return { ...page, stylesheets };
   }
-  
-
-  // console.log('_document PayPal form', process.env.NEXT_PUBLIC_PAYPAL_CLIENT);
 
   render() {
-    const { stylesheets = [] } = this.props;
-
     return (
       <Html lang="en-US">
         <Head>
@@ -35,15 +30,10 @@ export default class CustomDocument extends Document<any> {
           />
           <link rel="icon" href={favicon} type="image/png" sizes="16x16" />
 
-          <script src="https://www.gstatic.com/firebasejs/ui/4.5.0/firebase-ui-auth.js"></script>
-          <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.5.0/firebase-ui-auth.css" />
-          <script src="https://www.gstatic.com/firebasejs/7.13.1/firebase-app.js"></script>
-          <script src="https://www.gstatic.com/firebasejs/7.13.1/firebase-analytics.js"></script>
-
           {/* PayPal script */}
           <script src="https://www.paypal.com/sdk/js?client-id=PRODUCTION_CLIENT_ID" />
-
-          {!isEmpty(stylesheets) && stylesheets.map((sheet, i) => (
+          <link rel="icon" href={favicon} type="image/png" sizes="16x16" />
+          {this.props.stylesheets.map((sheet, i) => (
             <style
               className="_styletron_hydrate_"
               dangerouslySetInnerHTML={{ __html: sheet.css }}
@@ -53,7 +43,7 @@ export default class CustomDocument extends Document<any> {
             />
           ))}
         </Head>
-        <body>
+        <body dir="ltr">
           <Main />
           <NextScript />
         </body>
