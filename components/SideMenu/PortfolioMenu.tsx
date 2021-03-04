@@ -14,12 +14,12 @@ const menuItems = [
 	{
 		id: 3,
 		label: 'Transactions',
-		path: '/web/portfolio/history',
+		path: '/web/history',
 	},
 	{
 		id: 4,
 		label: 'Withdraw',
-		path: '/web/portfolio/withdraw',
+		path: '/web/withdraw',
 	}
 ];
 
