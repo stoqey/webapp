@@ -28,9 +28,6 @@ ENV NODE_ENV=production
 # Save all env to dotenv
 RUN printenv | sed 's/\([^=]*=\)\(.*\)/\1"\2"/' > /usr/src/.env
 
-# Build app
-RUN yarn build
-
 # Export static HTML
 RUN yarn export
 
