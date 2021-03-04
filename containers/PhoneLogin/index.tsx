@@ -128,27 +128,45 @@ export const PhoneLogin = () => {
     const allCodes = codes.join("");
     try {
       if (!loading) {
+
         //at this line i am facing issue.
         const credential = firebase.auth.PhoneAuthProvider.credential(verificationId, allCodes);
-        const loginUsingCred = await firebase.auth().signInWithCredential(credential);
-        console.log('login results', loginUsingCred);
+        const authResult = await firebase.auth().signInWithCredential(credential);
+
+        if (authResult.user) {
+          // console.log('login', JSON.stringify(authResult))
+          const resData: PhoneAuthResults = JSONDATA(JSON.stringify(authResult)) as any;
+          // console.log('login', resData)
+          const phone = resData.user.phoneNumber // _.get(authResult, 'user.phoneNumber', '');
+          const firebaseToken = resData.user.stsTokenManager.accessToken // _.get(authResult, 'user.stsTokenManager.accessToken', '');
+
+          let createNew: boolean = false;
+          if (resData.additionalUserInfo && resData.additionalUserInfo.isNewUser) {
+            createNew = resData.additionalUserInfo.isNewUser;
+          }
+
+          // Login without creating new account
+          phoneLoginApiCall({
+            phone,
+            firebaseToken,
+            createNew
+          });
+
+        } else {
+          // Show error from here
+          throw new Error('logging in with phone number, please try again')
+        }
       }
 
-      // var result = userLocal.updatePhoneNumber(credential);
     } catch (error) {
       console.log(error);
+      // Show error from here
+      toastKey = toaster.negative(<>Error: {error && error.message}</>, {
+        autoHideDuration: 6000
+      })
     }
     setLoading(false);
   }
-
-  // Code verification listener
-  useEffect(() => {
-    const allCodesStatus = codes.filter(c => !isEmpty(c))
-    if (allCodesStatus.length >= 6 && !loading) {
-      setLoading(true);
-      codeVerification(); // run verification code
-    }
-  }, [codes, loading])
 
   const fullPhoneNumber = `${country.dialCode}${phone}`;
   const isValid = validator.isMobilePhone(fullPhoneNumber);
@@ -177,9 +195,17 @@ export const PhoneLogin = () => {
           )}
 
 
+          {/* Check if PinCode */}
           <PinCode
             values={codes}
-            onChange={({ values }) => setCodes(values)}
+            onChange={({ values }) => {
+              setCodes(values)
+              const allCodesStatus = values.filter(c => !isEmpty(c))
+              if (allCodesStatus.length >= 6 && !loading) {
+                setLoading(true);
+                codeVerification(); // run verification code
+              }
+            }}
           // clearOnEscape
           />
 
