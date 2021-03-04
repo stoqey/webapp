@@ -6,7 +6,8 @@
 				"build": "next build",
 				"start": "next start",
 				"export": "next export",
-				"migrate": "node scripts/migrate-db.js"
+				"migrate": "node scripts/migrate-db.js",
+				"all": "yarn build && yarn export && serve -d out"
 		},
 		"dependencies": {
 				"@apollo/client": "^3.2.5",

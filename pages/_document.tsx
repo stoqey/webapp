@@ -79,7 +79,7 @@ export default class CustomDocument extends Document<any> {
           ))}
 
           {/* PayPal script */}
-          <script src="https://www.paypal.com/sdk/js?client-id=PRODUCTION_CLIENT_ID" />
+          <script src={`https://www.paypal.com/sdk/js?client-id=${process.env.NEXT_PUBLIC_ENV_VARIABLE}`} />
         </Head>
         <body dir="ltr">
           <Main />

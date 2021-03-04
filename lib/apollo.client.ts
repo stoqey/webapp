@@ -10,15 +10,17 @@ import { setContext } from "@apollo/client/link/context";
 import { WebSocketLink } from "@apollo/client/link/ws";
 import { getMainDefinition } from "@apollo/client/utilities";
 import includes from "lodash/includes";
-import urlFromJson from "keys/url.json";
 import AsyncStorageDB from "./AsyncStorageDB";
 
 let apolloClient;
 
-const demoToken = "stoqey.api.token.demo.hash";
-
 function createApolloClient() {
-  console.log("json url is simply", urlFromJson);
+  const urlFromJson = process.env.NEXT_PUBLIC_API_URL;
+
+  // console.log(
+  //   "process.env.NEXT_PUBLIC_API_URL ----> ",
+  //   process.env.NEXT_PUBLIC_API_URL
+  // );
 
   let useHttps = false;
 
@@ -27,11 +29,11 @@ function createApolloClient() {
   }
 
   const devBaseUrl = `://${urlFromJson}/graphql`;
-  const backendUrl = `http${useHttps? 's': ''}${devBaseUrl}`;
+  const backendUrl = `http${useHttps ? "s" : ""}${devBaseUrl}`;
 
-  const wsUrl = `ws${useHttps? 's': ''}${devBaseUrl}`;
+  const wsUrl = `ws${useHttps ? "s" : ""}${devBaseUrl}`;
 
-  console.log("backend url is", backendUrl);
+  // console.log("backend url is", backendUrl);
 
   const httpLink = new HttpLink({
     uri: backendUrl, // Server URL (must be absolute)
@@ -39,10 +41,10 @@ function createApolloClient() {
 
   const authLink = setContext(async (_, ctx) => {
     const headers = (ctx && ctx.headers) || {};
-     // console.log('<-----------> AuthContext <-----------> BEGIN ', getLastChar(token))
-     const authorization = await AsyncStorageDB.getAuthToken();
-     console.log('<-----------> AuthContext <-----------> END ', authorization);
- 
+    // console.log('<-----------> AuthContext <-----------> BEGIN ', getLastChar(token))
+    const authorization = await AsyncStorageDB.getAuthToken();
+    // console.log("<-----------> AuthContext <-----------> END ", authorization);
+
     // return the headers to the context so httpLink can read them
     return {
       headers: {
