@@ -9,17 +9,17 @@ const menuItems = [
 	{
 		id: 1,
 		label: 'Positions',
-		path: '/portfolio',
+		path: '/web/portfolio',
 	},
 	{
 		id: 3,
 		label: 'Transactions',
-		path: '/portfolio/history',
+		path: '/web/portfolio/history',
 	},
 	{
 		id: 4,
 		label: 'Withdraw',
-		path: '/portfolio/withdraw',
+		path: '/web/portfolio/withdraw',
 	}
 ];
 

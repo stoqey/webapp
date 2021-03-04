@@ -10,6 +10,8 @@ import Logo from '../../UiElements/Logo/Logo';
 import SvgIcon from '../../UiElements/SvgIcon/SvgIcon';
 import TopMenu from '../HeaderMenu/TopMenu/TopMenu';
 import MainMenu from '../HeaderMenu/MainMenu/MainMenu';
+import HomeMenu from '../HeaderMenu/HomeMenu/HomeMenu';
+import BetaMenu from '../HeaderMenu/BetaMenu/BetaMenu';
 import AvatarMenu from '../HeaderMenu/AvatarMenu/AvatarMenu';
 import {
 	useThemeSwitcherCtx,
@@ -93,7 +95,7 @@ const MobileHeader: React.FC<{}> = () => {
 						Block: { style: { display: 'flex', alignItems: 'center' } },
 					}}
 				>
-					<Badge
+					{/* <Badge
 						path="/shop/checkout"
 						style={{ margin: '0 20px' }}
 						icon={
@@ -102,7 +104,7 @@ const MobileHeader: React.FC<{}> = () => {
 							/>
 						}
 						count={cartItems.length}
-					/>
+					/> */}
 
 					<Button
 						onClick={() => {
@@ -158,7 +160,7 @@ const MobileHeader: React.FC<{}> = () => {
 				}}
 			>
 				{menu === 'main' && (
-					<MainMenu
+					<BetaMenu
 						className={`mobile-menu ${theme}`}
 						onClick={() => setIsOpen(false)}
 					/>

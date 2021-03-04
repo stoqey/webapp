@@ -1,38 +1,23 @@
 import React from 'react';
 import ActiveLink from '../../../UiElements/NavLink/NavLink';
-import Menu, { MenuItem, MenuLink } from './BateMenu.styled';
+import Menu, { MenuItem, MenuLink } from './HomeMenu.styled';
 
 const menuItems = [
   {
-    id: 0,
-    label: 'Dash',
+    id: 1,
+    label: 'Overview',
     path: '/web',
   },
   // {
-  //   id: 1,
-  //   label: 'Home',
-  //   path: '/home',
+  //   id: 2,
+  //   label: 'OrderBook',
+  //   path: '/web/orderbook',
   // },
   {
-    id: 2,
-    label: 'Invest',
-    path: '/web/invest',
-  },
-  {
     id: 3,
-    label: 'Portfolio',
-    path: '/web/portfolio',
-  },
-  {
-    id: 4,
-    label: 'Account',
-    path: '/web/account',
-  },
-  {
-    id: 5,
-    label: 'OrderBook',
-    path: '/web/orderbook',
-  },
+    label: 'Join',
+    path: '/web/login',
+  }
 ];
 
 type MenuProps = {
