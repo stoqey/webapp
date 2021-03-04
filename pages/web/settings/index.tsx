@@ -13,7 +13,7 @@ import SettingsMenu from 'components/SideMenu/SettingsMenu';
 import {
 	AvatarWrapper,
 	ButtonGroup,
-} from '../../components/PageStyles/Settings.styled';
+} from '../../../components/PageStyles/Settings.styled';
 
 const AvatarWithNoSSR = dynamic(() => import('react-avatar-edit'), {
 	ssr: false,
