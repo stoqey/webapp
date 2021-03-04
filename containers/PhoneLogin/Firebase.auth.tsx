@@ -12,6 +12,7 @@ import config from 'keys/firebase.config.json';
 
 export const FirebaseAuth = () => {
     return (
+        // @ts-ignore
         <FirebaseAuthProvider {...config} firebase={firebase}>
             <div>
 

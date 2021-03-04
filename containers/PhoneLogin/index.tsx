@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import validator from 'validator';
-import config from 'keys/firebase.config.json';
+import * as config from 'keys/firebase.config.json';
 import router from 'next/router';
 import { toaster } from 'baseui/toast';
 import { Button } from 'baseui/button';
@@ -15,10 +15,7 @@ import { PhoneInput, SIZE } from "baseui/phone-input";
 import { PinCode } from "baseui/pin-code";
 import "firebase/auth";
 import {
-  FirebaseAuthProvider,
-  FirebaseAuthConsumer,
-  IfFirebaseAuthed,
-  IfFirebaseAuthedAnd
+  FirebaseAuthProvider
 } from "@react-firebase/auth";
 
 
@@ -118,11 +115,11 @@ export const PhoneLogin = () => {
   const fullPhoneNumber = `${country.dialCode}${phone}`;
   const isValid = validator.isMobilePhone(fullPhoneNumber);
 
+  // @ts-ignore
   return (
     <>
       <Toaster toastKey={toastKey} />
-
-      <FirebaseAuthProvider {...config} firebase={firebase}>
+      <FirebaseAuthProvider {...config as any} firebase={firebase}>
         <div style={{ display: "flex", justifyContent: "center", alignItems: "center", flexDirection: 'column', padding: '20px' }}>
 
           {/* RE-captchaRef */}
@@ -130,8 +127,8 @@ export const PhoneLogin = () => {
 
           {(isEmpty(verificationId)) ? (
             <PhoneInput
-              country={country}
-              onCountryChange={({ option }) => setCountry(option)}
+              country={country as any}
+              onCountryChange={({ option }) => setCountry(option as any)}
               text={phone}
               onTextChange={e => setPhone(e.currentTarget.value)}
               size={SIZE.default}
@@ -159,13 +156,13 @@ export const PhoneLogin = () => {
               onClick={() => {
                 const appVerifier = new firebase.auth.RecaptchaVerifier(captchaRef.current, {
                   size: 'invisible',
-                  callback: (response: any) => { },
+                  callback: () => { },
                 });
 
                 firebase.auth().signInWithPhoneNumber(fullPhoneNumber, appVerifier)
                   .then(function (confirmationResult) {
                     return setVerificationId(confirmationResult.verificationId);
-                  }).catch(function (error) {
+                  }).catch(function () {
                     // TODO error loggin in with phone
                   });
 

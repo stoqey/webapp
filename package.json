@@ -5,6 +5,7 @@
 				"dev": "next -p 3036",
 				"build": "next build",
 				"start": "next start",
+				"export": "next export",
 				"migrate": "node scripts/migrate-db.js"
 		},
 		"dependencies": {

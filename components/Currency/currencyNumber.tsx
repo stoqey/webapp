@@ -22,7 +22,7 @@ export const CurrencyNumber = (props: Props) => {
 				{/*  */}
 				<div style={{ display: 'flex' }}>
 					<H3>${niceDec(close)}</H3>
-					<Paragraph1 style={{ fontSize: '12px' }}>USD</Paragraph1>
+					<Paragraph1>USD</Paragraph1>
 				</div>
 
 				{/* {change && ( */}
