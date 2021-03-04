@@ -32,7 +32,7 @@ RUN printenv | sed 's/\([^=]*=\)\(.*\)/\1"\2"/' > /usr/src/.env
 RUN npm run build
 
 # Export static HTML
-RUN run run export
+RUN npm run export
 
 # use lighter image
 FROM pierrezemb/gostatic
