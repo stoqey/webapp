@@ -15,10 +15,10 @@ import { PhoneInput, SIZE } from "baseui/phone-input";
 import { PinCode } from "baseui/pin-code";
 import "firebase/auth";
 import {
-    FirebaseAuthProvider,
-    FirebaseAuthConsumer,
-    IfFirebaseAuthed,
-    IfFirebaseAuthedAnd
+  FirebaseAuthProvider,
+  FirebaseAuthConsumer,
+  IfFirebaseAuthed,
+  IfFirebaseAuthedAnd
 } from "@react-firebase/auth";
 import config from 'keys/firebase.config.json';
 
@@ -26,7 +26,7 @@ import config from 'keys/firebase.config.json';
 export const PhoneLogin = () => {
 
   const [country, setCountry] = React.useState(undefined);
-  const [text, setText] = React.useState("");
+  const [phone, setPhone] = React.useState("");
   const [codes, setCodes] = React.useState([
     "",
     "",
@@ -68,9 +68,9 @@ export const PhoneLogin = () => {
     }
   });
 
-  if (firebase.apps.length <= 0) {
-    firebase.initializeApp(firebaseConfig);
-  }
+  // if (firebase.apps.length <= 0) {
+  //   firebase.initializeApp(firebaseConfig);
+  // }
 
   const uiConfig = {
     signInOptions: [firebase.auth.PhoneAuthProvider.PROVIDER_ID],
@@ -138,46 +138,51 @@ export const PhoneLogin = () => {
     // }
   }, []);
 
+  console.log('phone number is', {
+    phone, country
+  })
+
   return (
     <>
       <Toaster toastKey={toastKey} />
 
+      <FirebaseAuthProvider {...config} firebase={firebase}>
+        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", flexDirection: 'column', padding: '20px' }}>
 
-      {/* Firebae container here */}
-      
-      {/* Phone input right here */}
-      <div style={{ display: "flex", justifyContent: "center", alignItems: "center", flexDirection: 'column', padding: '20px' }}>
-        <PhoneInput
-          country={country}
-          onCountryChange={({ option }) => setCountry(option)}
-          text={text}
-          onTextChange={e => setText(e.currentTarget.value)}
-          size={SIZE.default}
-        />
+          <PhoneInput
+            country={country}
+            onCountryChange={({ option }) => setCountry(option)}
+            text={phone}
+            onTextChange={e => setPhone(e.currentTarget.value)}
+            size={SIZE.default}
+            clearable
+          />
 
-        <PinCode
-          values={codes}
-          onChange={({ values }) => setCodes(values)}
-          clearOnEscape
-        />
+          <PinCode
+            values={codes}
+            onChange={({ values }) => setCodes(values)}
+            clearOnEscape
+          />
 
-        <Button
-          size="large"
-          shape="pill"
-          onClick={() => { }}
-          overrides={{
-            BaseButton: {
-              style: ({ $theme }) => {
-                return {
-                  margin: '15px',
-                  width: '60%',
-                  ...$theme.typography.font450,
-                };
+          <Button
+            size="large"
+            shape="pill"
+            onClick={() => { }}
+            overrides={{
+              BaseButton: {
+                style: ({ $theme }) => {
+                  return {
+                    margin: '15px',
+                    width: '60%',
+                    ...$theme.typography.font450,
+                  };
+                },
               },
-            },
-          }}
-        > Continue </Button>
-      </div>
+            }}
+          > Continue </Button>
+        </div>
+      </FirebaseAuthProvider>
+
       {/* <div id="firebaseui-auth-container"></div> */}
     </>
   )
