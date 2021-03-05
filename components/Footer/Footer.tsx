@@ -41,7 +41,9 @@ const Footer: React.FC<{}> = () => {
           <div style={{ background: 'green', height: '100px' }} />
         </Cell>
         <Cell span={[12, 12, 3]}>
-          <div style={{ background: 'green', height: '100px' }} />
+          <div>
+
+          </div>
         </Cell>
         <Cell span={[12, 12, 3]}>
           <div style={{ background: 'green', height: '100px' }} />
