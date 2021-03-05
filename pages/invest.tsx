@@ -3,7 +3,7 @@ import { NextPage } from 'next';
 import Head from 'next/head';
 import { Grid, Cell } from 'baseui/layout-grid';
 import { MarketDataType } from '@stoqey/client-graphql';
-import { FaShoppingBag, FaMapMarkerAlt, FaMoneyCheckAlt, FaMoneyBillWave, FaPaypal, FaCreditCard, FaPiggyBank, FaBitcoin } from 'react-icons/fa';
+import { FaShoppingBag, FaMapMarkerAlt, FaMoneyCheckAlt, FaMoneyBillWave, FaPaypal, FaCreditCard, FaPiggyBank, FaBitcoin, FaDollarSign } from 'react-icons/fa';
 import { Button } from 'baseui/button';
 import { ButtonGroup } from 'baseui/button-group';
 import { Input } from 'baseui/input';
@@ -101,14 +101,14 @@ const Checkout: NextPage<{}> = () => {
 						className={step === 1 ? 'active' : ''}
 						onClick={() => handleChange("step")(1)}
 					>
+						<FaDollarSign />
 						<FaMoneyBillWave />
 						<Block
 							overrides={{
 								Block: {
 									style: ({ $theme }) => {
 										return {
-											paddingLeft: '5px',
-											paddingRight: '5px',
+											padding: '10px',
 											color: $theme.colors.primaryA,
 										};
 									},
@@ -122,16 +122,15 @@ const Checkout: NextPage<{}> = () => {
 						className={step === 2 ? 'active' : ''}
 						onClick={() => handleChange("step")(2)}
 					>
-						<FaPaypal />
 						<FaCreditCard />
+						<FaPaypal />
 						<FaBitcoin />
 						<Block
 							overrides={{
 								Block: {
 									style: ({ $theme }) => {
 										return {
-											paddingLeft: '5px',
-											paddingRight: '5px',
+											padding: '10px',
 											color: $theme.colors.primaryA,
 										};
 									},
@@ -154,7 +153,7 @@ const Checkout: NextPage<{}> = () => {
 							<Cell span={[12, 12, 4]}>
 								<Block paddingTop={['30px', '40px', '0']}>
 									<Title>Payment Details</Title>
-									<div>
+									<div style={{ display: "flex", justifyContent: "center"}}>
 										<Button disabled={step !== 1} size="compact" kind={amountType === "amount" ? "primary" : "secondary"} onClick={() => handleChange("amountType")("amount")}>Amount</Button>
 										<Button disabled={step !== 1} size="compact" kind={amountType === "qty" ? "primary" : "secondary"} onClick={() => handleChange("amountType")("qty")}>Quantity</Button>
 									</div>
