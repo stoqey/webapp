@@ -5,6 +5,7 @@ import { Grid, Cell } from 'baseui/layout-grid';
 import { MarketDataType } from '@stoqey/client-graphql';
 import { FaShoppingBag, FaMapMarkerAlt, FaMoneyCheckAlt, FaMoneyBillWave, FaPaypal, FaCreditCard, FaPiggyBank, FaBitcoin } from 'react-icons/fa';
 import { Button } from 'baseui/button';
+import { ButtonGroup } from 'baseui/button-group';
 import { Input } from 'baseui/input';
 import { Block } from 'baseui/block';
 import Container from 'components/UiElements/Container/Container';
@@ -27,33 +28,56 @@ import {
 import { useUserInfo } from 'hooks/useUserInfo';
 import { useAppEvent } from 'hooks/useAppEvent';
 import { APPEVENTS } from '@/lib/AppEvent';
+import { niceDec } from 'utils/number';
 
 const TITLE = 'Invest';
 const SUB_TITLE = 'Invest in Stoqey';
 
+interface State {
+	step: number;
+	amountType: 'amount' | 'qty';
+	inputAmount: number;
+	inputQty: number;
+}
+
 const Checkout: NextPage<{}> = () => {
-	const [amount, setAmount] = useState(3);
-	const [step, setStep] = useState(1);
+	const [state, setState] = useState<State>({
+		step: 1,
+		amountType: 'amount',
+		inputAmount: 5,
+		inputQty: 1,
+	});
 	const cartItems = useCartState('cartItems');
-	const totalPrice = calcCartItemsTotal(cartItems);
+
 	const { theme } = useThemeSwitcherCtx();
 	const user = useUserInfo();
 
 	const qoute: MarketDataType = useAppEvent(APPEVENTS.CURRENCY);
 
+	const stqPrice = qoute.close || 0;
 	const currencyPrice = qoute && qoute.close || 0;
 
-	const handleStep = () => {
-		setStep(step + 1);
+	const { step, inputAmount, inputQty, amountType } = state;
+
+	const totalPrice = niceDec(amountType === "amount" ? +inputAmount : inputQty * stqPrice);
+
+	const handleChange = (field: string) => {
+		return (val: any) => {
+			setState({
+				...state,
+				[field]: val
+			});
+		}
+
 	};
 
 	let component: React.ReactNode;
 	switch (step) {
 		case 1:
-			component = <CurrencyCart amount={amount} products={cartItems} />;
+			component = <CurrencyCart amount={totalPrice} products={cartItems} />;
 			break;
 		case 2:
-			component = <PayPalPayment amount={amount} userId={user && user.user && user.user.id}/>;
+			component = <PayPalPayment amount={totalPrice} userId={user && user.user && user.user.id} />;
 			break;
 	}
 
@@ -75,7 +99,7 @@ const Checkout: NextPage<{}> = () => {
 				<MenuStep className="step-menu">
 					<ListItem
 						className={step === 1 ? 'active' : ''}
-						onClick={() => setStep(1)}
+						onClick={() => handleChange("step")(1)}
 					>
 						<FaMoneyBillWave />
 						<Block
@@ -96,7 +120,7 @@ const Checkout: NextPage<{}> = () => {
 					</ListItem>
 					<ListItem
 						className={step === 2 ? 'active' : ''}
-						onClick={() => setStep(2)}
+						onClick={() => handleChange("step")(2)}
 					>
 						<FaPaypal />
 						<FaCreditCard />
@@ -126,27 +150,55 @@ const Checkout: NextPage<{}> = () => {
 						gridGutters={[0, 0, 50]}
 						gridMargins={0}
 					>
-						<Cell span={[12, 12, 8]}>{component}</Cell>
 						{step !== 3 && (
 							<Cell span={[12, 12, 4]}>
 								<Block paddingTop={['30px', '40px', '0']}>
-									<Title>Amount Details</Title>
-									<Input
-									    disabled={step !== 1}
-										type={"number"}
-										onChange={(e: any) => setAmount(e.target.value)}
-										placeholder="Enter amount"
-										overrides={{
-											InputContainer: {
-												style: () => {
-													return { backgroundColor: 'transparent' };
+									<Title>Payment Details</Title>
+									<div>
+										<Button disabled={step !== 1} size="compact" kind={amountType === "amount" ? "primary" : "secondary"} onClick={() => handleChange("amountType")("amount")}>Amount</Button>
+										<Button disabled={step !== 1} size="compact" kind={amountType === "qty" ? "primary" : "secondary"} onClick={() => handleChange("amountType")("qty")}>Quantity</Button>
+									</div>
+									{amountType === "amount" ? (
+										<Input
+											disabled={step !== 1}
+											type={"number"}
+											value={inputAmount}
+											onChange={(e: any) => handleChange("inputAmount")(+e.target.value)}
+											placeholder="Amount"
+											overrides={{
+												InputContainer: {
+													style: () => {
+														return { backgroundColor: 'transparent' };
+													},
 												},
-											},
-										}}
-									/>
+											}}
+										/>
+									) :
+										(
+											<Input
+												disabled={step !== 1}
+												type={"number"}
+												value={inputQty}
+												onChange={(e: any) => handleChange("inputQty")(+e.target.value)}
+												placeholder="Qty"
+												overrides={{
+													InputContainer: {
+														style: () => {
+															return { backgroundColor: 'transparent' };
+														},
+													},
+												}}
+											/>
+										)
+									}
+
+
 									<PriceList>
 										<PriceItem>
 											<span>Per share</span> <span>$ {currencyPrice}</span>
+										</PriceItem>
+										<PriceItem>
+											<span>Total</span> <span>${totalPrice}</span>
 										</PriceItem>
 										{/* <PriceItem>
 											<span>Tax</span> <span> + 0.5%</span>
@@ -158,7 +210,8 @@ const Checkout: NextPage<{}> = () => {
 									{step === 1 && (
 										<Button
 											size="large"
-											onClick={handleStep}
+											shape="pill"
+											onClick={() => handleChange("step")(2)}
 											overrides={{
 												BaseButton: {
 													style: ({ $theme }) => {
@@ -177,6 +230,7 @@ const Checkout: NextPage<{}> = () => {
 								</Block>
 							</Cell>
 						)}
+						<Cell span={[12, 12, 8]}>{component}</Cell>
 					</Grid>
 				</Block>
 			</Container>
