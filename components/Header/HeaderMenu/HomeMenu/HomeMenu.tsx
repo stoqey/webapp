@@ -11,12 +11,12 @@ const menuItems = [
   // {
   //   id: 2,
   //   label: 'OrderBook',
-  //   path: '/web/orderbook',
+  //   path: '/orderbook',
   // },
   {
     id: 3,
     label: 'Join',
-    path: '/web/login',
+    path: '/login',
   }
 ];
 

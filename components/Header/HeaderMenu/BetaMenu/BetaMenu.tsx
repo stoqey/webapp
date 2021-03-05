@@ -7,27 +7,27 @@ const menuItems = [
   {
     id: 1,
     label: 'Home',
-    path: '/web/home',
+    path: '/home',
   },
   {
     id: 2,
     label: 'Invest',
-    path: '/web/invest',
+    path: '/invest',
   },
   {
     id: 3,
     label: 'Portfolio',
-    path: '/web/portfolio',
+    path: '/portfolio',
   },
   // {
   //   id: 4,
   //   label: 'Account',
-  //   path: '/web/account',
+  //   path: '/account',
   // },
   // {
   //   id: 5,
   //   label: 'OrderBook',
-  //   path: '/web/orderbook',
+  //   path: '/orderbook',
   // },
 ];
 

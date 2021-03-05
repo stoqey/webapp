@@ -42,7 +42,7 @@ const Menu = ({ onClick }: MenuType) => {
       <Line></Line>
       <li onClick={async () => {
         await AsyncStorageDB.deleteAuthItem();
-        Router.push('/web/login');
+        Router.push('/login');
       }}>
         <MenuItem onClick={onClick}>Logout</MenuItem>
       </li>
