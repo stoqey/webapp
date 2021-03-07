@@ -59,7 +59,7 @@ const Checkout: NextPage<{}> = () => {
 
 	const { step, inputAmount, inputQty, amountType } = state;
 
-	const totalPrice = niceDec(amountType === "amount" ? +inputAmount : inputQty * stqPrice);
+	const totalPrice = +niceDec(amountType === "amount" ? +inputAmount : inputQty * stqPrice);
 
 	const handleChange = (field: string) => {
 		return (val: any) => {
@@ -118,28 +118,32 @@ const Checkout: NextPage<{}> = () => {
 							Amount
 						</Block>
 					</ListItem>
-					<ListItem
-						className={step === 2 ? 'active' : ''}
-						onClick={() => handleChange("step")(2)}
-					>
-						<FaCreditCard />
-						<FaPaypal />
-						<FaBitcoin />
-						<Block
-							overrides={{
-								Block: {
-									style: ({ $theme }) => {
-										return {
-											padding: '10px',
-											color: $theme.colors.primaryA,
-										};
-									},
-								},
-							}}
+					{totalPrice > 5 && (
+						<ListItem
+							aria-disabled="true"
+							className={step === 2 ? 'active' : ''}
+							onClick={() => handleChange("step")(2)}
 						>
-							Payment
+							<FaCreditCard />
+							<FaPaypal />
+							<FaBitcoin />
+							<Block
+								overrides={{
+									Block: {
+										style: ({ $theme }) => {
+											return {
+												padding: '10px',
+												color: $theme.colors.primaryA,
+											};
+										},
+									},
+								}}
+							>
+								Payment
 						</Block>
-					</ListItem>
+						</ListItem>
+					)}
+
 				</MenuStep>
 
 				<Block marginLeft={[0, 0, 0, '-25px']} marginRight={[0, 0, 0, '-25px']}>
@@ -153,7 +157,7 @@ const Checkout: NextPage<{}> = () => {
 							<Cell span={[12, 12, 4]}>
 								<Block paddingTop={['30px', '40px', '0']}>
 									<Title>Payment Details</Title>
-									<div style={{ display: "flex", justifyContent: "center"}}>
+									<div style={{ display: "flex", justifyContent: "center" }}>
 										<Button disabled={step !== 1} size="compact" kind={amountType === "amount" ? "primary" : "secondary"} onClick={() => handleChange("amountType")("amount")}>Amount</Button>
 										<Button disabled={step !== 1} size="compact" kind={amountType === "qty" ? "primary" : "secondary"} onClick={() => handleChange("amountType")("qty")}>Quantity</Button>
 									</div>
@@ -208,6 +212,7 @@ const Checkout: NextPage<{}> = () => {
 									</PriceList>
 									{step === 1 && (
 										<Button
+										    disabled={totalPrice < 5}
 											size="large"
 											shape="pill"
 											onClick={() => handleChange("step")(2)}
