@@ -12,12 +12,12 @@ const Footer: React.FC<{}> = () => {
   return (
     <FooterWrapper>
       <Container>
-        <Text>Stoqey ©{new Date().getFullYear()} Created by Stoqey, Inc</Text>
+        <Text></Text>
       </Container>
       <Grid gridColumns={12} gridGutters={0} gridMargins={0}>
-        <Cell span={[12, 12, 3]}>
+        <Cell span={[12, 12, 4]}>
           <div>
-            <p style={{ display: "flex", justifyContent: "center" }}>
+            <div style={{ display: "flex", justifyContent: "center" }}>
               <StqRoboIcon />
               <Logo
                 path="/"
@@ -27,17 +27,16 @@ const Footer: React.FC<{}> = () => {
                   />
                 }
               />
-            </p>
+            </div>
             <p style={{ textAlign: 'center' }}>
-              <Paragraph3>Copyright © {new Date().getFullYear()} Stoqey Inc.</Paragraph3>
-              <Paragraph3>All rights reserved.</Paragraph3>
+              <Paragraph4>Copyright © {new Date().getFullYear()} Stoqey Inc. All rights reserved</Paragraph4>
             </p>
 
           </div>
 
           <div style={{ height: "50px" }}></div>
         </Cell>
-        <Cell span={[12, 12, 3]}>
+        <Cell span={[12, 12, 2]}>
           <div style={{ background: 'green', height: '100px' }} />
         </Cell>
         <Cell span={[12, 12, 3]}>
