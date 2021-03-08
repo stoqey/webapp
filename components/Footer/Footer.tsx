@@ -20,7 +20,8 @@ const Footer: React.FC<{}> = () => {
   const { theme, setTheme } = useThemeSwitcherCtx();
 
   const icons = [
-    { name: 'Github', Icon: FaGithub, link: 'https://twitter.com/stoqey_' },
+    { name: 'Github', Icon: FaGithub, link: 'https://github.com/stoqey' },
+    { name: 'Twitter', Icon: FaTwitter, link: 'https://twitter.com/stoqey_' },
     { name: 'LinkedIn', Icon: FaLinkedinIn, link: 'https://linkedin.com/in/stoqey' },
     { name: 'Instagram', Icon: FaInstagram, link: 'https://instagram.com/stoqey' },
   ];
@@ -87,24 +88,25 @@ const Footer: React.FC<{}> = () => {
             })}
           </div>
         </Cell>
-        <Cell span={[12, 12, 3]}>
+        <Cell span={[12, 12, 4]}>
 
-          {/* <div
+          <div
             style={{
               display: 'flex',
               justifyContent: 'center'
             }}
           >
-            <StatusWrapper>
+            {/* <StatusWrapper>
               <StatusText> Status: All systems normal</StatusText>
-            </StatusWrapper>
-          </div> */}
-          <Paragraph2>
-            Toronto,  New york, Your city
-          </Paragraph2>
+            </StatusWrapper> */}
+            <Paragraph3>
+              support@stoqey.com
+          </Paragraph3>
+          </div>
+
 
         </Cell>
-        <Cell span={[12, 12, 3]} >
+        <Cell span={[12, 12, 1]} >
           <Block
             overrides={{
               Block: {
