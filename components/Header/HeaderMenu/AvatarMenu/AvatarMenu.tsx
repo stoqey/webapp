@@ -8,7 +8,7 @@ import MenuWrapper, { Line, MenuItem } from './AvatarMenu.styled';
 import {
   useThemeSwitcherCtx,
   THEME,
-} from '../../../../contexts/theme/theme.provider';
+} from 'contexts/theme/theme.provider';
 import AsyncStorageDB from '@/lib/AsyncStorageDB';
 
 type AvatarMenuType = {

@@ -1,6 +1,10 @@
 import React from 'react';
 import { Block } from 'baseui/block';
 import { Grid, Cell } from 'baseui/layout-grid';
+import {
+  useThemeSwitcherCtx,
+  THEME,
+} from 'contexts/theme/theme.provider';
 import Container from '../UiElements/Container/Container';
 import FooterWrapper, { Text, StatusWrapper, StatusText, StoqeyWords } from './Footer.styled';
 import StqRoboIcon, { StoqeyWordsLogo } from '../logo/icon';
@@ -9,8 +13,12 @@ import SvgIcon from '../UiElements/SvgIcon/SvgIcon';
 import Logo from '../UiElements/Logo/Logo';
 import { FaCircle, FaGithub, FaInstagram, FaLinkedinIn, FaTwitter } from 'react-icons/fa';
 import { RiLightbulbFlashFill } from 'react-icons/ri';
+import {Button} from 'baseui/button';
 
 const Footer: React.FC<{}> = () => {
+
+  const { theme, setTheme } = useThemeSwitcherCtx();
+
   const icons = [
     { name: 'Github', Icon: FaGithub, link: 'https://twitter.com/stoqey_' },
     { name: 'LinkedIn', Icon: FaLinkedinIn, link: 'https://linkedin.com/in/stoqey' },
@@ -93,6 +101,11 @@ const Footer: React.FC<{}> = () => {
         </Cell>
         <Cell span={[12, 12, 3]} >
           <Block
+            onClick={() => {
+              let getTheme = theme === THEME.light ? THEME.dark : THEME.light;
+              setTheme(getTheme);
+              localStorage.setItem('theme', getTheme);
+            }}
             overrides={{
               Block: {
                 style: ({ $theme }) => {
@@ -108,7 +121,10 @@ const Footer: React.FC<{}> = () => {
               },
             }}
           >
-            <RiLightbulbFlashFill size={27} />
+            <Button kind="tertiary" size="mini">
+              <RiLightbulbFlashFill size={27} />
+            </Button>
+
           </Block>
 
         </Cell>
