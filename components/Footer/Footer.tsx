@@ -92,7 +92,7 @@ const Footer: React.FC<{}> = () => {
         </Cell>
         <Cell span={[12, 12, 2]}>
 
-          <div
+          {/* <div
             style={{
               display: 'flex',
               justifyContent: 'center'
@@ -101,7 +101,7 @@ const Footer: React.FC<{}> = () => {
             <StatusWrapper>
               <StatusText> Status: All systems normal</StatusText>
             </StatusWrapper>
-          </div>
+          </div> */}
         </Cell>
         <Cell span={[12, 12, 3]} >
           <Block
