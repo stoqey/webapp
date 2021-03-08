@@ -31,7 +31,7 @@ const DefaultHeader: React.FC<{}> = () => {
 
 					{/* Stoqey logo */}
 					<Logo
-						path="/web"
+						path="/"
 						src={
 							<>
 								<StqRoboIcon />
