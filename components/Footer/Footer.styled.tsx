@@ -6,8 +6,13 @@ const FooterWrapper = styled('footer', {
   paddingBottom: '50px'
 });
 
+export const StoqeyWords = styled('p', ({ $theme }) => ({
+  color: $theme.colors.primary,
+  ...$theme.typography.font850,
+  fontFamily: "Helvetica-Bold, Helvetica",
+}));
+
 export const StatusWrapper = styled('div', ({ $theme }) => ({
-  
   display: 'flex',
   textAlign: 'center',
   justifyContent: 'space-between',

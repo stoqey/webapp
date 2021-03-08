@@ -9,14 +9,20 @@ export const Par = styled('p', ({ $theme }) => ({
     padding: '2px',
 }));
 
-function StqRoboIcon() {
+export const Txt = styled('text', ({ $theme }) => ({
+    fontSize: '12px',
+    color: $theme.colors.primary,
+    ...$theme.typography.font150,
+}));
+
+export function StqRoboIcon() {
 
     return (
         <Par>
             <Svg
                 xmlns='http://www.w3.org/2000/svg'
-                width='28.667'
-                height='55.333'
+                width='28'
+                height='33'
                 version='1'
                 viewBox='0 0 164 184'
             >
@@ -28,6 +34,24 @@ function StqRoboIcon() {
                     d='M0 432c0-11 14-46 31-80C94 225 245 122 483 44 585 10 607 6 732 2c391-13 741 135 862 363 25 46 35 91 19 83-184-94-329-149-493-184-132-29-467-26-610 4-138 30-318 91-418 141-45 23-84 41-87 41s-5-8-5-18z'
                     transform='matrix(.1 0 0 -.1 0 184)'
                 ></path>
+            </Svg>
+        </Par>
+
+    );
+}
+
+export function StoqeyWordsLogo() {
+
+    return (
+        <Par>
+            <Svg
+                xmlns='http://www.w3.org/2000/svg'
+                version='1'
+                viewBox='0 0 100 11'
+                height="auto"
+                width="auto"
+            >
+                <Txt x="2" y="10">STOQEY</Txt>
             </Svg>
         </Par>
 

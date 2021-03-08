@@ -2,8 +2,8 @@ import React from 'react';
 import { Block } from 'baseui/block';
 import { Grid, Cell } from 'baseui/layout-grid';
 import Container from '../UiElements/Container/Container';
-import FooterWrapper, { Text, StatusWrapper, StatusText } from './Footer.styled';
-import StqRoboIcon from '../logo/icon';
+import FooterWrapper, { Text, StatusWrapper, StatusText, StoqeyWords } from './Footer.styled';
+import StqRoboIcon, { StoqeyWordsLogo } from '../logo/icon';
 import { Paragraph1, Paragraph2, Paragraph3, Paragraph4 } from 'baseui/typography';
 import SvgIcon from '../UiElements/SvgIcon/SvgIcon';
 import Logo from '../UiElements/Logo/Logo';
@@ -26,16 +26,9 @@ const Footer: React.FC<{}> = () => {
       {/* Logo grid */}
       <Grid gridColumns={12} gridGutters={0} gridMargins={0}>
         <Cell span={[12, 12, 4]}>
-          <div style={{ display: "flex", justifyContent: "center" }}>
+          <div style={{ display: "flex", justifyContent: "center", alignContent: 'center' }}>
             <StqRoboIcon />
-            <Logo
-              path="/"
-              src={
-                <SvgIcon
-                  src={require('assets/images/logo.svg?include')}
-                />
-              }
-            />
+            <StoqeyWords>STOQEY</StoqeyWords>
           </div>
         </Cell>
       </Grid>
@@ -84,11 +77,6 @@ const Footer: React.FC<{}> = () => {
               )
             })}
           </div>
-
-
-
-
-
         </Cell>
         <Cell span={[12, 12, 2]}>
 
