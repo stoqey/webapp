@@ -55,7 +55,7 @@ const OrderBook: NextPage<Props> = (props: Props) => {
 									background: 'rgba(49, 242, 161, 0.39)',
 									display: 'flex', justifyContent: 'space-between', width: '100%'
 								}}>
-								<H6>${qty}</H6>
+								<H6>{qty}</H6>
 								<H6>${price}</H6>
 							</div>
 						)
