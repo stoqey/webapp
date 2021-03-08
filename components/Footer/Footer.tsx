@@ -22,7 +22,7 @@ const Footer: React.FC<{}> = () => {
   const icons = [
     { name: 'Github', Icon: FaGithub, link: 'https://github.com/stoqey' },
     { name: 'Twitter', Icon: FaTwitter, link: 'https://twitter.com/stoqey_' },
-    { name: 'LinkedIn', Icon: FaLinkedinIn, link: 'https://linkedin.com/in/stoqey' },
+    { name: 'LinkedIn', Icon: FaLinkedinIn, link: 'https://linkedin.com/company/stoqey' },
     { name: 'Instagram', Icon: FaInstagram, link: 'https://instagram.com/stoqey' },
   ];
 
