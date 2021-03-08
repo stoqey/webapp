@@ -13,7 +13,7 @@ import SvgIcon from '../UiElements/SvgIcon/SvgIcon';
 import Logo from '../UiElements/Logo/Logo';
 import { FaCircle, FaGithub, FaInstagram, FaLinkedinIn, FaTwitter } from 'react-icons/fa';
 import { RiLightbulbFlashFill } from 'react-icons/ri';
-import {Button} from 'baseui/button';
+import { Button } from 'baseui/button';
 
 const Footer: React.FC<{}> = () => {
 
@@ -63,6 +63,7 @@ const Footer: React.FC<{}> = () => {
                 <Block
                   key={name}
                   as="a"
+                  // @ts-ignore
                   target="_blank"
                   alt={name}
                   href={link}
@@ -80,13 +81,13 @@ const Footer: React.FC<{}> = () => {
                     },
                   }}
                 >
-                  <Icon size={25} />
+                  <Icon size={23} />
                 </Block>
               )
             })}
           </div>
         </Cell>
-        <Cell span={[12, 12, 2]}>
+        <Cell span={[12, 12, 3]}>
 
           {/* <div
             style={{
@@ -98,14 +99,13 @@ const Footer: React.FC<{}> = () => {
               <StatusText> Status: All systems normal</StatusText>
             </StatusWrapper>
           </div> */}
+          <Paragraph2>
+            Toronto,  New york, Your city
+          </Paragraph2>
+
         </Cell>
         <Cell span={[12, 12, 3]} >
           <Block
-            onClick={() => {
-              let getTheme = theme === THEME.light ? THEME.dark : THEME.light;
-              setTheme(getTheme);
-              localStorage.setItem('theme', getTheme);
-            }}
             overrides={{
               Block: {
                 style: ({ $theme }) => {
@@ -115,13 +115,19 @@ const Footer: React.FC<{}> = () => {
                       color: $theme.colors.primary,
                     },
                     display: 'flex',
-                    justifyContent: 'center',
+                    justifyContent: 'flex-end',
                   };
                 },
               },
             }}
           >
-            <Button kind="tertiary" size="mini">
+            <Button kind="tertiary" size="mini"
+              onClick={() => {
+                let getTheme = theme === THEME.light ? THEME.dark : THEME.light;
+                setTheme(getTheme);
+                localStorage.setItem('theme', getTheme);
+              }}
+            >
               <RiLightbulbFlashFill size={27} />
             </Button>
 
