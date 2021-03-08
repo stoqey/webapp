@@ -7,6 +7,7 @@ import StqRoboIcon from '../logo/icon';
 import { Paragraph1, Paragraph2, Paragraph3, Paragraph4 } from 'baseui/typography';
 import SvgIcon from '../UiElements/SvgIcon/SvgIcon';
 import Logo from '../UiElements/Logo/Logo';
+import { FaGithub, FaInstagram, FaTwitter } from 'react-icons/fa';
 
 const Footer: React.FC<{}> = () => {
   return (
@@ -38,6 +39,9 @@ const Footer: React.FC<{}> = () => {
         </Cell>
         <Cell span={[12, 12, 2]}>
           <div style={{ background: 'green', height: '100px' }} />
+          <FaGithub size={25} />
+          <FaTwitter size={25} />
+          <FaInstagram size={25} />
         </Cell>
         <Cell span={[12, 12, 3]}>
           <div>
