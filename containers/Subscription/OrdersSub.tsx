@@ -28,7 +28,7 @@ export const OrdersSub = () => {
         const results = subscription.subscribe(data => {
             const dataToSend = _.get(data, 'data.data', {});
             events.setCurrency(dataToSend);
-            events.emit(APPEVENTS.CURRENCY, dataToSend);
+            events.emit(APPEVENTS.ORDERS, dataToSend);
         });
 
         return () => { results.unsubscribe() }

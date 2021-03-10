@@ -5,6 +5,7 @@ export enum APPEVENTS {
   USER = 'user',
   CURRENCY = 'currency',
   TRADES = 'trades',
+  ORDERS = 'orders',
   LOGOUT = 'logout'
 }
 
