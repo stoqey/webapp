@@ -37,12 +37,12 @@ const AuthHeader = ({ pathname }: AuthHeaderType) => {
           }
         />
 
-        {pathname !== '/web/login' && (
+        {pathname !== '/login' && (
           <Block>
             <Button
               kind="minimal"
-              disabled={pathname === '/web/login'}
-              onClick={() => Router.push('/web/login')}
+              disabled={pathname === '/login'}
+              onClick={() => Router.push('/login')}
               overrides={{
                 BaseButton: {
                   style: ({ $theme }) => {
@@ -59,8 +59,8 @@ const AuthHeader = ({ pathname }: AuthHeaderType) => {
               Login
             </Button>
             <Button
-              disabled={pathname === '/web/login'}
-              onClick={() => Router.push('/web/login')}
+              disabled={pathname === '/login'}
+              onClick={() => Router.push('/login')}
               overrides={{
                 BaseButton: {
                   style: ({ $theme }) => {

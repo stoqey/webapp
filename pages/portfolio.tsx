@@ -13,9 +13,9 @@ import {
 	Title,
 	Subtitle,
 	SpaceBetween,
-} from '../../components/PageStyles/Settings.styled';
+} from 'components/PageStyles/Settings.styled';
 
-import applicationsPageData from '../../data/applicationsPage';
+import applicationsPageData from 'data/applicationsPage';
 import CurrencyPill from '@/components/Currency';
 import { useQuery } from '@apollo/client';
 import { GET_ME } from "@stoqey/client-graphql";

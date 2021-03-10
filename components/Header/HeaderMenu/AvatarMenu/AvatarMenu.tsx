@@ -8,7 +8,7 @@ import MenuWrapper, { Line, MenuItem } from './AvatarMenu.styled';
 import {
   useThemeSwitcherCtx,
   THEME,
-} from '../../../../contexts/theme/theme.provider';
+} from 'contexts/theme/theme.provider';
 import AsyncStorageDB from '@/lib/AsyncStorageDB';
 
 type AvatarMenuType = {
@@ -42,7 +42,7 @@ const Menu = ({ onClick }: MenuType) => {
       <Line></Line>
       <li onClick={async () => {
         await AsyncStorageDB.deleteAuthItem();
-        Router.push('/web/login');
+        Router.push('/login');
       }}>
         <MenuItem onClick={onClick}>Logout</MenuItem>
       </li>

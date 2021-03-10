@@ -18,7 +18,7 @@ COPY . /usr/src
 RUN mkdir -p /usr/src/keys && echo $FB_SA_KEY > /usr/src/keys/firebase.config.json
 
 # install dependencies
-RUN npm i yarn -g & yarn
+RUN yarn
 
 # Backend url
 ENV NEXT_PUBLIC_API_URL=$BACKEND
@@ -27,9 +27,6 @@ ENV NODE_ENV=production
 
 # Save all env to dotenv
 RUN printenv | sed 's/\([^=]*=\)\(.*\)/\1"\2"/' > /usr/src/.env
-
-# Build app
-RUN yarn build
 
 # Export static HTML
 RUN yarn export
