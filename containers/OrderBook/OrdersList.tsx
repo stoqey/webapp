@@ -33,37 +33,17 @@ const portEg = {
 	description: 'Number of shares',
 };
 
-const Positions: NextPage<{}> = () => {
+const OrdersList: NextPage<{}> = () => {
 	let toastKey = null;
 	const client = useApolloClient();
 	const [showNew, setShowNew] = useState(false);
 	const [showClose, setShowClose] = useState(false);
-	const quote: MarketDataType = useAppEvent(APPEVENTS.CURRENCY);
+	const orders: OrderType[] = useAppEvent(APPEVENTS.ORDERS);
 	const [selectedPortfolio, setSelectedPortfolio] = useState<PortfolioType>(null);
-	const [portfolios, setPortfolios] = useState<OrderType[]>([]);
-
-
-	React.useEffect(() => {
-		// getPortfoliosPaginationApi({
-		// 	client,
-		// 	success: async (portfolios) => {
-		// 		const portfoliosToSave = portfolios.map(port => ({
-		// 			id: port.id,
-		// 			thumb: stoqeyLogo,
-		// 			title: 'Stoqey',
-		// 			description: `${port.action} ${port.size} @${port.averageCost}`,
-		// 		}));
-
-				
-		// 		setPortfolios(portfoliosToSave);
-		// 	},
-		// })
-	}, [!showNew, !showClose])
-
 
 	return (
 		<>
-			{portfolios.map((item: any) => (
+			{orders.map((item: any) => (
 				<SpaceBetween key={`application-key${item.id}`}>
 					<ListGridCard
 						variant="list"
@@ -118,4 +98,4 @@ const Positions: NextPage<{}> = () => {
 	);
 };
 
-export default Positions;
+export default OrdersList;
