@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import { IoIosCheckmarkCircleOutline } from 'react-icons/io';
+import { BsFillTriangleFill } from 'react-icons/bs';
+
+import { Tria } from 'react-icons';
 import { Block } from 'baseui/block';
 import { Modal, ModalBody } from 'baseui/modal';
 import { useApolloClient } from '@apollo/client';
@@ -123,7 +126,7 @@ const StartPortfolio = (props: Props) => {
                     },
                   }}
                 >
-                  <IoIosCheckmarkCircleOutline
+                  <BsFillTriangleFill
                     size="4em"
                     color="#3AA76D"
                     style={{ marginBottom: '20px' }}
@@ -168,12 +171,12 @@ const StartPortfolio = (props: Props) => {
                                   width: '50%',
                                   borderTopRightRadius: 0,
                                   borderBottomRightRadius: 0,
-                                  background: 'green',
+                                  background: '#3AA76D',
                                   color: 'white',
                                   opacity: action === "BUY" ? 1 : 0.2,
 
                                   ":hover": {
-                                    background: 'green',
+                                    background: '#3AA76D',
                                     opacity: 1,
                                   },
                                   ...$theme.typography.font650,
@@ -193,10 +196,10 @@ const StartPortfolio = (props: Props) => {
                                   width: '50%',
                                   borderTopLeftRadius: 0,
                                   borderBottomLeftRadius: 0,
-                                  background: 'red',
+                                  background: 'rgba(216, 33, 33);',
                                   color: 'white',
                                   ":hover": {
-                                    background: 'red',
+                                    background: 'rgba(216, 33, 33);',
                                     opacity: 1,
                                   },
                                   opacity: action === "SELL" ? 1 : 0.2,
