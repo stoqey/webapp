@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { IoIosCheckmarkCircleOutline } from 'react-icons/io';
 import { BsFillTriangleFill } from 'react-icons/bs';
-
-import { Tria } from 'react-icons';
 import { Block } from 'baseui/block';
 import { Modal, ModalBody } from 'baseui/modal';
 import { useApolloClient } from '@apollo/client';
@@ -217,9 +215,9 @@ const StartPortfolio = (props: Props) => {
                         <div style={{ flex: 0.1 }}></div>
                         <div style={{ flex: 0.4 }}>
                           <div style={{ display: "flex", width: "100%" }}>
-                            <Button $style={{ flex: 0 }} size="compact" kind={"tertiary"} onClick={() => {}}>Type</Button>
+                            <Button $style={{ flex: 0 }} size="compact" kind={"tertiary"} onClick={() => { }}>Type</Button>
                             <Button $style={{ flex: 1 }} size="compact" kind={type === "market" ? "primary" : "secondary"} onClick={() => handleChange("type")("market")}>Market</Button>
-                            <Button  $style={{ flex: 1 }} size="compact" kind={type === "limit" ? "primary" : "secondary"} onClick={() => handleChange("type")("limit")}>Limit</Button>
+                            <Button $style={{ flex: 1 }} size="compact" kind={type === "limit" ? "primary" : "secondary"} onClick={() => handleChange("type")("limit")}>Limit</Button>
                           </div>
                           <Input
                             startEnhancer="$"
