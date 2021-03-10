@@ -21,6 +21,7 @@ import { useQuery } from '@apollo/client';
 import { GET_ME } from "@stoqey/client-graphql";
 import { useUserInfo } from 'hooks/useUserInfo';
 import Toaster from '@/components/UiElements/Toaster/Toaster';
+import OrdersListContainer from 'containers/OrderBook/OrdersListContainer';
 
 const stoqeyLogo = require('assets/images/STQ.png');
 
@@ -137,6 +138,8 @@ const Positions: NextPage<{}> = () => {
 								</SpaceBetween>
 
 								<Portfolios />
+
+								<OrdersListContainer />
 							</Block>
 						</Cell>
 					</Grid>

@@ -7,34 +7,34 @@ import { OrderType } from '@stoqey/client-graphql';
 import SvgIcon from 'components/UiElements/SvgIcon/SvgIcon';
 import { TextButton } from 'components/PageStyles/Settings.styled';
 import { StyledTableHeadAlt } from 'components/PageStyles/Apps.styled';
+import { isEmpty } from 'lodash';
 const stoqeyLogo = require('assets/images/STQ.png');
 
 interface Props {
     orders: OrderType[]
 }
-const OrdersTable: NextPage<{ orders }> = ({ orders }: Props) => {
+const OrdersTable: NextPage<Props> = ({ orders }: Props) => {
 
     return (
         <>
+            
             <Block
                 paddingTop={['10px', '20px', '30px', '0']}
                 overrides={{ Block: { style: { minHeight: '150px' } } }}
             >
+                
                 <StyledTable $gridTemplateColumns="max-content auto auto auto max-content">
-                    <StyledTableHeadAlt></StyledTableHeadAlt>
                     <StyledTableHeadAlt>Symbol</StyledTableHeadAlt>
                     <StyledTableHeadAlt>Actn</StyledTableHeadAlt>
                     <StyledTableHeadAlt>Type</StyledTableHeadAlt>
                     <StyledTableHeadAlt>Qty</StyledTableHeadAlt>
                     <StyledTableHeadAlt>Filled</StyledTableHeadAlt>
-                    <StyledTableHeadAlt></StyledTableHeadAlt>
-                    {orders.map((item, index) => {
+                    {/* <StyledTableHeadAlt></StyledTableHeadAlt> */}
+                    {!isEmpty(orders) && orders.map((item, index) => {
                         const striped = index % 2 === 0;
                         return (
                             <Fragment key={index}>
-                                <StyledBodyCell $striped={striped}>
-                                    <SvgIcon src={stoqeyLogo} />
-                                </StyledBodyCell>
+                                
                                 <StyledBodyCell $striped={striped}>
                                     {item.instrument}
                                 </StyledBodyCell>
@@ -50,11 +50,11 @@ const OrdersTable: NextPage<{ orders }> = ({ orders }: Props) => {
                                 <StyledBodyCell $striped={striped}>
                                     {item.qty - item.filledQty}
                                 </StyledBodyCell>
-                                <StyledBodyCell $striped={striped}>
+                                {/* <StyledBodyCell $striped={striped}>
                                     <TextButton onClick={() => alert('click')}>
                                         <MdCloudDownload size="1.2rem" color="#545454" />
                                     </TextButton>
-                                </StyledBodyCell>
+                                </StyledBodyCell> */}
                             </Fragment>
                         );
                     })}
