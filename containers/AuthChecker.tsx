@@ -6,6 +6,7 @@ import { useApolloClient } from "@apollo/client";
 
 import includes from 'lodash/includes';
 import AsyncStorageDB from '@/lib/AsyncStorageDB';
+import { APPEVENTS, AppEvents } from '@/lib/AppEvent';
 
 /**
  * Currency subscription
@@ -17,10 +18,14 @@ export const AuthChecker = () => {
 
     React.useEffect(() => {
 
+        const events = AppEvents.Instance;
         const logout = async () => {
             await AsyncStorageDB.deleteAuthItem();
             router.push('/login');
         }
+
+        const handleLogout = () => logout();
+        
         const getMe = async () => {
             try {
                 const { errors, data } = await client.query({
@@ -60,8 +65,15 @@ export const AuthChecker = () => {
 
         }
 
+        
+
         if(!['/', '/login', '/404'].includes(router.pathname)){
             getMe();
+            events.addListener(APPEVENTS.LOGOUT, handleLogout);
+        }
+
+        return () => {
+            events.removeListener(APPEVENTS.LOGOUT, handleLogout);
         }
     }, []);
 

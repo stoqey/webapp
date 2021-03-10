@@ -13,10 +13,12 @@ import { WebSocketLink } from "@apollo/client/link/ws";
 import { getMainDefinition } from "@apollo/client/utilities";
 import includes from "lodash/includes";
 import AsyncStorageDB from "./AsyncStorageDB";
+import { AppEvents, APPEVENTS } from "./AppEvent";
 
 let apolloClient;
 
 function createApolloClient() {
+  const events = AppEvents.Instance;
   const urlFromJson = process.env.NEXT_PUBLIC_API_URL;
 
   // console.log(
@@ -72,34 +74,34 @@ function createApolloClient() {
       if (graphQLErrors && graphQLErrors.forEach) {
         // Not Authorised!
         graphQLErrors.map(({ message, locations, path, originalError }) => {
-          console.error('originalError', { message, originalError, locations, path });
+          // console.error('originalError', { message, originalError, locations, path });
           // not authorized
-          if (includes(message, 'Expired')) {
-            // Refresh to token from here
-            // authHelper
-            //   .refreshToken()
-            //   .then(accessToken => {
-            //     log.info('Got new refresh token', getLastChar(accessToken));
-            //     return AsyncStorageDB.Instance.updateUserAuth({
-            //       accessToken,
-            //     });
-            //   })
-            //   .then(updatedUser => {
-            //     log.error('updatedUser refresh token', updatedUser);
-            //   })
-            //   .catch(error => {
-            //     log.error('error updatedUser refresh token', error);
-            //   });
+          // if (includes(message, 'Expired')) {
+          //   // Refresh to token from here
+          //   // authHelper
+          //   //   .refreshToken()
+          //   //   .then(accessToken => {
+          //   //     log.info('Got new refresh token', getLastChar(accessToken));
+          //   //     return AsyncStorageDB.Instance.updateUserAuth({
+          //   //       accessToken,
+          //   //     });
+          //   //   })
+          //   //   .then(updatedUser => {
+          //   //     log.error('updatedUser refresh token', updatedUser);
+          //   //   })
+          //   //   .catch(error => {
+          //   //     log.error('error updatedUser refresh token', error);
+          //   //   });
 
-            // log.error('Error when refreshing TOKEN', message);
-          }
+          //   // log.error('Error when refreshing TOKEN', message);
+          // }
           if (includes(message, 'not authenticated')) {
             // Ask user to login again
-            // appEvents.emit(APPEVENTS.LOGOUT, null); // emit logout
+            events.emit(APPEVENTS.LOGOUT, null); // emit logout
           };
 
         });
-        console.error(`[graphQLErrors error]: `, graphQLErrors);
+        // console.error(`[graphQLErrors error]: `, graphQLErrors);
       }
 
     } catch (error) {
