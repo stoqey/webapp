@@ -5,16 +5,9 @@ import { Modal, ModalBody } from 'baseui/modal';
 import { useApolloClient } from '@apollo/client';
 import { Grid, Cell } from 'baseui/layout-grid';
 import { ActionType, MarketDataType, IOrderType } from '@stoqey/client-graphql';
-import { FaShoppingBag, FaMapMarkerAlt, FaMoneyCheckAlt, FaMoneyBillWave, FaPaypal, FaCreditCard, FaPiggyBank, FaBitcoin } from 'react-icons/fa';
 import { Button } from 'baseui/button';
 import { Input } from 'baseui/input';
-import Container from 'components/UiElements/Container/Container';
-import PageTitle from 'components/UiElements/PageTitle/PageTitle';
-import CurrencyCart from 'containers/Shop/CurrencyCart';
-import PayPalPayment from 'containers/Shop/PayPalPayment';
 import {
-  MenuStep,
-  ListItem,
   Title,
   PriceList,
   PriceItem,
@@ -23,6 +16,7 @@ import {
 import { createOrderMutation } from './portfolios.api'
 import { niceDec } from 'utils/number';
 import OrderBookContainer from 'containers/OrderBook';
+import { ButtonGroup } from 'baseui/button-group';
 
 interface Props {
   quote: MarketDataType;
@@ -161,75 +155,63 @@ const StartPortfolio = (props: Props) => {
                     <Block paddingTop={['30px', '40px', '0']}>
 
                       {/* Buy / Sell */}
-                      <Button
-                        kind={action !== "BUY" ? "secondary" : "primary"}
-                        size="mini"
-                        onClick={() => handleChange("action")("BUY")}
-                        overrides={{
-                          BaseButton: {
-                            style: ({ $theme }) => {
-                              return {
-                                width: '50%',
-                                ...$theme.typography.font250,
-                              };
+                      <div style={{ padding: '10px'}}>
+                        <Button
+                          kind={action !== "BUY" ? "secondary" : "primary"}
+                          size="mini"
+                          shape="pill"
+                          onClick={() => handleChange("action")("BUY")}
+                          overrides={{
+                            BaseButton: {
+                              style: ({ $theme }) => {
+                                return {
+                                  width: '50%',
+                                  borderTopRightRadius: 0,
+                                  borderBottomRightRadius: 0,
+                                  background: 'green',
+                                  color: 'white',
+                                  opacity: action === "BUY" ? 1 : 0.2,
+
+                                  ":hover": {
+                                    background: 'green',
+                                    opacity: 1,
+                                  },
+                                  ...$theme.typography.font650,
+                                };
+                              },
                             },
-                          },
-                        }}
-                      > BUY </Button>
-                      <Button
-                        kind={action !== "SELL" ? "secondary" : "primary"}
-                        size="mini"
-                        onClick={() => handleChange("action")("SELL")}
-                        overrides={{
-                          BaseButton: {
-                            style: ({ $theme }) => {
-                              return {
-                                width: '50%',
-                                ...$theme.typography.font250,
-                              };
+                          }}
+                        > BUY STQ™</Button>
+                        <Button
+                          size="mini"
+                          shape="pill"
+                          onClick={() => handleChange("action")("SELL")}
+                          overrides={{
+                            BaseButton: {
+                              style: ({ $theme }) => {
+                                return {
+                                  width: '50%',
+                                  borderTopLeftRadius: 0,
+                                  borderBottomLeftRadius: 0,
+                                  background: 'red',
+                                  color: 'white',
+                                  ":hover": {
+                                    background: 'red',
+                                    opacity: 1,
+                                  },
+                                  opacity: action === "SELL" ? 1 : 0.2,
+                                  ...$theme.typography.font650,
+                                };
+                              },
                             },
-                          },
-                        }}
-                      > SELL </Button>
-                      <Title>Action</Title>
+                          }}
+                        > SELL STQ™</Button>
+                      </div>
 
 
                       {/* Type Market/Limit */}
-                      <Button
-                        kind={type !== "market" ? "secondary" : "primary"}
-                        size="mini"
-                        onClick={() => handleChange("type")("market")}
-                        overrides={{
-                          BaseButton: {
-                            style: ({ $theme }) => {
-                              return {
-                                width: '50%',
-                                ...$theme.typography.font250,
-                              };
-                            },
-                          },
-                        }}
-                      > Market </Button>
-                      <Button
-                        kind={type !== "limit" ? "secondary" : "primary"}
-                        size="mini"
-                        onClick={() => handleChange("type")("limit")}
-                        overrides={{
-                          BaseButton: {
-                            style: ({ $theme }) => {
-                              return {
-                                width: '50%',
-                                ...$theme.typography.font250,
-                              };
-                            },
-                          },
-                        }}
-                      > Limit </Button>
-                      <Title>Type</Title>
-
-
                       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                        <div>
+                        <div style={{ flex: 0.5 }}>
                           <div style={{ display: "flex", justifyContent: "center" }}>
                             <Button size="compact" kind={type === "market" ? "primary" : "secondary"} onClick={() => handleChange("type")("market")}>Market</Button>
                             <Button size="compact" kind={type === "limit" ? "primary" : "secondary"} onClick={() => handleChange("type")("limit")}>Limit</Button>
@@ -256,24 +238,27 @@ const StartPortfolio = (props: Props) => {
                           />
                         </div>
 
-                        <Input
-                          value={qty}
-                          type={"number"}
-                          onChange={(e: any) => handleChange("qty")(e.target.value)}
-                          placeholder="Qty"
-                          overrides={{
-                            Root: {
-                              style: () => {
-                                return { flex: 0.3 };
+                        <div style={{ flex: 0.3 }}>
+                          <Input
+                            value={qty}
+                            type={"number"}
+                            onChange={(e: any) => handleChange("qty")(e.target.value)}
+                            placeholder="Qty"
+                            overrides={{
+                              Root: {
+                                style: () => {
+                                  return { flex: 0.3 };
+                                },
                               },
-                            },
-                            InputContainer: {
-                              style: () => {
-                                return { backgroundColor: 'transparent' };
+                              InputContainer: {
+                                style: () => {
+                                  return { backgroundColor: 'transparent' };
+                                },
                               },
-                            },
-                          }}
-                        />
+                            }}
+                          />
+                        </div>
+
                       </div>
 
 
@@ -295,6 +280,7 @@ const StartPortfolio = (props: Props) => {
                       </PriceList>
                       <Button
                         size="large"
+                        shape="pill"
                         onClick={() => handleChange("steps")(1)}
                         overrides={{
                           BaseButton: {
