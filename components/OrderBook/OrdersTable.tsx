@@ -7,6 +7,7 @@ import { OrderType } from '@stoqey/client-graphql';
 import SvgIcon from 'components/UiElements/SvgIcon/SvgIcon';
 import { TextButton } from 'components/PageStyles/Settings.styled';
 import { StyledTableHeadAlt } from 'components/PageStyles/Apps.styled';
+const stoqeyLogo = require('assets/images/STQ.png');
 
 interface Props {
     orders: OrderType[]
@@ -20,6 +21,7 @@ const OrdersTable: NextPage<{ orders }> = ({ orders }: Props) => {
                 overrides={{ Block: { style: { minHeight: '150px' } } }}
             >
                 <StyledTable $gridTemplateColumns="max-content auto auto auto max-content">
+                    <StyledTableHeadAlt></StyledTableHeadAlt>
                     <StyledTableHeadAlt>Symbol</StyledTableHeadAlt>
                     <StyledTableHeadAlt>Actn</StyledTableHeadAlt>
                     <StyledTableHeadAlt>Type</StyledTableHeadAlt>
@@ -31,9 +33,9 @@ const OrdersTable: NextPage<{ orders }> = ({ orders }: Props) => {
                         return (
                             <Fragment key={index}>
                                 <StyledBodyCell $striped={striped}>
-                                    <SvgIcon
-                                        src={require('assets/images/check.svg?include')}
-                                    />{' '}
+                                    <SvgIcon src={stoqeyLogo} />
+                                </StyledBodyCell>
+                                <StyledBodyCell $striped={striped}>
                                     {item.instrument}
                                 </StyledBodyCell>
                                 <StyledBodyCell $striped={striped}>
