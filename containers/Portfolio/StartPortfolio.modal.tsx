@@ -216,9 +216,10 @@ const StartPortfolio = (props: Props) => {
                       <div style={{ display: 'flex', justifyContent: 'center' }}>
                         <div style={{ flex: 0.1 }}></div>
                         <div style={{ flex: 0.4 }}>
-                          <div style={{ display: "flex", justifyContent: "center" }}>
-                            <Button size="compact" kind={type === "market" ? "primary" : "secondary"} onClick={() => handleChange("type")("market")}>Market</Button>
-                            <Button size="compact" kind={type === "limit" ? "primary" : "secondary"} onClick={() => handleChange("type")("limit")}>Limit</Button>
+                          <div style={{ display: "flex", width: "100%" }}>
+                            <Button $style={{ flex: 0 }} size="compact" kind={"tertiary"} onClick={() => {}}>Type</Button>
+                            <Button $style={{ flex: 1 }} size="compact" kind={type === "market" ? "primary" : "secondary"} onClick={() => handleChange("type")("market")}>Market</Button>
+                            <Button  $style={{ flex: 1 }} size="compact" kind={type === "limit" ? "primary" : "secondary"} onClick={() => handleChange("type")("limit")}>Limit</Button>
                           </div>
                           <Input
                             startEnhancer="$"
