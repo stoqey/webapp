@@ -158,7 +158,7 @@ const StartPortfolio = (props: Props) => {
                     <Block paddingTop={['30px', '40px', '0']}>
 
                       {/* Buy / Sell */}
-                      <div style={{ padding: '10px'}}>
+                      <div style={{ padding: '10px', marginBottom: '20px' }}>
                         <Button
                           kind={action !== "BUY" ? "secondary" : "primary"}
                           size="mini"
@@ -184,7 +184,7 @@ const StartPortfolio = (props: Props) => {
                               },
                             },
                           }}
-                        > BUY STQ™</Button>
+                        > BUY</Button>
                         <Button
                           size="mini"
                           shape="pill"
@@ -208,19 +208,20 @@ const StartPortfolio = (props: Props) => {
                               },
                             },
                           }}
-                        > SELL STQ™</Button>
+                        > SELL </Button>
                       </div>
 
 
                       {/* Type Market/Limit */}
                       <div style={{ display: 'flex', justifyContent: 'center' }}>
-                      <div style={{ flex: 0.1}}></div>
+                        <div style={{ flex: 0.1 }}></div>
                         <div style={{ flex: 0.4 }}>
                           <div style={{ display: "flex", justifyContent: "center" }}>
                             <Button size="compact" kind={type === "market" ? "primary" : "secondary"} onClick={() => handleChange("type")("market")}>Market</Button>
                             <Button size="compact" kind={type === "limit" ? "primary" : "secondary"} onClick={() => handleChange("type")("limit")}>Limit</Button>
                           </div>
                           <Input
+                            startEnhancer="$"
                             disabled={type === "market"}
                             value={type === "market" ? close : price}
                             type={"number"}
@@ -238,22 +239,29 @@ const StartPortfolio = (props: Props) => {
                                   return { backgroundColor: 'transparent' };
                                 },
                               },
+
+                              Input: {
+                                style: () => {
+                                  return { fontSize: '1.5em' };
+                                },
+                              },
                             }}
                           />
                         </div>
 
-                        <div style={{ flex: 0.1}}></div>
+                        <div style={{ flex: 0.1 }}></div>
 
-                        <div style={{ flex: 0.3, background: 'red', alignSelf: 'center'  }}>
+                        <div style={{ flex: 0.3, background: 'red', alignSelf: 'center' }}>
                           <Input
                             value={qty}
+                            startEnhancer="Qty"
                             type={"number"}
                             onChange={(e: any) => handleChange("qty")(e.target.value)}
                             placeholder="Qty"
                             overrides={{
                               InputContainer: {
                                 style: () => {
-                                  return { backgroundColor: 'transparent'};
+                                  return { backgroundColor: 'transparent' };
                                 },
                               },
                               Input: {
@@ -265,7 +273,7 @@ const StartPortfolio = (props: Props) => {
                           />
                         </div>
 
-                        <div style={{ flex: 0.1}}></div>
+                        <div style={{ flex: 0.1 }}></div>
                       </div>
 
 
