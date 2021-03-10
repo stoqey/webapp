@@ -44,8 +44,6 @@ interface State {
 const StartPortfolio = (props: Props) => {
   const client = useApolloClient();
   const { show, hide, onError, onSuccess, quote } = props;
-  const [steps, setSteps] = useState(0);
-  const [amount, setAmount] = useState(0);
 
   const close = quote && quote.close;
   const [state, setState] = useState<State>({
@@ -56,9 +54,9 @@ const StartPortfolio = (props: Props) => {
     qty: 1,
   });
 
-  const { type, action, price = close, qty, stopPrice } = state;
+  const { type, action, price = close, qty, stopPrice, steps } = state;
 
-  const handleState = (field: string) => {
+  const handleChange = (field: string) => {
     return (value) => {
       setState({
         ...state,
@@ -166,7 +164,7 @@ const StartPortfolio = (props: Props) => {
                       <Button
                         kind={action !== "BUY" ? "secondary" : "primary"}
                         size="mini"
-                        onClick={() => handleState("action")("BUY")}
+                        onClick={() => handleChange("action")("BUY")}
                         overrides={{
                           BaseButton: {
                             style: ({ $theme }) => {
@@ -181,7 +179,7 @@ const StartPortfolio = (props: Props) => {
                       <Button
                         kind={action !== "SELL" ? "secondary" : "primary"}
                         size="mini"
-                        onClick={() => handleState("action")("SELL")}
+                        onClick={() => handleChange("action")("SELL")}
                         overrides={{
                           BaseButton: {
                             style: ({ $theme }) => {
@@ -200,7 +198,7 @@ const StartPortfolio = (props: Props) => {
                       <Button
                         kind={type !== "market" ? "secondary" : "primary"}
                         size="mini"
-                        onClick={() => handleState("type")("market")}
+                        onClick={() => handleChange("type")("market")}
                         overrides={{
                           BaseButton: {
                             style: ({ $theme }) => {
@@ -215,7 +213,7 @@ const StartPortfolio = (props: Props) => {
                       <Button
                         kind={type !== "limit" ? "secondary" : "primary"}
                         size="mini"
-                        onClick={() => handleState("type")("limit")}
+                        onClick={() => handleChange("type")("limit")}
                         overrides={{
                           BaseButton: {
                             style: ({ $theme }) => {
@@ -231,30 +229,37 @@ const StartPortfolio = (props: Props) => {
 
 
                       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                        <Input
-                          disabled={type === "market"}
-                          value={type === "market" ? close : price}
-                          type={"number"}
-                          onChange={(e: any) => handleState("price")(e.target.value)}
-                          placeholder="Price"
-                          overrides={{
-                            Root: {
-                              style: () => {
-                                return { flex: 0.6 };
+                        <div>
+                          <div style={{ display: "flex", justifyContent: "center" }}>
+                            <Button size="compact" kind={type === "market" ? "primary" : "secondary"} onClick={() => handleChange("type")("market")}>Market</Button>
+                            <Button size="compact" kind={type === "limit" ? "primary" : "secondary"} onClick={() => handleChange("type")("limit")}>Limit</Button>
+                          </div>
+                          <Input
+                            disabled={type === "market"}
+                            value={type === "market" ? close : price}
+                            type={"number"}
+                            onChange={(e: any) => handleChange("price")(e.target.value)}
+                            placeholder="Price"
+                            overrides={{
+                              Root: {
+                                style: () => {
+                                  return { flex: 0.6 };
+                                },
                               },
-                            },
 
-                            InputContainer: {
-                              style: () => {
-                                return { backgroundColor: 'transparent' };
+                              InputContainer: {
+                                style: () => {
+                                  return { backgroundColor: 'transparent' };
+                                },
                               },
-                            },
-                          }}
-                        />
+                            }}
+                          />
+                        </div>
+
                         <Input
                           value={qty}
                           type={"number"}
-                          onChange={(e: any) => handleState("qty")(e.target.value)}
+                          onChange={(e: any) => handleChange("qty")(e.target.value)}
                           placeholder="Qty"
                           overrides={{
                             Root: {
@@ -290,7 +295,7 @@ const StartPortfolio = (props: Props) => {
                       </PriceList>
                       <Button
                         size="large"
-                        onClick={() => setSteps(1)}
+                        onClick={() => handleChange("steps")(1)}
                         overrides={{
                           BaseButton: {
                             style: ({ $theme }) => {
@@ -333,7 +338,7 @@ const StartPortfolio = (props: Props) => {
                         <Button
                           kind="secondary"
                           size="default"
-                          onClick={() => setSteps(0)}
+                          onClick={() => handleChange("steps")(0)}
                           overrides={{
                             BaseButton: {
                               style: ({ $theme }) => {
