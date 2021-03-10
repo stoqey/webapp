@@ -65,7 +65,7 @@ const Positions: NextPage<{}> = () => {
 	return (
 		<>
 			<Head>
-				<title>{title} | Stoqey.</title>
+				<title>{title} | Stoqey</title>
 				<meta name="Description" content="Stoqey positions" />
 			</Head>
 
