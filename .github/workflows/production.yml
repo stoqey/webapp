@@ -10,7 +10,8 @@ env:
   GKE_ZONE: ${{ secrets.GKE_ZONE }}
   NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }} 
   FB_SA_KEY: ${{ secrets.FB_SA_KEY_JSON }}
-  BACKEND: web.stoqey.com
+  PAYPAL_ID: ${{ secrets.PROD_PAYPAL_ID }}
+  BACKEND: ${{ secrets.PROD_STQ_BACKEND }} 
   CLUSTER: stoqey
   DEPLOYMENT: stqwebapp
   IMAGE: stqwebapp
@@ -35,7 +36,7 @@ jobs:
     # helper for authentication
     - name: Save docker configure 
       run: |-
-        gcloud --quiet auth configure-docker        
+        gcloud --quiet auth configure-docker    
 
     # Build the Docker image
     - name: Build image
@@ -43,8 +44,9 @@ jobs:
         docker build \
           --tag "gcr.io/$GKE_PROJECT/$IMAGE:${GITHUB_SHA:0:7}" \
           --build-arg BACKEND="$BACKEND" \
-          --build-arg GITHUB_SHA="$GITHUB_SHA" \
+          --build-arg PAYPAL_ID="$PAYPAL_ID" \
           --build-arg FB_SA_KEY="$FB_SA_KEY" \
+          --build-arg GITHUB_SHA="$GITHUB_SHA" \
           --build-arg GITHUB_REF="$GITHUB_REF" \
           --build-arg NPM_AUTH_TOKEN="$NPM_AUTH_TOKEN" \
           .
@@ -69,4 +71,4 @@ jobs:
 
     # Deploy the Docker image to the GKE cluster
     - name: Deploy to k8s
-      run: kubectl set image deployment/$IMAGE $IMAGE=gcr.io/$GKE_PROJECT/$IMAGE:${GITHUB_SHA:0:7}
+      run: kubectl set image deployment/$DEPLOYMENT $DEPLOYMENT=gcr.io/$GKE_PROJECT/$IMAGE:${GITHUB_SHA:0:7} 
