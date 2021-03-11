@@ -6,7 +6,7 @@ import { FormControl } from 'baseui/form-control';
 import { Input } from 'baseui/input';
 import { Textarea } from 'baseui/textarea';
 import { Select } from 'baseui/select';
-import { UserType } from 'gql/user';
+import { UserType } from '@stoqey/client-graphql';
 
 interface Props {
   error: boolean,
@@ -51,11 +51,11 @@ const AddEditModal = ({
         <ModalBody style={{ overflow: 'hidden' }}>
           <FlexGrid flexGridColumnCount={1}>
 
-            {/* Fullname */}
+            {/* Firstname */}
             <FlexGridItem>
               <FormControl
                 label="Title"
-                error={error && !user.fullname ? 'Please fill out fullname' : null}
+                error={error && !user.firstname ? 'Please fill out firstname' : null}
                 overrides={{
                   Label: {
                     style: ({ $theme }) => {
@@ -66,9 +66,38 @@ const AddEditModal = ({
               >
                 <Input
                   name="title"
-                  value={user.fullname}
-                  error={error && !user.fullname}
-                  onChange={handleOnChange('fullname')}
+                  value={user.firstname}
+                  error={error && !user.firstname}
+                  onChange={handleOnChange('firstname')}
+                  overrides={{
+                    InputContainer: {
+                      style: () => {
+                        return { backgroundColor: 'transparent' };
+                      },
+                    },
+                  }}
+                />
+              </FormControl>
+            </FlexGridItem>
+
+            {/* Lastname */}
+            <FlexGridItem>
+              <FormControl
+                label="Title"
+                error={error && !user.lastname ? 'Please fill out lastname' : null}
+                overrides={{
+                  Label: {
+                    style: ({ $theme }) => {
+                      return { ...$theme.typography.font200 };
+                    },
+                  },
+                }}
+              >
+                <Input
+                  name="title"
+                  value={user.lastname}
+                  error={error && !user.lastname}
+                  onChange={handleOnChange('lastname')}
                   overrides={{
                     InputContainer: {
                       style: () => {
