@@ -9,7 +9,7 @@ env:
   GKE_PROJECT: ${{ secrets.GKE_PROJECT }}
   GKE_ZONE: ${{ secrets.GKE_ZONE }}
   NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }} 
-  FB_SA_KEY: ${{ secrets.FB_SA_KEY_JSON }}
+  FB_SA_KEY: ${{ secrets.CLIENT_FIREBASE_STQNETWORK_DEV }}
   PAYPAL_ID: ${{ secrets.DEV_PAYPAL_ID }}
   BACKEND: ${{ secrets.DEV_STQ_BACKEND }} 
   CLUSTER: cloudx
