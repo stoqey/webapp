@@ -4,7 +4,7 @@ import Head from "next/head";
 import { Grid, Cell } from "baseui/layout-grid";
 import { Block } from "baseui/block";
 import Container from "components/UiElements/Container/Container";
-import FirebaseCrud from "containers/admin/Crud";
+import FirebaseCrud from "containers/Admin";
 import AdminMenu from "components/SideMenu/AdminMenu";
 
 const TITLE = "Firebase CRUD";

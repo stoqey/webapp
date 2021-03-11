@@ -44,7 +44,7 @@ const Positions: NextPage<{}> = () => {
 	const [showClose, setShowClose] = useState(false);
 	const quote: MarketDataType = useAppEvent(APPEVENTS.CURRENCY);
 	const [selectedPortfolio, setSelectedPortfolio] = useState<PortfolioType>(null);
-	const [portfolios, setPortfolios] = useState<PortfolioItem[]>([portEg]);
+	const [portfolios, setPortfolios] = useState<PortfolioItem[]>([]);
 
 
 	React.useEffect(() => {
