@@ -29,6 +29,7 @@ const AddEditModal = ({
   return (
     <>
       <Modal
+        // @ts-ignore
         onClose={handleModdalClose}
         closeable
         isOpen={visible}
@@ -145,6 +146,7 @@ const AddEditModal = ({
               overrides={{ Block: { style: { marginTop: '30px' } } }}
             >
               <Button
+                // @ts-ignore
                 onClick={handleOnSubmit}
                 overrides={{
                   BaseButton: {
@@ -160,6 +162,7 @@ const AddEditModal = ({
               </Button>
               <Button
                 kind="minimal"
+                // @ts-ignore
                 onClick={handleModdalClose}
                 overrides={{
                   BaseButton: {

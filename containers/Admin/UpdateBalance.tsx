@@ -106,7 +106,7 @@ const UpdateBalanceModal = ({
             <FlexGridItem>
               <FormControl
                 label="Balance"
-                error={error && !user.fullname ? 'Please fill out balance' : null}
+                error={error && 'Please fill out balance'}
                 overrides={{
                   Label: {
                     style: ({ $theme }) => {
