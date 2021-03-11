@@ -7,10 +7,9 @@ import { FormControl } from 'baseui/form-control';
 import { Input } from 'baseui/input';
 import { Textarea } from 'baseui/textarea';
 import { Select } from 'baseui/select';
-import { UserType } from 'gql/user';
+import { UserType, UPDATE_USER_WALLET } from '@stoqey/client-graphql';
 import { useApolloClient } from '@apollo/client';
-import { UPDATE_USER_WALLET } from 'gql/user/user.mutation';
-import Toaster from '../../components/UiElements/Toaster/Toaster';
+import Toaster from 'components/UiElements/Toaster/Toaster';
 import { isEmpty } from 'lodash';
 
 

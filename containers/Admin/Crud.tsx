@@ -7,9 +7,9 @@ import Toaster from '../../components/UiElements/Toaster/Toaster';
 import AddEditModal from './AddEdit';
 import UpdateBalanceModal from './UpdateBalance';
 import { useApolloClient } from '@apollo/client';
-import { GET_ALL_USERS, UserType } from 'gql/user';
+import { GET_ALL_USERS, UserType } from '@stoqey/client-graphql';
 import { isEmpty } from 'lodash';
-import UserTable from './UserTable';
+import UserTable from '@/components/admin/UserTable';
 
 const TITLE = 'Stoqey Admin';
 const SUB_TITLE = 'Stoqey';
@@ -25,10 +25,10 @@ const AdminUserCRUD = () => {
 
   const [user, setUser] = useState<UserType>({
     id: null,
-    fullname: "",
+    firstname: "",
+    lastname: "",
     email: "",
     phone: "",
-
     balance: 0,
     currency: "USD"
   });
@@ -68,7 +68,8 @@ const AdminUserCRUD = () => {
     setEditState(false);
     setUser({
       id: null,
-      fullname: "",
+      firstname: "",
+      lastname: "",
       email: "",
       phone: "",
       balance: 0,
@@ -80,7 +81,8 @@ const AdminUserCRUD = () => {
     setVisible(false);
     setUser({
       id: null,
-      fullname: "",
+      firstname: "",
+      lastname: "",
       email: "",
       phone: "",
       balance: 0,
@@ -92,7 +94,8 @@ const AdminUserCRUD = () => {
     setBalanceVisible(false);
     setUser({
       id: null,
-      fullname: "",
+      firstname: "",
+      lastname: "",
       email: "",
       phone: "",
       balance: 0,
@@ -153,8 +156,8 @@ const AdminUserCRUD = () => {
 
   const checkError = () => {
     let errorStatus = false;
-    const { fullname, email, phone } = user;
-    if (!fullname || !email || !phone) {
+    const { firstname, lastname, email, phone } = user;
+    if (!firstname || !email || !phone || !lastname) {
       errorStatus = true;
     } else {
       errorStatus = false;
