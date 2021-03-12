@@ -75,13 +75,13 @@ const Positions: NextPage<{}> = () => {
 
 			{portfolios.map((item: any) => (
 				<SpaceBetween key={`application-key${item.id}`}>
-					<ListGridCard
+					{/* <ListGridCard
 						variant="list"
 						thumbWidth={`50px`}
 						thumb={item.thumb}
 						title={item.title}
 						description={item.description}
-					/>
+					/> */}
 
 					<Button
 						onClick={() => {

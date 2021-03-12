@@ -30,9 +30,9 @@ const OrderBook: NextPage<Props> = (props: Props) => {
 	return (
 		<>
 			{/* Currency amount */}
-			<div style={{ display: 'flex', justifyContent: 'center' }}>
+			{/* <div style={{ display: 'flex', justifyContent: 'center' }}>
 				<CurrencyNumberContainer />
-			</div>
+			</div> */}
 			<div style={{ display: 'flex' }}>
 
 				{/* BID side */}

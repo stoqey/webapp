@@ -10,6 +10,8 @@ import HighlightChart from 'containers/Chart/HighlightChart';
 import CurrencyPill from '@/components/Currency';
 import OrderBookContainer from 'containers/OrderBook';
 import AreaV1 from 'containers/Chart/AreaV1';
+import Portfolios from 'containers/Portfolio'
+import StartInvest from '../containers/Portfolio/invest';
 
 const PhoneLogin = dynamic(() => import('containers/PhoneLogin'), {
 	ssr: false,
@@ -35,17 +37,21 @@ const Pricing: NextPage<{}> = () => {
 				<meta name="Description" content="Stoqey Beta" />
 			</Head>
 
-			<PageTitle backdrop={false} title={'Beta'} />
-
+			{/* <PageTitle backdrop={false} title={'Beta'} /> */}
 			<Container>
 				<Block paddingTop={['0', '0', '0', '40px']}>
 					<Grid gridColumns={12} gridGutters={0} gridMargins={0}>
-						<Cell span={[12, 12, 6]}>
-							<OrderBookContainer />
+						<Cell span={[12, 12, 4]}>
+						<AreaV1 />
 						</Cell>
-						<Cell span={[12, 12, 6]}>
-							<AreaV1 />
+						<Cell span={[12, 12, 4]}>
+							 <OrderBookContainer />
 						</Cell>
+						{/* <Portfolios /> */}
+						<Cell span={[12, 12, 4]}>
+						<StartInvest />
+						</Cell>
+						
 					</Grid>
 				</Block>
 			</Container>
