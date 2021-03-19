@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { NextPage } from 'next';
 import { Button } from 'baseui/button';
 import { MarketDataType, PortfolioType } from '@stoqey/client-graphql'
-import { BsFillTriangleFill } from 'react-icons/bs';
+import { BsFillTriangleFill, BsPlus } from 'react-icons/bs';
 import { GoTriangleDown, GoTriangleUp } from 'react-icons/go';
 import ListGridCard from 'components/UiElements/ListGridCard/ListGridCard';
 import {
@@ -140,22 +140,22 @@ const Positions: NextPage<{}> = () => {
 					}}
 				>
 
-					<div style={{ display: "flex", justifyContent: 'center', alignItems: 'center' }}>
-						<StqRoboIcon gold />
+					<div style={{ display: "flex", justifyContent: 'center', alignItems: 'center'}}>
+						{/* <StqRoboIcon gold /> */}
 						<GoTriangleUp
 							size="2em"
 							color="#3AA76D"
 						// style={{ marginBottom: '20px' }}
 						/>
-						<div style={{ margin: '10px'}}>
+						<p style={{ margin: "10px"}}>
 							TRADE
-						</div>
+						</p>
 						<GoTriangleDown
 							size="2em"
 							color="red"
 						// style={{ marginBottom: '20px' }}
 						/>
-						<StqRoboIcon />
+						{/* <StqRoboIcon /> */}
 					</div>
 
 
