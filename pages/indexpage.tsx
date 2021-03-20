@@ -9,7 +9,7 @@ import Container from '@/components/UiElements/Container/Container';
 import HighlightChart from 'containers/Chart/HighlightChart';
 import CurrencyPill from '@/components/Currency';
 import OrderBookContainer from 'containers/OrderBook';
-import AreaV1 from 'containers/Chart/AreaV1';
+import StqChart from 'containers/Chart/StqChart';
 
 const PhoneLogin = dynamic(() => import('containers/PhoneLogin'), {
 	ssr: false,
@@ -44,7 +44,7 @@ const Pricing: NextPage<{}> = () => {
 							<OrderBookContainer />
 						</Cell>
 						<Cell span={[12, 12, 6]}>
-							<AreaV1 />
+							<StqChart />
 						</Cell>
 					</Grid>
 				</Block>
