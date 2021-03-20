@@ -9,6 +9,7 @@ import { Grid, Cell } from 'baseui/layout-grid';
 import PageTitle from '@/components/UiElements/PageTitle/PageTitle';
 import Container from '@/components/UiElements/Container/Container';
 import AreaV1 from 'containers/Chart/AreaV1';
+import StqChart from 'containers/Chart/StqChart';
 
 const PhoneLogin = dynamic(() => import('containers/PhoneLogin'), {
 	ssr: false,
@@ -27,19 +28,24 @@ const LoginPage: NextPage<{}> = () => {
 				<meta name="Description" content="Login/Signup | Stoqey" />
 			</Head>
 
-			<PageTitle backdrop={true} title={'Sup 👋, enter your phone'} subtitle={'to continue to Stoqey, new or existing investors'} />
+			<PageTitle style={{ textAlign: "center" }} backdrop={true} title={'Sup 👋, enter your phone'} subtitle={'to continue to Stoqey, new or existing investors'} />
 
 			<Container>
 				<Block paddingTop={['0', '0', '0', '40px']}>
 					<Grid gridColumns={12} gridGutters={0} gridMargins={0}>
-						<Cell span={[12, 12, 6]}>
-							<PhoneLogin />
+						<Cell span={[12, 12, 12]}>
+							<div style={{ justifyContent: "center", display: 'flex', marginBottom: '50px' }}>
+								<Cell span={8}>
+									<PhoneLogin />
+								</Cell>
+							</div>
 						</Cell>
-						<Cell span={[12, 12, 6]}>
-							<AreaV1 />
+						<Cell span={[12, 12, 12]}>
+							<StqChart />
 						</Cell>
 					</Grid>
 				</Block>
+
 			</Container>
 		</>
 	);

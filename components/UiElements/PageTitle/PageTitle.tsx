@@ -7,11 +7,12 @@ type PageTitleProps = {
   subtitle?: string;
   backdrop?: boolean;
   bgColor?: string;
+  style?: any;
 };
 
-const PageTitle = ({ title, subtitle, backdrop, bgColor }: PageTitleProps) => {
+const PageTitle = ({ title, subtitle, backdrop, bgColor, style }: PageTitleProps) => {
   return (
-    <Section style={{ backgroundColor: bgColor }}>
+    <Section style={{ backgroundColor: bgColor, ...style }}>
       <Container>
         <Title>{title}</Title>
         {subtitle && <Subtitle>{subtitle}</Subtitle>}
