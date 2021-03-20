@@ -8,33 +8,13 @@ import { Button } from 'baseui/button';
 import Container from 'components/UiElements/Container/Container';
 import ChartMenu from 'components/SideMenu/ChartMenu';
 import ApexChart from 'components/UiElements/ApexChart/ApexChart';
-import { useApolloClient, useQuery } from '@apollo/react-hooks';
+import { useApolloClient } from '@apollo/client';
+import { isEmpty } from 'lodash';
+import _get from 'lodash/get';
 
 const StqChart: NextPage<{}> = () => {
 
     const client = useApolloClient();
-
-    React.useEffect(() => {
-        const getData = async () => {
-            const { data } = await client.query({
-                query: GET_MARKETDATA,
-                variables: {
-                    symbol: 'STQ',
-                    range: '1d',
-                    start: new Date("2021-01-02"),
-                    end: new Date(),
-                    limit: 1000,
-                },
-                fetchPolicy: "network-only",
-            });
-
-            console.log('data received is about', data);
-        }
-        getData();
-    }, [])
-    
-
-    
 
     const [selection, setSelection] = useState<string>('one_year');
     const [state, setState] = useState<any>({
@@ -356,6 +336,39 @@ const StqChart: NextPage<{}> = () => {
             },
         },
     });
+
+    React.useEffect(() => {
+        const getData = async () => {
+            const response = await client.query({
+                query: GET_MARKETDATA,
+                variables: {
+                    symbol: 'STQ',
+                    range: '1d',
+                    start: new Date("2021-01-02"),
+                    end: new Date(),
+                    limit: 1000,
+                },
+                fetchPolicy: "network-only",
+            });
+
+            const data = _get(response, 'data.data', []);
+
+            const dataForState = data.map(y => {
+                return [new Date(y.date).getTime(), y.close]
+            });
+
+            // update series now
+            setState({
+                ...state,
+                series: [
+                    {
+                        data: dataForState
+                    }
+                ],
+            });
+        }
+        getData();
+    }, [])
 
     function updateData(timeline: string) {
         setSelection(timeline);

@@ -9,13 +9,21 @@ import Container from '@/components/UiElements/Container/Container';
 import HighlightChart from 'containers/Chart/HighlightChart';
 import CurrencyPill from '@/components/Currency';
 import OrderBookContainer from 'containers/OrderBook';
-import StqChart from 'containers/Chart/StqChart';
+import withLayout from 'containers/Layout';
+import WithLayout from 'containers/Layout';
+import MainWrapper from 'containers/MainWrapper';
+// import StqChart from 'containers/Chart/StqChart';
+
+const StqChart = dynamic(() => import('containers/Chart/StqChart'), {
+	ssr: false,
+});
 
 const PhoneLogin = dynamic(() => import('containers/PhoneLogin'), {
 	ssr: false,
 });
 
-const Pricing: NextPage<{}> = () => {
+const IndexPage: NextPage<{}> = ({ ...props }) => {
+	console.log('all props', props);
 	const [loading, setLoading] = useState(false);
 	const [pricingPlan, setPricingPlan] = useState('Free');
 
@@ -53,4 +61,4 @@ const Pricing: NextPage<{}> = () => {
 	);
 };
 
-export default Pricing;
+export default IndexPage;
