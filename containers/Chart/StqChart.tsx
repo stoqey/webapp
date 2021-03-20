@@ -12,6 +12,9 @@ const StqChart: NextPage<{}> = () => {
 
     const client = useApolloClient();
 
+    const startDate = new Date("2021-01-02");
+    const endDate = new Date();
+
     const [selection, setSelection] = useState<string>('all');
     const [state, setState] = useState<any>({
         series: [
@@ -37,8 +40,7 @@ const StqChart: NextPage<{}> = () => {
             xaxis: {
                 type: 'datetime',
                 min: undefined,
-                max: undefined,
-                tickAmount: 6,
+                max: undefined
             },
             tooltip: {
                 x: {
@@ -65,8 +67,8 @@ const StqChart: NextPage<{}> = () => {
                 variables: {
                     symbol: 'STQ',
                     range: '1d',
-                    start: new Date("2021-01-02"),
-                    end: new Date(),
+                    start: startDate,
+                    end: endDate,
                     limit: 1000,
                 },
                 fetchPolicy: "network-only",
@@ -100,8 +102,8 @@ const StqChart: NextPage<{}> = () => {
                     ...state,
                     options: {
                         xaxis: {
-                            min: new Date('28 Jan 2013').getTime(),
-                            max: new Date('27 Feb 2013').getTime(),
+                            min: new Date(new Date(endDate).setMonth(endDate.getMonth() - 1)).getTime(),
+                            max: endDate.getTime(),
                         },
                     },
                 });
@@ -111,8 +113,8 @@ const StqChart: NextPage<{}> = () => {
                     ...state,
                     options: {
                         xaxis: {
-                            min: new Date('27 Sep 2012').getTime(),
-                            max: new Date('27 Feb 2013').getTime(),
+                            min: new Date(new Date(endDate).setMonth(endDate.getMonth() - 6)).getTime(),
+                            max: endDate.getTime(),
                         },
                     },
                 });
@@ -122,8 +124,8 @@ const StqChart: NextPage<{}> = () => {
                     ...state,
                     options: {
                         xaxis: {
-                            min: new Date('27 Feb 2012').getTime(),
-                            max: new Date('27 Feb 2013').getTime(),
+                            min: new Date(new Date(endDate).setMonth(endDate.getMonth() - 12)).getTime(),
+                            max: endDate.getTime(),
                         },
                     },
                 });
@@ -133,8 +135,8 @@ const StqChart: NextPage<{}> = () => {
                     ...state,
                     options: {
                         xaxis: {
-                            min: new Date('01 Jan 2013').getTime(),
-                            max: new Date('27 Feb 2013').getTime(),
+                            min: new Date(new Date(endDate).setMonth(endDate.getMonth() - 12)).getTime(),
+                            max: endDate.getTime(),
                         },
                     },
                 });
