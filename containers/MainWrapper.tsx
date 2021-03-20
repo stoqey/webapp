@@ -33,11 +33,5 @@ function MainWrapper(Component, embed?: boolean) {
             </>;
         }
     }
-
-    return (props: any) => {
-        return (
-            
-        );
-    }
 }
 export default MainWrapper;

@@ -48,10 +48,14 @@ const IndexPage: NextPage<{}> = ({ ...props }) => {
 			<Container>
 				<Block paddingTop={['0', '0', '0', '40px']}>
 					<Grid gridColumns={12} gridGutters={0} gridMargins={0}>
-						<Cell span={[12, 12, 6]}>
-							<OrderBookContainer />
+						<Cell span={[12, 12, 12]}>
+							<div style={{ justifyContent: "center", display: 'flex', marginBottom: '50px'}}>
+								<Cell span={8}>
+									<OrderBookContainer />
+								</Cell>
+							</div>
 						</Cell>
-						<Cell span={[12, 12, 6]}>
+						<Cell span={[12, 12, 12]}>
 							<StqChart />
 						</Cell>
 					</Grid>
