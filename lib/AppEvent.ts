@@ -5,6 +5,8 @@ export enum APPEVENTS {
   USER = 'user',
   CURRENCY = 'currency',
   TRADES = 'trades',
+  ORDERS = 'orders',
+  LOGOUT = 'logout'
 }
 
 export class AppEvents extends EventEmitter.EventEmitter {

@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { NextPage } from 'next';
 import { Button } from 'baseui/button';
 import { MarketDataType, PortfolioType } from '@stoqey/client-graphql'
+import { BsFillTriangleFill, BsPlus } from 'react-icons/bs';
+import { GoTriangleDown, GoTriangleUp } from 'react-icons/go';
 import ListGridCard from 'components/UiElements/ListGridCard/ListGridCard';
 import {
 	SpaceBetween,
@@ -16,6 +18,8 @@ import { useApolloClient } from '@apollo/client';
 import Toaster from '@/components/UiElements/Toaster/Toaster';
 import { useAppEvent } from 'hooks/useAppEvent';
 import { APPEVENTS } from '@/lib/AppEvent';
+import { Block } from 'baseui/block';
+import StqRoboIcon from '@/components/logo/icon';
 
 const stoqeyLogo = require('assets/images/STQ.png');
 
@@ -25,6 +29,12 @@ interface PortfolioItem {
 	thumb: any; // stoqeyLogo
 	title: string; // 'Stoqey',
 	description: string; // 'Number of shares',
+};
+
+const portEg = {
+	id: 'stq',
+	title: 'Stoqey',
+	description: 'Number of shares',
 };
 
 const Positions: NextPage<{}> = () => {
@@ -48,7 +58,7 @@ const Positions: NextPage<{}> = () => {
 					description: `${port.action} ${port.size} @${port.averageCost}`,
 				}));
 
-				
+
 				setPortfolios(portfoliosToSave);
 			},
 		})
@@ -105,23 +115,52 @@ const Positions: NextPage<{}> = () => {
 			))}
 
 			{/* Start new portfolio */}
-			<SpaceBetween key={`start-new-portfolio`}>
+			<Block $style={{
+				display: 'flex',
+				justifyContent: 'center',
+				padding: '20px'
+			}}>
 				<Button
 					onClick={() => setShowNew(true)}
-					kind="secondary"
-					shape="pill"
+					kind="primary"
+					shape="square"
 					overrides={{
 						BaseButton: {
 							style: ({ $theme }) => {
 								return {
-									...$theme.typography.font250,
-									minWidth: '82px',
+									...$theme.typography.font750,
+									minWidth: '110px',
+									display: 'flex',
+									// paddingLeft: '15px',
+									// paddingRight: '15px'
+									// fontSize: '22px'
 								};
 							},
 						},
 					}}
-				>Buy/Sell Stoqey</Button>
-			</SpaceBetween>
+				>
+
+					<div style={{ display: "flex", justifyContent: 'center', alignItems: 'center'}}>
+						{/* <StqRoboIcon gold /> */}
+						<GoTriangleUp
+							size="2em"
+							color="#3AA76D"
+						// style={{ marginBottom: '20px' }}
+						/>
+						<p style={{ margin: "10px"}}>
+							TRADE
+						</p>
+						<GoTriangleDown
+							size="2em"
+							color="red"
+						// style={{ marginBottom: '20px' }}
+						/>
+						{/* <StqRoboIcon /> */}
+					</div>
+
+
+				</Button>
+			</Block>
 		</>
 	);
 };

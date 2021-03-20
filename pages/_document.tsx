@@ -63,7 +63,7 @@ export default class CustomDocument extends Document<any> {
           <link rel="icon" type="image/png" sizes="16x16" href={icon16} />
           {/* 
               // @ts-ignore */}
-          <link rel="manifest" href={manifestFile} />
+          {/* <link rel="manifest" href={manifestFile} /> */}
           <meta name="msapplication-TileColor" content="#ffffff" />
           <meta name="msapplication-TileImage" content={msapplicationTileImage} />
           <meta name="theme-color" content="#ffffff" />

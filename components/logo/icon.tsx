@@ -1,25 +1,29 @@
 import React from "react";
 import { styled } from 'baseui';
 
-export const Svg = styled('svg', ({ $theme }) => ({
-    fill: $theme.colors.primaryA,
+export const Svg = styled('svg', ({ $theme, $gold }: any) => ({
+    // fill: $theme.colors.primaryA,
+    fill: $gold ? 'gold' : $theme.colors.primary,
 }));
 
 export const Par = styled('p', ({ $theme }) => ({
     padding: '2px',
 }));
 
-export const Txt = styled('text', ({ $theme }) => ({
+export const Txt = styled('text', ({ $theme, $gold }: any) => ({
     fontSize: '12px',
-    color: $theme.colors.primary,
+    color: $gold ? 'gold' : $theme.colors.primary,
     ...$theme.typography.font150,
 }));
 
-export function StqRoboIcon() {
-
+interface Props {
+    gold?: boolean;
+}
+export function StqRoboIcon(props: Props) {
+    const gold = props && props.gold || false;
     return (
         <Par>
-            <Svg
+            <Svg $gold={gold}
                 xmlns='http://www.w3.org/2000/svg'
                 width='28'
                 height='33'

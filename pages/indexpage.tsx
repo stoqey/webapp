@@ -9,13 +9,21 @@ import Container from '@/components/UiElements/Container/Container';
 import HighlightChart from 'containers/Chart/HighlightChart';
 import CurrencyPill from '@/components/Currency';
 import OrderBookContainer from 'containers/OrderBook';
-import AreaV1 from 'containers/Chart/AreaV1';
+import withLayout from 'containers/Layout';
+import WithLayout from 'containers/Layout';
+import MainWrapper from 'containers/MainWrapper';
+// import StqChart from 'containers/Chart/StqChart';
+
+const StqChart = dynamic(() => import('containers/Chart/StqChart'), {
+	ssr: false,
+});
 
 const PhoneLogin = dynamic(() => import('containers/PhoneLogin'), {
 	ssr: false,
 });
 
-const Pricing: NextPage<{}> = () => {
+const IndexPage: NextPage<{}> = ({ ...props }) => {
+	console.log('all props', props);
 	const [loading, setLoading] = useState(false);
 	const [pricingPlan, setPricingPlan] = useState('Free');
 
@@ -40,11 +48,15 @@ const Pricing: NextPage<{}> = () => {
 			<Container>
 				<Block paddingTop={['0', '0', '0', '40px']}>
 					<Grid gridColumns={12} gridGutters={0} gridMargins={0}>
-						<Cell span={[12, 12, 6]}>
-							<OrderBookContainer />
+						<Cell span={[12, 12, 12]}>
+							<div style={{ justifyContent: "center", display: 'flex', marginBottom: '50px'}}>
+								<Cell span={8}>
+									<OrderBookContainer />
+								</Cell>
+							</div>
 						</Cell>
-						<Cell span={[12, 12, 6]}>
-							<AreaV1 />
+						<Cell span={[12, 12, 12]}>
+							<StqChart />
 						</Cell>
 					</Grid>
 				</Block>
@@ -53,4 +65,4 @@ const Pricing: NextPage<{}> = () => {
 	);
 };
 
-export default Pricing;
+export default IndexPage;

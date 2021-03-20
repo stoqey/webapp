@@ -5,16 +5,20 @@ import {
   InMemoryCache,
   ApolloLink,
   split,
+  from
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
+import { onError } from "@apollo/client/link/error";
 import { WebSocketLink } from "@apollo/client/link/ws";
 import { getMainDefinition } from "@apollo/client/utilities";
 import includes from "lodash/includes";
 import AsyncStorageDB from "./AsyncStorageDB";
+import { AppEvents, APPEVENTS } from "./AppEvent";
 
 let apolloClient;
 
 function createApolloClient() {
+  const events = AppEvents.Instance;
   const urlFromJson = process.env.NEXT_PUBLIC_API_URL;
 
   // console.log(
@@ -64,7 +68,48 @@ function createApolloClient() {
       })
     : null;
 
-  const link = process.browser
+  // Log any GraphQL errors or network error that occurred
+  const errorLink = onError(({ graphQLErrors, networkError }) => {
+    try {
+      if (graphQLErrors && graphQLErrors.forEach) {
+        // Not Authorised!
+        graphQLErrors.map(({ message, locations, path, originalError }) => {
+          // console.error('originalError', { message, originalError, locations, path });
+          // not authorized
+          // if (includes(message, 'Expired')) {
+          //   // Refresh to token from here
+          //   // authHelper
+          //   //   .refreshToken()
+          //   //   .then(accessToken => {
+          //   //     log.info('Got new refresh token', getLastChar(accessToken));
+          //   //     return AsyncStorageDB.Instance.updateUserAuth({
+          //   //       accessToken,
+          //   //     });
+          //   //   })
+          //   //   .then(updatedUser => {
+          //   //     log.error('updatedUser refresh token', updatedUser);
+          //   //   })
+          //   //   .catch(error => {
+          //   //     log.error('error updatedUser refresh token', error);
+          //   //   });
+
+          //   // log.error('Error when refreshing TOKEN', message);
+          // }
+          if (includes(message, 'not authenticated')) {
+            // Ask user to login again
+            events.emit(APPEVENTS.LOGOUT, null); // emit logout
+          };
+
+        });
+        // console.error(`[graphQLErrors error]: `, graphQLErrors);
+      }
+
+    } catch (error) {
+      console.error('error with graphql', error);
+    }
+  });
+
+  const tcpLink = process.browser
     ? split(
         ({ query }) => {
           // @ts-ignore
@@ -72,9 +117,11 @@ function createApolloClient() {
           return kind === "OperationDefinition" && operation === "subscription";
         },
         wsLink,
-        authLink.concat(httpLink)
+        authLink,
       )
-    : authLink.concat(httpLink);
+    : authLink;
+
+    const link = from([tcpLink,errorLink,httpLink]);
 
   return new ApolloClient({
     ssrMode: typeof window === "undefined",

@@ -8,16 +8,16 @@ const menuItems = [
   //   label: 'Blog',
   //   path: '#',
   // },
-  {
-    id: 2,
-    label: 'Privacy',
-    path: '/privacy',
-  },
-  {
-    id: 3,
-    label: 'Terms',
-    path: '/terms',
-  },
+  // {
+  //   id: 2,
+  //   label: 'Privacy',
+  //   path: '/privacy',
+  // },
+  // {
+  //   id: 3,
+  //   label: 'Terms',
+  //   path: '/terms',
+  // },
 ];
 
 type MenuProps = {
