@@ -25,6 +25,7 @@ interface Props {
   hide: () => void;
   onError?: (message: string) => void;
   onSuccess?: (message: string) => void;
+  state?: State;
 };
 
 
@@ -38,10 +39,10 @@ interface State {
 }
 const StartPortfolio = (props: Props) => {
   const client = useApolloClient();
-  const { show, hide, onError, onSuccess, quote } = props;
+  const { show, hide, onError, onSuccess, quote, state: propsState } = props;
 
   const close = quote && quote.close;
-  const [state, setState] = useState<State>({
+  const [state, setState] = useState<State>(propsState || {
     steps: 0,
     type: IOrderType.MARKET,
     action: ActionType.BUY,
