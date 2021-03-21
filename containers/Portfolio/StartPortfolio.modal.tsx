@@ -52,7 +52,7 @@ const StartPortfolio = (props: Props) => {
     qty: 1,
   });
 
-  const { type, action, price = close, qty, stopPrice, steps, admin } = state;
+  const { type, action, price = close, qty, stopPrice, steps } = state;
 
   const handleChange = (field: string) => {
     return (value) => {
