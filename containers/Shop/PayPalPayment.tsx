@@ -7,6 +7,7 @@ import { PayPalButton } from "react-paypal-button-v2";
 import { processPayment } from './api';
 import { useApolloClient } from '@apollo/client';
 import { FaHandHoldingUsd } from 'react-icons/fa';
+import { StatefulPopover } from "baseui/popover";
 import { H6 } from 'baseui/typography';
 
 interface Props {
@@ -62,19 +63,29 @@ const PayPalPayment = (props: Props) => {
   return (
     <Block marginLeft="-16px" marginRight="-16px">
 
-      <Button
-        shape="square"
-        overrides={{
-          Root: {
-            style: () => {
-              return { width: "100%", fontSize: "20px", borderRadius: "5px", height: "55px", marginBottom: "17px" };
-            },
-          },
-        }}
+      <StatefulPopover
+        content={() => (
+          <Block padding="15px" $style={{ textAlign: "center"}}>
+            <h3>Send any amount to support@stoqey.com, please add your account's phone number as the message</h3>
+          </Block>
+        )}
+        returnFocus
+        autoFocus
       >
-        <FaHandHoldingUsd size={30} style={{ margin: "10px" }} />
-        <h4>E-transfer</h4>
-      </Button>
+        <Button
+          shape="square"
+          overrides={{
+            Root: {
+              style: () => {
+                return { width: "100%", fontSize: "20px", borderRadius: "5px", height: "55px", marginBottom: "17px" };
+              },
+            },
+          }}
+        >
+          <FaHandHoldingUsd size={30} style={{ margin: "10px" }} />
+          <h4>E-transfer</h4>
+        </Button>
+      </StatefulPopover>
       {/* PayPal form */}
       <PayPalForm {...props} onSuccess={paymentApi} />
 
