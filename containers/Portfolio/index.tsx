@@ -20,11 +20,13 @@ import { useAppEvent } from 'hooks/useAppEvent';
 import { APPEVENTS } from '@/lib/AppEvent';
 import { Block } from 'baseui/block';
 import StqRoboIcon from '@/components/logo/icon';
+import { niceDec } from 'utils/number';
+import { H2, H4, H6, Paragraph1, Paragraph2, Paragraph4 } from 'baseui/typography';
 
 const stoqeyLogo = require('assets/images/STQ.png');
 
 
-interface PortfolioItem {
+interface PortfolioItem extends PortfolioType {
 	id: string;
 	thumb: any; // stoqeyLogo
 	title: string; // 'Stoqey',
@@ -46,6 +48,7 @@ const Positions: NextPage<{}> = () => {
 	const [selectedPortfolio, setSelectedPortfolio] = useState<PortfolioType>(null);
 	const [portfolios, setPortfolios] = useState<PortfolioItem[]>([]);
 
+	const price = quote && quote.close | 0;
 
 	React.useEffect(() => {
 		getPortfoliosPaginationApi({
@@ -56,7 +59,10 @@ const Positions: NextPage<{}> = () => {
 					thumb: stoqeyLogo,
 					title: 'Stoqey',
 					description: `${port.action} ${port.size} @${port.averageCost}`,
+					...port,
 				}));
+
+				console.log('data is', portfoliosToSave);
 
 
 				setPortfolios(portfoliosToSave);
@@ -77,23 +83,43 @@ const Positions: NextPage<{}> = () => {
 	}
 
 
+
 	return (
 		<>
 			<Toaster toastKey={toastKey} />
 			<StartPortfolio quote={quote} onError={onError} onSuccess={onSuccess} show={showNew} hide={() => setShowNew(false)} />
 			<ClosePortfolio onError={onError} onSuccess={onSuccess} show={showClose} hide={() => setShowClose(false)} portfolio={selectedPortfolio} />
 
-			{portfolios.map((item: any) => (
-				<SpaceBetween key={`application-key${item.id}`}>
-					<ListGridCard
-						variant="list"
-						thumbWidth={`50px`}
-						thumb={item.thumb}
-						title={item.title}
-						description={item.description}
-					/>
+			{portfolios.map((item: any) => {
+				const profit = price - item.averageCost; 
+				
+				return (
+					<SpaceBetween key={`application-key${item.id}`}>
+						<ListGridCard
+							variant="list"
+							thumbWidth={`50px`}
+							thumb={item.thumb}
+							title={item.title}
+							description={item.description}
+						/>
 
-					<Button
+						<div>
+							<h2> </h2>
+							<h4> </h4>
+						</div>
+						<div>
+							<h2> </h2>
+							<h4> </h4>
+						</div>
+						<div>
+							<H6>${item.averageCost}</H6>
+							<Paragraph2>{item.size} shares</Paragraph2>
+						</div>
+						<div>
+							<H2>{niceDec(profit)}</H2>
+							<H4>{niceDec(profit)}</H4>
+						</div>
+						{/* <Button
 						onClick={() => {
 							setSelectedPortfolio(item);
 							setShowClose(true);
@@ -110,9 +136,11 @@ const Positions: NextPage<{}> = () => {
 								},
 							},
 						}}
-					>Close position</Button>
-				</SpaceBetween>
-			))}
+					>Close position</Button> */}
+					</SpaceBetween>
+				)
+			}
+			)}
 
 			{/* Start new portfolio */}
 			<Block $style={{
@@ -140,14 +168,14 @@ const Positions: NextPage<{}> = () => {
 					}}
 				>
 
-					<div style={{ display: "flex", justifyContent: 'center', alignItems: 'center'}}>
+					<div style={{ display: "flex", justifyContent: 'center', alignItems: 'center' }}>
 						{/* <StqRoboIcon gold /> */}
 						<GoTriangleUp
 							size="2em"
 							color="#3AA76D"
 						// style={{ marginBottom: '20px' }}
 						/>
-						<p style={{ margin: "10px"}}>
+						<p style={{ margin: "10px" }}>
 							TRADE
 						</p>
 						<GoTriangleDown
@@ -157,8 +185,6 @@ const Positions: NextPage<{}> = () => {
 						/>
 						{/* <StqRoboIcon /> */}
 					</div>
-
-
 				</Button>
 			</Block>
 		</>
