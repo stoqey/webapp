@@ -6,6 +6,8 @@ import { Modal, ModalBody } from 'baseui/modal';
 import { PayPalButton } from "react-paypal-button-v2";
 import { processPayment } from './api';
 import { useApolloClient } from '@apollo/client';
+import { FaHandHoldingUsd } from 'react-icons/fa';
+import { H6 } from 'baseui/typography';
 
 interface Props {
   userId: string;
@@ -56,10 +58,23 @@ const PayPalPayment = (props: Props) => {
     }
   })
 
-
+  // FaHandHoldingUsd
   return (
     <Block marginLeft="-16px" marginRight="-16px">
 
+      <Button
+        shape="square"
+        overrides={{
+          Root: {
+            style: () => {
+              return { width: "100%", fontSize: "20px", borderRadius: "5px", height: "55px", marginBottom: "17px" };
+            },
+          },
+        }}
+      >
+        <FaHandHoldingUsd size={30} style={{ margin: "10px" }} />
+        <h4>E-transfer</h4>
+      </Button>
       {/* PayPal form */}
       <PayPalForm {...props} onSuccess={paymentApi} />
 
