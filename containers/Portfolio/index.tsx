@@ -21,7 +21,8 @@ import { APPEVENTS } from '@/lib/AppEvent';
 import { Block } from 'baseui/block';
 import StqRoboIcon from '@/components/logo/icon';
 import { niceDec } from 'utils/number';
-import { H2, H4, H6, Paragraph1, Paragraph2, Paragraph4 } from 'baseui/typography';
+import { H2, H4, H6, Paragraph1, Paragraph2, Paragraph3, Paragraph4 } from 'baseui/typography';
+import { getTradeColor } from 'utils/colors';
 
 const stoqeyLogo = require('assets/images/STQ.png');
 
@@ -116,8 +117,8 @@ const Positions: NextPage<{}> = () => {
 							<Paragraph2>{item.size} shares</Paragraph2>
 						</div>
 						<div>
-							<H2>{niceDec(profit)}</H2>
-							<H4>{niceDec(profit)}</H4>
+							<H6>{niceDec(profit)}</H6>
+							<Paragraph3 $style={{ color: getTradeColor(profit) }}>{niceDec(profit)}</Paragraph3>
 						</div>
 						{/* <Button
 						onClick={() => {

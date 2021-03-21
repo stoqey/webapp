@@ -22,6 +22,7 @@ import { GET_ME } from "@stoqey/client-graphql";
 import { useUserInfo } from 'hooks/useUserInfo';
 import Toaster from '@/components/UiElements/Toaster/Toaster';
 import OrdersListContainer from 'containers/OrderBook/OrdersListContainer';
+import { H5, H6, Paragraph3 } from 'baseui/typography';
 
 const stoqeyLogo = require('assets/images/STQ.png');
 
@@ -135,6 +136,12 @@ const Positions: NextPage<{}> = () => {
 									>
 										Remove all
 									</Button> */}
+
+									<div style={{ textAlign: 'center'}}>
+										<H6>2300</H6>
+										<Paragraph3>unrealized profit</Paragraph3>
+									</div>
+
 								</SpaceBetween>
 
 								<Portfolios />
