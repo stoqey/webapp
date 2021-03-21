@@ -4,19 +4,15 @@ import Head from "next/head";
 import { Grid, Cell } from "baseui/layout-grid";
 import { Block } from "baseui/block";
 import Container from "components/UiElements/Container/Container";
-import FirebaseCrud from "containers/Admin";
 import AdminMenu from "components/SideMenu/AdminMenu";
-
-const TITLE = "Firebase CRUD";
-const SUB_TITLE =
-	"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod";
+import AdminOrderBook from "containers/Admin/Order";
 
 const FirebaseCRUD: NextPage<{}> = () => {
 	return (
 		<>
 			<Head>
-				<title>Stoqey Admin</title>
-				<meta name="Description" content={SUB_TITLE} />
+				<title>Stoqey Admin OrderBook</title>
+				<meta name="Description" content={"Stoqey Admin OrderBook"} />
 			</Head>
 
 			<Container>
@@ -27,7 +23,7 @@ const FirebaseCRUD: NextPage<{}> = () => {
 						</Cell>
 						<Cell span={[12, 12, 9]}>
 							<Block paddingTop={["10px", "7px", "30px", "0"]}>
-								<FirebaseCrud />
+								<AdminOrderBook />
 							</Block>
 						</Cell>
 					</Grid>
