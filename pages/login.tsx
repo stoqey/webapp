@@ -24,8 +24,8 @@ const LoginPage: NextPage<{}> = () => {
 	return (
 		<>
 			<Head>
-				<title>Login/Signup | Stoqey</title>
-				<meta name="Description" content="Login/Signup | Stoqey" />
+				<title>Enter | Stoqey</title>
+				<meta name="Description" content="Enter | Stoqey" />
 			</Head>
 
 			<PageTitle style={{ textAlign: "center" }} backdrop={true} title={'Sup 👋, enter your phone'} subtitle={'to continue to Stoqey, new or existing investors'} />

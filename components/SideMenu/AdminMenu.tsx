@@ -13,7 +13,12 @@ const menuItems = [
 	{
 		id: 2,
 		label: 'Transactions',
-		path: '/apps/todo',
+		path: '/admin/transactions',
+	},
+	{
+		id: 3,
+		label: 'Orders',
+		path: '/admin/orders',
 	}
 ];
 
