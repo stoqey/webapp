@@ -44,7 +44,7 @@ const Checkout: NextPage<{}> = () => {
 	const [state, setState] = useState<State>({
 		step: 1,
 		amountType: 'amount',
-		inputAmount: 5,
+		inputAmount: 6,
 		inputQty: 1,
 	});
 	const cartItems = useCartState('cartItems');
@@ -157,13 +157,14 @@ const Checkout: NextPage<{}> = () => {
 							<Cell span={[12, 12, 4]}>
 								<Block paddingTop={['30px', '40px', '0']}>
 									<Title>Payment Details</Title>
-									<div style={{ display: "flex", justifyContent: "center" }}>
+									{/* <div style={{ display: "flex", justifyContent: "center" }}>
 										<Button disabled={step !== 1} size="compact" kind={amountType === "amount" ? "primary" : "secondary"} onClick={() => handleChange("amountType")("amount")}>Amount</Button>
 										<Button disabled={step !== 1} size="compact" kind={amountType === "qty" ? "primary" : "secondary"} onClick={() => handleChange("amountType")("qty")}>Quantity</Button>
-									</div>
-									{amountType === "amount" ? (
+									</div> */}
+									{/* {amountType === "amount" ? ( */}
 										<Input
 											disabled={step !== 1}
+											startEnhancer="$"
 											type={"number"}
 											value={inputAmount}
 											onChange={(e: any) => handleChange("inputAmount")(+e.target.value)}
@@ -174,27 +175,14 @@ const Checkout: NextPage<{}> = () => {
 														return { backgroundColor: 'transparent' };
 													},
 												},
+												Input: {
+													style: () => {
+														return { fontSize: "35px"}
+													}
+												}
 											}}
 										/>
-									) :
-										(
-											<Input
-												disabled={step !== 1}
-												type={"number"}
-												value={inputQty}
-												onChange={(e: any) => handleChange("inputQty")(+e.target.value)}
-												placeholder="Qty"
-												overrides={{
-													InputContainer: {
-														style: () => {
-															return { backgroundColor: 'transparent' };
-														},
-													},
-												}}
-											/>
-										)
-									}
-
+									
 
 									<PriceList>
 										<PriceItem>
