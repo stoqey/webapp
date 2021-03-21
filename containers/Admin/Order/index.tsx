@@ -7,6 +7,9 @@ import { useApolloClient } from '@apollo/client';
 import { MarketDataType } from '@stoqey/client-graphql';
 import { useAppEvent } from 'hooks/useAppEvent';
 import { APPEVENTS } from '@/lib/AppEvent';
+import { toaster } from 'baseui/toast';
+import OrdersListContainer from 'containers/OrderBook/OrdersListContainer';
+import StartPortfolio from 'containers/Portfolio/StartPortfolio.modal';
 
 const TITLE = 'Admin OrderBook';
 const SUB_TITLE = 'Stoqey';
@@ -14,10 +17,21 @@ const SUB_TITLE = 'Stoqey';
 const AdminOrderBook = () => {
 
     let toastKey;
-    const [showClose, setShowClose] = useState(false);
+    const [show, setShow] = useState(false);
     const quote: MarketDataType = useAppEvent(APPEVENTS.CURRENCY);
-
     const client = useApolloClient();
+
+    const onSuccess = (message: string) => {
+		toastKey = toaster.positive(<>{message}</>, {
+			autoHideDuration: 4000
+		})
+	}
+
+	const onError = (message: string) => {
+		toastKey = toaster.negative(<>{message}</>, {
+			autoHideDuration: 5000
+		})
+	}
 
     return (
         <>
@@ -70,7 +84,7 @@ const AdminOrderBook = () => {
                 </Block>
                 <Block overrides={{ Block: { style: { flexShrink: 0 } } }}>
                     <Button
-                        onClick={() => {}}
+                        onClick={() => setShow(true)}
                         overrides={{
                             BaseButton: {
                                 style: ({ $theme }) => {
@@ -81,7 +95,7 @@ const AdminOrderBook = () => {
                             },
                         }}
                     >
-                        Add User
+                        TRADE
                     </Button>
                 </Block>
             </Block>
@@ -96,8 +110,10 @@ const AdminOrderBook = () => {
                 }}
             >
                 {/* Table here */}
+                <OrdersListContainer />
             </Block>
-
+            <StartPortfolio quote={quote} onError={onError} onSuccess={onSuccess} show={show} hide={() => setShow(false)} />
+			
         </>
     );
 };
