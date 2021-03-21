@@ -36,13 +36,15 @@ interface State {
   price: number;
   qty: number;
   stopPrice?: number;
+  // admin?: boolean;
 }
 const StartPortfolio = (props: Props) => {
   const client = useApolloClient();
   const { show, hide, onError, onSuccess, quote, state: propsState } = props;
 
   const close = quote && quote.close;
-  const [state, setState] = useState<State>(propsState || {
+  const [state, setState] = useState<State>({
+    ...propsState,
     steps: 0,
     type: IOrderType.MARKET,
     action: ActionType.BUY,
@@ -50,7 +52,7 @@ const StartPortfolio = (props: Props) => {
     qty: 1,
   });
 
-  const { type, action, price = close, qty, stopPrice, steps } = state;
+  const { type, action, price = close, qty, stopPrice, steps, admin } = state;
 
   const handleChange = (field: string) => {
     return (value) => {
