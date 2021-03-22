@@ -1,3 +1,4 @@
+import DataPrivacy from './Data.privacy';
 const termsPageData = {
   title: "Terms of Service",
   date: "01/01/2020",
@@ -5,20 +6,7 @@ const termsPageData = {
     {
       id: "1",
       title: "PERSONAL DATA COLLECTED",
-      description: `<strong>Personal Information You Provide: </strong> </br>
-        We collect the following personal information you provide when you use our Services, like when
-        you sign up for an account, request a transaction, enroll in a promotion or program, or otherwise
-        engage or communicate with us:
-
-        <ol>
-          <li>
-           Identity Data includes your full name, date of birth, gender, social security numbers, and
-           other data on government-issued identification documents.
-          </li>
-        </ol>
-        
-
-        `,
+      description: DataPrivacy,
     },
     {
       id: "2",
