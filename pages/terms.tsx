@@ -7,16 +7,9 @@ import Container from '../components/UiElements/Container/Container';
 import PageTitle from '../components/UiElements/PageTitle/PageTitle';
 import ScrollSpyMenu from '../components/UiElements/ScrollSpyMenu/ScrollSpyMenu';
 
-import termsPageData from '../data/termsPage';
-import PrivacyPage from 'containers/Privacy';
+import TermsPage from 'containers/Terms';
 
-const Privacy: NextPage<{}> = () => {
-  const { title, date, content } = termsPageData;
-
-  const menuItems: string[] = [];
-  content.forEach((item) => {
-    menuItems.push(item.title);
-  });
+const Terms: NextPage<{}> = () => {
 
   return (
     <>
@@ -27,14 +20,14 @@ const Privacy: NextPage<{}> = () => {
 
       <Container>
         <PageTitle
-          title={title}
-          subtitle={`Last update: ${date}`}
+          title={"Terms and Conditions"}
+          subtitle={`2021/01/01`}
           backdrop={false}
         />
-        <PrivacyPage />
+        <TermsPage />
       </Container>
     </>
   );
 };
 
-export default Privacy;
+export default Terms;
