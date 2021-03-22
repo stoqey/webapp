@@ -1,4 +1,5 @@
 import DataPrivacy from "./Data.privacy";
+import { DisclosuresPrivacy } from "./Disclosures.privacy";
 import { HowWeUseData } from "./HowData.privacy";
 const termsPageData = {
   title: "Privacy Policy",
@@ -16,9 +17,8 @@ const termsPageData = {
     },
     {
       id: "3",
-      title: "Personal Data Collected",
-      description:
-        "<p>Personal Data collected for the following purposes and using the following services:</p><ol><li>Google Analytics: Cookies; Usage Data</li><li>Contact form: email address; first name; phone number</li><li>Mailing list or newsletter: email address; first name</li></ol>",
+      title: "DISCLOSURES OF PERSONAL INFORMATION",
+      description: DisclosuresPrivacy,
     },
     {
       id: "4",

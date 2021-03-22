@@ -10,7 +10,7 @@ export const HowWeUseData = () => {
             <ul>
                 <li>
                     <strong>Create and process your account and deliver the Services to you</strong> , including to allow you to
-                    register for the Services and participate in interactive features and for Robinhood to
+                    register for the Services and participate in interactive features and for Stoqey to
                     authenticate your identity, handle billing and account management, fulfill our legal and
                     regulatory obligations such as obligations that apply to being a regulated broker-dealer, and
                     complete other administrative matters;
