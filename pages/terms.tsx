@@ -7,97 +7,45 @@ import Container from '../components/UiElements/Container/Container';
 import PageTitle from '../components/UiElements/PageTitle/PageTitle';
 import ScrollSpyMenu from '../components/UiElements/ScrollSpyMenu/ScrollSpyMenu';
 
-import termsPageData from '../data/termsPage';
+import TermsPage from 'containers/Terms';
 
-const Privacy: NextPage<{}> = () => {
-  const { title, date, content } = termsPageData;
-
-  const menuItems: string[] = [];
-  content.forEach((item) => {
-    menuItems.push(item.title);
-  });
+const TNC = () => {
+  return (
+    <div>
+      <p>
+        Stoqey Financial LLC (“Stoqey Financial”), a wholly-owned subsidiary of Stoqey Markets,
+        Inc. (“Stoqey Markets”), is a registered broker-dealer and member of FINRA and SIPC that provides
+        online and mobile application-based discount stock brokerage services to self-directed investors.
+      </p>
+      <br/>
+      <p>
+        These Terms and Conditions are in addition to any other agreements between you and Stoqey Financial
+        and Stoqey Markets (collectively, “Stoqey”), including any customer or account agreements and
+        any other agreements that govern your use of software, products, goods, services, content, tools, and
+        information provided by Stoqey.
+      </p>
+    </div>
+  )
+}
+const Terms: NextPage<{}> = () => {
 
   return (
     <>
       <Head>
-        <title>{title} | INST.</title>
-        <meta name="Description" content="Inst privacy page" />
+        <title>Terms and Conditions Stoqey</title>
+        <meta name="Description" content="Terms and Conditions Stoqey" />
       </Head>
 
       <Container>
         <PageTitle
-          title={title}
-          subtitle={`Last update: ${date}`}
+          title={"Terms and Conditions"}
+          subtitle={<TNC />}
           backdrop={false}
         />
-
-        <Row>
-          <Col md={4}>
-            <Sticky top=".navbar" innerZ="1">
-              <ScrollSpyMenu
-                showCounter={true}
-                isSeparator={true}
-                items={menuItems}
-                style={{ padding: '30px 0' }}
-              />
-            </Sticky>
-          </Col>
-
-          <Col md={8}>
-            <Block paddingBottom={['270px', '370px']}>
-              {content.map((item) => {
-                const sectionID = item.title.split(' ').join('_');
-                return (
-                  <section
-                    id={sectionID}
-                    key={sectionID}
-                    style={{ padding: '30px 0' }}
-                  >
-                    <Block
-                      as="h2"
-                      paddingBottom="20px"
-                      overrides={{
-                        Block: {
-                          style: ({ $theme }) => {
-                            return {
-                              ...$theme.typography.font750,
-                              color: $theme.colors.primaryA,
-                            };
-                          },
-                        },
-                      }}
-                    >
-                      {item.title}
-                    </Block>
-                    <Block
-                      overrides={{
-                        Block: {
-                          style: ({ $theme }) => {
-                            return {
-                              ...$theme.typography.font200,
-                              lineHeight: '26px',
-                              color: $theme.colors.contentSecondary,
-                            };
-                          },
-                        },
-                      }}
-                    >
-                      <div
-                        className="html-content"
-                        dangerouslySetInnerHTML={{
-                          __html: item.description,
-                        }}
-                      ></div>
-                    </Block>
-                  </section>
-                );
-              })}
-            </Block>
-          </Col>
-        </Row>
+        <TermsPage />
       </Container>
     </>
   );
 };
 
-export default Privacy;
+export default Terms;
