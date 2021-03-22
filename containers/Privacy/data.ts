@@ -1,7 +1,8 @@
-import DataPrivacy from './Data.privacy';
+import DataPrivacy from "./Data.privacy";
+import { HowWeUseData } from "./HowData.privacy";
 const termsPageData = {
-  title: "Terms of Service",
-  date: "01/01/2020",
+  title: "Privacy Policy",
+  date: "01/01/2021 by Ceddy Muhoza",
   content: [
     {
       id: "1",
@@ -10,9 +11,8 @@ const termsPageData = {
     },
     {
       id: "2",
-      title: "What is Personal Data?",
-      description:
-        '<p>When used in this Policy, "personal information" has the meaning given in the Privacy Act. Generally, it means any information or an opinion that could be used to identify you.</p>',
+      title: "HOW WE USE YOUR INFORMATION",
+      description: HowWeUseData,
     },
     {
       id: "3",
