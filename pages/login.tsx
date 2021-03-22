@@ -28,7 +28,7 @@ const LoginPage: NextPage<{}> = () => {
 				<meta name="Description" content="Enter | Stoqey" />
 			</Head>
 
-			<PageTitle style={{ textAlign: "center" }} backdrop={true} title={'Sup 👋, enter your phone'} subtitle={'to continue to Stoqey, new or existing investors'} />
+			<PageTitle style={{ textAlign: "center" }} backdrop={false} title={'Sup 👋, enter your phone'} subtitle={'to continue to Stoqey, new or existing investors'} />
 
 			<Container>
 				<Block paddingTop={['0', '0', '0', '40px']}>
@@ -41,7 +41,10 @@ const LoginPage: NextPage<{}> = () => {
 							</div>
 						</Cell>
 						<Cell span={[12, 12, 12]}>
-							<StqChart />
+							<div style={{ marginTop: "-50px"}}>
+								<StqChart />
+							</div>
+
 						</Cell>
 					</Grid>
 				</Block>
