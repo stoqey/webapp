@@ -9,6 +9,24 @@ import ScrollSpyMenu from '../components/UiElements/ScrollSpyMenu/ScrollSpyMenu'
 
 import TermsPage from 'containers/Terms';
 
+const TNC = () => {
+  return (
+    <div>
+      <p>
+        Stoqey Financial LLC (“Stoqey Financial”), a wholly-owned subsidiary of Stoqey Markets,
+        Inc. (“Stoqey Markets”), is a registered broker-dealer and member of FINRA and SIPC that provides
+        online and mobile application-based discount stock brokerage services to self-directed investors.
+      </p>
+      <br/>
+      <p>
+        These Terms and Conditions are in addition to any other agreements between you and Stoqey Financial
+        and Stoqey Markets (collectively, “Stoqey”), including any customer or account agreements and
+        any other agreements that govern your use of software, products, goods, services, content, tools, and
+        information provided by Stoqey.
+      </p>
+    </div>
+  )
+}
 const Terms: NextPage<{}> = () => {
 
   return (
@@ -21,7 +39,7 @@ const Terms: NextPage<{}> = () => {
       <Container>
         <PageTitle
           title={"Terms and Conditions"}
-          subtitle={`2021/01/01`}
+          subtitle={<TNC />}
           backdrop={false}
         />
         <TermsPage />
