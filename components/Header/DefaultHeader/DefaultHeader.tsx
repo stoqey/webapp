@@ -65,7 +65,7 @@ const DefaultHeader: React.FC<{}> = () => {
 						<StickyNav>
 							<NavLeft>
 								<Logo
-									path="/web"
+									path="/"
 									src={
 										<>
 											<StqRoboIcon />
