@@ -76,6 +76,7 @@ const TermsPage: NextPage<{}> = () => {
                   ) : (
                     <div
                       className="html-content"
+                      // @ts-ignore
                     >{item.description()}</div>
                   )}
 

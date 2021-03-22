@@ -39,6 +39,7 @@ const Terms: NextPage<{}> = () => {
       <Container>
         <PageTitle
           title={"Terms and Conditions"}
+          // @ts-ignore
           subtitle={<TNC />}
           backdrop={false}
         />
