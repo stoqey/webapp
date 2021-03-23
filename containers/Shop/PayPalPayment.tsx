@@ -91,7 +91,6 @@ const PayPalPayment = (props: Props) => {
 
   const { message, showResults, success } = state;
 
-  // FaHandHoldingUsd
   return (
     <Block marginLeft="-16px" marginRight="-16px">
 
