@@ -44,7 +44,6 @@ const PayPalForm = (props: PayPalFormProps) => {
 
 interface State {
   showResults: boolean;
-  error: string;
   message: string;
   success: boolean;
 }
@@ -55,7 +54,6 @@ const PayPalPayment = (props: Props) => {
 
   const [state, setState] = useState<State>({
     showResults: true,
-    error: "",
     message: "Error processing payment",
     success: false,
   });
@@ -69,7 +67,6 @@ const PayPalPayment = (props: Props) => {
         console.log('successfuly processed payment', data);
         setState({
           ...state,
-          error: "",
           message: `Successfuly processed payment of $${amount}`,
           success: true,
         });
@@ -78,7 +75,6 @@ const PayPalPayment = (props: Props) => {
         console.log('error submitting payment', error);
         setState({
           ...state,
-          error: error && error.message,
           message: `Error processing payment of $${amount}`,
           success: false,
         });
