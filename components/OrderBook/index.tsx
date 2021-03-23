@@ -14,10 +14,11 @@ export const Block = styled('div', ({ $theme }) => ({
 
 interface Props {
 	orders: OrderType[];
+	showCurrency?: boolean;
 };
 
 const OrderBook: NextPage<Props> = (props: Props) => {
-	const { orders = [] } = props;
+	const { orders = [], showCurrency = true } = props;
 
 	let bids = [];
 	let asks = [];
@@ -30,9 +31,12 @@ const OrderBook: NextPage<Props> = (props: Props) => {
 	return (
 		<>
 			{/* Currency amount */}
-			<div style={{ display: 'flex', justifyContent: 'center' }}>
-				<CurrencyNumberContainer />
-			</div>
+			{showCurrency && (
+				<div style={{ display: 'flex', justifyContent: 'center' }}>
+					<CurrencyNumberContainer />
+				</div>
+			)}
+
 			<div style={{ display: 'flex' }}>
 
 				{/* BID side */}

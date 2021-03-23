@@ -30,8 +30,8 @@ import { useAppEvent } from 'hooks/useAppEvent';
 import { APPEVENTS } from '@/lib/AppEvent';
 import { niceDec } from 'utils/number';
 
-const TITLE = 'Invest';
-const SUB_TITLE = 'Invest in Stoqey';
+const TITLE = 'Add funds';
+const SUB_TITLE = 'Add money to your Stoqey account, then start trading';
 
 interface State {
 	step: number;
@@ -40,7 +40,7 @@ interface State {
 	inputQty: number;
 }
 
-const Checkout: NextPage<{}> = () => {
+const AddFunds: NextPage<{}> = () => {
 	const [state, setState] = useState<State>({
 		step: 1,
 		amountType: 'amount',
@@ -89,6 +89,7 @@ const Checkout: NextPage<{}> = () => {
 			</Head>
 
 			<PageTitle
+				style={{ textAlign: "center" }}
 				title={TITLE}
 				subtitle={SUB_TITLE}
 				backdrop={false}
@@ -162,27 +163,27 @@ const Checkout: NextPage<{}> = () => {
 										<Button disabled={step !== 1} size="compact" kind={amountType === "qty" ? "primary" : "secondary"} onClick={() => handleChange("amountType")("qty")}>Quantity</Button>
 									</div> */}
 									{/* {amountType === "amount" ? ( */}
-										<Input
-											disabled={step !== 1}
-											startEnhancer="$"
-											type={"number"}
-											value={inputAmount}
-											onChange={(e: any) => handleChange("inputAmount")(+e.target.value)}
-											placeholder="Amount"
-											overrides={{
-												InputContainer: {
-													style: () => {
-														return { backgroundColor: 'transparent' };
-													},
+									<Input
+										disabled={step !== 1}
+										startEnhancer="$"
+										type={"number"}
+										value={inputAmount}
+										onChange={(e: any) => handleChange("inputAmount")(+e.target.value)}
+										placeholder="Amount"
+										overrides={{
+											InputContainer: {
+												style: () => {
+													return { backgroundColor: 'transparent' };
 												},
-												Input: {
-													style: () => {
-														return { fontSize: "35px"}
-													}
+											},
+											Input: {
+												style: () => {
+													return { fontSize: "35px" }
 												}
-											}}
-										/>
-									
+											}
+										}}
+									/>
+
 
 									<PriceList>
 										<PriceItem>
@@ -200,7 +201,7 @@ const Checkout: NextPage<{}> = () => {
 									</PriceList>
 									{step === 1 && (
 										<Button
-										    disabled={totalPrice < 5}
+											disabled={totalPrice < 5}
 											size="large"
 											shape="pill"
 											onClick={() => handleChange("step")(2)}
@@ -230,4 +231,4 @@ const Checkout: NextPage<{}> = () => {
 	);
 };
 
-export default Checkout;
+export default AddFunds;

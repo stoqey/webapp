@@ -45,7 +45,7 @@ const positions = [
 	},
 ];
 
-const Positions: NextPage<{}> = () => {
+const Trade: NextPage<{}> = () => {
 	let to
 	const { applications } = applicationsPageData;
 	const [value, setValue] = useState([]);
@@ -100,4 +100,4 @@ const Positions: NextPage<{}> = () => {
 	);
 };
 
-export default Positions;
+export default Trade;

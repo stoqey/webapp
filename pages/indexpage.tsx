@@ -43,7 +43,7 @@ const IndexPage: NextPage<{}> = ({ ...props }) => {
 				<meta name="Description" content="Stoqey Beta" />
 			</Head>
 
-			<PageTitle backdrop={false} title={'Beta'} />
+			{/* <PageTitle backdrop={false} title={'Beta'} /> */}
 
 			<Container>
 				<Block paddingTop={['0', '0', '0', '40px']}>
@@ -51,7 +51,7 @@ const IndexPage: NextPage<{}> = ({ ...props }) => {
 						<Cell span={[12, 12, 12]}>
 							<div style={{ justifyContent: "center", display: 'flex', marginBottom: '50px'}}>
 								<Cell span={8}>
-									<OrderBookContainer />
+									<OrderBookContainer showCurrency={false} />
 								</Cell>
 							</div>
 						</Cell>

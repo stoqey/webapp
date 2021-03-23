@@ -5,10 +5,12 @@ import {OrderType } from '@stoqey/client-graphql';
 import { useAppEvent } from 'hooks/useAppEvent';
 import { APPEVENTS } from '@/lib/AppEvent';
 
-
-export const OrderBookContainer = () => {
+interface Props {
+    showCurrency?: boolean;
+}
+export const OrderBookContainer = (props: Props) => {
     const orders: OrderType[] = useAppEvent(APPEVENTS.ORDERS);
-    return <OrderBook orders={orders} />;
+    return <OrderBook orders={orders} {...props}/>;
 }
 
 export default OrderBookContainer;
