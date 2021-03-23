@@ -72,8 +72,8 @@ const Portfolio: NextPage<{}> = () => {
 		portfolios: [],
 
 		// api status
-		message: "",
-		success: false,
+		message: "Successfully submitted order",
+		success: true,
 	});
 
 	const changeState = (field: string) => {
@@ -170,7 +170,16 @@ const Portfolio: NextPage<{}> = () => {
 	return (
 		<>
 			<Toaster toastKey={toastKey} />
-			{showEditor && <TradeEditor state={editor} quote={quote} onError={onError} onSuccess={onSuccess} show={true} hide={() => setShowEditor(false)} />}
+			{showEditor && <TradeEditor state={editor} quote={quote} onError={onError} onSuccess={(props) => {
+				const { message, success } = props;
+				setState({
+					...state,
+					message,
+					success,
+					showResults: true,
+					showEditor: false,
+				});
+			}} show={true} hide={() => setShowEditor(false)} />}
 			
 
 			{/* Model success */}

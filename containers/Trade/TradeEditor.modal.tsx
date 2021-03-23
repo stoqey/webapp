@@ -19,12 +19,13 @@ import { niceDec } from 'utils/number';
 import OrderBookContainer from 'containers/OrderBook';
 import { ButtonGroup } from 'baseui/button-group';
 
+
 interface Props {
   quote: MarketDataType;
   show: boolean;
   hide: () => void;
   onError?: (message: string) => void;
-  onSuccess?: (message: string) => void;
+  onSuccess?: (Results: Results) => void;
   state?: TradeEditorState;
 };
 
@@ -38,6 +39,12 @@ export interface TradeEditorState {
   stopPrice?: number;
   // admin?: boolean;
 }
+
+interface Results extends TradeEditorState {
+  message: string;
+  success: boolean;
+};
+
 const TradeEditor = (props: Props) => {
   const client = useApolloClient();
   const { show, hide, onError, onSuccess, quote, state: propsState } = props;
@@ -75,8 +82,12 @@ const TradeEditor = (props: Props) => {
       },
       success: async (d: any) => {
         console.log('success starting portfolio', d);
-        onSuccess(`Successfully started portfolio for ${qty} shares`)
-        // hide();
+        const success: Results = {
+          message: `Successfully started portfolio for ${qty} shares`,
+          success: true,
+          ...state,
+        }
+        onSuccess(success);
       },
       error: async (e: Error) => {
         onError(e && e.message)
