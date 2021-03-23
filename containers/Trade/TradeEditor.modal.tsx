@@ -38,7 +38,7 @@ interface State {
   stopPrice?: number;
   // admin?: boolean;
 }
-const StartPortfolio = (props: Props) => {
+const TradeEditor = (props: Props) => {
   const client = useApolloClient();
   const { show, hide, onError, onSuccess, quote, state: propsState } = props;
 
@@ -369,4 +369,4 @@ const StartPortfolio = (props: Props) => {
   );
 };
 
-export default StartPortfolio;
+export default TradeEditor;

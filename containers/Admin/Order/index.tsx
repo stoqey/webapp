@@ -9,7 +9,7 @@ import { useAppEvent } from 'hooks/useAppEvent';
 import { APPEVENTS } from '@/lib/AppEvent';
 import { toaster } from 'baseui/toast';
 import OrdersListContainer from 'containers/OrderBook/OrdersListContainer';
-import StartPortfolio from 'containers/Trade/StartPortfolio.modal';
+import TradeEditor from 'containers/Trade/TradeEditor.modal';
 
 const TITLE = 'Admin OrderBook';
 const SUB_TITLE = 'Stoqey';
@@ -112,7 +112,7 @@ const AdminOrderBook = () => {
                 {/* Table here */}
                 <OrdersListContainer />
             </Block>
-            <StartPortfolio quote={quote} onError={onError} onSuccess={onSuccess} show={show} hide={() => setShow(false)} />
+            <TradeEditor quote={quote} onError={onError} onSuccess={onSuccess} show={show} hide={() => setShow(false)} />
 			
         </>
     );

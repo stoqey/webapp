@@ -11,7 +11,7 @@ import {
 } from '../../components/PageStyles/Settings.styled';
 import { toaster } from 'baseui/toast';
 import applicationsPageData from '../../data/applicationsPage';
-import StartPortfolio from './StartPortfolio.modal';
+import TradeEditor from './TradeEditor.modal';
 import ClosePortfolio from './ClosePortfolio.modal';
 
 import { getPortfoliosPaginationApi } from './portfolios.api';
@@ -114,9 +114,11 @@ const Positions: NextPage<{}> = () => {
 	return (
 		<>
 			<Toaster toastKey={toastKey} />
-			<StartPortfolio quote={quote} onError={onError} onSuccess={onSuccess} show={showNew} hide={() => setShowNew(false)} />
+			<TradeEditor quote={quote} onError={onError} onSuccess={onSuccess} show={showNew} hide={() => setShowNew(false)} />
 			<ClosePortfolio onError={onError} onSuccess={onSuccess} show={showClose} hide={() => setShowClose(false)} portfolio={selectedPortfolio} />
 
+
+			{/* Sort and Unrealised profit */}
 			<SpaceBetween>
 				<Select
 					options={sortOptions}
