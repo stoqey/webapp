@@ -334,6 +334,7 @@ const Portfolio: NextPage<{}> = () => {
 									...$theme.typography.font750,
 									minWidth: '110px',
 									display: 'flex',
+									backgroundColor: 'hotpink'
 									// paddingLeft: '15px',
 									// paddingRight: '15px'
 									// fontSize: '22px'

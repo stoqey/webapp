@@ -89,11 +89,11 @@ const AddFunds: NextPage<{}> = () => {
 			</Head>
 
 			<PageTitle
-				style={{ textAlign: "center" }}
-				title={TITLE}
+				style={{ textAlign: "center", color: "golden" }}
+				title={"Add funds"}
 				subtitle={SUB_TITLE}
-				backdrop={false}
-				bgColor={theme === THEME.light ? '#ffffff' : '#000000'}
+				backdrop={true}
+				bgColor={theme === THEME.light ? 'golden' : '#000000'}
 			/>
 
 			<Container>
