@@ -168,7 +168,7 @@ const Positions: NextPage<{}> = () => {
 									</Button> */}
 
 				<div style={{ textAlign: 'center' }}>
-					<H6 $style={{ color: getTradeColor(totalProfit)}}>${niceDec(totalProfit)}</H6>
+					<H6 $style={{ color: getTradeColor(totalProfit) }}>${niceDec(totalProfit)}</H6>
 					<Paragraph3>unrealized profit</Paragraph3>
 				</div>
 
@@ -178,7 +178,9 @@ const Positions: NextPage<{}> = () => {
 
 				const profitPct = getProfitFromTrade(item.action, item.averageCost, price) / 100;
 				const amountSpent = item.size * item.averageCost;
-				const profit = profitPct * amountSpent;
+				const profitAmount = profitPct * amountSpent;
+
+				const pnL = amountSpent + profitAmount;
 
 				return (
 					<SpaceBetween key={`application-key${item.id}`}>
@@ -194,17 +196,25 @@ const Positions: NextPage<{}> = () => {
 							<h2> </h2>
 							<h4> </h4>
 						</div>
-						<div>
-							<h2> </h2>
-							<h4> </h4>
-						</div>
+
+						
+
+						{/* Average cost / shares */}
 						<div>
 							<H6>${item.averageCost}</H6>
 							<Paragraph2>{item.size} shares</Paragraph2>
 						</div>
+
+						{/* Amount spent / Profit & Loss */}
+						<div>
+							<H6>${niceDec(amountSpent)}</H6>
+							<Paragraph2 $style={{ color: getTradeColor(profitPct) }}> ${niceDec(pnL)} </Paragraph2>
+						</div>
+
+						{/* Percentage / Profit Amount */}
 						<div>
 							<H6>{niceDec(profitPct)}%</H6>
-							<Paragraph3 $style={{ color: getTradeColor(profit) }}>${niceDec(profit)}</Paragraph3>
+							<Paragraph3 $style={{ color: getTradeColor(profitAmount) }}>${niceDec(profitAmount)}</Paragraph3>
 						</div>
 						{/* <Button
 						onClick={() => {
