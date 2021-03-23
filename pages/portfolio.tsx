@@ -87,63 +87,7 @@ const Positions: NextPage<{}> = () => {
 								<Title>{title}</Title>
 								<Subtitle>{subtitle}</Subtitle>
 
-								<SpaceBetween>
-									<Select
-										options={sortOptions}
-										value={value}
-										placeholder="Sort"
-										onChange={handleSort}
-										overrides={{
-											Root: {
-												style: () => {
-													return { width: '100px' };
-												},
-											},
-											ControlContainer: {
-												style: () => {
-													return {
-														borderWidth: 0,
-														borderTopLeftRadius: '30px',
-														borderTopRightRadius: '30px',
-														borderBottomRightRadius: '30px',
-														borderBottomLeftRadius: '30px',
-														backgroundColor: 'transparent',
-													};
-												},
-											},
-											ValueContainer: {
-												style: () => {
-													return { paddingLeft: 0 };
-												},
-											},
-										}}
-									/>
-									{/* Remove all */}
-									{/* <Button
-										onClick={handleRemoveAll}
-										kind="secondary"
-										shape="pill"
-										overrides={{
-											BaseButton: {
-												style: ({ $theme }) => {
-													return {
-														...$theme.typography.font250,
-														minWidth: '101px',
-													};
-												},
-											},
-										}}
-									>
-										Remove all
-									</Button> */}
-
-									<div style={{ textAlign: 'center'}}>
-										<H6>2300</H6>
-										<Paragraph3>unrealized profit</Paragraph3>
-									</div>
-
-								</SpaceBetween>
-
+								
 								<Portfolios />
 
 								<OrdersListContainer />

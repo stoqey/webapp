@@ -14,7 +14,7 @@
 				"@apollo/react-hooks": "^4.0.0",
 				"@glidejs/glide": "^3.4.1",
 				"@react-firebase/auth": "^0.2.10",
-				"@stoqey/client-graphql": "^0.2.5",
+				"@stoqey/client-graphql": "^0.2.6",
 				"apexcharts": "^3.19.2",
 				"bad-words": "^3.0.4",
 				"baseui": "^9.84.0",

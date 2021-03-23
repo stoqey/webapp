@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { NextPage } from 'next';
 import { Button } from 'baseui/button';
-import { MarketDataType, PortfolioType } from '@stoqey/client-graphql'
+import sum from 'lodash/sum';
+import { MarketDataType, PortfolioType, getPercentageGain, getProfitFromTrade } from '@stoqey/client-graphql'
 import { BsFillTriangleFill, BsPlus } from 'react-icons/bs';
 import { GoTriangleDown, GoTriangleUp } from 'react-icons/go';
 import ListGridCard from 'components/UiElements/ListGridCard/ListGridCard';
@@ -23,6 +24,8 @@ import StqRoboIcon from '@/components/logo/icon';
 import { niceDec } from 'utils/number';
 import { H2, H4, H6, Paragraph1, Paragraph2, Paragraph3, Paragraph4 } from 'baseui/typography';
 import { getTradeColor } from 'utils/colors';
+import { Select } from 'baseui/select';
+import { isEmpty } from 'lodash';
 
 const stoqeyLogo = require('assets/images/STQ.png');
 
@@ -84,6 +87,29 @@ const Positions: NextPage<{}> = () => {
 	}
 
 
+	const sortOptions = [
+		{ label: 'Sort by A', value: 'a' },
+		{ label: 'Sort by B', value: 'b' },
+		{ label: 'Sort by C', value: 'c' },
+	];
+
+
+
+	// price - averageCost
+	// average, price %
+	// % / 100 * amount(averageCost * qty)
+	// const getProfits = (accumulator, currentValue: PortfolioType) => accumulator + ((getProfitFromTrade(currentValue.action, currentValue.averageCost, price)/100) * (currentValue.size * currentValue.averageCost), 0);
+	const getProfits = (accumulator, currentValue: PortfolioType) => (accumulator + currentValue.averageCost);
+
+
+	// @ts-ignore
+	const totalProfit: any = sum(!isEmpty(portfolios) ?
+		portfolios.map(i => {
+			const profit = getProfitFromTrade(i.action, i.averageCost, price) / 100;
+			const amountSpent = i.size * i.averageCost;
+			const amountProfit = profit * (amountSpent);
+			return amountProfit;
+		}) : 0);
 
 	return (
 		<>
@@ -91,9 +117,69 @@ const Positions: NextPage<{}> = () => {
 			<StartPortfolio quote={quote} onError={onError} onSuccess={onSuccess} show={showNew} hide={() => setShowNew(false)} />
 			<ClosePortfolio onError={onError} onSuccess={onSuccess} show={showClose} hide={() => setShowClose(false)} portfolio={selectedPortfolio} />
 
+			<SpaceBetween>
+				<Select
+					options={sortOptions}
+					// value={value}
+					placeholder="Sort"
+					// onChange={handleSort}
+					overrides={{
+						Root: {
+							style: () => {
+								return { width: '100px' };
+							},
+						},
+						ControlContainer: {
+							style: () => {
+								return {
+									borderWidth: 0,
+									borderTopLeftRadius: '30px',
+									borderTopRightRadius: '30px',
+									borderBottomRightRadius: '30px',
+									borderBottomLeftRadius: '30px',
+									backgroundColor: 'transparent',
+								};
+							},
+						},
+						ValueContainer: {
+							style: () => {
+								return { paddingLeft: 0 };
+							},
+						},
+					}}
+				/>
+				{/* Remove all */}
+				{/* <Button
+										onClick={handleRemoveAll}
+										kind="secondary"
+										shape="pill"
+										overrides={{
+											BaseButton: {
+												style: ({ $theme }) => {
+													return {
+														...$theme.typography.font250,
+														minWidth: '101px',
+													};
+												},
+											},
+										}}
+									>
+										Remove all
+									</Button> */}
+
+				<div style={{ textAlign: 'center' }}>
+					<H6>${niceDec(totalProfit)}</H6>
+					<Paragraph3>unrealized profit</Paragraph3>
+				</div>
+
+			</SpaceBetween>
+
 			{portfolios.map((item: any) => {
-				const profit = price - item.averageCost; 
-				
+
+				const profitPct = getProfitFromTrade(item.action, item.averageCost, price) / 100;
+				const amountSpent = item.size * item.averageCost;
+				const profit = profitPct * amountSpent;
+
 				return (
 					<SpaceBetween key={`application-key${item.id}`}>
 						<ListGridCard
@@ -117,8 +203,8 @@ const Positions: NextPage<{}> = () => {
 							<Paragraph2>{item.size} shares</Paragraph2>
 						</div>
 						<div>
-							<H6>{niceDec(profit)}</H6>
-							<Paragraph3 $style={{ color: getTradeColor(profit) }}>{niceDec(profit)}</Paragraph3>
+							<H6>{niceDec(profitPct)}%</H6>
+							<Paragraph3 $style={{ color: getTradeColor(profit) }}>${niceDec(profit)}</Paragraph3>
 						</div>
 						{/* <Button
 						onClick={() => {
