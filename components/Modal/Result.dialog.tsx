@@ -1,20 +1,25 @@
 import React, { useState } from 'react';
-import { IoIosCheckmarkCircleOutline } from 'react-icons/io';
+import { IoIosCheckmarkCircleOutline, IoIosCloseCircleOutline } from 'react-icons/io';
 import { Block } from 'baseui/block';
 import { Button } from 'baseui/button';
 import { Modal, ModalBody } from 'baseui/modal';
+import { getTradeColor } from 'utils/colors';
+import { isEmpty } from 'lodash';
 
-
+interface Content {
+  title: string;
+  value: string;
+}
 interface Props {
   show: boolean;
   hide: Function;
   success: boolean;
   title: string;
-  message: string;
+  content?: Content[];
 };
 
 const ResultsDialog = (props: Props) => {
-  const { show, hide, success, title, message } = props;
+  const { show, hide, success, title, content = [] } = props;
 
 
   return (
@@ -51,12 +56,24 @@ const ResultsDialog = (props: Props) => {
               },
             }}
           >
-            <IoIosCheckmarkCircleOutline
-              size="4em"
-              color="#3AA76D"
-              style={{ marginBottom: '20px' }}
-            />
+            {/* Icon */}
+            {success ? (
+              <IoIosCheckmarkCircleOutline
+                size="4em"
+                color={getTradeColor(1)}
+                // color="#3AA76D"
+                style={{ marginBottom: '20px' }}
+              />
+            ) : (
+              <IoIosCloseCircleOutline
+                size="4em"
+                color={getTradeColor(-1)}
+                style={{ marginBottom: '20px' }}
+              />
+            )}
 
+
+            {/* Title */}
             <Block
               as="h2"
               overrides={{
@@ -75,63 +92,32 @@ const ResultsDialog = (props: Props) => {
                 },
               }}
             >
-              Order Placed
+              {title}
             </Block>
 
-            <Block as="p" marginBottom="15px">
-              <Block
-                as="strong"
-                overrides={{
-                  Block: {
-                    style: ({ $theme }) => {
-                      return { color: $theme.colors.primary };
-                    },
-                  },
-                }}
-              >
-                Order ID :{' '}
-              </Block>
-              <Block as="span">123djbre4</Block>
-            </Block>
+            {isEmpty(content) && content.map((i) => {
+              return ( <Block as="p" marginBottom="15px" key={i.title}>
+                  <Block
+                    as="strong"
+                    overrides={{
+                      Block: {
+                        style: ({ $theme }) => {
+                          return { color: $theme.colors.primary };
+                        },
+                      },
+                    }}
+                  >
+                    {i.title} :{' '}
+                  </Block>
+                  <Block as="span">{i.value}</Block>
+                </Block>
+              )
+            })}
 
-            <Block as="p" marginBottom="15px">
-              <Block
-                as="strong"
-                overrides={{
-                  Block: {
-                    style: ({ $theme }) => {
-                      return { color: $theme.colors.primary };
-                    },
-                  },
-                }}
-              >
-                Delivery :{' '}
-              </Block>
-              <Block as="span">within 3-5 working days</Block>
-            </Block>
-
-            <Block as="p" marginBottom="15px">
-              <Block
-                as="strong"
-                overrides={{
-                  Block: {
-                    style: ({ $theme }) => {
-                      return { color: $theme.colors.primary };
-                    },
-                  },
-                }}
-              >
-                Thanks for your order :{' '}
-              </Block>
-              <Block as="span">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis
-                aliquid beatae ipsam quisquam voluptatem tenetur.
-              </Block>
-            </Block>
           </Block>
         </ModalBody>
       </Modal>
-    
+
     </Block>
   );
 };
