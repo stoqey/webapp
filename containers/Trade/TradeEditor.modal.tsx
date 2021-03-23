@@ -18,6 +18,7 @@ import { createOrderMutation } from './portfolios.api'
 import { niceDec } from 'utils/number';
 import OrderBookContainer from 'containers/OrderBook';
 import { ButtonGroup } from 'baseui/button-group';
+import { H3, H4 } from 'baseui/typography';
 
 
 interface Props {
@@ -328,10 +329,11 @@ const TradeEditor = (props: Props) => {
                   {steps === 1 && (
                     <Block paddingTop={['30px', '40px', '0']}>
                       {/* Confirm  amount */}
-                      <Title>{`You're about to BUY ${qty} of STQ`}</Title>
-
+                      <H4>
+                        {`You're about to `} <strong>{action}</strong> {` ${qty} shares of STQ`}
+                      </H4>
                       {/* Confirm */}
-                      <p style={{ display: 'flex' }}>
+                      <p style={{ display: 'flex', padding: '20px' }}>
                         <Button
                           size="default"
                           onClick={() => startPortfolio()}
@@ -340,12 +342,12 @@ const TradeEditor = (props: Props) => {
                               style: ({ $theme }) => {
                                 return {
                                   width: '50%',
-                                  ...$theme.typography.font250,
+                                  ...$theme.typography.font450,
                                 };
                               },
                             },
                           }}
-                        > Continue </Button>
+                        > ✅ Continue </Button>
 
                         <div style={{ width: '10px' }} />
 
@@ -358,12 +360,12 @@ const TradeEditor = (props: Props) => {
                               style: ({ $theme }) => {
                                 return {
                                   width: '50%',
-                                  ...$theme.typography.font250,
+                                  ...$theme.typography.font450,
                                 };
                               },
                             },
                           }}
-                        > Cancel </Button>
+                        > ❌ Cancel </Button>
                       </p>
                     </Block>
                   )}
