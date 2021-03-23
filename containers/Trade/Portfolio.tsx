@@ -13,7 +13,7 @@ import { toaster } from 'baseui/toast';
 import applicationsPageData from '../../data/applicationsPage';
 import TradeEditor from './TradeEditor.modal';
 import ClosePortfolio from './ClosePortfolio.modal';
-
+import { ImCross} from 'react-icons/im';
 import { getPortfoliosPaginationApi } from './portfolios.api';
 import { useApolloClient } from '@apollo/client';
 import Toaster from '@/components/UiElements/Toaster/Toaster';
@@ -290,7 +290,7 @@ const Portfolio: NextPage<{}> = () => {
 						<div>
 							<Button shape="round" $style={{ backgroundColor: 'blueviolet' }} 
 							onClick={() => closeThisPosition()}>
-								Close
+								<ImCross />
 							</Button>
 							<h4> </h4>
 						</div>
@@ -326,7 +326,7 @@ const Portfolio: NextPage<{}> = () => {
 				<Button
 					onClick={() => startPortfolio()}
 					kind="primary"
-					shape="square"
+					shape="pill"
 					overrides={{
 						BaseButton: {
 							style: ({ $theme }) => {
@@ -334,7 +334,7 @@ const Portfolio: NextPage<{}> = () => {
 									...$theme.typography.font750,
 									minWidth: '110px',
 									display: 'flex',
-									backgroundColor: 'hotpink'
+									backgroundColor: 'goldenrod'
 									// paddingLeft: '15px',
 									// paddingRight: '15px'
 									// fontSize: '22px'
@@ -346,19 +346,19 @@ const Portfolio: NextPage<{}> = () => {
 
 					<div style={{ display: "flex", justifyContent: 'center', alignItems: 'center' }}>
 						{/* <StqRoboIcon gold /> */}
-						<GoTriangleUp
+						{/* <GoTriangleUp
 							size="2em"
 							color="#3AA76D"
 						// style={{ marginBottom: '20px' }}
-						/>
-						<p style={{ margin: "10px" }}>
-							TRADE
+						/> */}
+						<p style={{ margin: "2px" }}>
+							+ TRADE
 						</p>
-						<GoTriangleDown
+						{/* <GoTriangleDown
 							size="2em"
 							color="red"
 						// style={{ marginBottom: '20px' }}
-						/>
+						/> */}
 						{/* <StqRoboIcon /> */}
 					</div>
 				</Button>
