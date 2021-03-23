@@ -4,58 +4,27 @@ import { Block } from 'baseui/block';
 import { Button } from 'baseui/button';
 import { Modal, ModalBody } from 'baseui/modal';
 
-const Payment = () => {
-  const [visible, setVisible] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [paymentMethod, setPaymentMethod] = useState('paypal');
 
-  const handlePayment = (type: string) => {
-    setLoading(true);
-    setPaymentMethod(type);
+interface Props {
+  show: boolean;
+  hide: Function;
+  success: boolean;
+  title: string;
+  message: string;
+};
 
-    setTimeout(() => {
-      setLoading(false);
-      setVisible(true);
-    }, 600);
-  };
+const PaymentResults = (props: Props) => {
+  const { show, hide, success, title, message } = props;
+
 
   return (
     <Block marginLeft="-16px" marginRight="-16px">
-      <Button
-        kind="minimal"
-        isLoading={loading && paymentMethod === 'paypal'}
-        onClick={() => handlePayment('paypal')}
-      >
-        <img
-          src={require('assets/images/payment/paypal.png')}
-          alt="paypal"
-        />
-      </Button>
-      <Button
-        kind="minimal"
-        isLoading={loading && paymentMethod === 'mastercard'}
-        onClick={() => handlePayment('mastercard')}
-      >
-        <img
-          src={require('assets/images/payment/mastercard.png')}
-          alt="mastercard"
-        />
-      </Button>
-      <Button
-        kind="minimal"
-        isLoading={loading && paymentMethod === 'visa'}
-        onClick={() => handlePayment('visa')}
-      >
-        <img src={require('assets/images/payment/visa.png')} alt="visa" />
-      </Button>
 
       {/* Success model */}
       <Modal
-        onClose={() => {
-          setVisible(false);
-        }}
+        onClose={() => hide()}
         closeable
-        isOpen={visible}
+        isOpen={show}
         animate
         size="default"
         role="dialog"
@@ -167,4 +136,4 @@ const Payment = () => {
   );
 };
 
-export default Payment;
+export default PaymentResults;

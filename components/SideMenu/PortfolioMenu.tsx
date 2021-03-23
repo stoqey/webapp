@@ -8,8 +8,8 @@ const menuItems = [
 	
 	{
 		id: 1,
-		label: 'Positions',
-		path: '/portfolio',
+		label: 'Trades & Positions',
+		path: '/trade',
 	},
 	{
 		id: 3,

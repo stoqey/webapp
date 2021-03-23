@@ -63,7 +63,7 @@ export const PhoneLogin = () => {
 
       // save login data in client browser
       await db.updateAuthItem(data);
-      await router.push('/portfolio');
+      await router.push('/trade');
       // send send user to home
     }
   });

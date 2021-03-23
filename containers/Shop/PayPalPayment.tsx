@@ -9,6 +9,7 @@ import { useApolloClient } from '@apollo/client';
 import { FaHandHoldingUsd } from 'react-icons/fa';
 import { StatefulPopover } from "baseui/popover";
 import { H6 } from 'baseui/typography';
+import PaymentResults from './PaymentResult.dialog';
 
 interface Props {
   userId: string;
@@ -44,7 +45,7 @@ const PayPalForm = (props: PayPalFormProps) => {
 const PayPalPayment = (props: Props) => {
   const { userId, amount } = props;
   const client = useApolloClient();
-  const [visible, setVisible] = useState(false);
+  const [showResponse, setShowResponse] = useState(true);
 
 
   const paymentApi = async (orderId: string) => await processPayment({
@@ -52,7 +53,7 @@ const PayPalPayment = (props: Props) => {
     args: { orderId, owner: userId, amount: +amount },
     success: async (data: any) => {
       console.log('successfuly processed payment', data);
-      setVisible(true); // show success
+      setShowResponse(true); // show success
     },
     error: async (error: Error) => {
       console.log('error submitting payment', error);
@@ -89,120 +90,8 @@ const PayPalPayment = (props: Props) => {
       {/* PayPal form */}
       <PayPalForm {...props} onSuccess={paymentApi} />
 
-
       {/* Model success */}
-      <Modal
-        onClose={() => {
-          setVisible(false);
-        }}
-        closeable
-        isOpen={visible}
-        animate
-        size="default"
-        role="dialog"
-        unstable_ModalBackdropScroll={true}
-        overrides={{
-          Root: {
-            style: () => {
-              return { zIndex: 9999 };
-            },
-          },
-        }}
-      >
-        <ModalBody style={{ overflow: 'hidden' }}>
-          <Block
-            overrides={{
-              Block: {
-                style: {
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  textAlign: 'center',
-                  padding: '45px 30px',
-                },
-              },
-            }}
-          >
-            <IoIosCheckmarkCircleOutline
-              size="4em"
-              color="#3AA76D"
-              style={{ marginBottom: '20px' }}
-            />
-
-            <Block
-              as="h2"
-              overrides={{
-                Block: {
-                  style: ({ $theme }) => {
-                    return {
-                      ...$theme.typography.font750,
-                      color: $theme.colors.primary,
-                      marginBottom: '30px',
-                      '@media only screen and (max-width: 480px)': {
-                        ...$theme.typography.font650,
-                        marginBottom: '20px',
-                      },
-                    };
-                  },
-                },
-              }}
-            >
-              Order Placed
-            </Block>
-
-            <Block as="p" marginBottom="15px">
-              <Block
-                as="strong"
-                overrides={{
-                  Block: {
-                    style: ({ $theme }) => {
-                      return { color: $theme.colors.primary };
-                    },
-                  },
-                }}
-              >
-                Order ID :{' '}
-              </Block>
-              <Block as="span">xxxxx</Block>
-            </Block>
-
-            <Block as="p" marginBottom="15px">
-              <Block
-                as="strong"
-                overrides={{
-                  Block: {
-                    style: ({ $theme }) => {
-                      return { color: $theme.colors.primary };
-                    },
-                  },
-                }}
-              >
-                Delivery :{' '}
-              </Block>
-              <Block as="span">instant</Block>
-            </Block>
-
-            <Block as="p" marginBottom="15px">
-              <Block
-                as="strong"
-                overrides={{
-                  Block: {
-                    style: ({ $theme }) => {
-                      return { color: $theme.colors.primary };
-                    },
-                  },
-                }}
-              >
-                Thanks for your investing in Stoqey {' '}
-              </Block>
-              <Block as="span">
-                Now you can go to the portfolio screen and buy shares in Stoqey
-                Happy investing with Stoqey
-              </Block>
-            </Block>
-          </Block>
-        </ModalBody>
-      </Modal>
+      <PaymentResults show={showResponse} hide={() => setShowResponse(false)} />
     </Block>
   );
 };
