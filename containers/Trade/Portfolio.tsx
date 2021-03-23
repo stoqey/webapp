@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { NextPage } from 'next';
 import { Button } from 'baseui/button';
 import sum from 'lodash/sum';
-import { MarketDataType, PortfolioType, getPercentageGain, getProfitFromTrade, ActionType } from '@stoqey/client-graphql'
+import { MarketDataType, PortfolioType, getPercentageGain, getProfitFromTrade, ActionType, IOrderType } from '@stoqey/client-graphql'
 import { BsFillTriangleFill, BsPlus } from 'react-icons/bs';
 import { GoTriangleDown, GoTriangleUp } from 'react-icons/go';
 import ListGridCard from 'components/UiElements/ListGridCard/ListGridCard';
@@ -27,7 +27,7 @@ import { getTradeColor } from 'utils/colors';
 import { Select } from 'baseui/select';
 import { isEmpty } from 'lodash';
 import ResultsDialog from '@/components/Modal/Result.dialog';
-
+import { TradeEditorState } from './TradeEditor.modal'
 const stoqeyLogo = require('assets/images/STQ.png');
 
 
@@ -54,6 +54,8 @@ interface State {
 	// api status
 	message: string;
 	success: boolean;
+
+	editor?: TradeEditorState
 };
 
 const Portfolio: NextPage<{}> = () => {
@@ -94,6 +96,14 @@ const Portfolio: NextPage<{}> = () => {
 	} = state;
 
 	const price = quote && quote.close | 0;
+
+	const closePortfolio = (closeProps: TradeEditorState) => {
+		setState({
+			...state,
+			editor: closeProps,
+			showEditor: true,
+		})
+	}
 
 	React.useEffect(() => {
 		getPortfoliosPaginationApi({
@@ -140,11 +150,13 @@ const Portfolio: NextPage<{}> = () => {
 			return amountProfit;
 		}) : 0);
 
+	const setShowEditor = (show: boolean = true) => changeState("showEditor")(show);
+
 	return (
 		<>
 			<Toaster toastKey={toastKey} />
-			<TradeEditor quote={quote} onError={onError} onSuccess={onSuccess} show={showEditor} hide={() => changeState("showEditor")(false)} />
-			
+			<TradeEditor quote={quote} onError={onError} onSuccess={onSuccess} show={showEditor} hide={() => setShowEditor(false)} />
+
 			{/* Model success */}
 			<ResultsDialog title={message} success={success} show={showResults} hide={() => changeState("showResults")(false)}
 				content={[
@@ -196,14 +208,24 @@ const Portfolio: NextPage<{}> = () => {
 
 			{/* Portfolios */}
 			{portfolios.map((item: PortfolioItem) => {
-				const { action } = item
+				const { action, size } = item
 				const profitPct = getProfitFromTrade(item.action, item.averageCost, price) / 100;
 				const amountSpent = item.size * item.averageCost;
 				const profitAmount = profitPct * amountSpent;
 
 				const pnL = amountSpent + profitAmount;
 
+				const closeProps: TradeEditorState = {
+					steps: 0,
+					action: action === ActionType.BUY? ActionType.SELL : ActionType.BUY,
+					type: IOrderType.MARKET,
+					price: 0,
+					qty: size,
+				};
 
+				const closeThisPosition = () => {
+					closePortfolio(closeProps);
+				}
 
 				return (
 					<SpaceBetween key={`application-key${item.id}`}>
@@ -230,13 +252,6 @@ const Portfolio: NextPage<{}> = () => {
 							description={item.description}
 						/>
 
-						<div>
-							<h2> </h2>
-							<h4> </h4>
-						</div>
-
-
-
 						{/* Average cost / shares */}
 						<div>
 							<H6>${item.averageCost}</H6>
@@ -253,6 +268,15 @@ const Portfolio: NextPage<{}> = () => {
 						<div>
 							<H6>{niceDec(profitPct)}%</H6>
 							<Paragraph3 $style={{ color: getTradeColor(profitAmount) }}>${niceDec(profitAmount)}</Paragraph3>
+						</div>
+
+						{/* Close trade */}
+						<div>
+							<Button shape="round" $style={{ backgroundColor: 'blueviolet' }} 
+							onClick={() => closeThisPosition()}>
+								Close
+							</Button>
+							<h4> </h4>
 						</div>
 						{/* <Button
 						onClick={() => {

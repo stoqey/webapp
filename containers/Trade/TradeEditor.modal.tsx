@@ -25,11 +25,11 @@ interface Props {
   hide: () => void;
   onError?: (message: string) => void;
   onSuccess?: (message: string) => void;
-  state?: State;
+  state?: TradeEditorState;
 };
 
 
-interface State {
+export interface TradeEditorState {
   steps: number;
   action: ActionType;
   type: IOrderType;
@@ -43,7 +43,7 @@ const TradeEditor = (props: Props) => {
   const { show, hide, onError, onSuccess, quote, state: propsState } = props;
 
   const close = quote && quote.close;
-  const [state, setState] = useState<State>({
+  const [state, setState] = useState<TradeEditorState>({
     ...propsState,
     steps: 0,
     type: IOrderType.MARKET,
