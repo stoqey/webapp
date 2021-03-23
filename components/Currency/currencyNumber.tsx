@@ -10,25 +10,19 @@ interface Props {
 };
 export const CurrencyNumber = (props: Props) => {
 	const { close, change, changePtc } = props;
+	const changeStyleColor = changePtc >= 0 ? 'green' : 'red';
 
-	const changeStyleColor = change >= 0 ? 'green' : 'red';
-
-	const changeSign = change >= 0 ? '+' : '-';
+	const changeSign = changePtc >= 0 ? '+' : '-';
 
 	return (
 		<div style={{ display: 'flex', justifyContent: 'center' }}>
 			<div style={{ textAlign: 'center', padding: '10px' }}>
-
-				{/*  */}
 				<div style={{ display: 'flex' }}>
 					<H3>${niceDec(close)}</H3>
 					<Paragraph1>USD</Paragraph1>
 				</div>
-
-				{/* {change && ( */}
-					<p style={{ color: changeStyleColor }}>{changeSign}{niceDec(change)} ({niceDec(changePtc)}%)</p>
-				{/* )} */}
-
+				 
+				<p style={{ color: changeStyleColor }}>{changeSign}{niceDec(change)} ({niceDec(changePtc)}%)</p>
 			</div>
 		</div>
 	)
