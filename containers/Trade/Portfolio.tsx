@@ -93,6 +93,7 @@ const Portfolio: NextPage<{}> = () => {
 		portfolios,
 		message,
 		success,
+		editor
 	} = state;
 
 	const price = quote && quote.close | 0;
@@ -101,6 +102,20 @@ const Portfolio: NextPage<{}> = () => {
 		setState({
 			...state,
 			editor: closeProps,
+			showEditor: true,
+		})
+	}
+
+	const startPortfolio = () => {
+		setState({
+			...state,
+			editor: {
+				steps: 0,
+				type: IOrderType.MARKET,
+				action: ActionType.BUY,
+				price,
+				qty: 1,
+			},
 			showEditor: true,
 		})
 	}
@@ -155,7 +170,8 @@ const Portfolio: NextPage<{}> = () => {
 	return (
 		<>
 			<Toaster toastKey={toastKey} />
-			<TradeEditor quote={quote} onError={onError} onSuccess={onSuccess} show={showEditor} hide={() => setShowEditor(false)} />
+			{showEditor && <TradeEditor state={editor} quote={quote} onError={onError} onSuccess={onSuccess} show={true} hide={() => setShowEditor(false)} />}
+			
 
 			{/* Model success */}
 			<ResultsDialog title={message} success={success} show={showResults} hide={() => changeState("showResults")(false)}
@@ -308,7 +324,7 @@ const Portfolio: NextPage<{}> = () => {
 				padding: '20px'
 			}}>
 				<Button
-					onClick={() => changeState("showEditor")(true)}
+					onClick={() => startPortfolio()}
 					kind="primary"
 					shape="square"
 					overrides={{
