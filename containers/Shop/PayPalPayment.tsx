@@ -53,7 +53,7 @@ const PayPalPayment = (props: Props) => {
   const client = useApolloClient();
 
   const [state, setState] = useState<State>({
-    showResults: true,
+    showResults: false,
     message: "Error processing payment",
     success: false,
   });
@@ -89,7 +89,7 @@ const PayPalPayment = (props: Props) => {
     })
   };
 
-  const { message, error, showResults, success } = state;
+  const { message, showResults, success } = state;
 
   // FaHandHoldingUsd
   return (
