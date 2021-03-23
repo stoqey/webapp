@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { NextPage } from 'next';
 import { Button } from 'baseui/button';
 import sum from 'lodash/sum';
-import { MarketDataType, PortfolioType, getPercentageGain, getProfitFromTrade } from '@stoqey/client-graphql'
+import { MarketDataType, PortfolioType, getPercentageGain, getProfitFromTrade, ActionType } from '@stoqey/client-graphql'
 import { BsFillTriangleFill, BsPlus } from 'react-icons/bs';
 import { GoTriangleDown, GoTriangleUp } from 'react-icons/go';
 import ListGridCard from 'components/UiElements/ListGridCard/ListGridCard';
@@ -148,25 +148,8 @@ const Positions: NextPage<{}> = () => {
 						},
 					}}
 				/>
-				{/* Remove all */}
-				{/* <Button
-										onClick={handleRemoveAll}
-										kind="secondary"
-										shape="pill"
-										overrides={{
-											BaseButton: {
-												style: ({ $theme }) => {
-													return {
-														...$theme.typography.font250,
-														minWidth: '101px',
-													};
-												},
-											},
-										}}
-									>
-										Remove all
-									</Button> */}
 
+				{/* Unrealized profit */}
 				<div style={{ textAlign: 'center' }}>
 					<H6 $style={{ color: getTradeColor(totalProfit) }}>${niceDec(totalProfit)}</H6>
 					<Paragraph3>unrealized profit</Paragraph3>
@@ -174,16 +157,35 @@ const Positions: NextPage<{}> = () => {
 
 			</SpaceBetween>
 
-			{portfolios.map((item: any) => {
 
+			{/* Portfolios */}
+			{portfolios.map((item: PortfolioType) => {
+				const { action } = item
 				const profitPct = getProfitFromTrade(item.action, item.averageCost, price) / 100;
 				const amountSpent = item.size * item.averageCost;
 				const profitAmount = profitPct * amountSpent;
 
 				const pnL = amountSpent + profitAmount;
 
+
+
 				return (
 					<SpaceBetween key={`application-key${item.id}`}>
+
+						{action === ActionType.BUY ? (
+							<GoTriangleUp
+								size="2em"
+								color="#3AA76D"
+							// style={{ marginBottom: '20px' }}
+							/>
+						) : (
+							<GoTriangleDown
+								size="2em"
+								color="red"
+							// style={{ marginBottom: '20px' }}
+							/>
+						)}
+
 						<ListGridCard
 							variant="list"
 							thumbWidth={`50px`}
@@ -197,7 +199,7 @@ const Positions: NextPage<{}> = () => {
 							<h4> </h4>
 						</div>
 
-						
+
 
 						{/* Average cost / shares */}
 						<div>

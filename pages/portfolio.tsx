@@ -80,7 +80,7 @@ const Positions: NextPage<{}> = () => {
 
 						<Cell span={[12, 12, 9]}>
 
-							<CurrencyPill amount={user && user.balance} name={'my wallet'} />
+							<CurrencyPill amount={user && user.balance} name={'wallet'} />
 
 
 							<Block paddingTop={['10px', '15px', '30px', '0']}>
