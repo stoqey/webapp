@@ -61,8 +61,8 @@ const Positions: NextPage<{}> = () => {
 				const portfoliosToSave = portfolios.map(port => ({
 					id: port.id,
 					thumb: stoqeyLogo,
-					title: 'Stoqey',
-					description: `${port.action} ${port.size} @${port.averageCost}`,
+					title: 'STQ',
+					description: `Stoqey Inc`,
 					...port,
 				}));
 
@@ -168,7 +168,7 @@ const Positions: NextPage<{}> = () => {
 									</Button> */}
 
 				<div style={{ textAlign: 'center' }}>
-					<H6>${niceDec(totalProfit)}</H6>
+					<H6 $style={{ color: getTradeColor(totalProfit)}}>${niceDec(totalProfit)}</H6>
 					<Paragraph3>unrealized profit</Paragraph3>
 				</div>
 
