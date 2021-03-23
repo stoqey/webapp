@@ -8,7 +8,7 @@ import { isEmpty } from 'lodash';
 
 interface Content {
   title: string;
-  value: string;
+  value: any;
 }
 interface Props {
   show: boolean;
@@ -95,7 +95,7 @@ const ResultsDialog = (props: Props) => {
               {title}
             </Block>
 
-            {isEmpty(content) && content.map((i) => {
+            {!isEmpty(content) && content.map((i) => {
               return ( <Block as="p" marginBottom="15px" key={i.title}>
                   <Block
                     as="strong"

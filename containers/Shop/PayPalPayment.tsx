@@ -9,7 +9,7 @@ import { useApolloClient } from '@apollo/client';
 import { FaHandHoldingUsd } from 'react-icons/fa';
 import { StatefulPopover } from "baseui/popover";
 import { H6 } from 'baseui/typography';
-import PaymentResults from './PaymentResult.dialog';
+import ResultsDialog from '@/components/Modal/Result.dialog';
 
 interface Props {
   userId: string;
@@ -24,8 +24,8 @@ interface PayPalFormProps {
 
 const PayPalForm = (props: PayPalFormProps) => {
   const { userId, amount = 30, onSuccess } = props;
-  const clientId = process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID || "AeTaBjLsajBbU4SSXYu1DIH7MOaA6hNRcqKZuhOdfGz4YKv2TxNufduBnmlUN0TNwsrM_3VAnfN2MJew";
-  console.log('PayPal client id', { clientId, userId, amount });
+  const clientId = process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID;
+
   return (
     <PayPalButton
       options={{
@@ -42,23 +42,58 @@ const PayPalForm = (props: PayPalFormProps) => {
   );
 }
 
+interface State {
+  showResults: boolean;
+  error: string;
+  message: string;
+  success: boolean;
+}
+
 const PayPalPayment = (props: Props) => {
   const { userId, amount } = props;
   const client = useApolloClient();
-  const [showResponse, setShowResponse] = useState(true);
+
+  const [state, setState] = useState<State>({
+    showResults: true,
+    error: "",
+    message: "Error processing payment",
+    success: false,
+  });
 
 
-  const paymentApi = async (orderId: string) => await processPayment({
-    client,
-    args: { orderId, owner: userId, amount: +amount },
-    success: async (data: any) => {
-      console.log('successfuly processed payment', data);
-      setShowResponse(true); // show success
-    },
-    error: async (error: Error) => {
-      console.log('error submitting payment', error);
-    }
-  })
+  const paymentApi = async (orderId: string) => {
+    await processPayment({
+      client,
+      args: { orderId, owner: userId, amount: +amount },
+      success: async (data: any) => {
+        console.log('successfuly processed payment', data);
+        setState({
+          ...state,
+          error: "",
+          message: `Successfuly processed payment of $${amount}`,
+          success: true,
+        });
+      },
+      error: async (error: Error) => {
+        console.log('error submitting payment', error);
+        setState({
+          ...state,
+          error: error && error.message,
+          message: `Error processing payment of $${amount}`,
+          success: false,
+        });
+      }
+    });
+  }
+
+  const hide = () => {
+    setState({
+      ...state,
+      showResults: false
+    })
+  };
+
+  const { message, error, showResults, success } = state;
 
   // FaHandHoldingUsd
   return (
@@ -66,7 +101,7 @@ const PayPalPayment = (props: Props) => {
 
       <StatefulPopover
         content={() => (
-          <Block padding="15px" $style={{ textAlign: "center"}}>
+          <Block padding="15px" $style={{ textAlign: "center" }}>
             <h3>Send any amount to support@stoqey.com, please add your account's phone number as the message</h3>
           </Block>
         )}
@@ -91,7 +126,11 @@ const PayPalPayment = (props: Props) => {
       <PayPalForm {...props} onSuccess={paymentApi} />
 
       {/* Model success */}
-      <PaymentResults show={showResponse} hide={() => setShowResponse(false)} />
+      <ResultsDialog title={message} success={success} show={showResults} hide={hide}
+        content={[
+          { title: "Amount", value: +amount },
+        ]}
+      />
     </Block>
   );
 };
