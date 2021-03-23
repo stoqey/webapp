@@ -33,7 +33,7 @@ const Cart = ({ products }: CartType) => {
     <>
       <Header>
         <Title>My Shopping Bag</Title>
-        <Price>Total: $ {totalPrice}</Price>
+        <Price>Total: ${totalPrice}</Price>
       </Header>
       {products.length > 0 ? (
         <>

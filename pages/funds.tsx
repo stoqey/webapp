@@ -209,14 +209,15 @@ const AddFunds: NextPage<{}> = () => {
 												BaseButton: {
 													style: ({ $theme }) => {
 														return {
+															backgroundColor: 'goldenrod',
 															width: '100%',
-															...$theme.typography.font250,
+															...$theme.typography.font350,
 														};
 													},
 												},
 											}}
 										>
-											Next
+											Continue to payment
 										</Button>
 									)}
 

@@ -55,6 +55,7 @@ export const Title = styled('h4', ({ $theme }) => ({
 }));
 
 export const Price = styled('p', ({ $theme }) => ({
+  color: $theme.colors.primaryA,
   ...$theme.typography.font450,
   '@media only screen and (max-width: 667px)': {
     ...$theme.typography.font350,
