@@ -8,7 +8,7 @@ import { Select } from 'baseui/select';
 import Container from 'components/UiElements/Container/Container';
 import PortfolioMenu from 'components/SideMenu/PortfolioMenu';
 import ListGridCard from 'components/UiElements/ListGridCard/ListGridCard';
-import Portfolios from 'containers/Portfolio'
+import Portfolios from 'containers/Trade'
 import {
 	Title,
 	Subtitle,

@@ -9,7 +9,7 @@ import { useAppEvent } from 'hooks/useAppEvent';
 import { APPEVENTS } from '@/lib/AppEvent';
 import { toaster } from 'baseui/toast';
 import OrdersListContainer from 'containers/OrderBook/OrdersListContainer';
-import StartPortfolio from 'containers/Portfolio/StartPortfolio.modal';
+import StartPortfolio from 'containers/Trade/StartPortfolio.modal';
 
 const TITLE = 'Admin OrderBook';
 const SUB_TITLE = 'Stoqey';
