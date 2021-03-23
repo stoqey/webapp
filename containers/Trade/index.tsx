@@ -26,6 +26,7 @@ import { H2, H4, H6, Paragraph1, Paragraph2, Paragraph3, Paragraph4 } from 'base
 import { getTradeColor } from 'utils/colors';
 import { Select } from 'baseui/select';
 import { isEmpty } from 'lodash';
+import ResultsDialog from '@/components/Modal/Result.dialog';
 
 const stoqeyLogo = require('assets/images/STQ.png');
 
@@ -43,14 +44,54 @@ const portEg = {
 	description: 'Number of shares',
 };
 
+interface State {
+	showResults: boolean;
+	showEditor: boolean;
+	showInfo: boolean;
+	selectedPortfolio: PortfolioItem[];
+	portfolios: PortfolioItem[];
+
+	// api status
+	message: string;
+	success: boolean;
+};
+
 const Positions: NextPage<{}> = () => {
 	let toastKey = null;
 	const client = useApolloClient();
-	const [showNew, setShowNew] = useState(false);
-	const [showClose, setShowClose] = useState(false);
+
 	const quote: MarketDataType = useAppEvent(APPEVENTS.CURRENCY);
-	const [selectedPortfolio, setSelectedPortfolio] = useState<PortfolioType>(null);
-	const [portfolios, setPortfolios] = useState<PortfolioItem[]>([]);
+
+	const [state, setState] = useState<State>({
+		showResults: false,
+		showEditor: false,
+		showInfo: false,
+		selectedPortfolio: null,
+		portfolios: [],
+
+		// api status
+		message: "",
+		success: false,
+	});
+
+	const changeState = (field: string) => {
+		return (val) => {
+			setState({
+				...state,
+				[field]: val
+			})
+		}
+	};
+
+	const {
+		showResults,
+		showEditor,
+		showInfo,
+		selectedPortfolio,
+		portfolios,
+		message,
+		success,
+	} = state;
 
 	const price = quote && quote.close | 0;
 
@@ -66,13 +107,10 @@ const Positions: NextPage<{}> = () => {
 					...port,
 				}));
 
-				console.log('data is', portfoliosToSave);
-
-
-				setPortfolios(portfoliosToSave);
+				changeState("portfolios")(portfoliosToSave);
 			},
 		})
-	}, [!showNew, !showClose])
+	}, [!showEditor])
 
 	const onSuccess = (message: string) => {
 		toastKey = toaster.positive(<>{message}</>, {
@@ -93,15 +131,6 @@ const Positions: NextPage<{}> = () => {
 		{ label: 'Sort by C', value: 'c' },
 	];
 
-
-
-	// price - averageCost
-	// average, price %
-	// % / 100 * amount(averageCost * qty)
-	// const getProfits = (accumulator, currentValue: PortfolioType) => accumulator + ((getProfitFromTrade(currentValue.action, currentValue.averageCost, price)/100) * (currentValue.size * currentValue.averageCost), 0);
-	const getProfits = (accumulator, currentValue: PortfolioType) => (accumulator + currentValue.averageCost);
-
-
 	// @ts-ignore
 	const totalProfit: any = sum(!isEmpty(portfolios) ?
 		portfolios.map(i => {
@@ -114,9 +143,14 @@ const Positions: NextPage<{}> = () => {
 	return (
 		<>
 			<Toaster toastKey={toastKey} />
-			<TradeEditor quote={quote} onError={onError} onSuccess={onSuccess} show={showNew} hide={() => setShowNew(false)} />
-			<ClosePortfolio onError={onError} onSuccess={onSuccess} show={showClose} hide={() => setShowClose(false)} portfolio={selectedPortfolio} />
-
+			<TradeEditor quote={quote} onError={onError} onSuccess={onSuccess} show={showEditor} hide={() => changeState("showEditor")(false)} />
+			
+			{/* Model success */}
+			<ResultsDialog title={message} success={success} show={showResults} hide={() => changeState("showResults")(false)}
+				content={[
+					// { title: "Amount", value: +amount },
+				]}
+			/>
 
 			{/* Sort and Unrealised profit */}
 			<SpaceBetween>
@@ -161,7 +195,7 @@ const Positions: NextPage<{}> = () => {
 
 
 			{/* Portfolios */}
-			{portfolios.map((item: PortfolioType) => {
+			{portfolios.map((item: PortfolioItem) => {
 				const { action } = item
 				const profitPct = getProfitFromTrade(item.action, item.averageCost, price) / 100;
 				const amountSpent = item.size * item.averageCost;
@@ -250,7 +284,7 @@ const Positions: NextPage<{}> = () => {
 				padding: '20px'
 			}}>
 				<Button
-					onClick={() => setShowNew(true)}
+					onClick={() => changeState("showEditor")(true)}
 					kind="primary"
 					shape="square"
 					overrides={{
