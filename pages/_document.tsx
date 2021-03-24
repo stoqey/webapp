@@ -40,39 +40,12 @@ export default class CustomDocument extends Document<any> {
     return (
       <Html lang="en-US">
         <Head>
-          <meta name="theme-color" content="#000000" />
-          <meta
-            name="Description"
-            content="Beat Wall Street from anywhere"
-          />
-
-          {/* Icon */}
-          <link rel="icon" href={favicon} type="image/png" sizes="16x16" />
-          <link rel="apple-touch-icon" sizes="57x57" href={appleTouchIcon57} />
-          <link rel="apple-touch-icon" sizes="60x60" href={appleTouchIcon60} />
-          <link rel="apple-touch-icon" sizes="72x72" href={appleTouchIcon72} />
-          <link rel="apple-touch-icon" sizes="76x76" href={appleTouchIcon76} />
-          <link rel="apple-touch-icon" sizes="114x114" href={appleTouchIcon114} />
-          <link rel="apple-touch-icon" sizes="120x120" href={appleTouchIcon120} />
-          <link rel="apple-touch-icon" sizes="144x144" href={appleTouchIcon144} />
-          <link rel="apple-touch-icon" sizes="152x152" href={appleTouchIcon152} />
-          <link rel="apple-touch-icon" sizes="180x180" href={appleTouchIcon180} />
-          <link rel="icon" type="image/png" sizes="192x192" href={icon192} />
-          <link rel="icon" type="image/png" sizes="32x32" href={icon32} />
-          <link rel="icon" type="image/png" sizes="96x96" href={icon96} />
-          <link rel="icon" type="image/png" sizes="16x16" href={icon16} />
-          {/* 
-              // @ts-ignore */}
-          {/* <link rel="manifest" href={manifestFile} /> */}
-          <meta name="msapplication-TileColor" content="#ffffff" />
-          <meta name="msapplication-TileImage" content={msapplicationTileImage} />
-          <meta name="theme-color" content="#ffffff" />
-
           {/* SEO */}
           <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
           <meta name="robots" content="NOODP" />
           <meta charSet="UTF-8" />
           <meta name="application-name" content="Stoqey" />
+          <meta name="theme-color" content="#ffffff" />
 
           <meta
             name="keywords"
@@ -101,6 +74,29 @@ export default class CustomDocument extends Document<any> {
             property="og:description"
             content="Investing sucks, let bots do it for you? then share profits"
           />
+
+          {/* Icon */}
+          <link rel="icon" href={favicon} type="image/png" sizes="16x16" />
+          <link rel="apple-touch-icon" sizes="57x57" href={appleTouchIcon57} />
+          <link rel="apple-touch-icon" sizes="60x60" href={appleTouchIcon60} />
+          <link rel="apple-touch-icon" sizes="72x72" href={appleTouchIcon72} />
+          <link rel="apple-touch-icon" sizes="76x76" href={appleTouchIcon76} />
+          <link rel="apple-touch-icon" sizes="114x114" href={appleTouchIcon114} />
+          <link rel="apple-touch-icon" sizes="120x120" href={appleTouchIcon120} />
+          <link rel="apple-touch-icon" sizes="144x144" href={appleTouchIcon144} />
+          <link rel="apple-touch-icon" sizes="152x152" href={appleTouchIcon152} />
+          <link rel="apple-touch-icon" sizes="180x180" href={appleTouchIcon180} />
+          <link rel="icon" type="image/png" sizes="192x192" href={icon192} />
+          <link rel="icon" type="image/png" sizes="32x32" href={icon32} />
+          <link rel="icon" type="image/png" sizes="96x96" href={icon96} />
+          <link rel="icon" type="image/png" sizes="16x16" href={icon16} />
+          {/* 
+              // @ts-ignore */}
+          {/* <link rel="manifest" href={manifestFile} /> */}
+          <meta name="msapplication-TileColor" content="#ffffff" />
+          <meta name="msapplication-TileImage" content={msapplicationTileImage} />
+
+
 
           {this.props.stylesheets.map((sheet, i) => (
             <style
