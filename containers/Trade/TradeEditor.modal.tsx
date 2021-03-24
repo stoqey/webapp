@@ -20,6 +20,8 @@ import OrderBookContainer from 'containers/OrderBook';
 import { ButtonGroup } from 'baseui/button-group';
 import { H3, H4 } from 'baseui/typography';
 import { getTradeColor } from 'utils/colors';
+import CurrencyPill from '@/components/Currency';
+import { useUserInfo } from 'hooks/useUserInfo';
 
 
 interface Props {
@@ -60,6 +62,8 @@ const TradeEditor = (props: Props) => {
     qty: 1,
     ...propsState,
   });
+
+  const { user } = useUserInfo();
 
   const { type, action, price = close, qty, stopPrice, steps } = state;
 
@@ -112,7 +116,7 @@ const TradeEditor = (props: Props) => {
         closeable
         isOpen={show}
         animate
-        size="full"
+        size="auto"
         role="dialog"
         unstable_ModalBackdropScroll={true}
         overrides={{
@@ -126,10 +130,8 @@ const TradeEditor = (props: Props) => {
         <ModalBody style={{ overflow: 'hidden' }}>
           <Block paddingTop={['0', '0', '0', '40px']}>
             <Grid gridColumns={12} gridGutters={0} gridMargins={0}>
-              <Cell span={[12, 12, 6]}>
-                <OrderBookContainer />
-              </Cell>
-              <Cell span={[12, 12, 6]}>
+
+              <Cell span={[12, 12, 9]}>
                 <Block
                   overrides={{
                     Block: {
@@ -184,180 +186,160 @@ const TradeEditor = (props: Props) => {
             </Block>
 
                   {/* Form */}
-                  {steps === 0 && (
-                    <Block paddingTop={['30px', '40px', '0']}>
 
-                      {/* Buy / Sell */}
-                      <div style={{ padding: '10px', marginBottom: '20px' }}>
-                        <Button
-                          kind={action !== "BUY" ? "secondary" : "primary"}
-                          size="mini"
-                          shape="pill"
-                          onClick={() => handleChange("action")("BUY")}
-                          overrides={{
-                            BaseButton: {
-                              style: ({ $theme }) => {
-                                return {
-                                  width: '50%',
-                                  borderTopRightRadius: 0,
-                                  borderBottomRightRadius: 0,
-                                  background: '#3AA76D',
-                                  color: 'white',
-                                  opacity: action === "BUY" ? 1 : 0.2,
+                  <Block paddingTop={['30px', '40px', '0']}>
 
-                                  ":hover": {
-                                    background: '#3AA76D',
-                                    opacity: 1,
-                                  },
-                                  ...$theme.typography.font650,
-                                };
-                              },
-                            },
-                          }}
-                        > BUY</Button>
-                        <Button
-                          size="mini"
-                          shape="pill"
-                          onClick={() => handleChange("action")("SELL")}
-                          overrides={{
-                            BaseButton: {
-                              style: ({ $theme }) => {
-                                return {
-                                  width: '50%',
-                                  borderTopLeftRadius: 0,
-                                  borderBottomLeftRadius: 0,
-                                  background: 'rgba(216, 33, 33);',
-                                  color: 'white',
-                                  ":hover": {
-                                    background: 'rgba(216, 33, 33);',
-                                    opacity: 1,
-                                  },
-                                  opacity: action === "SELL" ? 1 : 0.2,
-                                  ...$theme.typography.font650,
-                                };
-                              },
-                            },
-                          }}
-                        > SELL </Button>
-                      </div>
-
-
-                      {/* Type Market/Limit */}
-                      <div style={{ display: 'flex', justifyContent: 'center' }}>
-                        <div style={{ flex: 0.1 }}></div>
-                        <div style={{ flex: 0.4 }}>
-                          <div style={{ display: "flex", width: "100%" }}>
-                            <Button $style={{ flex: 0 }} size="compact" kind={"tertiary"} onClick={() => { }}>Type</Button>
-                            <Button $style={{ flex: 1 }} size="compact" kind={type === "market" ? "primary" : "secondary"} onClick={() => handleChange("type")("market")}>Market</Button>
-                            <Button $style={{ flex: 1 }} size="compact" kind={type === "limit" ? "primary" : "secondary"} onClick={() => handleChange("type")("limit")}>Limit</Button>
-                          </div>
-                          <Input
-                            startEnhancer="$"
-                            disabled={type === "market"}
-                            value={type === "market" ? close : price}
-                            type={"number"}
-                            onChange={(e: any) => handleChange("price")(e.target.value)}
-                            placeholder="Price"
-                            overrides={{
-                              Root: {
-                                style: () => {
-                                  return { flex: 0.6 };
-                                },
-                              },
-
-                              InputContainer: {
-                                style: () => {
-                                  return { backgroundColor: 'transparent' };
-                                },
-                              },
-
-                              Input: {
-                                style: () => {
-                                  return { fontSize: '1.5em' };
-                                },
-                              },
-                            }}
-                          />
-                        </div>
-
-                        <div style={{ flex: 0.1 }}></div>
-
-                        <div style={{ flex: 0.3, background: 'red', alignSelf: 'center' }}>
-                          <Input
-                            value={qty}
-                            startEnhancer="Qty"
-                            type={"number"}
-                            onChange={(e: any) => handleChange("qty")(e.target.value)}
-                            placeholder="Qty"
-                            overrides={{
-                              InputContainer: {
-                                style: () => {
-                                  return { backgroundColor: 'transparent' };
-                                },
-                              },
-                              Input: {
-                                style: () => {
-                                  return { fontSize: '2.5em' };
-                                },
-                              }
-                            }}
-                          />
-                        </div>
-
-                        <div style={{ flex: 0.1 }}></div>
-                      </div>
-
-
-                      {/* Price list */}
-                      <PriceList>
-                        <PriceItem>
-                          <span>Market Price</span> <span>${niceDec(close)}</span>
-                        </PriceItem>
-
-                        {/* Limit price */}
-                        {type === "limit" && (
-                          <PriceItem>
-                            <span>Limit Price</span> <span>${niceDec(+price)}</span>
-                          </PriceItem>
-                        )}
-
-                        <PriceItem>
-                          <span>Total amount</span> <span> {finalPrice} </span>
-                        </PriceItem>
-                      </PriceList>
-
-                      {/* Next button */}
+                    {/* Buy / Sell */}
+                    <div style={{ padding: '10px', marginBottom: '20px' }}>
                       <Button
-                        size="large"
+                        kind={action !== "BUY" ? "secondary" : "primary"}
+                        size="mini"
                         shape="pill"
-                        onClick={() => handleChange("steps")(1)}
+                        onClick={() => handleChange("action")("BUY")}
                         overrides={{
                           BaseButton: {
                             style: ({ $theme }) => {
                               return {
-                                width: '100%',
-                                ...$theme.typography.font450,
+                                width: '50%',
+                                borderTopRightRadius: 0,
+                                borderBottomRightRadius: 0,
+                                background: '#3AA76D',
+                                color: 'white',
+                                opacity: action === "BUY" ? 1 : 0.2,
+
+                                ":hover": {
+                                  background: '#3AA76D',
+                                  opacity: 1,
+                                },
+                                ...$theme.typography.font650,
                               };
                             },
                           },
                         }}
-                      > Continue ➡</Button>
-                    </Block>
-                  )}
+                      > BUY</Button>
+                      <Button
+                        size="mini"
+                        shape="pill"
+                        onClick={() => handleChange("action")("SELL")}
+                        overrides={{
+                          BaseButton: {
+                            style: ({ $theme }) => {
+                              return {
+                                width: '50%',
+                                borderTopLeftRadius: 0,
+                                borderBottomLeftRadius: 0,
+                                background: 'rgba(216, 33, 33);',
+                                color: 'white',
+                                ":hover": {
+                                  background: 'rgba(216, 33, 33);',
+                                  opacity: 1,
+                                },
+                                opacity: action === "SELL" ? 1 : 0.2,
+                                ...$theme.typography.font650,
+                              };
+                            },
+                          },
+                        }}
+                      > SELL </Button>
+                    </div>
 
-                  {/* Confirm amount for trade */}
-                  {steps === 1 && (
+
+                    {/* Type Market/Limit */}
+                    <div style={{ display: 'flex', justifyContent: 'center' }}>
+                      <div style={{ flex: 0.1 }}></div>
+                      <div style={{ flex: 0.4 }}>
+                        <div style={{ display: "flex", width: "100%" }}>
+                          <Button $style={{ flex: 0 }} size="compact" kind={"tertiary"} onClick={() => { }}>Type</Button>
+                          <Button $style={{ flex: 1 }} size="compact" kind={type === "market" ? "primary" : "secondary"} onClick={() => handleChange("type")("market")}>Market</Button>
+                          <Button $style={{ flex: 1 }} size="compact" kind={type === "limit" ? "primary" : "secondary"} onClick={() => handleChange("type")("limit")}>Limit</Button>
+                        </div>
+                        <Input
+                          startEnhancer="$"
+                          disabled={type === "market"}
+                          value={type === "market" ? close : price}
+                          type={"number"}
+                          onChange={(e: any) => handleChange("price")(e.target.value)}
+                          placeholder="Price"
+                          overrides={{
+                            Root: {
+                              style: () => {
+                                return { flex: 0.6 };
+                              },
+                            },
+
+                            InputContainer: {
+                              style: () => {
+                                return { backgroundColor: 'transparent' };
+                              },
+                            },
+
+                            Input: {
+                              style: () => {
+                                return { fontSize: '1.5em' };
+                              },
+                            },
+                          }}
+                        />
+                      </div>
+
+                      <div style={{ flex: 0.1 }}></div>
+
+                      <div style={{ flex: 0.3, background: 'red', alignSelf: 'center' }}>
+                        <Input
+                          value={qty}
+                          startEnhancer="Qty"
+                          type={"number"}
+                          onChange={(e: any) => handleChange("qty")(e.target.value)}
+                          placeholder="Qty"
+                          overrides={{
+                            InputContainer: {
+                              style: () => {
+                                return { backgroundColor: 'transparent' };
+                              },
+                            },
+                            Input: {
+                              style: () => {
+                                return { fontSize: '2.5em' };
+                              },
+                            }
+                          }}
+                        />
+                      </div>
+
+                      <div style={{ flex: 0.1 }}></div>
+                    </div>
+
+
+                    {/* Price list */}
+                    <PriceList>
+                      <PriceItem>
+                        <span>Market Price</span> <span>${niceDec(close)}</span>
+                      </PriceItem>
+
+                      {/* Limit price */}
+                      {type === "limit" && (
+                        <PriceItem>
+                          <span>Limit Price</span> <span>${niceDec(+price)}</span>
+                        </PriceItem>
+                      )}
+
+                      <PriceItem>
+                        <span>Total amount</span> <span> {finalPrice} </span>
+                      </PriceItem>
+                    </PriceList>
+
+                    {/* Next button */}
+
+
+                    {/* Confirm amount for trade */}
+
                     <Block paddingTop={['30px', '40px', '0']}>
                       {/* Confirm  amount */}
-                      <H4>
+                      {/* <H4>
                         {`You're about to `} <strong>{action}</strong> {` ${qty} shares of STQ`}
-                      </H4>
+                      </H4> */}
                       {/* Confirm */}
                       <p style={{ display: 'flex', padding: '20px' }}>
-
-
-
-
                         <Button
                           kind="secondary"
                           size="default"
@@ -394,9 +376,20 @@ const TradeEditor = (props: Props) => {
                         > ✅ Submit Order </Button>
                       </p>
                     </Block>
-                  )}
+
+                  </Block>
+
+
+
+
+
 
                 </Block>
+              </Cell>
+
+              <Cell span={[12, 12, 3]}>
+                <CurrencyPill amount={(user && user.balance) - +finalPrice} name={'available balance'} />
+                <OrderBookContainer showCurrency={false} />
               </Cell>
             </Grid>
           </Block>
