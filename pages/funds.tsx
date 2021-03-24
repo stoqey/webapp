@@ -229,7 +229,7 @@ const AddFunds: NextPage<{}> = () => {
 								</Block>
 							</Cell>
 						)}
-						<Cell span={[12, 12, 6]}><PayPalPayment amount={totalPrice} userId={user && user.user && user.user.id} /></Cell>
+						<Cell span={[12, 12, 6]}><PayPalPayment amount={totalPrice} userId={user && user.id} /></Cell>
 					</Grid>
 				</Block>
 			</Container>
