@@ -19,12 +19,14 @@ import { createOrderMutation } from './portfolios.api'
 import { niceDec } from 'utils/number';
 import OrderBookContainer from 'containers/OrderBook';
 import { ButtonGroup } from 'baseui/button-group';
-import { H3, H4 } from 'baseui/typography';
+import { H3, H4, Paragraph3 } from 'baseui/typography';
 import { getTradeColor } from 'utils/colors';
 import CurrencyPill from '@/components/Currency';
 import { useUserInfo } from 'hooks/useUserInfo';
+import { Popover } from 'baseui/popover';
 
 
+import { DesktopOrderBookWrapper } from "./styles";
 interface Props {
   quote: MarketDataType;
   show: boolean;
@@ -117,6 +119,7 @@ const TradeEditor = (props: Props) => {
   return (
     <>
 
+
       {/* Model success */}
       <Modal
         onClose={() => hide()}
@@ -134,7 +137,20 @@ const TradeEditor = (props: Props) => {
           },
         }}
       >
+
+        {/* Desktop OrderBook */}
+        <Popover
+          isOpen
+          content={<div/>}
+        >
+          <DesktopOrderBookWrapper>
+            <OrderBookContainer showCurrency={false} />
+          </DesktopOrderBookWrapper>
+        </Popover>
+        
         <ModalBody style={{ overflow: 'hidden' }}>
+
+
           <Block paddingTop={['0', '0', '0', '40px']}>
             <Grid gridColumns={12} gridGutters={0} gridMargins={0}>
 
@@ -199,7 +215,7 @@ const TradeEditor = (props: Props) => {
                     </Cell>
 
                     <Cell span={[2]}>
-                      
+
                     </Cell>
                     <Cell span={[3]}>
                       {/* Available balance and QTy */}
