@@ -26,7 +26,7 @@ import { useUserInfo } from 'hooks/useUserInfo';
 import { Popover } from 'baseui/popover';
 
 
-import { DesktopOrderBookWrapper } from "./styles";
+import { DesktopOrderBookWrapper, MobileOrderBookWrapper } from "./styles";
 interface Props {
   quote: MarketDataType;
   show: boolean;
@@ -141,13 +141,13 @@ const TradeEditor = (props: Props) => {
         {/* Desktop OrderBook */}
         <Popover
           isOpen
-          content={<div/>}
+          content={<div />}
         >
           <DesktopOrderBookWrapper>
             <OrderBookContainer showCurrency={false} />
           </DesktopOrderBookWrapper>
         </Popover>
-        
+
         <ModalBody style={{ overflow: 'hidden' }}>
 
 
@@ -433,16 +433,15 @@ const TradeEditor = (props: Props) => {
 
 
 
-
+                  <MobileOrderBookWrapper>
+                    <OrderBookContainer showCurrency={false} />
+                  </MobileOrderBookWrapper>
 
                 </Block>
               </Cell>
 
-              {/* <Cell span={[12, 12, 3]}>
 
-                <div style={{ height: "100px" }} />
-                <OrderBookContainer showCurrency={false} />
-              </Cell> */}
+
             </Grid>
           </Block>
 
