@@ -19,6 +19,7 @@ import { niceDec } from 'utils/number';
 import OrderBookContainer from 'containers/OrderBook';
 import { ButtonGroup } from 'baseui/button-group';
 import { H3, H4 } from 'baseui/typography';
+import { getTradeColor } from 'utils/colors';
 
 
 interface Props {
@@ -99,6 +100,9 @@ const TradeEditor = (props: Props) => {
 
 
   const finalPrice = niceDec(type === "limit" ? qty * price : qty * close);
+
+  const getColor = (sell: boolean = false) => getTradeColor(sell ? -1 : 1);
+
   return (
     <>
 
@@ -139,11 +143,24 @@ const TradeEditor = (props: Props) => {
                     },
                   }}
                 >
-                  <BsFillTriangleFill
-                    size="4em"
-                    color="#3AA76D"
-                    style={{ marginBottom: '20px' }}
-                  />
+
+                  {/* TRADE SIGN */}
+                  {action === ActionType.BUY ? (
+                    <BsFillTriangleFill
+                      size="4em"
+                      color={getColor()}
+                      style={{ marginBottom: '20px' }}
+                    />
+                  ) : (
+                    <BsFillTriangleFill
+                      size="4em"
+                      color={getColor(true)}
+                      style={{ marginBottom: '20px', transform: 'rotate(180deg)' }}
+                    />
+                  )}
+
+
+                  {/* transform: rotate(45deg); */}
 
                   <Block
                     as="h2"
@@ -163,7 +180,7 @@ const TradeEditor = (props: Props) => {
                       },
                     }}
                   >
-                    INVEST IN STQ™
+                    <strong style={{ color: getColor(action === ActionType.SELL) }}>{action}</strong> STQ™
             </Block>
 
                   {/* Form */}
@@ -291,6 +308,7 @@ const TradeEditor = (props: Props) => {
                       </div>
 
 
+                      {/* Price list */}
                       <PriceList>
                         <PriceItem>
                           <span>Market Price</span> <span>${niceDec(close)}</span>
@@ -307,6 +325,8 @@ const TradeEditor = (props: Props) => {
                           <span>Total amount</span> <span> {finalPrice} </span>
                         </PriceItem>
                       </PriceList>
+
+                      {/* Next button */}
                       <Button
                         size="large"
                         shape="pill"
@@ -316,12 +336,12 @@ const TradeEditor = (props: Props) => {
                             style: ({ $theme }) => {
                               return {
                                 width: '100%',
-                                ...$theme.typography.font250,
+                                ...$theme.typography.font450,
                               };
                             },
                           },
                         }}
-                      > Next </Button>
+                      > Continue ➡</Button>
                     </Block>
                   )}
 
@@ -334,26 +354,14 @@ const TradeEditor = (props: Props) => {
                       </H4>
                       {/* Confirm */}
                       <p style={{ display: 'flex', padding: '20px' }}>
-                        <Button
-                          size="default"
-                          onClick={() => startPortfolio()}
-                          overrides={{
-                            BaseButton: {
-                              style: ({ $theme }) => {
-                                return {
-                                  width: '50%',
-                                  ...$theme.typography.font450,
-                                };
-                              },
-                            },
-                          }}
-                        > ✅ Continue </Button>
 
-                        <div style={{ width: '10px' }} />
+
+
 
                         <Button
                           kind="secondary"
                           size="default"
+                          shape="pill"
                           onClick={() => handleChange("steps")(0)}
                           overrides={{
                             BaseButton: {
@@ -366,6 +374,24 @@ const TradeEditor = (props: Props) => {
                             },
                           }}
                         > ❌ Cancel </Button>
+
+                        <div style={{ width: '10px' }} />
+
+                        <Button
+                          size="default"
+                          shape="pill"
+                          onClick={() => startPortfolio()}
+                          overrides={{
+                            BaseButton: {
+                              style: ({ $theme }) => {
+                                return {
+                                  width: '50%',
+                                  ...$theme.typography.font450,
+                                };
+                              },
+                            },
+                          }}
+                        > ✅ Submit Order </Button>
                       </p>
                     </Block>
                   )}
