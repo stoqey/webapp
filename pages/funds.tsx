@@ -29,6 +29,7 @@ import { useUserInfo } from 'hooks/useUserInfo';
 import { useAppEvent } from 'hooks/useAppEvent';
 import { APPEVENTS } from '@/lib/AppEvent';
 import { niceDec } from 'utils/number';
+import CurrencyPill from '@/components/Currency';
 
 const TITLE = 'Add funds';
 const SUB_TITLE = 'Add money to your Stoqey account, then start trading';
@@ -50,7 +51,7 @@ const AddFunds: NextPage<{}> = () => {
 	const cartItems = useCartState('cartItems');
 
 	const { theme } = useThemeSwitcherCtx();
-	const user = useUserInfo();
+	const { user } = useUserInfo();
 
 	const qoute: MarketDataType = useAppEvent(APPEVENTS.CURRENCY);
 
@@ -71,15 +72,15 @@ const AddFunds: NextPage<{}> = () => {
 
 	};
 
-	let component: React.ReactNode;
-	switch (step) {
-		case 1:
-			component = <CurrencyCart amount={totalPrice} products={cartItems} />;
-			break;
-		case 2:
-			component = <PayPalPayment amount={totalPrice} userId={user && user.user && user.user.id} />;
-			break;
-	}
+	// let component: React.ReactNode;
+	// switch (step) {
+	// 	case 1:
+	// 		component = <CurrencyCart amount={totalPrice} products={cartItems} />;
+	// 		break;
+	// 	case 2:
+	// 		component = <PayPalPayment amount={totalPrice} userId={user && user.user && user.user.id} />;
+	// 		break;
+	// }
 
 	return (
 		<>
@@ -98,6 +99,10 @@ const AddFunds: NextPage<{}> = () => {
 
 			<Container>
 				<MenuStep className="step-menu">
+
+
+					<CurrencyPill amount={user && user.balance} name={'account balance'} />
+
 					{/* <ListItem
 						className={step === 1 ? 'active' : ''}
 						onClick={() => handleChange("step")(1)}
