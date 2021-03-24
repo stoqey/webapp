@@ -116,6 +116,9 @@ const TradeEditor = (props: Props) => {
 
   const availableQty = sum(portfolios.map(t => t.size));
 
+  // Amount or QTY
+  const balance = action === ActionType.SELL ? availableQty - qty : (user && user.balance) - +finalPrice;
+
   return (
     <>
 
@@ -219,7 +222,7 @@ const TradeEditor = (props: Props) => {
                     </Cell>
                     <Cell span={[3]}>
                       {/* Available balance and QTy */}
-                      <CurrencyPill amount={action === ActionType.SELL ? availableQty - qty : (user && user.balance) - +finalPrice} name={action === ActionType.SELL ? 'Qty' : 'Balance'} />
+                      <CurrencyPill amount={balance} name={action === ActionType.SELL ? 'Qty left' : 'Balance left'} />
                     </Cell>
                   </Grid>
 
@@ -229,9 +232,6 @@ const TradeEditor = (props: Props) => {
 
 
                   </div>
-
-
-
 
 
 
@@ -390,11 +390,9 @@ const TradeEditor = (props: Props) => {
                         {`You're about to `} <strong>{action}</strong> {` ${qty} shares of STQ`}
                       </H4> */}
                       {/* Confirm */}
-                      <p style={{ display: 'flex', padding: '20px', flexDirection: 'row', justifyContent: "center" }}>
-
-                        <div style={{ width: '10px' }} />
+                      <p style={{ display: 'flex', padding: '10px', flexDirection: 'row', justifyContent: "center" }}>
                         <Button
-                          disabled={+finalPrice <= 0}
+                          disabled={+finalPrice < 0 || balance < 0}
                           size="default"
                           shape="pill"
                           onClick={() => startPortfolio()}
@@ -408,7 +406,7 @@ const TradeEditor = (props: Props) => {
                               },
                             },
                           }}
-                        > {+finalPrice > 0 ? "✅" : "❌"} Submit Order </Button>
+                        > {+finalPrice >= 0 && balance >= 0 ? "✅" : "❌"} Submit Order </Button>
                       </p>
                     </Block>
 
