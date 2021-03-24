@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
+import sum from 'lodash/sum';
 import { IoIosCheckmarkCircleOutline } from 'react-icons/io';
 import { BsFillTriangleFill } from 'react-icons/bs';
 import { Block } from 'baseui/block';
 import { Modal, ModalBody } from 'baseui/modal';
 import { useApolloClient } from '@apollo/client';
 import { Grid, Cell } from 'baseui/layout-grid';
-import { ActionType, MarketDataType, IOrderType } from '@stoqey/client-graphql';
+import { ActionType, MarketDataType, IOrderType, PortfolioType } from '@stoqey/client-graphql';
 import { Button } from 'baseui/button';
 import { Input } from 'baseui/input';
 import {
@@ -31,6 +32,7 @@ interface Props {
   onError?: (message: string) => void;
   onSuccess?: (Results: Results) => void;
   state?: TradeEditorState;
+  portfolios?: PortfolioType[]
 };
 
 
@@ -51,7 +53,8 @@ interface Results extends TradeEditorState {
 
 const TradeEditor = (props: Props) => {
   const client = useApolloClient();
-  const { show, hide, onError, onSuccess, quote, state: propsState } = props;
+  const { show, hide, onError, onSuccess, quote, state: propsState, portfolios = [] } = props;
+
 
   const close = quote && quote.close;
   const [state, setState] = useState<TradeEditorState>({
@@ -109,6 +112,8 @@ const TradeEditor = (props: Props) => {
 
   const maxmumQty = Math.round((user && user.balance) / (type === IOrderType.LIMIT ? price : close));
 
+  const availableQty = sum(portfolios.map(t => t.size));
+
   return (
     <>
 
@@ -118,7 +123,7 @@ const TradeEditor = (props: Props) => {
         closeable
         isOpen={show}
         animate
-        size="auto"
+        size="default"
         role="dialog"
         unstable_ModalBackdropScroll={true}
         overrides={{
@@ -133,7 +138,7 @@ const TradeEditor = (props: Props) => {
           <Block paddingTop={['0', '0', '0', '40px']}>
             <Grid gridColumns={12} gridGutters={0} gridMargins={0}>
 
-              <Cell span={[12, 12, 9]}>
+              <Cell span={[12, 12, 12]}>
                 <Block
                   overrides={{
                     Block: {
@@ -148,47 +153,73 @@ const TradeEditor = (props: Props) => {
                   }}
                 >
 
-                  {/* TRADE SIGN */}
-                  {action === ActionType.BUY ? (
-                    <BsFillTriangleFill
-                      size="4em"
-                      color={getColor()}
-                      style={{ marginBottom: '20px' }}
-                    />
-                  ) : (
-                    <BsFillTriangleFill
-                      size="4em"
-                      color={getColor(true)}
-                      style={{ marginBottom: '20px', transform: 'rotate(180deg)' }}
-                    />
-                  )}
+                  <Grid gridColumns={8} gridGutters={0} gridMargins={0}>
+                    <Cell span={[3]}>
 
+                      {/* TRADE SIGN */}
+                      {action === ActionType.BUY ? (
+                        <BsFillTriangleFill
+                          // size="4em"
+                          color={getColor()}
+                          style={{ marginBottom: '10px' }}
+                        />
+                      ) : (
+                        <BsFillTriangleFill
+                          // size="4em"
+                          color={getColor(true)}
+                          style={{ marginBottom: '10px', transform: 'rotate(180deg)' }}
+                        />
+                      )}
+                      <Block
+                        as="p"
+                        overrides={{
+                          Block: {
+                            style: ({ $theme }) => {
+                              return {
+                                ...$theme.typography.font750,
+                                color: $theme.colors.primary,
+                                marginBottom: '30px',
+                                '@media only screen and (max-width: 480px)': {
+                                  ...$theme.typography.font650,
+                                  marginBottom: '20px',
+                                },
+                                display: "flex",
+                                justifyContent: "center",
 
-                  {/* transform: rotate(45deg); */}
-
-                  <Block
-                    as="h2"
-                    overrides={{
-                      Block: {
-                        style: ({ $theme }) => {
-                          return {
-                            ...$theme.typography.font750,
-                            color: $theme.colors.primary,
-                            marginBottom: '30px',
-                            '@media only screen and (max-width: 480px)': {
-                              ...$theme.typography.font650,
-                              marginBottom: '20px',
+                                alignItems: "center"
+                              };
                             },
-                          };
-                        },
-                      },
-                    }}
-                  >
-                    <strong style={{ color: getColor(action === ActionType.SELL) }}>{action}</strong> STQ™
-            </Block>
+                          },
+                        }}
+                      >
+                        <strong style={{ color: getColor(action === ActionType.SELL) }}>{action}</strong> STQ™
+                      </Block>
+
+
+                    </Cell>
+
+                    <Cell span={[2]}>
+                      
+                    </Cell>
+                    <Cell span={[3]}>
+                      {/* Available balance and QTy */}
+                      <CurrencyPill amount={action === ActionType.SELL ? availableQty - qty : (user && user.balance) - +finalPrice} name={action === ActionType.SELL ? 'Qty' : 'Balance'} />
+                    </Cell>
+                  </Grid>
+
+
+                  <div style={{ display: "flex", justifyContent: "center", alignContent: "center", alignItems: 'center', textAlign: 'center' }}>
+
+
+
+                  </div>
+
+
+
+
+
 
                   {/* Form */}
-
                   <Block paddingTop={['30px', '40px', '0']}>
 
                     {/* Buy / Sell */}
@@ -391,11 +422,11 @@ const TradeEditor = (props: Props) => {
                 </Block>
               </Cell>
 
-              <Cell span={[12, 12, 3]}>
-                {/* <CurrencyPill amount={action? ActionType.BUY?  (user && user.balance) - +finalPrice} name={'available balance'} /> */}
+              {/* <Cell span={[12, 12, 3]}>
+
                 <div style={{ height: "100px" }} />
                 <OrderBookContainer showCurrency={false} />
-              </Cell>
+              </Cell> */}
             </Grid>
           </Block>
 

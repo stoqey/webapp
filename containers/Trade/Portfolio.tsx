@@ -170,7 +170,7 @@ const Portfolio: NextPage<{}> = () => {
 	return (
 		<>
 			<Toaster toastKey={toastKey} />
-			{showEditor && <TradeEditor state={editor} quote={quote} onError={onError} onSuccess={(props) => {
+			{showEditor && <TradeEditor portfolios={portfolios} state={editor} quote={quote} onError={onError} onSuccess={(props) => {
 				const { message, success } = props;
 				setState({
 					...state,
