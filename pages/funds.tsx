@@ -92,13 +92,13 @@ const AddFunds: NextPage<{}> = () => {
 				style={{ textAlign: "center", color: "golden" }}
 				title={"Add funds"}
 				subtitle={SUB_TITLE}
-				backdrop={true}
+				backdrop={false}
 				bgColor={theme === THEME.light ? 'golden' : '#000000'}
 			/>
 
 			<Container>
 				<MenuStep className="step-menu">
-					<ListItem
+					{/* <ListItem
 						className={step === 1 ? 'active' : ''}
 						onClick={() => handleChange("step")(1)}
 					>
@@ -118,8 +118,8 @@ const AddFunds: NextPage<{}> = () => {
 						>
 							Amount
 						</Block>
-					</ListItem>
-					{totalPrice > 5 && (
+					</ListItem> */}
+					{/* {totalPrice > 5 && (
 						<ListItem
 							aria-disabled="true"
 							className={step === 2 ? 'active' : ''}
@@ -143,7 +143,7 @@ const AddFunds: NextPage<{}> = () => {
 								Payment
 						</Block>
 						</ListItem>
-					)}
+					)} */}
 
 				</MenuStep>
 
@@ -164,11 +164,11 @@ const AddFunds: NextPage<{}> = () => {
 									</div> */}
 									{/* {amountType === "amount" ? ( */}
 									<Input
-										disabled={step !== 1}
+										// disabled={step !== 1}
 										startEnhancer="$"
 										type={"number"}
 										value={inputAmount}
-										onChange={(e: any) => handleChange("inputAmount")(+e.target.value)}
+										onChange={(e: any) => handleChange("inputAmount")(e.target.value)}
 										placeholder="Amount"
 										overrides={{
 											InputContainer: {
@@ -199,7 +199,7 @@ const AddFunds: NextPage<{}> = () => {
 											<span>Total</span> <span> + 0.5%</span>
 										</PriceItem> */}
 									</PriceList>
-									{step === 1 && (
+									{/* {step === 1 && (
 										<Button
 											disabled={totalPrice < 5}
 											size="large"
@@ -219,12 +219,12 @@ const AddFunds: NextPage<{}> = () => {
 										>
 											Continue to payment
 										</Button>
-									)}
+									)} */}
 
 								</Block>
 							</Cell>
 						)}
-						<Cell span={[12, 12, 8]}>{component}</Cell>
+						<Cell span={[12, 12, 8]}><PayPalPayment amount={totalPrice} userId={user && user.user && user.user.id} /></Cell>
 					</Grid>
 				</Block>
 			</Container>
