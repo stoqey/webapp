@@ -40,7 +40,7 @@ const IndexPage: NextPage<{}> = ({ ...props }) => {
 		<>
 			<Head>
 				<title>Home | Stoqey</title>
-				<meta name="Description" content="Stoqey Beta" />
+				<meta name="Description" content="Home | Stoqey" />
 			</Head>
 
 			{/* <PageTitle backdrop={false} title={'Beta'} /> */}

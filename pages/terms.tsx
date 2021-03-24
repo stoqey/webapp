@@ -32,8 +32,8 @@ const Terms: NextPage<{}> = () => {
   return (
     <>
       <Head>
-        <title>Terms and Conditions Stoqey</title>
-        <meta name="Description" content="Terms and Conditions Stoqey" />
+        <title>Terms and Conditions | Stoqey</title>
+        <meta name="Description" content="Terms and Conditions | Stoqey" />
       </Head>
 
       <Container>

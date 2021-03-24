@@ -17,8 +17,8 @@ const Privacy: NextPage<{}> = () => {
   return (
     <>
       <Head>
-        <title>Privacy Policy Stoqey</title>
-        <meta name="Description" content="Privacy Policy Stoqey" />
+        <title>Privacy Policy | Stoqey</title>
+        <meta name="Description" content="Privacy Policy | Stoqey" />
       </Head>
 
       <Container>

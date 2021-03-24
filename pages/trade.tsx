@@ -67,8 +67,8 @@ const Trade: NextPage<{}> = () => {
 	return (
 		<>
 			<Head>
-				<title>{title} | Stoqey</title>
-				<meta name="Description" content="Stoqey positions" />
+				<title>Trade | Stoqey</title>
+				<meta name="Description" content="Trade | Stoqey" />
 			</Head>
 
 			<Container>

@@ -84,8 +84,8 @@ const AddFunds: NextPage<{}> = () => {
 	return (
 		<>
 			<Head>
-				<title>{TITLE} | Stoqey.</title>
-				<meta name="Description" content={SUB_TITLE} />
+				<title>Funds | Stoqey</title>
+				<meta name="Description" content={"Funds | Stoqey"} />
 			</Head>
 
 			<PageTitle

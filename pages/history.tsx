@@ -12,8 +12,8 @@ const TransactionsHistory: NextPage<{}> = () => {
 	return (
 		<>
 			<Head>
-				<title>Transactions history | Stoqey.</title>
-				<meta name="Description" content="Stoqey transactions history page" />
+				<title>Transactions history | Stoqey</title>
+				<meta name="Description" content="Transactions history | Stoqey" />
 			</Head>
 
 			<Container>
