@@ -14,7 +14,7 @@ const TNC = () => {
     <div>
       <p>
         Stoqey Financial LLC (“Stoqey Financial”), a wholly-owned subsidiary of Stoqey,
-        Inc. (“Stoqey"), is a registered broker-dealer and member of FINRA and SIPC that provides
+        Inc. (“Stoqey"), is a registered broker-dealer (not a member of FINRA/SIPC) that provides
         online and mobile application-based discount stock brokerage services to self-directed investors.
       </p>
       <br/>
