@@ -298,7 +298,7 @@ const TradeEditor = (props: Props) => {
                       {/* <div style={{ flex: 0.1 }}></div> */}
                       <div style={{ flex: 0.5 }}>
                         <div style={{ display: "flex", width: "100%" }}>
-                          <Button $style={{ flex: 0 }} size="compact" kind={"tertiary"} onClick={() => { }}>Type</Button>
+                          <Button $style={{ flex: 0 }} size="compact" kind={"tertiary"} onClick={() => { }}>Price</Button>
                           <Button $style={{ flex: 1 }} size="compact" kind={type === "market" ? "primary" : "secondary"} onClick={() => handleChange("type")("market")}>Market</Button>
                           <Button $style={{ flex: 1 }} size="compact" kind={type === "limit" ? "primary" : "secondary"} onClick={() => handleChange("type")("limit")}>Limit</Button>
                         </div>
@@ -375,7 +375,7 @@ const TradeEditor = (props: Props) => {
 
 
                       <PriceItem>
-                        <span>Total amount</span> <span> {finalPrice} </span>
+                        <span><strong> Total amount</strong></span> <span> <strong>{finalPrice}</strong></span>
                       </PriceItem>
                     </PriceList>
 
@@ -390,27 +390,11 @@ const TradeEditor = (props: Props) => {
                         {`You're about to `} <strong>{action}</strong> {` ${qty} shares of STQ`}
                       </H4> */}
                       {/* Confirm */}
-                      <p style={{ display: 'flex', padding: '20px' }}>
-                        <Button
-                          kind="secondary"
-                          size="default"
-                          shape="pill"
-                          onClick={() => handleChange("steps")(0)}
-                          overrides={{
-                            BaseButton: {
-                              style: ({ $theme }) => {
-                                return {
-                                  width: '50%',
-                                  ...$theme.typography.font450,
-                                };
-                              },
-                            },
-                          }}
-                        > ❌ Cancel </Button>
+                      <p style={{ display: 'flex', padding: '20px', flexDirection: 'row', justifyContent: "center" }}>
 
                         <div style={{ width: '10px' }} />
-
                         <Button
+                          disabled={+finalPrice <= 0}
                           size="default"
                           shape="pill"
                           onClick={() => startPortfolio()}
@@ -424,7 +408,7 @@ const TradeEditor = (props: Props) => {
                               },
                             },
                           }}
-                        > ✅ Submit Order </Button>
+                        > {+finalPrice > 0 ? "✅" : "❌"} Submit Order </Button>
                       </p>
                     </Block>
 
