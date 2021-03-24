@@ -30,7 +30,7 @@ export const Title = styled('h2', ({ $theme }) => ({
 }));
 
 export const Subtitle = styled('p', ({ $theme }) => ({
-	...$theme.typography.font200,
+	...$theme.typography.font550,
 	color: $theme.colors.contentSecondary,
 }));
 

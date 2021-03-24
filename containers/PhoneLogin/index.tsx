@@ -130,12 +130,13 @@ export const PhoneLogin = () => {
               onCountryChange={({ option }) => setCountry(option as any)}
               text={phone}
               onTextChange={e => setPhone(e.currentTarget.value)}
-              size={SIZE.default}
+              size={SIZE.large}
               clearable
               positive={isValid}
               // error={!isValid}
             />
           ) : <PinCode
+              size="large"
               values={codes}
               onChange={({ values }) => {
                 setCodes(values)
