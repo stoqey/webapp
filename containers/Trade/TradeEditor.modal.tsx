@@ -295,8 +295,8 @@ const TradeEditor = (props: Props) => {
 
                     {/* Type Market/Limit */}
                     <div style={{ display: 'flex', justifyContent: 'center' }}>
-                      <div style={{ flex: 0.1 }}></div>
-                      <div style={{ flex: 0.4 }}>
+                      {/* <div style={{ flex: 0.1 }}></div> */}
+                      <div style={{ flex: 0.5 }}>
                         <div style={{ display: "flex", width: "100%" }}>
                           <Button $style={{ flex: 0 }} size="compact" kind={"tertiary"} onClick={() => { }}>Type</Button>
                           <Button $style={{ flex: 1 }} size="compact" kind={type === "market" ? "primary" : "secondary"} onClick={() => handleChange("type")("market")}>Market</Button>
@@ -312,7 +312,7 @@ const TradeEditor = (props: Props) => {
                           overrides={{
                             Root: {
                               style: () => {
-                                return { flex: 0.6 };
+                                return { flex: 0.5 };
                               },
                             },
 
@@ -331,9 +331,9 @@ const TradeEditor = (props: Props) => {
                         />
                       </div>
 
-                      <div style={{ flex: 0.1 }}></div>
+                      <div style={{ flex: 0.02 }}></div>
 
-                      <div style={{ flex: 0.3, background: 'red', alignSelf: 'center' }}>
+                      <div style={{ flex: 0.5, background: 'red', alignSelf: 'center' }}>
                         <Input
                           value={qty}
                           startEnhancer="Qty"
@@ -350,14 +350,14 @@ const TradeEditor = (props: Props) => {
                             },
                             Input: {
                               style: () => {
-                                return { fontSize: '2.5em' };
+                                return { fontSize: '2em' };
                               },
                             }
                           }}
                         />
                       </div>
 
-                      <div style={{ flex: 0.1 }}></div>
+                      {/* <div style={{ flex: 0.1 }}></div> */}
                     </div>
 
 

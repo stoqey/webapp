@@ -15,6 +15,7 @@ export const DesktopOrderBookWrapper = styled("div", ({ $theme }) => ({
 }));
 
 export const MobileOrderBookWrapper = styled("div", ({ $theme }) => ({
+  display: "none",
   marginTop: "50px",
   width: "100%",
   "@media only screen and (max-width: 1200px)": {
