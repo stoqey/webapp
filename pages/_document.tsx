@@ -68,6 +68,36 @@ export default class CustomDocument extends Document<any> {
           <meta name="msapplication-TileImage" content={msapplicationTileImage} />
           <meta name="theme-color" content="#ffffff" />
 
+          {/* SEO */}
+          <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
+          <meta name="robots" content="NOODP" />
+          <meta charSet="UTF-8" />
+          <meta name="application-name" content="Stoqey" />
+
+          <meta
+            name="keywords"
+            content="investing services, invest service, trading services, trade service, trading account services, trade account, invest account, business account, stocks, stocks investing, crypto, crypto investing, bitcoin, ico, contracts, ethereum, dogecoin, stoqey, STQ"
+          />
+          <meta
+            name="description"
+            content="Investing sucks, let bots do it for you? then share profits"
+          />
+
+          <link rel="canonical" href="https://app.stoqey.com" />
+          <meta property="twitter:card" content="summary" />
+          <meta property="twitter:site" content="@stoqey_" />
+          <meta property="og:url" content="https://app.stoqey.com" />
+          <meta property="og:type" content="website" />
+          <meta
+            property="og:title"
+            content="Stupid simple investing | Online Investment Services | Stoqey"
+          />
+          <meta property="og:image" content={appleTouchIcon180} />
+          <meta
+            property="og:description"
+            content="Investing sucks, let bots do it for you? then share profits"
+          />
+
           {this.props.stylesheets.map((sheet, i) => (
             <style
               className="_styletron_hydrate_"
