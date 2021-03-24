@@ -215,7 +215,7 @@ const TradeEditor = (props: Props) => {
                     </Block>
                     </div>
 
-                    <div style={{ width: "40px"}} />
+                    <div style={{ width: "40px" }} />
 
 
                     <div style={{ textAlign: "center" }}>
@@ -391,7 +391,7 @@ const TradeEditor = (props: Props) => {
                       {/* Confirm */}
                       <p style={{ display: 'flex', padding: '10px', flexDirection: 'row', justifyContent: "center" }}>
                         <Button
-                          disabled={+finalPrice < 0 || balance < 0}
+                          disabled={+finalPrice <= 0 || balance < 0}
                           size="default"
                           shape="pill"
                           onClick={() => startPortfolio()}
@@ -405,7 +405,7 @@ const TradeEditor = (props: Props) => {
                               },
                             },
                           }}
-                        > {+finalPrice >= 0 && balance >= 0 ? "✅" : "❌"} Submit Order </Button>
+                        > {+finalPrice <= 0 || balance < 0 ? "❌" : "✅"} Submit Order </Button>
                       </p>
                     </Block>
 
