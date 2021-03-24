@@ -27,6 +27,7 @@ import { Popover } from 'baseui/popover';
 
 
 import { DesktopOrderBookWrapper, MobileOrderBookWrapper } from "./styles";
+import { SpaceBetween } from '@/components/PageStyles/Settings.styled';
 interface Props {
   quote: MarketDataType;
   show: boolean;
@@ -172,9 +173,8 @@ const TradeEditor = (props: Props) => {
                   }}
                 >
 
-                  <Grid gridColumns={8} gridGutters={0} gridMargins={0}>
-                    <Cell span={[3]}>
-
+                  <SpaceBetween>
+                    <div>
                       {/* TRADE SIGN */}
                       {action === ActionType.BUY ? (
                         <BsFillTriangleFill
@@ -212,19 +212,18 @@ const TradeEditor = (props: Props) => {
                         }}
                       >
                         <strong style={{ color: getColor(action === ActionType.SELL) }}>{action}</strong> STQ™
-                      </Block>
+                    </Block>
+                    </div>
+
+                    <div style={{ width: "40px"}} />
 
 
-                    </Cell>
-
-                    <Cell span={[2]}>
-
-                    </Cell>
-                    <Cell span={[3]}>
+                    <div style={{ textAlign: "center" }}>
                       {/* Available balance and QTy */}
-                      <CurrencyPill amount={balance} name={action === ActionType.SELL ? 'Qty left' : 'Balance left'} />
-                    </Cell>
-                  </Grid>
+                      <CurrencyPill amount={balance} name={action === ActionType.SELL ? 'Shares left' : 'Balance left'} />
+                    </div>
+
+                  </SpaceBetween>
 
 
                   <div style={{ display: "flex", justifyContent: "center", alignContent: "center", alignItems: 'center', textAlign: 'center' }}>
@@ -336,12 +335,12 @@ const TradeEditor = (props: Props) => {
                       <div style={{ flex: 0.5, background: 'red', alignSelf: 'center' }}>
                         <Input
                           value={qty}
-                          startEnhancer="Qty"
+                          startEnhancer="Shares"
                           min={1}
                           max={maxmumQty}
                           type={"number"}
                           onChange={(e: any) => handleChange("qty")(e.target.value)}
-                          placeholder="Qty"
+                          placeholder="Shares"
                           overrides={{
                             InputContainer: {
                               style: () => {
@@ -350,7 +349,7 @@ const TradeEditor = (props: Props) => {
                             },
                             Input: {
                               style: () => {
-                                return { fontSize: '2em' };
+                                return { fontSize: '2.7em' };
                               },
                             }
                           }}
