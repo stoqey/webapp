@@ -76,7 +76,11 @@ export default class CustomDocument extends Document<any> {
 
           <meta
             name="keywords"
-            content="investing services, invest service, trading services, trade service, trading account services, trade account, invest account, business account, stocks, stocks investing, crypto, crypto investing, bitcoin, ico, contracts, ethereum, dogecoin, stoqey, STQ"
+            content="
+            gme stock, amc stock, stock, btc to usd, silver price, dogecoin,
+            silver, cryptocurrency, stocks to buy now, btc, amc, stock screener,
+            sndl, gold, aphria stock, stock market, ethereum price, sndl stock,
+            scr stock, scr stock, zom stock, gme stock price, penny stocks,  investing services, invest service, trading services, trade service, trading account services, trade account, invest account, business account, stocks, stocks investing, crypto, crypto investing, bitcoin, ico, contracts, ethereum, dogecoin, stoqey, STQ"
           />
           <meta
             name="description"
