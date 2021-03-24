@@ -107,6 +107,8 @@ const TradeEditor = (props: Props) => {
 
   const getColor = (sell: boolean = false) => getTradeColor(sell ? -1 : 1);
 
+  const maxmumQty = Math.round((user && user.balance) / (type === IOrderType.LIMIT ? price : close));
+
   return (
     <>
 
@@ -288,6 +290,8 @@ const TradeEditor = (props: Props) => {
                         <Input
                           value={qty}
                           startEnhancer="Qty"
+                          min={1}
+                          max={maxmumQty}
                           type={"number"}
                           onChange={(e: any) => handleChange("qty")(e.target.value)}
                           placeholder="Qty"
@@ -317,11 +321,11 @@ const TradeEditor = (props: Props) => {
                       </PriceItem>
 
                       {/* Limit price */}
-                      {type === "limit" && (
-                        <PriceItem>
-                          <span>Limit Price</span> <span>${niceDec(+price)}</span>
-                        </PriceItem>
-                      )}
+
+                      <PriceItem>
+                        <span>Limit Price</span> <span>{type === "limit" ? niceDec(+price) : null}</span>
+                      </PriceItem>
+
 
                       <PriceItem>
                         <span>Total amount</span> <span> {finalPrice} </span>
@@ -388,7 +392,8 @@ const TradeEditor = (props: Props) => {
               </Cell>
 
               <Cell span={[12, 12, 3]}>
-                <CurrencyPill amount={(user && user.balance) - +finalPrice} name={'available balance'} />
+                {/* <CurrencyPill amount={action? ActionType.BUY?  (user && user.balance) - +finalPrice} name={'available balance'} /> */}
+                <div style={{ height: "100px" }} />
                 <OrderBookContainer showCurrency={false} />
               </Cell>
             </Grid>
