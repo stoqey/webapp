@@ -133,7 +133,7 @@ export const PhoneLogin = () => {
               size={SIZE.default}
               clearable
               positive={isValid}
-              error={!isValid}
+              // error={!isValid}
             />
           ) : <PinCode
               values={codes}
