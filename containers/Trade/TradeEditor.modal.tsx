@@ -85,7 +85,7 @@ const TradeEditor = (props: Props) => {
       success: async (d: any) => {
         console.log('success starting portfolio', d);
         const success: Results = {
-          message: `Successfully started portfolio for ${qty} shares`,
+          message: `Successfully submitted order shares:${qty} `,
           success: true,
           ...state,
         }
