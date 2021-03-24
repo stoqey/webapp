@@ -21,17 +21,17 @@ const AdminOrderBook = () => {
     const quote: MarketDataType = useAppEvent(APPEVENTS.CURRENCY);
     const client = useApolloClient();
 
-    const onSuccess = (message: string) => {
-		toastKey = toaster.positive(<>{message}</>, {
-			autoHideDuration: 4000
-		})
-	}
+    const onSuccess = ({ message }) => {
+        toastKey = toaster.positive(<>{message}</>, {
+            autoHideDuration: 4000
+        })
+    }
 
-	const onError = (message: string) => {
-		toastKey = toaster.negative(<>{message}</>, {
-			autoHideDuration: 5000
-		})
-	}
+    const onError = (message: string) => {
+        toastKey = toaster.negative(<>{message}</>, {
+            autoHideDuration: 5000
+        })
+    }
 
     return (
         <>
@@ -113,7 +113,7 @@ const AdminOrderBook = () => {
                 <OrdersListContainer />
             </Block>
             <TradeEditor quote={quote} onError={onError} onSuccess={onSuccess} show={show} hide={() => setShow(false)} />
-			
+
         </>
     );
 };
