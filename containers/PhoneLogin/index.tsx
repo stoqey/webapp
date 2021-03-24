@@ -173,7 +173,7 @@ export const PhoneLogin = () => {
                     return {
                       margin: '15px',
                       width: '60%',
-                      ...$theme.typography.font450,
+                      ...$theme.typography.font550,
                     };
                   },
                 },
