@@ -40,12 +40,6 @@ const LoginPage: NextPage<{}> = () => {
 								</Cell>
 							</div>
 						</Cell>
-						<Cell span={[12, 12, 12]}>
-							<div style={{ marginTop: "-50px"}}>
-								<StqChart />
-							</div>
-
-						</Cell>
 					</Grid>
 				</Block>
 
