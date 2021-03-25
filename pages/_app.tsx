@@ -38,7 +38,6 @@ export default function CustomApp({ Component, pageProps }: AppProps) {
 
   return (
     <ApolloProvider client={apolloClient}>
-      {/* Persistant websocket */}
       <WebsocketSubscription />
       <AuthChecker />
       <ThemeSwitcherProvider value={{ theme, setTheme }}>
@@ -50,7 +49,6 @@ export default function CustomApp({ Component, pageProps }: AppProps) {
                 : { ...DarkTheme, direction: 'ltr' }
             }
           >
-            <CartProvider>
               {removeLayout ? (
                 <Component {...pageProps} />
               ) : (
@@ -58,8 +56,6 @@ export default function CustomApp({ Component, pageProps }: AppProps) {
                   <Component {...pageProps} />
                 </Layout>
               )}
-
-            </CartProvider>
           </BaseProvider>
         </StyletronProvider>
       </ThemeSwitcherProvider>

@@ -50,18 +50,24 @@ const OrderBook: NextPage<Props> = (props: Props) => {
 
 					{/* Bid Cell */}
 					{bids.map(i => {
-						const { price, qty: totalQty, filledQty } = i;
+						const { price, qty: totalQty, filledQty, clientId = "" } = i;
 						const qty = totalQty - filledQty;
+
+						const userId = clientId.slice(0, 6)
 						return (
-							<div key={i.id + qty}
-								style={{
-									padding: '10px',
-									background: 'rgba(49, 242, 161, 0.39)',
-									display: 'flex', justifyContent: 'space-between', width: '100%'
-								}}>
-								<H6>{qty}</H6>
-								<H6>${price}</H6>
-							</div>
+							<>
+								<div key={i.id + qty}
+									style={{
+										padding: '10px',
+										background: 'rgba(49, 242, 161, 0.39)',
+										display: 'flex', justifyContent: 'space-between', width: '100%'
+									}}>
+									<H6>{qty}</H6>
+									<H6>${price}</H6>
+								</div>
+								<p>{userId}</p>
+							</>
+
 						)
 					})}
 
@@ -78,13 +84,18 @@ const OrderBook: NextPage<Props> = (props: Props) => {
 
 					{/* Ask Cell */}
 					{asks.map(i => {
-						const { price, qty: totalQty, filledQty } = i;
+						const { price, qty: totalQty, filledQty, clientId } = i;
 						const qty = totalQty - filledQty;
+						const userId = clientId.slice(0, 6)
 						return (
-							<div key={i.id + qty} style={{ padding: '10px', background: 'rgb(216 33 33 / 38%)', display: 'flex', justifyContent: 'space-between', width: '100%' }}>
-								<H6>${price}</H6>
-								<H6>{qty}</H6>
-							</div>
+							<>
+								<div key={i.id + qty} style={{ padding: '10px', background: 'rgb(216 33 33 / 38%)', display: 'flex', justifyContent: 'space-between', width: '100%' }}>
+									<H6>${price}</H6>
+									<H6>{qty}</H6>
+								</div>
+								<p>{userId}</p>
+							</>
+
 						)
 					})}
 
