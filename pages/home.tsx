@@ -15,7 +15,7 @@ import MainWrapper from 'containers/MainWrapper';
 // import StqChart from 'containers/Chart/StqChart';
 
 const StqChart = dynamic(() => import('containers/Chart/StqChart'), {
-    ssr: false,
+    ssr: true,
 });
 
 const PhoneLogin = dynamic(() => import('containers/PhoneLogin'), {
@@ -23,7 +23,7 @@ const PhoneLogin = dynamic(() => import('containers/PhoneLogin'), {
 });
 
 const IndexPage: NextPage<{}> = ({ ...props }) => {
-    console.log('all props', props);
+    // console.log('all props', props);
     const [loading, setLoading] = useState(false);
     const [pricingPlan, setPricingPlan] = useState('Free');
 

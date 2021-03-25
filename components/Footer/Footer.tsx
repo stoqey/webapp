@@ -45,9 +45,9 @@ const Footer: React.FC<{}> = () => {
       <Grid gridColumns={12} gridGutters={0} gridMargins={0}>
         <Cell span={[12, 12, 4]}>
           <div>
-            <p style={{ textAlign: 'center' }}>
-              <Paragraph3>Copyright © {new Date().getFullYear()} Stoqey Inc. All rights reserved</Paragraph3>
-            </p>
+            <Paragraph3 $style={{ textAlign: 'center' }}>
+              Copyright © {new Date().getFullYear()} Stoqey Inc. All rights reserved
+            </Paragraph3>
           </div>
         </Cell>
         <Cell span={[12, 12, 2]}>

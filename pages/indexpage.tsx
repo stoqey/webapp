@@ -23,7 +23,7 @@ const PhoneLogin = dynamic(() => import('containers/PhoneLogin'), {
 });
 
 const IndexPage: NextPage<{}> = ({ ...props }) => {
-	console.log('all props', props);
+	// console.log('all props', props);
 	const [loading, setLoading] = useState(false);
 	const [pricingPlan, setPricingPlan] = useState('Free');
 
