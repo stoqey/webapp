@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { withRouter } from 'next/router';
-import Header from 'components/Header/Header';
 import Footer from 'components/Footer/Footer';
-import AuthHeader from 'components/Header/AuthHeader/AuthHeader';
 import AppWrapper, { ContentWrapper } from './Layout.styled';
 import { useThemeSwitcherCtx, THEME } from 'contexts/theme/theme.provider';
-import { useUserInfo } from 'hooks/useUserInfo';
-import AsyncStorageDB from '@/lib/AsyncStorageDB';
+
+import dynamic from 'next/dynamic';
+const LayoutHeader = dynamic(() => import('./Layout.header'), {
+  ssr: false,
+});
+
 
 const Layout: React.FunctionComponent<{ router?: any }> = ({
   router,
@@ -14,16 +16,7 @@ const Layout: React.FunctionComponent<{ router?: any }> = ({
 }) => {
   const pathname = router.pathname;
 
-  const db = AsyncStorageDB;
-
   const { theme } = useThemeSwitcherCtx();
-
-  const { user } = useUserInfo();
-  const [currentUser, setCurrentUser] = useState(user);
-
-  useEffect(() => {
-    db.getAuthItem().then(dbData => setCurrentUser(dbData as any));
-  }, [pathname]);
 
   let layoutBg = '#ffffff';
 
@@ -47,12 +40,7 @@ const Layout: React.FunctionComponent<{ router?: any }> = ({
 
   return (
     <AppWrapper className={theme} style={{ backgroundColor: layoutBg }}>
-      {!currentUser ? (
-        <AuthHeader pathname={pathname} />
-      ) : (
-        <Header />
-      )}
-
+      <LayoutHeader />
       <ContentWrapper>{children}</ContentWrapper>
       <Footer />
     </AppWrapper>

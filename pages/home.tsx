@@ -15,7 +15,7 @@ import MainWrapper from 'containers/MainWrapper';
 // import StqChart from 'containers/Chart/StqChart';
 
 const StqChart = dynamic(() => import('containers/Chart/StqChart'), {
-    ssr: true,
+    ssr: false,
 });
 
 const PhoneLogin = dynamic(() => import('containers/PhoneLogin'), {
