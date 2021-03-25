@@ -174,6 +174,7 @@ export const PhoneLogin = () => {
                       margin: '15px',
                       width: '60%',
                       ...$theme.typography.font550,
+                      backgroundImage: `-webkit-linear-gradient(29deg , rgb(255, 148, 147) 0%, rgb(255, 120, 162) 100%)`
                     };
                   },
                 },
