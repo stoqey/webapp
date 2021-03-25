@@ -34,11 +34,12 @@ const Layout: React.FunctionComponent<{ router?: any }> = ({
 
   return (
     <AppWrapper className={theme} style={{ backgroundColor: layoutBg }}>
-      {pathname === '/login' || pathname === '/login' || pathname === '/signup' ? (
+      {/* {pathname === '/login' || pathname === '/login' || pathname === '/signup' ? (
         <AuthHeader pathname={pathname} />
       ) : (
           <Header />
-        )}
+        )} */}
+      <AuthHeader pathname={pathname} />
 
       <ContentWrapper>{children}</ContentWrapper>
       <Footer />
