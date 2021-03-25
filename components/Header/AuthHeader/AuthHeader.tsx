@@ -55,7 +55,7 @@ const AuthHeader = ({ pathname }: AuthHeaderType) => {
       >
 
         <Logo
-          path={pathname}
+          path={'/'}
           src={
             <>
               <StqRoboIcon />
