@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { withRouter } from 'next/router';
 import Header from 'components/Header/Header';
 import Footer from 'components/Footer/Footer';
@@ -6,15 +6,25 @@ import AuthHeader from 'components/Header/AuthHeader/AuthHeader';
 import AppWrapper, { ContentWrapper } from './Layout.styled';
 import { useThemeSwitcherCtx, THEME } from 'contexts/theme/theme.provider';
 import { useUserInfo } from 'hooks/useUserInfo';
+import AsyncStorageDB from '@/lib/AsyncStorageDB';
 
 const Layout: React.FunctionComponent<{ router?: any }> = ({
   router,
   children,
 }) => {
   const pathname = router.pathname;
+
+  const db = AsyncStorageDB;
+
   const { theme } = useThemeSwitcherCtx();
 
-  const { user } = useUserInfo()
+  const { user } = useUserInfo();
+  const [currentUser, setCurrentUser] = useState(user);
+
+  useEffect(() => {
+    db.getAuthItem().then(dbData => setCurrentUser(dbData as any));
+  }, [pathname]);
+
   let layoutBg = '#ffffff';
 
   if (theme === THEME.dark) {
@@ -37,7 +47,7 @@ const Layout: React.FunctionComponent<{ router?: any }> = ({
 
   return (
     <AppWrapper className={theme} style={{ backgroundColor: layoutBg }}>
-      {!user ? (
+      {!currentUser ? (
         <AuthHeader pathname={pathname} />
       ) : (
         <Header />

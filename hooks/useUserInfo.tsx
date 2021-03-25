@@ -23,13 +23,21 @@ import { useLocalStorage } from './useLocalStorage';
 // }
 
 export function useUserInfo(): LoginResponseType {
-
   const [userInfo, setuserInfo] = useLocalStorage(USER_DB_PATH, null);
   return !userInfo ? ({} as any) : userInfo;
 }
+
+// export function useUserInfo(): LoginResponseType {
+//   const userInfo = useAppEvent(APPEVENTS.AUTH);
+//   if(!userInfo){
+//     fetchUserInfo();
+//   }
+//   return !userInfo ? ({} as any) : userInfo;
+// }
 
 export function fetchUserInfo(): void {
   const db = AsyncStorageDB;
   const events = AppEvents.Instance;
   db.getAuthItem().then(dbData => events.emit(APPEVENTS.AUTH, dbData)).catch(error => console.error(error));
 }
+
