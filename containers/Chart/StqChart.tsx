@@ -158,14 +158,6 @@ const StqChart: NextPage<{}> = () => {
     return (
         <>
             <Cell span={[12, 12, 12]}>
-                <Block paddingTop="10px">
-                    <ApexChart
-                        options={state.options}
-                        series={state.series}
-                        type="area"
-                        height={420}
-                    />
-                </Block>
                 <Block justifyContent="center" alignContent="center" display="flex" width="100%" paddingTop="10px">
                     <Button
                         onClick={() => updateData('one_month')}
@@ -202,6 +194,14 @@ const StqChart: NextPage<{}> = () => {
                     >
                         ALL
 								</Button>
+                </Block>
+                <Block paddingTop="10px">
+                    <ApexChart
+                        options={state.options}
+                        series={state.series}
+                        type="area"
+                        height={420}
+                    />
                 </Block>
             </Cell>
 
