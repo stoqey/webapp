@@ -5,6 +5,7 @@ import Footer from 'components/Footer/Footer';
 import AuthHeader from 'components/Header/AuthHeader/AuthHeader';
 import AppWrapper, { ContentWrapper } from './Layout.styled';
 import { useThemeSwitcherCtx, THEME } from 'contexts/theme/theme.provider';
+import { useUserInfo } from 'hooks/useUserInfo';
 
 const Layout: React.FunctionComponent<{ router?: any }> = ({
   router,
@@ -12,6 +13,8 @@ const Layout: React.FunctionComponent<{ router?: any }> = ({
 }) => {
   const pathname = router.pathname;
   const { theme } = useThemeSwitcherCtx();
+
+  const { user } = useUserInfo()
   let layoutBg = '#ffffff';
 
   if (theme === THEME.dark) {
@@ -34,12 +37,11 @@ const Layout: React.FunctionComponent<{ router?: any }> = ({
 
   return (
     <AppWrapper className={theme} style={{ backgroundColor: layoutBg }}>
-      {/* {pathname === '/login' || pathname === '/login' || pathname === '/signup' ? (
+      {!user ? (
         <AuthHeader pathname={pathname} />
       ) : (
-          <Header />
-        )} */}
-      <AuthHeader pathname={pathname} />
+        <Header />
+      )}
 
       <ContentWrapper>{children}</ContentWrapper>
       <Footer />
