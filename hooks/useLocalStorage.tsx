@@ -1,3 +1,4 @@
+import { JSONDATA } from '@/lib/AsyncStorageDB';
 import { useState } from 'react';
 
 // Usage
@@ -26,7 +27,7 @@ export function useLocalStorage(key, initialValue) {
       // Get from local storage by key
       const item = window.localStorage.getItem(key);
       // Parse stored json or if none return initialValue
-      return item ? JSON.parse(item) : initialValue;
+      return item ? JSONDATA(item) : initialValue;
     } catch (error) {
       // If error also return initialValue
       console.log(error);
