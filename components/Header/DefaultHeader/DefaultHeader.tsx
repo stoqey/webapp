@@ -19,9 +19,9 @@ import HeaderWrapper, {
 import { useStyletron } from 'styletron-react';
 import StqRoboIcon from '@/components/logo/icon';
 import { CurrencyNumberContainer } from 'containers/Currency/CurrencyNumber';
+import { SpaceBetween } from '@/components/PageStyles/Settings.styled';
 
 const DefaultHeader: React.FC<{}> = () => {
-	const cartItems = useCartState('cartItems');
 
 	const Currency = () => <CurrencyNumberContainer />;
 	return (
@@ -35,7 +35,7 @@ const DefaultHeader: React.FC<{}> = () => {
 						src={
 							<>
 								<StqRoboIcon />
-								<Currency />
+								{/* <Currency /> */}
 							</>
 						}
 					/>
@@ -69,23 +69,22 @@ const DefaultHeader: React.FC<{}> = () => {
 									src={
 										<>
 											<StqRoboIcon />
-											<Currency />
+
 										</>
 									}
 								/>
 
+								
 								<BetaMenu className="main-nav" />
+								<div style={{  marginLeft: '40%'}}>
+									<Currency />
+								</div>
+								
+
+
 							</NavLeft>
+
 							<NavRight className="cart-and-avatar">
-								{/* <Badge
-									path="/shop/checkout"
-									icon={
-										<SvgIcon
-											src={require('assets/images/cart-bag.svg?include')}
-										/>
-									}
-									count={cartItems.length}
-								/> */}
 								<AvatarMenu
 									name="Stoqey Bot"
 									src={require('assets/images/STQ.png')}
