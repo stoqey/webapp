@@ -5,6 +5,8 @@ export const DesktopOrderBookWrapper = styled("div", ({ $theme }) => ({
   top: "20%",
   right: "-310px",
   width: "300px",
+  height: "80%",
+  overflow: "scroll",
   backgroundColor: $theme.colors.backgroundSecondary,
   "@media only screen and (max-width: 1200px)": {
     display: "block",

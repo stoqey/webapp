@@ -148,7 +148,7 @@ const TradeEditor = (props: Props) => {
           content={<p></p>}
         >
           <DesktopOrderBookWrapper>
-            <OrderBookContainer showCurrency={false} />
+            <OrderBookContainer showCurrency />
           </DesktopOrderBookWrapper>
         </Popover>
 
