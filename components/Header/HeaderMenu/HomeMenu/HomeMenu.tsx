@@ -6,7 +6,7 @@ const menuItems = [
   {
     id: 1,
     label: 'Overview',
-    path: '/web',
+    path: '/',
   },
   // {
   //   id: 2,

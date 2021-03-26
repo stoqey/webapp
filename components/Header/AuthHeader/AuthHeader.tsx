@@ -7,12 +7,38 @@ import SvgIcon from '../../UiElements/SvgIcon/SvgIcon';
 import Container from '../../UiElements/Container/Container';
 import StqRoboIcon from '@/components/logo/icon';
 import { CurrencyNumberContainer } from 'containers/Currency/CurrencyNumber';
+import { SpaceBetween } from '@/components/PageStyles/Settings.styled';
 
 type AuthHeaderType = {
   pathname?: string;
 };
 
 const AuthHeader = ({ pathname }: AuthHeaderType) => {
+
+  const LoginButtons = () => {
+    return (
+      <Block>
+        <Button
+          shape="pill"
+          // disabled={pathname === '/login'}
+          onClick={() => Router.push('/login')}
+          overrides={{
+            BaseButton: {
+              style: ({ $theme }) => {
+                return {
+                  ...$theme.typography.font350,
+                  backgroundImage: `linear-gradient(to right, rgb(75, 161, 216), rgb(68, 100, 189) 95%);`
+                };
+              },
+            },
+          }}
+        >
+          Start investing
+        </Button>
+      </Block>
+    )
+  };
+
   return (
     <Container>
       <Block
@@ -21,14 +47,15 @@ const AuthHeader = ({ pathname }: AuthHeaderType) => {
             style: {
               display: 'flex',
               alignItems: 'center',
-              justifyContent: 'center',
+              justifyContent: pathname === '/login'? "center" : "space-between",
               padding: '23px 0',
             },
           },
         }}
       >
+
         <Logo
-          path={pathname}
+          path={'/'}
           src={
             <>
               <StqRoboIcon />
@@ -37,44 +64,7 @@ const AuthHeader = ({ pathname }: AuthHeaderType) => {
           }
         />
 
-        {pathname !== '/login' && (
-          <Block>
-            <Button
-              kind="minimal"
-              disabled={pathname === '/login'}
-              onClick={() => Router.push('/login')}
-              overrides={{
-                BaseButton: {
-                  style: ({ $theme }) => {
-                    return {
-                      ...$theme.typography.font250,
-                      ':disabled': {
-                        backgroundColor: 'transparent',
-                      },
-                    };
-                  },
-                },
-              }}
-            >
-              Login
-            </Button>
-            <Button
-              disabled={pathname === '/login'}
-              onClick={() => Router.push('/login')}
-              overrides={{
-                BaseButton: {
-                  style: ({ $theme }) => {
-                    return {
-                      ...$theme.typography.font250,
-                    };
-                  },
-                },
-              }}
-            >
-              Join Free
-            </Button>
-          </Block>
-        )}
+        {pathname !== '/login' &&  <LoginButtons />}
 
       </Block>
     </Container>

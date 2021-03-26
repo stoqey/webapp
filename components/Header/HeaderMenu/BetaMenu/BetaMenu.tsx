@@ -11,13 +11,13 @@ const menuItems = [
   },
   {
     id: 2,
-    label: 'Invest',
-    path: '/invest',
+    label: 'Funds',
+    path: '/funds',
   },
   {
     id: 3,
-    label: 'Portfolio',
-    path: '/portfolio',
+    label: 'Trade',
+    path: '/trade',
   },
   // {
   //   id: 4,

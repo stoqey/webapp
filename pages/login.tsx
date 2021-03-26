@@ -24,24 +24,21 @@ const LoginPage: NextPage<{}> = () => {
 	return (
 		<>
 			<Head>
-				<title>Login/Signup | Stoqey</title>
-				<meta name="Description" content="Login/Signup | Stoqey" />
+				<title>Login | Stoqey</title>
+				<meta name="Description" content="Login | Stoqey" />
 			</Head>
 
-			<PageTitle style={{ textAlign: "center" }} backdrop={true} title={'Sup 👋, enter your phone'} subtitle={'to continue to Stoqey, new or existing investors'} />
+			<PageTitle style={{ textAlign: "center" }} backdrop={false} title={'Wha Ya Say? 🥴, enter your phone'} subtitle={'New and existing investors'} />
 
 			<Container>
 				<Block paddingTop={['0', '0', '0', '40px']}>
 					<Grid gridColumns={12} gridGutters={0} gridMargins={0}>
 						<Cell span={[12, 12, 12]}>
 							<div style={{ justifyContent: "center", display: 'flex', marginBottom: '50px' }}>
-								<Cell span={8}>
+								<Cell span={[12, 12, 8]}>
 									<PhoneLogin />
 								</Cell>
 							</div>
-						</Cell>
-						<Cell span={[12, 12, 12]}>
-							<StqChart />
 						</Cell>
 					</Grid>
 				</Block>

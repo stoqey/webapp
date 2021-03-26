@@ -49,6 +49,7 @@ const Payment = () => {
         <img src={require('assets/images/payment/visa.png')} alt="visa" />
       </Button>
 
+      {/* Success model */}
       <Modal
         onClose={() => {
           setVisible(false);
@@ -161,6 +162,7 @@ const Payment = () => {
           </Block>
         </ModalBody>
       </Modal>
+    
     </Block>
   );
 };

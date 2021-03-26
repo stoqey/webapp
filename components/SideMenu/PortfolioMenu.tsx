@@ -8,19 +8,19 @@ const menuItems = [
 	
 	{
 		id: 1,
-		label: 'Positions',
-		path: '/portfolio',
+		label: 'Trades',
+		path: '/trade',
 	},
 	{
 		id: 3,
 		label: 'Transactions',
 		path: '/history',
 	},
-	// {
-	// 	id: 4,
-	// 	label: 'Withdraw',
-	// 	path: '/withdraw',
-	// }
+	{
+		id: 4,
+		label: 'Orders',
+		path: '/order',
+	}
 ];
 
 type MenuProps = {

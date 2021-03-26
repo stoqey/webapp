@@ -6,6 +6,10 @@ import { Modal, ModalBody } from 'baseui/modal';
 import { PayPalButton } from "react-paypal-button-v2";
 import { processPayment } from './api';
 import { useApolloClient } from '@apollo/client';
+import { FaHandHoldingUsd } from 'react-icons/fa';
+import { StatefulPopover } from "baseui/popover";
+import { H6 } from 'baseui/typography';
+import ResultsDialog from '@/components/Modal/Result.dialog';
 
 interface Props {
   userId: string;
@@ -20,8 +24,8 @@ interface PayPalFormProps {
 
 const PayPalForm = (props: PayPalFormProps) => {
   const { userId, amount = 30, onSuccess } = props;
-  const clientId = process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID || "AeTaBjLsajBbU4SSXYu1DIH7MOaA6hNRcqKZuhOdfGz4YKv2TxNufduBnmlUN0TNwsrM_3VAnfN2MJew";
-  console.log('PayPal client id', { clientId, userId, amount });
+  const clientId = process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID;
+
   return (
     <PayPalButton
       options={{
@@ -38,145 +42,90 @@ const PayPalForm = (props: PayPalFormProps) => {
   );
 }
 
+interface State {
+  showResults: boolean;
+  message: string;
+  success: boolean;
+}
+
 const PayPalPayment = (props: Props) => {
   const { userId, amount } = props;
   const client = useApolloClient();
-  const [visible, setVisible] = useState(false);
+
+  const [state, setState] = useState<State>({
+    showResults: false,
+    message: "Error processing payment",
+    success: false,
+  });
 
 
-  const paymentApi = async (orderId: string) => await processPayment({
-    client,
-    args: { orderId, owner: userId, amount: +amount },
-    success: async (data: any) => {
-      console.log('successfuly processed payment', data);
-      setVisible(true); // show success
-    },
-    error: async (error: Error) => {
-      console.log('error submitting payment', error);
-    }
-  })
+  const paymentApi = async (orderId: string) => {
+    await processPayment({
+      client,
+      args: { orderId, owner: userId, amount: +amount },
+      success: async (data: any) => {
+        console.log('successfuly processed payment', data);
+        setState({
+          ...state,
+          message: `Successfuly processed payment of $${amount}`,
+          success: true,
+        });
+      },
+      error: async (error: Error) => {
+        console.log('error submitting payment', error);
+        setState({
+          ...state,
+          message: `Error processing payment of $${amount}`,
+          success: false,
+        });
+      }
+    });
+  }
 
+  const hide = () => {
+    setState({
+      ...state,
+      showResults: false
+    })
+  };
+
+  const { message, showResults, success } = state;
 
   return (
     <Block marginLeft="-16px" marginRight="-16px">
 
+      <StatefulPopover
+        content={() => (
+          <Block padding="15px" $style={{ textAlign: "center" }}>
+            <h3>Send any amount to support@stoqey.com, please add your account's phone number as the message</h3>
+          </Block>
+        )}
+        returnFocus
+        autoFocus
+      >
+        <Button
+          shape="square"
+          overrides={{
+            Root: {
+              style: () => {
+                return { width: "100%", fontSize: "20px", borderRadius: "5px", height: "55px", marginBottom: "17px" };
+              },
+            },
+          }}
+        >
+          <FaHandHoldingUsd size={30} style={{ margin: "10px" }} />
+          <h4>E-transfer</h4>
+        </Button>
+      </StatefulPopover>
       {/* PayPal form */}
       <PayPalForm {...props} onSuccess={paymentApi} />
 
-
       {/* Model success */}
-      <Modal
-        onClose={() => {
-          setVisible(false);
-        }}
-        closeable
-        isOpen={visible}
-        animate
-        size="default"
-        role="dialog"
-        unstable_ModalBackdropScroll={true}
-        overrides={{
-          Root: {
-            style: () => {
-              return { zIndex: 9999 };
-            },
-          },
-        }}
-      >
-        <ModalBody style={{ overflow: 'hidden' }}>
-          <Block
-            overrides={{
-              Block: {
-                style: {
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  textAlign: 'center',
-                  padding: '45px 30px',
-                },
-              },
-            }}
-          >
-            <IoIosCheckmarkCircleOutline
-              size="4em"
-              color="#3AA76D"
-              style={{ marginBottom: '20px' }}
-            />
-
-            <Block
-              as="h2"
-              overrides={{
-                Block: {
-                  style: ({ $theme }) => {
-                    return {
-                      ...$theme.typography.font750,
-                      color: $theme.colors.primary,
-                      marginBottom: '30px',
-                      '@media only screen and (max-width: 480px)': {
-                        ...$theme.typography.font650,
-                        marginBottom: '20px',
-                      },
-                    };
-                  },
-                },
-              }}
-            >
-              Order Placed
-            </Block>
-
-            <Block as="p" marginBottom="15px">
-              <Block
-                as="strong"
-                overrides={{
-                  Block: {
-                    style: ({ $theme }) => {
-                      return { color: $theme.colors.primary };
-                    },
-                  },
-                }}
-              >
-                Order ID :{' '}
-              </Block>
-              <Block as="span">xxxxx</Block>
-            </Block>
-
-            <Block as="p" marginBottom="15px">
-              <Block
-                as="strong"
-                overrides={{
-                  Block: {
-                    style: ({ $theme }) => {
-                      return { color: $theme.colors.primary };
-                    },
-                  },
-                }}
-              >
-                Delivery :{' '}
-              </Block>
-              <Block as="span">instant</Block>
-            </Block>
-
-            <Block as="p" marginBottom="15px">
-              <Block
-                as="strong"
-                overrides={{
-                  Block: {
-                    style: ({ $theme }) => {
-                      return { color: $theme.colors.primary };
-                    },
-                  },
-                }}
-              >
-                Thanks for your investing in Stoqey {' '}
-              </Block>
-              <Block as="span">
-                Now you can go to the portfolio screen and buy shares in Stoqey
-                Happy investing with Stoqey
-              </Block>
-            </Block>
-          </Block>
-        </ModalBody>
-      </Modal>
+      <ResultsDialog title={message} success={success} show={showResults} hide={hide}
+        content={[
+          { title: "Amount", value: +amount },
+        ]}
+      />
     </Block>
   );
 };

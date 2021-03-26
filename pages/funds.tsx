@@ -29,9 +29,10 @@ import { useUserInfo } from 'hooks/useUserInfo';
 import { useAppEvent } from 'hooks/useAppEvent';
 import { APPEVENTS } from '@/lib/AppEvent';
 import { niceDec } from 'utils/number';
+import CurrencyPill from '@/components/Currency';
 
-const TITLE = 'Invest';
-const SUB_TITLE = 'Invest in Stoqey';
+const TITLE = 'Add funds';
+const SUB_TITLE = 'Add money to your Stoqey account, then start trading';
 
 interface State {
 	step: number;
@@ -40,17 +41,17 @@ interface State {
 	inputQty: number;
 }
 
-const Checkout: NextPage<{}> = () => {
+const AddFunds: NextPage<{}> = () => {
 	const [state, setState] = useState<State>({
 		step: 1,
 		amountType: 'amount',
-		inputAmount: 5,
+		inputAmount: 6,
 		inputQty: 1,
 	});
 	const cartItems = useCartState('cartItems');
 
 	const { theme } = useThemeSwitcherCtx();
-	const user = useUserInfo();
+	const { user } = useUserInfo();
 
 	const qoute: MarketDataType = useAppEvent(APPEVENTS.CURRENCY);
 
@@ -71,25 +72,26 @@ const Checkout: NextPage<{}> = () => {
 
 	};
 
-	let component: React.ReactNode;
-	switch (step) {
-		case 1:
-			component = <CurrencyCart amount={totalPrice} products={cartItems} />;
-			break;
-		case 2:
-			component = <PayPalPayment amount={totalPrice} userId={user && user.user && user.user.id} />;
-			break;
-	}
+	// let component: React.ReactNode;
+	// switch (step) {
+	// 	case 1:
+	// 		component = <CurrencyCart amount={totalPrice} products={cartItems} />;
+	// 		break;
+	// 	case 2:
+	// 		component = <PayPalPayment amount={totalPrice} userId={user && user.user && user.user.id} />;
+	// 		break;
+	// }
 
 	return (
 		<>
 			<Head>
-				<title>{TITLE} | Stoqey.</title>
-				<meta name="Description" content={SUB_TITLE} />
+				<title>Funds | Stoqey</title>
+				<meta name="Description" content={"Funds | Stoqey"} />
 			</Head>
 
 			<PageTitle
-				title={TITLE}
+				style={{ textAlign: "center" }}
+				title={"Add funds"}
 				subtitle={SUB_TITLE}
 				backdrop={false}
 				bgColor={theme === THEME.light ? '#ffffff' : '#000000'}
@@ -97,7 +99,11 @@ const Checkout: NextPage<{}> = () => {
 
 			<Container>
 				<MenuStep className="step-menu">
-					<ListItem
+
+
+					<CurrencyPill amount={user && user.balance} name={'account balance'} />
+
+					{/* <ListItem
 						className={step === 1 ? 'active' : ''}
 						onClick={() => handleChange("step")(1)}
 					>
@@ -117,8 +123,8 @@ const Checkout: NextPage<{}> = () => {
 						>
 							Amount
 						</Block>
-					</ListItem>
-					{totalPrice > 5 && (
+					</ListItem> */}
+					{/* {totalPrice > 5 && (
 						<ListItem
 							aria-disabled="true"
 							className={step === 2 ? 'active' : ''}
@@ -142,7 +148,7 @@ const Checkout: NextPage<{}> = () => {
 								Payment
 						</Block>
 						</ListItem>
-					)}
+					)} */}
 
 				</MenuStep>
 
@@ -154,54 +160,42 @@ const Checkout: NextPage<{}> = () => {
 						gridMargins={0}
 					>
 						{step !== 3 && (
-							<Cell span={[12, 12, 4]}>
+							<Cell span={[12, 12, 5]}>
 								<Block paddingTop={['30px', '40px', '0']}>
 									<Title>Payment Details</Title>
-									<div style={{ display: "flex", justifyContent: "center" }}>
+									{/* <div style={{ display: "flex", justifyContent: "center" }}>
 										<Button disabled={step !== 1} size="compact" kind={amountType === "amount" ? "primary" : "secondary"} onClick={() => handleChange("amountType")("amount")}>Amount</Button>
 										<Button disabled={step !== 1} size="compact" kind={amountType === "qty" ? "primary" : "secondary"} onClick={() => handleChange("amountType")("qty")}>Quantity</Button>
-									</div>
-									{amountType === "amount" ? (
-										<Input
-											disabled={step !== 1}
-											type={"number"}
-											value={inputAmount}
-											onChange={(e: any) => handleChange("inputAmount")(+e.target.value)}
-											placeholder="Amount"
-											overrides={{
-												InputContainer: {
-													style: () => {
-														return { backgroundColor: 'transparent' };
-													},
+									</div> */}
+									{/* {amountType === "amount" ? ( */}
+									<Input
+										// disabled={step !== 1}
+										startEnhancer="$"
+										type={"number"}
+										value={inputAmount}
+										onChange={(e: any) => handleChange("inputAmount")(e.target.value)}
+										placeholder="Amount"
+										overrides={{
+											InputContainer: {
+												style: () => {
+													return { backgroundColor: 'transparent' };
 												},
-											}}
-										/>
-									) :
-										(
-											<Input
-												disabled={step !== 1}
-												type={"number"}
-												value={inputQty}
-												onChange={(e: any) => handleChange("inputQty")(+e.target.value)}
-												placeholder="Qty"
-												overrides={{
-													InputContainer: {
-														style: () => {
-															return { backgroundColor: 'transparent' };
-														},
-													},
-												}}
-											/>
-										)
-									}
+											},
+											Input: {
+												style: () => {
+													return { fontSize: "3em" }
+												}
+											}
+										}}
+									/>
 
 
 									<PriceList>
-										<PriceItem>
+										{/* <PriceItem>
 											<span>Per share</span> <span>$ {currencyPrice}</span>
-										</PriceItem>
+										</PriceItem> */}
 										<PriceItem>
-											<span>Total</span> <span>${totalPrice}</span>
+											<strong> <span>Total</span></strong>  <strong><span>${totalPrice}</span></strong>
 										</PriceItem>
 										{/* <PriceItem>
 											<span>Tax</span> <span> + 0.5%</span>
@@ -210,9 +204,9 @@ const Checkout: NextPage<{}> = () => {
 											<span>Total</span> <span> + 0.5%</span>
 										</PriceItem> */}
 									</PriceList>
-									{step === 1 && (
+									{/* {step === 1 && (
 										<Button
-										    disabled={totalPrice < 5}
+											disabled={totalPrice < 5}
 											size="large"
 											shape="pill"
 											onClick={() => handleChange("step")(2)}
@@ -220,21 +214,22 @@ const Checkout: NextPage<{}> = () => {
 												BaseButton: {
 													style: ({ $theme }) => {
 														return {
+															backgroundColor: 'goldenrod',
 															width: '100%',
-															...$theme.typography.font250,
+															...$theme.typography.font350,
 														};
 													},
 												},
 											}}
 										>
-											Next
+											Continue to payment
 										</Button>
-									)}
+									)} */}
 
 								</Block>
 							</Cell>
 						)}
-						<Cell span={[12, 12, 8]}>{component}</Cell>
+						<Cell span={[12, 12, 6]}><PayPalPayment amount={totalPrice} userId={user && user.id} /></Cell>
 					</Grid>
 				</Block>
 			</Container>
@@ -242,4 +237,4 @@ const Checkout: NextPage<{}> = () => {
 	);
 };
 
-export default Checkout;
+export default AddFunds;

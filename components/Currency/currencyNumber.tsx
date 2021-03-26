@@ -1,34 +1,26 @@
 import React from 'react';
-import { styled } from 'baseui';
-import { H2, H3, Paragraph1 } from 'baseui/typography';
+import { H3, Paragraph1 } from 'baseui/typography';
 import { niceDec } from 'utils/number';
+import { getTradeColor } from 'utils/colors';
 
 interface Props {
 	close: number;
 	change: number;
-	changePtc: number;
+	changePct: number;
 };
 export const CurrencyNumber = (props: Props) => {
-	const { close, change, changePtc } = props;
-
-	const changeStyleColor = change >= 0 ? 'green' : 'red';
-
-	const changeSign = change >= 0 ? '+' : '-';
+	const { close, change, changePct } = props;
+	const changeStyleColor = getTradeColor(changePct);
 
 	return (
 		<div style={{ display: 'flex', justifyContent: 'center' }}>
 			<div style={{ textAlign: 'center', padding: '10px' }}>
-
-				{/*  */}
 				<div style={{ display: 'flex' }}>
 					<H3>${niceDec(close)}</H3>
 					<Paragraph1>USD</Paragraph1>
 				</div>
 
-				{/* {change && ( */}
-					<p style={{ color: changeStyleColor }}>{changeSign}{niceDec(change)} ({niceDec(changePtc)}%)</p>
-				{/* )} */}
-
+				<p style={{ color: changeStyleColor }}>{niceDec(change)} ({changePct}%)</p>
 			</div>
 		</div>
 	)

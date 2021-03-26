@@ -31,7 +31,7 @@ export const CurrencyPill = (props: Props) => {
                 {/* Amount and wallet name */}
                 <Block padding="5px">
                     <p style={{ display: 'flex', justifyContent: 'center' }}>
-                        <H1Title>{niceDec(amount)}</H1Title>
+                        <H1Title $style={{ color: "orangered"}}>{niceDec(amount)}</H1Title>
                         {change && <h2 style={{ color: change > 0 ? "#3AA76D" : "red" }}>{change}</h2>}
                     </p>
                     <Subtitle style={{ textAlign: 'center' }}>{name}</Subtitle>

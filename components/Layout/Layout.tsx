@@ -1,17 +1,23 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { withRouter } from 'next/router';
-import Header from 'components/Header/Header';
 import Footer from 'components/Footer/Footer';
-import AuthHeader from 'components/Header/AuthHeader/AuthHeader';
 import AppWrapper, { ContentWrapper } from './Layout.styled';
 import { useThemeSwitcherCtx, THEME } from 'contexts/theme/theme.provider';
+
+import dynamic from 'next/dynamic';
+const LayoutHeader = dynamic(() => import('./Layout.header'), {
+  ssr: false,
+});
+
 
 const Layout: React.FunctionComponent<{ router?: any }> = ({
   router,
   children,
 }) => {
   const pathname = router.pathname;
+
   const { theme } = useThemeSwitcherCtx();
+
   let layoutBg = '#ffffff';
 
   if (theme === THEME.dark) {
@@ -34,12 +40,7 @@ const Layout: React.FunctionComponent<{ router?: any }> = ({
 
   return (
     <AppWrapper className={theme} style={{ backgroundColor: layoutBg }}>
-      {pathname === '/login' || pathname === '/login' || pathname === '/signup' ? (
-        <AuthHeader pathname={pathname} />
-      ) : (
-          <Header />
-        )}
-
+      <LayoutHeader />
       <ContentWrapper>{children}</ContentWrapper>
       <Footer />
     </AppWrapper>

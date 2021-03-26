@@ -35,7 +35,7 @@ const CurrencyCart = ({ products, amount }: CartType) => {
     <>
       <Header>
         <Title>Amount to invest</Title>
-        <Price>Total: $ {total}</Price>
+        <Price>Total: ${total}</Price>
       </Header>
       <>
         <CartProduct

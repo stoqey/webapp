@@ -23,7 +23,7 @@ const PhoneLogin = dynamic(() => import('containers/PhoneLogin'), {
 });
 
 const IndexPage: NextPage<{}> = ({ ...props }) => {
-	console.log('all props', props);
+	// console.log('all props', props);
 	const [loading, setLoading] = useState(false);
 	const [pricingPlan, setPricingPlan] = useState('Free');
 
@@ -40,10 +40,10 @@ const IndexPage: NextPage<{}> = ({ ...props }) => {
 		<>
 			<Head>
 				<title>Home | Stoqey</title>
-				<meta name="Description" content="Stoqey Beta" />
+				<meta name="Description" content="Home | Stoqey" />
 			</Head>
 
-			<PageTitle backdrop={false} title={'Beta'} />
+			{/* <PageTitle backdrop={false} title={'Beta'} /> */}
 
 			<Container>
 				<Block paddingTop={['0', '0', '0', '40px']}>
@@ -51,7 +51,7 @@ const IndexPage: NextPage<{}> = ({ ...props }) => {
 						<Cell span={[12, 12, 12]}>
 							<div style={{ justifyContent: "center", display: 'flex', marginBottom: '50px'}}>
 								<Cell span={8}>
-									<OrderBookContainer />
+									<OrderBookContainer showCurrency={false} />
 								</Cell>
 							</div>
 						</Cell>

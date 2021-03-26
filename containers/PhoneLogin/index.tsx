@@ -17,6 +17,7 @@ import "firebase/auth";
 import {
   FirebaseAuthProvider
 } from "@react-firebase/auth";
+import { H5 } from 'baseui/typography';
 
 
 export const PhoneLogin = () => {
@@ -63,7 +64,7 @@ export const PhoneLogin = () => {
 
       // save login data in client browser
       await db.updateAuthItem(data);
-      await router.push('/portfolio');
+      await router.push('/trade');
       // send send user to home
     }
   });
@@ -130,29 +131,35 @@ export const PhoneLogin = () => {
               onCountryChange={({ option }) => setCountry(option as any)}
               text={phone}
               onTextChange={e => setPhone(e.currentTarget.value)}
-              size={SIZE.default}
+              size={SIZE.large}
               clearable
               positive={isValid}
               error={!isValid}
             />
           ) : <PinCode
-              values={codes}
-              onChange={({ values }) => {
-                setCodes(values)
-                const allCodesStatus = values.filter(c => !isEmpty(c))
-                if (allCodesStatus.length >= 6 && !loading) {
-                  setLoading(true);
-                  codeVerification(values.join("")); // run verification code
-                }
-              }}
-            />
+            size="large"
+            values={codes}
+            onChange={({ values }) => {
+              setCodes(values)
+              const allCodesStatus = values.filter(c => !isEmpty(c))
+              if (allCodesStatus.length >= 6 && !loading) {
+                setLoading(true);
+                codeVerification(values.join("")); // run verification code
+              }
+            }}
+          />
           }
 
           {isEmpty(verificationId) && (
             <Button
               size="large"
               shape="pill"
+              // disabled={!isValid}
               onClick={() => {
+                if (!isValid) {
+                  // show error
+                  return;
+                }
                 const appVerifier = new firebase.auth.RecaptchaVerifier(captchaRef.current, {
                   size: 'invisible',
                   callback: () => { },
@@ -170,14 +177,18 @@ export const PhoneLogin = () => {
                 BaseButton: {
                   style: ({ $theme }) => {
                     return {
-                      margin: '15px',
+                      opacity: isValid ? 1 : 0.7,
+                      margin: '20px',
                       width: '60%',
-                      ...$theme.typography.font450,
+                      ...$theme.typography.font550,
+                      backgroundImage: `-webkit-linear-gradient(29deg , rgb(255, 148, 147) 0%, rgb(255, 120, 162) 100%)`
                     };
                   },
                 },
               }}
-            > Send code </Button>
+            >
+              Send code
+            </Button>
           )}
 
         </div>
