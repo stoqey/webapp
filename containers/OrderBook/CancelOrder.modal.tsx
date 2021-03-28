@@ -1,6 +1,6 @@
 import React from 'react';
 import { Block } from 'baseui/block';
-import {Toast, KIND} from 'baseui/toast';
+import { Toast, KIND, toaster } from 'baseui/toast';
 import { Modal, ModalBody } from 'baseui/modal';
 import { useApolloClient } from '@apollo/client';
 import { OrderType } from '@stoqey/client-graphql';
@@ -8,6 +8,7 @@ import { Button } from 'baseui/button';
 import { MdWarning } from 'react-icons/md';
 import { H6, Paragraph2 } from 'baseui/typography';
 import { cancelOrderMutation } from './order.api';
+import Toaster from '@/components/UiElements/Toaster/Toaster';
 
 interface Props {
   show: boolean;
@@ -19,13 +20,27 @@ interface Props {
 
 
 const CancelOrder = (props: Props) => {
-  const { show, hide, order, onError, onSuccess } = props;
+  const { show, hide, order } = props;
 
   const orderId = order && order.id;
   const qty = order && order.qty;
   const remainingQty = (qty || 0) - (order && order.filledQty || 0);
 
   const client = useApolloClient();
+
+  let toastKey = null;
+
+  const onSuccess = (message: string) => {
+    toastKey = toaster.positive(<>{message}</>, {
+      autoHideDuration: 4000
+    })
+  }
+
+  const onError = (message: string) => {
+    toastKey = toaster.negative(<>{message}</>, {
+      autoHideDuration: 5000
+    })
+  }
 
   const cancelTheOrderApi = async () => {
     await cancelOrderMutation({
@@ -43,6 +58,7 @@ const CancelOrder = (props: Props) => {
 
   return (
     <>
+      <Toaster toastKey={toastKey} />
       {/* Model success */}
       <Modal
         onClose={() => hide()}
