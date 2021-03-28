@@ -1,12 +1,12 @@
 import React, { Fragment } from 'react';
 import { NextPage } from 'next';
 import { Block } from 'baseui/block';
-import { StyledTable, StyledBodyCell } from 'baseui/table-grid';
+import { StyledTable } from 'baseui/table-grid';
 import { MdCloudDownload } from 'react-icons/md';
 import { OrderType } from '@stoqey/client-graphql';
 import SvgIcon from 'components/UiElements/SvgIcon/SvgIcon';
 import { TextButton } from 'components/PageStyles/Settings.styled';
-import { StyledTableHeadAlt } from 'components/PageStyles/Apps.styled';
+import { StyledTableHeadAlt, StyledTableBodyCell } from 'components/PageStyles/Apps.styled';
 import { isEmpty } from 'lodash';
 import { useUserInfo } from 'hooks/useUserInfo';
 import { Button } from 'baseui/button';
@@ -51,7 +51,7 @@ const OrdersTable: NextPage<Props> = ({ orders, userId }: Props) => {
 
                         return (
                             <Fragment key={index}>
-                                <StyledBodyCell $striped={striped}>
+                                <StyledTableBodyCell $striped={striped}>
                                     <Tag
                                         closeable={false}
                                         variant="outlined"
@@ -59,25 +59,26 @@ const OrdersTable: NextPage<Props> = ({ orders, userId }: Props) => {
                                     >
                                         {statusText}
                                     </Tag>
-                                </StyledBodyCell>
+                                </StyledTableBodyCell>
 
-                                <StyledBodyCell $striped={striped}>
+                                <StyledTableBodyCell $striped={striped}>
                                     {item.action} {"->"} {item.type}
-                                </StyledBodyCell>
+                                </StyledTableBodyCell>
 
-                                <StyledBodyCell $striped={striped}>
+                                <StyledTableBodyCell $striped={striped}>
                                     {item.qty} / {item.filledQty}
-                                </StyledBodyCell>
+                                </StyledTableBodyCell>
 
                                 {isMine && !cannotBeCanceled ? (
-                                    <StyledBodyCell $striped={striped}>
-                                        <Button shape="round" kind="primary" onClick={() => { }}>
+                                    <StyledTableBodyCell $striped={striped}>
+                                        <Button size="default" shape="round" kind="secondary" onClick={() => { }}>
                                             <ImCross color="red" />
                                         </Button>
-                                    </StyledBodyCell>
+                                    </StyledTableBodyCell>
                                 ) : (
-                                    <StyledBodyCell $striped={striped}>
-                                    </StyledBodyCell>
+                                    <StyledTableBodyCell $striped={striped}>
+                                        
+                                    </StyledTableBodyCell>
                                 )}
 
                             </Fragment>

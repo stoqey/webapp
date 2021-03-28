@@ -29,8 +29,8 @@ export const StyledTableHeadAlt = withStyle(StyledHeadCell, ({ $theme }) => ({
 export const StyledTableBodyCell = withStyle(StyledBodyCell, (props: any) => ({
   display: 'inline-flex',
   alignItems: 'center',
-  marginTop: '10px',
-  marginBottom: '10px',
+  marginTop: '5px',
+  marginBottom: '5px',
   cursor: props.$isCursor === true ? 'pointer' : 'default',
   justifyContent: props.$isCenter === true ? 'center' : 'flex-start',
 }));
