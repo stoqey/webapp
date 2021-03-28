@@ -11,19 +11,20 @@ import StqRoboIcon, { StoqeyWordsLogo } from '../logo/icon';
 import { Paragraph1, Paragraph2, Paragraph3, Paragraph4 } from 'baseui/typography';
 import SvgIcon from '../UiElements/SvgIcon/SvgIcon';
 import Logo from '../UiElements/Logo/Logo';
-import { FaCircle, FaGithub, FaInstagram, FaLinkedinIn, FaTwitter } from 'react-icons/fa';
+import { FaCircle, FaGithub, FaInstagram, FaLinkedinIn, FaRedditAlien, FaTwitter } from 'react-icons/fa';
 import { RiLightbulbFlashFill } from 'react-icons/ri';
 import { Button } from 'baseui/button';
 
 const Footer: React.FC<{}> = () => {
 
   const { theme, setTheme } = useThemeSwitcherCtx();
-
+  // https://www.reddit.com/r/stoqey/
   const icons = [
     { name: 'Github', Icon: FaGithub, link: 'https://github.com/stoqey' },
-    { name: 'Twitter', Icon: FaTwitter, link: 'https://twitter.com/stoqey_' },
-    { name: 'LinkedIn', Icon: FaLinkedinIn, link: 'https://linkedin.com/company/stoqey' },
+    // { name: 'Twitter', Icon: FaTwitter, link: 'https://twitter.com/stoqey_' },
+    // { name: 'LinkedIn', Icon: FaLinkedinIn, link: 'https://linkedin.com/company/stoqey' },
     { name: 'Instagram', Icon: FaInstagram, link: 'https://instagram.com/stoqey' },
+    { name: 'Reddit', Icon: FaRedditAlien, link: 'https://www.reddit.com/r/stoqey/' },
   ];
 
   return (
