@@ -23,32 +23,30 @@ import {
 
 interface Props {
   show: boolean;
-  hide: () => void;
-  portfolio: PortfolioType;
+  hide?: () => void;
+  orderId?: string;
   onError?: (message: string) => void;
   onSuccess?: (message: string) => void;
 };
 
 
 const CancelOrder = (props: Props) => {
-  const { show, hide, portfolio, onError, onSuccess } = props;
-
-  const portfolioId = portfolio && portfolio.id;
+  const { show, hide, orderId, onError, onSuccess } = props;
 
   const client = useApolloClient();
 
-  const closePortfolio  = async () => {
-    await closePortfolioMutation({
-      client,
-      args: { id: portfolioId },
-      success: async (d: any) => {
-        onSuccess(`Successfully close position`)
-        hide();
-      },
-      error: async (e: Error) => {
-        onError(e && e.message)
-      },
-    })
+  const cancelTheOrderApi  = async () => {
+    // await closePortfolioMutation({
+    //   client,
+    //   args: { id: portfolioId },
+    //   success: async (d: any) => {
+    //     onSuccess(`Successfully close position`)
+    //     hide();
+    //   },
+    //   error: async (e: Error) => {
+    //     onError(e && e.message)
+    //   },
+    // })
   }
 
   return (
@@ -120,7 +118,7 @@ const CancelOrder = (props: Props) => {
               <p style={{ display: 'flex' }}>
                 <Button
                   size="default"
-                  onClick={() => closePortfolio()}
+                  onClick={() => cancelTheOrderApi()}
                   overrides={{
                     BaseButton: {
                       style: ({ $theme }) => {

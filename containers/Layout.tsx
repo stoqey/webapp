@@ -1,6 +1,7 @@
 import React from 'react';
 import { Provider as StyletronProvider } from 'styletron-react';
 import { BaseProvider, LightTheme, DarkTheme } from 'baseui';
+import { ToasterContainer } from "baseui/toast";
 import dynamic from 'next/dynamic';
 import { withApollo } from '@apollo/client/react/hoc';
 import Layout from 'components/Layout/Layout';
@@ -18,7 +19,7 @@ interface Props {
 function MainLayout(props: Props) {
     const { children, embed } = props;
     return (
-        <>
+        <ToasterContainer>
             {/* Persistant websocket */}
             <WebsocketSubscription />
             {!embed && <AuthChecker />}
@@ -29,7 +30,7 @@ function MainLayout(props: Props) {
                     </Layout>
                 ) : ({ children })}
             </CartProvider>
-        </>
+        </ToasterContainer>
     );
 }
 

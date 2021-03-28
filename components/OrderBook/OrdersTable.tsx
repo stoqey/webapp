@@ -17,8 +17,9 @@ const stoqeyLogo = require('assets/images/STQ.png');
 interface Props {
     orders: OrderType[];
     userId?: string;
+    onCancelOrder?: (orderId: string) => Promise<any>;
 }
-const OrdersTable: NextPage<Props> = ({ orders, userId }: Props) => {
+const OrdersTable: NextPage<Props> = ({ orders, userId, onCancelOrder }: Props) => {
     return (
         <>
             <Block
@@ -32,7 +33,7 @@ const OrdersTable: NextPage<Props> = ({ orders, userId }: Props) => {
                     <StyledTableHeadAlt>Qty</StyledTableHeadAlt>
                     <StyledTableHeadAlt></StyledTableHeadAlt>
                     {!isEmpty(orders) && orders.map((item: OrderType, index) => {
-                        const { clientId: owner, filledQty, qty, canceled } = item;
+                        const { clientId: owner, filledQty, qty, canceled, id: orderId } = item;
                         const isMine = owner === userId;
                         const isFilled = filledQty === qty;
                         const striped = index % 2 === 0;
@@ -71,7 +72,7 @@ const OrdersTable: NextPage<Props> = ({ orders, userId }: Props) => {
 
                                 {isMine && !cannotBeCanceled ? (
                                     <StyledTableBodyCell $striped={striped}>
-                                        <Button size="default" shape="round" kind="secondary" onClick={() => { }}>
+                                        <Button size="default" shape="round" kind="secondary" onClick={() => onCancelOrder(orderId)}>
                                             <ImCross color="red" />
                                         </Button>
                                     </StyledTableBodyCell>
