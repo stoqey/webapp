@@ -1,7 +1,7 @@
 import { ApolloClient } from '@apollo/react-hooks';
 import isEmpty from 'lodash/isEmpty';
 import _get from 'lodash/get';
-import { ResType, ActionType, PortfolioType, GET_MY_PORTFOLIOS_PAGINATION, CLOSE_PORTFOLIO_MUTATION, START_PORTFOLIO_MUTATION, CREATE_ORDER_MUTATION, TradingStatusType, IOrderType } from '@stoqey/client-graphql';
+import { ResType, ActionType, PortfolioType, GET_MY_PORTFOLIOS_PAGINATION, CLOSE_PORTFOLIO_MUTATION, START_PORTFOLIO_MUTATION, CREATE_ORDER_MUTATION, TradingStatusType, IOrderType, CANCEL_ORDER_MUTATION} from '@stoqey/client-graphql';
 import AsyncStorageDB from '@/lib/AsyncStorageDB';
 
 export const createOrderMutation = async ({
@@ -89,7 +89,7 @@ export const cancelOrderMutation = async ({
     };
     
     const { data: dataResponse }: any = await client.mutate({
-      mutation: CLOSE_PORTFOLIO_MUTATION,
+      mutation: CANCEL_ORDER_MUTATION,
       variables: argsToPass,
       fetchPolicy: 'no-cache',
     });

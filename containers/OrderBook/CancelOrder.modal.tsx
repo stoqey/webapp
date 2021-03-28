@@ -1,28 +1,13 @@
-import React, { useState } from 'react';
-import { IoIosCheckmarkCircleOutline } from 'react-icons/io';
+import React from 'react';
 import { Block } from 'baseui/block';
 import {Toast, KIND} from 'baseui/toast';
 import { Modal, ModalBody } from 'baseui/modal';
 import { useApolloClient } from '@apollo/client';
-import { toaster, ToasterContainer } from "baseui/toast";
-import { Grid, Cell } from 'baseui/layout-grid';
-import { MarketDataType, OrderType, PortfolioType } from '@stoqey/client-graphql';
-import { FaShoppingBag, FaMapMarkerAlt, FaMoneyCheckAlt, FaMoneyBillWave, FaPaypal, FaCreditCard, FaPiggyBank, FaBitcoin } from 'react-icons/fa';
+import { OrderType } from '@stoqey/client-graphql';
 import { Button } from 'baseui/button';
-import { Input } from 'baseui/input';
-import Container from 'components/UiElements/Container/Container';
-import PageTitle from 'components/UiElements/PageTitle/PageTitle';
-import CurrencyCart from 'containers/Shop/CurrencyCart';
-import PayPalPayment from 'containers/Shop/PayPalPayment';
-import {
-  MenuStep,
-  ListItem,
-  Title,
-  PriceList,
-  PriceItem,
-} from 'components/PageStyles/Checkout.styled';
 import { MdWarning } from 'react-icons/md';
-import { H5, H6, Paragraph2, Paragraph4 } from 'baseui/typography';
+import { H6, Paragraph2 } from 'baseui/typography';
+import { cancelOrderMutation } from './order.api';
 
 interface Props {
   show: boolean;
@@ -36,38 +21,24 @@ interface Props {
 const CancelOrder = (props: Props) => {
   const { show, hide, order, onError, onSuccess } = props;
 
+  const orderId = order && order.id;
   const qty = order && order.qty;
   const remainingQty = (qty || 0) - (order && order.filledQty || 0);
 
   const client = useApolloClient();
 
   const cancelTheOrderApi = async () => {
-
-    toaster.info(
-      <>
-        Some message
-      </>,
-      {
-        onClose: () => console.log("Toast closed."),
-        overrides: {
-          InnerContainer: {
-            style: { width: "100%" }
-          }
-        }
-      }
-    );
-
-    // await closePortfolioMutation({
-    //   client,
-    //   args: { id: portfolioId },
-    //   success: async (d: any) => {
-    //     onSuccess(`Successfully close position`)
-    //     hide();
-    //   },
-    //   error: async (e: Error) => {
-    //     onError(e && e.message)
-    //   },
-    // })
+    await cancelOrderMutation({
+      client,
+      args: { id: orderId },
+      success: async (d: any) => {
+        onSuccess(`Successfully canceled order`)
+        hide();
+      },
+      error: async (e: Error) => {
+        onError(e && e.message)
+      },
+    })
   }
 
   return (
