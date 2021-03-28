@@ -13,7 +13,7 @@ import { toaster } from 'baseui/toast';
 import applicationsPageData from '../../data/applicationsPage';
 import TradeEditor from './TradeEditor.modal';
 import ClosePortfolio from './ClosePortfolio.modal';
-import { ImCross} from 'react-icons/im';
+import { ImCross } from 'react-icons/im';
 import { getPortfoliosPaginationApi } from './portfolios.api';
 import { useApolloClient } from '@apollo/client';
 import Toaster from '@/components/UiElements/Toaster/Toaster';
@@ -180,7 +180,7 @@ const Portfolio: NextPage<{}> = () => {
 					showEditor: false,
 				});
 			}} show={true} hide={() => setShowEditor(false)} />}
-			
+
 
 			{/* Model success */}
 			<ResultsDialog title={message} success={success} show={showResults} hide={() => changeState("showResults")(false)}
@@ -234,15 +234,16 @@ const Portfolio: NextPage<{}> = () => {
 			{/* Portfolios */}
 			{portfolios.map((item: PortfolioItem) => {
 				const { action, size } = item
-				const profitPct = getProfitFromTrade(item.action, item.averageCost, price) / 100;
+				const profitPct = getProfitFromTrade(item.action, item.averageCost, price);
 				const amountSpent = item.size * item.averageCost;
-				const profitAmount = profitPct * amountSpent;
+				const amountProfitIfSold = item.size * price;
+				const profitAmount = amountProfitIfSold - amountSpent;
 
-				const pnL = amountSpent + profitAmount;
+				const pnL = profitAmount;
 
 				const closeProps: TradeEditorState = {
 					steps: 0,
-					action: action === ActionType.BUY? ActionType.SELL : ActionType.BUY,
+					action: action === ActionType.BUY ? ActionType.SELL : ActionType.BUY,
 					type: IOrderType.MARKET,
 					price: 0,
 					qty: size,
@@ -278,49 +279,31 @@ const Portfolio: NextPage<{}> = () => {
 						/>
 
 						{/* Average cost / shares */}
-						<div>
+						<div style={{ textAlign: "center" }}>
 							<H6>${item.averageCost}</H6>
 							<Paragraph2>{item.size} shares</Paragraph2>
 						</div>
 
 						{/* Amount spent / Profit & Loss */}
-						<div>
-							<H6>${niceDec(amountSpent)}</H6>
+						{/* <div>
+							<H6> {item.size} * {item.averageCost} = ${niceDec(amountSpent)}</H6>
 							<Paragraph2 $style={{ color: getTradeColor(profitPct) }}> ${niceDec(pnL)} </Paragraph2>
-						</div>
+						</div> */}
 
 						{/* Percentage / Profit Amount */}
-						<div>
-							<H6>{niceDec(profitPct)}%</H6>
+						<div style={{ textAlign: "center" }}>
+							<H6 $style={{ color: getTradeColor(profitAmount) }}>{niceDec(profitPct)}%</H6>
 							<Paragraph3 $style={{ color: getTradeColor(profitAmount) }}>${niceDec(profitAmount)}</Paragraph3>
 						</div>
 
 						{/* Close trade */}
 						<div>
-							<Button shape="round" $style={{ backgroundColor: 'blueviolet' }} 
-							onClick={() => closeThisPosition()}>
+							<Button shape="round" $style={{ backgroundColor: 'blueviolet' }}
+								onClick={() => closeThisPosition()}>
 								<ImCross />
 							</Button>
 							<h4> </h4>
 						</div>
-						{/* <Button
-						onClick={() => {
-							setSelectedPortfolio(item);
-							setShowClose(true);
-						}}
-						kind="secondary"
-						shape="pill"
-						overrides={{
-							BaseButton: {
-								style: ({ $theme }) => {
-									return {
-										...$theme.typography.font250,
-										minWidth: '82px',
-									};
-								},
-							},
-						}}
-					>Close position</Button> */}
 					</SpaceBetween>
 				)
 			}
