@@ -18,11 +18,11 @@ import { Button } from 'baseui/button';
 const Footer: React.FC<{}> = () => {
 
   const { theme, setTheme } = useThemeSwitcherCtx();
-  // https://www.reddit.com/r/stoqey/
+  
   const icons = [
     { name: 'Reddit', Icon: FaRedditAlien, link: 'https://www.reddit.com/r/stoqey/' },
     { name: 'Github', Icon: FaGithub, link: 'https://github.com/stoqey' },
-    // { name: 'Twitter', Icon: FaTwitter, link: 'https://twitter.com/stoqey_' },
+    { name: 'Twitter', Icon: FaTwitter, link: 'https://twitter.com/stoqey_' },
     { name: 'Instagram', Icon: FaInstagram, link: 'https://instagram.com/stoqey' },
     { name: 'LinkedIn', Icon: FaLinkedinIn, link: 'https://linkedin.com/company/stoqey' },
     
