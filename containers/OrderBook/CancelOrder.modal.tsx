@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { IoIosCheckmarkCircleOutline } from 'react-icons/io';
 import { Block } from 'baseui/block';
+import {Toast, KIND} from 'baseui/toast';
 import { Modal, ModalBody } from 'baseui/modal';
 import { useApolloClient } from '@apollo/client';
 import { toaster, ToasterContainer } from "baseui/toast";
@@ -174,6 +175,10 @@ const CancelOrder = (props: Props) => {
                 > ❌ Dismiss </Button>
               </p>
             </Block>
+
+            <div style={{ padding: "10px" }}>
+              <Toast kind={KIND.positive}>Positive notification</Toast>
+            </div>
 
           </Block>
         </ModalBody>
