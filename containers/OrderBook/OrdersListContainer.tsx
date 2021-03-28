@@ -11,24 +11,24 @@ import CancelOrder from './CancelOrder.modal';
 
 interface State {
 	show: boolean;
-	selectedId: string;
+	selectedOrder: OrderType;
 }
 
 const OrdersListContainer: NextPage<{}> = () => {
 	const orders: OrderType[] = useAppEvent(APPEVENTS.ORDERS);
 
-	const [state, setState] = useState<State>({ show: false, selectedId: null });
+	const [state, setState] = useState<State>({ show: false, selectedOrder: null });
 	const { user } = useUserInfo();
-	const { show, selectedId } = state;
+	const { show, selectedOrder } = state;
 	const userId = user && user.id;
 
 	return (
 		<>
-			<CancelOrder show={show} orderId={selectedId} hide={() => setState({ ...state, show: false })} />
-			<OrdersTable orders={orders} userId={userId} onCancelOrder={async (orderId) => {
+			<CancelOrder show={show} order={selectedOrder} hide={() => setState({ ...state, show: false })} />
+			<OrdersTable orders={orders} userId={userId} onCancelOrder={async (order) => {
 				setState({
 					show: true,
-					selectedId: orderId,
+					selectedOrder: order,
 				});
 			}} />
 		</>

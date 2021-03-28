@@ -3,9 +3,9 @@ import { IoIosCheckmarkCircleOutline } from 'react-icons/io';
 import { Block } from 'baseui/block';
 import { Modal, ModalBody } from 'baseui/modal';
 import { useApolloClient } from '@apollo/client';
-
+import { toaster, ToasterContainer } from "baseui/toast";
 import { Grid, Cell } from 'baseui/layout-grid';
-import { MarketDataType, PortfolioType } from '@stoqey/client-graphql';
+import { MarketDataType, OrderType, PortfolioType } from '@stoqey/client-graphql';
 import { FaShoppingBag, FaMapMarkerAlt, FaMoneyCheckAlt, FaMoneyBillWave, FaPaypal, FaCreditCard, FaPiggyBank, FaBitcoin } from 'react-icons/fa';
 import { Button } from 'baseui/button';
 import { Input } from 'baseui/input';
@@ -20,22 +20,42 @@ import {
   PriceList,
   PriceItem,
 } from 'components/PageStyles/Checkout.styled';
+import { MdWarning } from 'react-icons/md';
+import { H5, H6, Paragraph2, Paragraph4 } from 'baseui/typography';
 
 interface Props {
   show: boolean;
   hide?: () => void;
-  orderId?: string;
+  order: OrderType;
   onError?: (message: string) => void;
   onSuccess?: (message: string) => void;
 };
 
 
 const CancelOrder = (props: Props) => {
-  const { show, hide, orderId, onError, onSuccess } = props;
+  const { show, hide, order, onError, onSuccess } = props;
+
+  const qty = order && order.qty;
+  const remainingQty = (qty || 0) - (order && order.filledQty || 0);
 
   const client = useApolloClient();
 
-  const cancelTheOrderApi  = async () => {
+  const cancelTheOrderApi = async () => {
+
+    toaster.info(
+      <>
+        Some message
+      </>,
+      {
+        onClose: () => console.log("Toast closed."),
+        overrides: {
+          InnerContainer: {
+            style: { width: "100%" }
+          }
+        }
+      }
+    );
+
     // await closePortfolioMutation({
     //   client,
     //   args: { id: portfolioId },
@@ -82,9 +102,9 @@ const CancelOrder = (props: Props) => {
               },
             }}
           >
-            <IoIosCheckmarkCircleOutline
+            <MdWarning
               size="4em"
-              color="#3AA76D"
+              color="red"
               style={{ marginBottom: '20px' }}
             />
 
@@ -106,17 +126,20 @@ const CancelOrder = (props: Props) => {
                 },
               }}
             >
-              Close position
+              Cancel order
             </Block>
 
             {/* Confirm amount for trade */}
             <Block paddingTop={['30px', '40px', '0']}>
               {/* Confirm  amount */}
-              <Title>{`You're about to close position on ${'100'} of STQ`}</Title>
+              <H6>{`You're about to cancel a STQ order of ${qty} shares`}</H6>
+              <Paragraph2>{`the remaining ${remainingQty} unsold shares will not be affected`}</Paragraph2>
 
               {/* Confirm */}
-              <p style={{ display: 'flex' }}>
+              <p style={{ display: 'flex', padding: "20px" }}>
                 <Button
+                  isLoading={true}
+                  shape="pill"
                   size="default"
                   onClick={() => cancelTheOrderApi()}
                   overrides={{
@@ -129,11 +152,12 @@ const CancelOrder = (props: Props) => {
                       },
                     },
                   }}
-                > Continue </Button>
+                > ✅ Submit </Button>
 
                 <div style={{ width: '10px' }} />
 
                 <Button
+                  shape="pill"
                   kind="secondary"
                   size="default"
                   onClick={() => hide()}
@@ -147,7 +171,7 @@ const CancelOrder = (props: Props) => {
                       },
                     },
                   }}
-                > Cancel </Button>
+                > ❌ Dismiss </Button>
               </p>
             </Block>
 
