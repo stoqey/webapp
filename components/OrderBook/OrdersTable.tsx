@@ -23,45 +23,53 @@ const OrdersTable: NextPage<Props> = ({ orders, userId }: Props) => {
         <>
             <Block
                 paddingTop={['10px', '20px', '30px', '0']}
-                overrides={{ Block: { style: { minHeight: '150px' } } }}
+                overrides={{ Block: { style: { minHeight: '150px', textAlign: "center" } } }}
             >
 
-                <StyledTable $gridTemplateColumns="max-content auto auto auto max-content">
+                <StyledTable $gridTemplateColumns="max-content auto auto max-content">
                     <StyledTableHeadAlt>State</StyledTableHeadAlt>
-                    <StyledTableHeadAlt>Action</StyledTableHeadAlt>
-                    <StyledTableHeadAlt>PriceType</StyledTableHeadAlt>
+                    <StyledTableHeadAlt>Action {"->"} PriceType </StyledTableHeadAlt>
                     <StyledTableHeadAlt>Qty</StyledTableHeadAlt>
                     <StyledTableHeadAlt></StyledTableHeadAlt>
-                    {!isEmpty(orders) && orders.map((item, index) => {
-                        const { clientId: owner, filledQty, qty } = item;
+                    {!isEmpty(orders) && orders.map((item: OrderType, index) => {
+                        const { clientId: owner, filledQty, qty, canceled } = item;
                         const isMine = owner === userId;
                         const isFilled = filledQty === qty;
                         const striped = index % 2 === 0;
+
+                        const [colour, statusText] = (() => {
+                            if (canceled) {
+                                return ["negative", "CANCELED"]
+                            }
+                            if (isFilled) {
+                                return ["positive", "SUCCESS"]
+                            }
+                            return ["warning", "LIVE"];
+                        })();
+
+                        const cannotBeCanceled = isFilled || canceled;
+
                         return (
                             <Fragment key={index}>
                                 <StyledBodyCell $striped={striped}>
                                     <Tag
                                         closeable={false}
                                         variant="outlined"
-                                        kind="positive"
+                                        kind={colour}
                                     >
-                                        success
+                                        {statusText}
                                     </Tag>
                                 </StyledBodyCell>
 
                                 <StyledBodyCell $striped={striped}>
-                                    {item.action}
-                                </StyledBodyCell>
-
-                                <StyledBodyCell $striped={striped}>
-                                    {item.type}
+                                    {item.action} {"->"} {item.type}
                                 </StyledBodyCell>
 
                                 <StyledBodyCell $striped={striped}>
                                     {item.qty} / {item.filledQty}
                                 </StyledBodyCell>
 
-                                {isMine ? (
+                                {isMine && !cannotBeCanceled ? (
                                     <StyledBodyCell $striped={striped}>
                                         <Button shape="round" kind="primary" onClick={() => { }}>
                                             <ImCross color="red" />
@@ -69,9 +77,6 @@ const OrdersTable: NextPage<Props> = ({ orders, userId }: Props) => {
                                     </StyledBodyCell>
                                 ) : (
                                     <StyledBodyCell $striped={striped}>
-                                        <Button shape="round" kind="secondary" onClick={() => { }}>
-                                            ✅
-                                        </Button>
                                     </StyledBodyCell>
                                 )}
 

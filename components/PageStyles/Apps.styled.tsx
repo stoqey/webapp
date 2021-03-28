@@ -22,6 +22,7 @@ export const StyledTableHead = withStyle(StyledHeadCell, ({ $theme }) => ({
 
 export const StyledTableHeadAlt = withStyle(StyledHeadCell, ({ $theme }) => ({
   alignItems: 'center',
+  justifyContent: 'center',
   ...$theme.typography.font250,
 }));
 
