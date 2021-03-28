@@ -16,15 +16,21 @@ interface State {
 	selectedOrder: OrderType;
 }
 
-const OrdersListContainer: NextPage<{}> = () => {
-	const orders: OrderType[] = useAppEvent(APPEVENTS.ORDERS);
+interface Props {
+	filterMine?: boolean;
+}
 
+
+const OrdersListContainer = (props: Props) => {
+	const allOrders: OrderType[] = useAppEvent(APPEVENTS.ORDERS) || [];
+	const { filterMine } = props;
 	const [state, setState] = useState<State>({ show: false, selectedOrder: null });
 	const { user } = useUserInfo();
 	const { show, selectedOrder } = state;
 	const userId = user && user.id;
 
-	
+	const orders = filterMine && !isEmpty(allOrders) ? allOrders.filter(i => i.clientId === userId) : allOrders;
+
 
 	return (
 		<>

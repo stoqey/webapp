@@ -28,6 +28,7 @@ import { Select } from 'baseui/select';
 import { isEmpty } from 'lodash';
 import ResultsDialog from '@/components/Modal/Result.dialog';
 import { TradeEditorState } from './TradeEditor.modal'
+import OrdersListContainer from 'containers/OrderBook/OrdersListContainer';
 const stoqeyLogo = require('assets/images/STQ.png');
 
 
@@ -355,6 +356,8 @@ const Portfolio: NextPage<{}> = () => {
 					</div>
 				</Button>
 			</Block>
+		    
+			<OrdersListContainer filterMine />
 		</>
 	);
 };
