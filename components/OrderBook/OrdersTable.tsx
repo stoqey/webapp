@@ -11,61 +11,68 @@ import { isEmpty } from 'lodash';
 import { useUserInfo } from 'hooks/useUserInfo';
 import { Button } from 'baseui/button';
 import { ImCross } from 'react-icons/im';
+import { Tag } from 'baseui/tag';
 const stoqeyLogo = require('assets/images/STQ.png');
 
 interface Props {
-    orders: OrderType[]
+    orders: OrderType[];
+    userId?: string;
 }
-const OrdersTable: NextPage<Props> = ({ orders }: Props) => {
-    const { user } = useUserInfo();
-    const userId = user && user.id;
-
+const OrdersTable: NextPage<Props> = ({ orders, userId }: Props) => {
     return (
         <>
-
             <Block
                 paddingTop={['10px', '20px', '30px', '0']}
                 overrides={{ Block: { style: { minHeight: '150px' } } }}
             >
 
                 <StyledTable $gridTemplateColumns="max-content auto auto auto max-content">
-                    {/* <StyledTableHeadAlt>Symbol</StyledTableHeadAlt> */}
-                    <StyledTableHeadAlt>Actn</StyledTableHeadAlt>
-                    <StyledTableHeadAlt>Type</StyledTableHeadAlt>
+                    <StyledTableHeadAlt>State</StyledTableHeadAlt>
+                    <StyledTableHeadAlt>Action</StyledTableHeadAlt>
+                    <StyledTableHeadAlt>PriceType</StyledTableHeadAlt>
                     <StyledTableHeadAlt>Qty</StyledTableHeadAlt>
-                    <StyledTableHeadAlt>Filled</StyledTableHeadAlt>
                     <StyledTableHeadAlt></StyledTableHeadAlt>
-                    {/* <StyledTableHeadAlt></StyledTableHeadAlt> */}
                     {!isEmpty(orders) && orders.map((item, index) => {
-                        const { owner } = item;
+                        const { clientId: owner, filledQty, qty } = item;
                         const isMine = owner === userId;
+                        const isFilled = filledQty === qty;
                         const striped = index % 2 === 0;
                         return (
                             <Fragment key={index}>
-                                {/* <StyledBodyCell $striped={striped}>
-                                    {item.instrument}
-                                </StyledBodyCell> */}
+                                <StyledBodyCell $striped={striped}>
+                                    <Tag
+                                        closeable={false}
+                                        variant="outlined"
+                                        kind="positive"
+                                    >
+                                        success
+                                    </Tag>
+                                </StyledBodyCell>
+
                                 <StyledBodyCell $striped={striped}>
                                     {item.action}
                                 </StyledBodyCell>
+
                                 <StyledBodyCell $striped={striped}>
                                     {item.type}
                                 </StyledBodyCell>
+
                                 <StyledBodyCell $striped={striped}>
-                                    {item.qty}
-                                </StyledBodyCell>
-                                <StyledBodyCell $striped={striped}>
-                                    {item.qty - item.filledQty}
+                                    {item.qty} / {item.filledQty}
                                 </StyledBodyCell>
 
                                 {isMine ? (
                                     <StyledBodyCell $striped={striped}>
-                                        <Button shape="round" kind="tertiary" onClick={() => { }}>
+                                        <Button shape="round" kind="primary" onClick={() => { }}>
                                             <ImCross color="red" />
                                         </Button>
                                     </StyledBodyCell>
                                 ) : (
-                                    <div />
+                                    <StyledBodyCell $striped={striped}>
+                                        <Button shape="round" kind="secondary" onClick={() => { }}>
+                                            ✅
+                                        </Button>
+                                    </StyledBodyCell>
                                 )}
 
                             </Fragment>
