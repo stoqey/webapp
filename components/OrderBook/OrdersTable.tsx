@@ -56,7 +56,7 @@ const OrdersTable: NextPage<Props> = ({ orders, userId, onCancelOrder }: Props) 
                                     <Tag
                                         closeable={false}
                                         variant="outlined"
-                                        kind={colour}
+                                        kind={colour as any}
                                     >
                                         {statusText}
                                     </Tag>
