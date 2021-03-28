@@ -32,8 +32,8 @@ const CancelOrder = (props: Props) => {
       client,
       args: { id: orderId },
       success: async (d: any) => {
-        onSuccess(`Successfully canceled order`)
-        hide();
+        onSuccess(`Successfully submitted order to cancel`);
+        setTimeout(() => hide(), 4000);
       },
       error: async (e: Error) => {
         onError(e && e.message)
@@ -110,7 +110,7 @@ const CancelOrder = (props: Props) => {
               {/* Confirm */}
               <p style={{ display: 'flex', padding: "20px" }}>
                 <Button
-                  isLoading={true}
+                  // isLoading={true}
                   shape="pill"
                   size="default"
                   onClick={() => cancelTheOrderApi()}
@@ -146,11 +146,6 @@ const CancelOrder = (props: Props) => {
                 > ❌ Dismiss </Button>
               </p>
             </Block>
-
-            <div style={{ padding: "10px" }}>
-              <Toast kind={KIND.positive}>Positive notification</Toast>
-            </div>
-
           </Block>
         </ModalBody>
       </Modal>
