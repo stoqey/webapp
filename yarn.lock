@@ -10,6 +10,24 @@
     lodash.debounce "^4.0.8"
     shallowequal "^1.0.2"
 
+"@amplitude/types@^1.5.3":
+  version "1.5.3"
+  resolved "https://registry.yarnpkg.com/@amplitude/types/-/types-1.5.3.tgz#7d09adcfe7258c61fd24fdb6398b51048bd271d1"
+  integrity sha512-1XOkNilMoehnriKU7zg+L+Ya1QA9kv3e7FL3bJJlt/NVXoV+jV/8OeRpQBPZzbKSwLpg+JBmUsP5VQHBx3O3Dw==
+
+"@amplitude/ua-parser-js@0.7.24":
+  version "0.7.24"
+  resolved "https://registry.yarnpkg.com/@amplitude/ua-parser-js/-/ua-parser-js-0.7.24.tgz#2ce605af7d2c38d4a01313fb2385df55fbbd69aa"
+  integrity sha512-VbQuJymJ20WEw0HtI2np7EdC3NJGUWi8+Xdbc7uk8WfMIF308T0howpzkQ3JFMN7ejnrcSM/OyNGveeE3TP3TA==
+
+"@amplitude/utils@^1.0.5":
+  version "1.5.3"
+  resolved "https://registry.yarnpkg.com/@amplitude/utils/-/utils-1.5.3.tgz#1a0ce8cb252c5d2871f14c2e49139b8e3845791b"
+  integrity sha512-FISxU0/UPWntMLkGWnXgKvPnd+MLdhQNV+5Rc633zhYdxqqu459cLCPd8K7tc1z+ZK1Q09besGohodnIndo5sw==
+  dependencies:
+    "@amplitude/types" "^1.5.3"
+    tslib "^1.9.3"
+
 "@ampproject/toolbox-core@2.7.4", "@ampproject/toolbox-core@^2.7.1-alpha.0":
   version "2.7.4"
   resolved "https://registry.yarnpkg.com/@ampproject/toolbox-core/-/toolbox-core-2.7.4.tgz"
@@ -1060,6 +1078,16 @@ ajv@^6.1.0, ajv@^6.12.5:
     json-schema-traverse "^0.4.1"
     uri-js "^4.2.2"
 
+amplitude-js@^8.1.0:
+  version "8.1.0"
+  resolved "https://registry.yarnpkg.com/amplitude-js/-/amplitude-js-8.1.0.tgz#1d5b95f5fbe660cbf78e403d1d18d78c18a9e5ec"
+  integrity sha512-S52cbLElI2qO3qqREYHsg1UBbEsq7bM6mpc62dF/m8eT3XgiOKs11nVBnVYk5JwmSgjIxw2pMgVdLYZ7833GSw==
+  dependencies:
+    "@amplitude/ua-parser-js" "0.7.24"
+    "@amplitude/utils" "^1.0.5"
+    blueimp-md5 "^2.10.0"
+    query-string "5"
+
 anser@1.4.9:
   version "1.4.9"
   resolved "https://registry.yarnpkg.com/anser/-/anser-1.4.9.tgz"
@@ -1457,6 +1485,11 @@ bl@^4.0.3:
     buffer "^5.5.0"
     inherits "^2.0.4"
     readable-stream "^3.4.0"
+
+blueimp-md5@^2.10.0:
+  version "2.18.0"
+  resolved "https://registry.yarnpkg.com/blueimp-md5/-/blueimp-md5-2.18.0.tgz#1152be1335f0c6b3911ed9e36db54f3e6ac52935"
+  integrity sha512-vE52okJvzsVWhcgUHOv+69OG3Mdg151xyn41aVQN/5W5S+S43qZhxECtYLAEHMSFWX6Mv5IZrzj3T5+JqXfj5Q==
 
 bn.js@^4.0.0, bn.js@^4.1.0, bn.js@^4.11.9:
   version "4.11.9"
@@ -6060,7 +6093,7 @@ q@^1.1.2:
   resolved "https://registry.yarnpkg.com/q/-/q-1.5.1.tgz"
   integrity sha1-fjL3W0E4EpHQRhHxvxQQmsAGUdc=
 
-query-string@^5.0.1:
+query-string@5, query-string@^5.0.1:
   version "5.1.1"
   resolved "https://registry.yarnpkg.com/query-string/-/query-string-5.1.1.tgz"
   integrity sha512-gjWOsm2SoGlgLEdAGt7a6slVOk9mGiXmPFMqrEhLQ68rhQuBnpfs3+EmlvqKyxnCo9/PPlF+9MtY02S1aFg+Jw==
@@ -6138,6 +6171,13 @@ rc@^1.0.1, rc@^1.1.6, rc@^1.2.7:
     ini "~1.3.0"
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
+
+react-amplitude-hooks@^0.10.1:
+  version "0.10.1"
+  resolved "https://registry.yarnpkg.com/react-amplitude-hooks/-/react-amplitude-hooks-0.10.1.tgz#4aab50aabe60e836e3f62b19734ab182dfa9946c"
+  integrity sha512-5TU4/L9eYpd73wXT8mAEjPsJU/HdV3gtXnfLfCIJC/kiUFlo7Z6y+fX6H4/3Ne1fpEV4o+BUv46oFYhbPZ+pKQ==
+  dependencies:
+    prop-types "^15.7.2"
 
 react-anchor-link-smooth-scroll@^1.0.12:
   version "1.0.12"
