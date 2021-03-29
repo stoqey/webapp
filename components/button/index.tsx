@@ -6,7 +6,9 @@ interface Analytics {
   eventName?: string;
 };
 
-type ButtonType =  ButtonProps &  HTMLButtonElement & Analytics;
+type ButtonType = React.ForwardRefExoticComponent<
+  React.PropsWithoutRef<ButtonProps> & React.RefAttributes<HTMLButtonElement>
+> & ButtonProps & HTMLButtonElement & Analytics;
 
 export const Button = (props: ButtonType) => {
   const eventName = (props && props.eventName) || 'click';

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { NextPage } from 'next';
-import { Button } from 'baseui/button';
+import { Button } from 'components/button';
 import sum from 'lodash/sum';
 import { MarketDataType, PortfolioType, getPercentageGain, getProfitFromTrade, ActionType, IOrderType } from '@stoqey/client-graphql'
 import { BsFillTriangleFill, BsPlus } from 'react-icons/bs';
@@ -336,7 +336,6 @@ const Portfolio: NextPage<{}> = () => {
 						},
 					}}
 				>
-
 					<div style={{ display: "flex", justifyContent: 'center', alignItems: 'center' }}>
 						{/* <StqRoboIcon gold /> */}
 						{/* <GoTriangleUp
@@ -356,7 +355,7 @@ const Portfolio: NextPage<{}> = () => {
 					</div>
 				</Button>
 			</Block>
-		    
+
 			<OrdersListContainer filterMine />
 		</>
 	);
