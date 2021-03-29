@@ -1,33 +1,43 @@
-import cn from 'clsx'
+import React from 'react';
+import { Button as DefaultButton, ButtonProps } from 'baseui/button'
+import { Amplitude } from '@amplitude/react-amplitude';
 
-function Button({
-  onClick = console.log,
-  className = '',
-  children = null,
-  type = null,
-  disabled = false,
-}) {
-  return (
-    <button
-      type={type}
-      onClick={onClick}
-      disabled={disabled}
-      className={cn(
-        'bg-black',
-        'text-white',
-        'p-2',
-        'rounded',
-        'uppercase',
-        'text-sm',
-        'font-bold',
-        {
-          [className]: Boolean(className),
-        }
-      )}
-    >
-      {children}
-    </button>
-  )
-}
+interface Analytics {
+  $$typeof?: any;
+  eventName?: string;
+  children?: any;
+};
 
-export default Button
+type ButtonType = ButtonProps & HTMLButtonElement & Analytics;
+
+export const Button = (props?: Partial<ButtonType>) => {
+  const eventName = (props && props.eventName) || 'click';
+
+  if (process.browser) {
+    return (
+      <Amplitude
+        eventProperties={(inheritedProps) => ({
+          ...inheritedProps,
+          scope: 'website',
+          eventName,
+        })}
+      >
+        {({ logEvent }) => (
+          <DefaultButton
+            {...props}
+            // href="#"
+            onClick={(e) => {
+              logEvent(eventName);
+              props.onClick(e);
+            }}
+          />
+        )}
+      </Amplitude>
+    );
+  }
+
+  // @ts-ignore
+  return <DefaultButton {...props} />;
+};
+
+export default Button;

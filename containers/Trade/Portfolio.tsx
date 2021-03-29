@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { NextPage } from 'next';
-import { Button } from 'baseui/button';
+import { Button } from 'components/button';
 import sum from 'lodash/sum';
 import { MarketDataType, PortfolioType, getPercentageGain, getProfitFromTrade, ActionType, IOrderType } from '@stoqey/client-graphql'
 import { BsFillTriangleFill, BsPlus } from 'react-icons/bs';
@@ -29,6 +29,7 @@ import { isEmpty } from 'lodash';
 import ResultsDialog from '@/components/Modal/Result.dialog';
 import { TradeEditorState } from './TradeEditor.modal'
 import OrdersListContainer from 'containers/OrderBook/OrdersListContainer';
+import { ANALYTICS } from 'constants/analytics.enum';
 const stoqeyLogo = require('assets/images/STQ.png');
 
 
@@ -299,7 +300,7 @@ const Portfolio: NextPage<{}> = () => {
 
 						{/* Close trade */}
 						<div>
-							<Button shape="round" $style={{ backgroundColor: 'blueviolet' }}
+							<Button eventName={ANALYTICS.USER_TRADE_CLOSE} shape="round" $style={{ backgroundColor: 'blueviolet' }}
 								onClick={() => closeThisPosition()}>
 								<ImCross />
 							</Button>
@@ -317,6 +318,7 @@ const Portfolio: NextPage<{}> = () => {
 				padding: '20px'
 			}}>
 				<Button
+				    eventName={ANALYTICS.USER_TRADE}
 					onClick={() => startPortfolio()}
 					kind="primary"
 					shape="pill"
@@ -336,7 +338,6 @@ const Portfolio: NextPage<{}> = () => {
 						},
 					}}
 				>
-
 					<div style={{ display: "flex", justifyContent: 'center', alignItems: 'center' }}>
 						{/* <StqRoboIcon gold /> */}
 						{/* <GoTriangleUp
@@ -356,7 +357,7 @@ const Portfolio: NextPage<{}> = () => {
 					</div>
 				</Button>
 			</Block>
-		    
+
 			<OrdersListContainer filterMine />
 		</>
 	);

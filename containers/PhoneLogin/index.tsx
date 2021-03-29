@@ -18,9 +18,16 @@ import {
   FirebaseAuthProvider
 } from "@react-firebase/auth";
 import { H5 } from 'baseui/typography';
+import { useAnalyticsAmplitude, AmplitudeAnalytics } from 'hooks/useAnalytics';
+import { Amplitude, LogOnMount } from '@amplitude/react-amplitude';
+import {
+  useAmplitude
+} from "react-amplitude-hooks";
+import { ANALYTICS } from 'constants/analytics.enum';
 
 
-export const PhoneLogin = () => {
+const PhoneLoginComponent = (props?: AmplitudeAnalytics) => {
+  const { instrument, logEvent, eventProperties, amplitudeInstance } = props;
 
   const [country, setCountry] = React.useState({ label: "Canada", id: "CA", dialCode: "+1" });
   const [phone, setPhone] = React.useState("");
@@ -41,6 +48,8 @@ export const PhoneLogin = () => {
   let toastKey = null;
   const db = AsyncStorageDB;
   const client = useApolloClient();
+  const fullPhoneNumber = `${country.dialCode}${phone}`;
+  const isValid = validator.isMobilePhone(fullPhoneNumber);
 
   const phoneLoginApiCall = (args: PhoneAuthCreds): Promise<any> => phoneLoginApi({
     args,
@@ -61,6 +70,14 @@ export const PhoneLogin = () => {
       toastKey = toaster.positive(<>Successfully logged in using phone</>, {
         autoHideDuration: 4000
       });
+
+      if (amplitudeInstance) {
+        // Save with amplitude right now
+        await amplitudeInstance.setUserId(fullPhoneNumber)
+      }
+
+      await logEvent(ANALYTICS.USER_LOGIN, { phone: fullPhoneNumber, country })
+
 
       // save login data in client browser
       await db.updateAuthItem(data);
@@ -111,9 +128,6 @@ export const PhoneLogin = () => {
     }
     setLoading(false);
   }
-
-  const fullPhoneNumber = `${country.dialCode}${phone}`;
-  const isValid = validator.isMobilePhone(fullPhoneNumber);
 
   // @ts-ignore
   return (
@@ -167,6 +181,7 @@ export const PhoneLogin = () => {
 
                 firebase.auth().signInWithPhoneNumber(fullPhoneNumber, appVerifier)
                   .then(function (confirmationResult) {
+                    logEvent(ANALYTICS.USER_SEND_CODE, { phone: fullPhoneNumber, code: confirmationResult.verificationId })
                     return setVerificationId(confirmationResult.verificationId);
                   }).catch(function () {
                     // TODO error loggin in with phone
@@ -197,4 +212,18 @@ export const PhoneLogin = () => {
   )
 }
 
-export default PhoneLogin;
+export const PhoneLoginContainer = () => {
+  return (
+    <Amplitude
+      eventProperties={(inheritedProps) => ({
+        ...inheritedProps,
+        scope: 'webapp',
+        // eventName,
+      })}
+    >
+      {(amplitudeProps) => <PhoneLoginComponent {...amplitudeProps} />}
+    </Amplitude>
+  );
+}
+
+export default PhoneLoginContainer;

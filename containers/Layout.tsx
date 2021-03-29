@@ -1,38 +1,75 @@
-import React from 'react';
-import { Provider as StyletronProvider } from 'styletron-react';
-import { BaseProvider, LightTheme, DarkTheme } from 'baseui';
-import { ToasterContainer } from "baseui/toast";
+import React, { useEffect, useState } from 'react';
+import { withRouter } from 'next/router';
+import { Amplitude, LogOnMount } from '@amplitude/react-amplitude';
+import { useAmplitude } from 'react-amplitude-hooks';
+import Footer from 'components/Footer/Footer';
 import dynamic from 'next/dynamic';
-import { withApollo } from '@apollo/client/react/hoc';
-import Layout from 'components/Layout/Layout';
-import { styletron } from '../styletron';
-import { ThemeSwitcherProvider, THEME } from '../contexts/theme/theme.provider';
-import { CartProvider } from '../contexts/cart/cart.provider';
-import AuthChecker from 'containers/AuthChecker';
+import AppWrapper, { ContentWrapper } from 'components/Layout/Layout.styled';
+import { useThemeSwitcherCtx, THEME } from 'contexts/theme/theme.provider';
 
-const WebsocketSubscription = dynamic(() => import('containers/Subscription'), { ssr: false });
+const LayoutHeader = dynamic(() => import('components/Layout/Layout.header'), {
+  ssr: false,
+});
 
-interface Props {
-    children?: any;
-    embed?: boolean;
-}
-function MainLayout(props: Props) {
-    const { children, embed } = props;
+
+const Layout: React.FunctionComponent<{ router?: any }> = ({
+  router,
+  children,
+}) => {
+  const pathname = router.pathname;
+
+  const { theme } = useThemeSwitcherCtx();
+
+  let layoutBg = '#ffffff';
+
+  if (theme === THEME.dark) {
+    layoutBg = '#000000';
+  }
+
+  if (
+    (theme === THEME.light && pathname === '/') ||
+    (theme === THEME.light && pathname === '/chat')
+  ) {
+    layoutBg = '#fcfcfc';
+  }
+
+  if (
+    (theme === THEME.dark && pathname === '/') ||
+    (theme === THEME.dark && pathname === '/chat')
+  ) {
+    layoutBg = '#0c0c0c';
+  }
+
+  const LayoutComponent = () => {
     return (
-        <ToasterContainer>
-            {/* Persistant websocket */}
-            <WebsocketSubscription />
-            {!embed && <AuthChecker />}
-            <CartProvider>
-                {!embed ? (
-                    <Layout>
-                        {children}
-                    </Layout>
-                ) : ({ children })}
-            </CartProvider>
-        </ToasterContainer>
+      <AppWrapper className={theme} style={{ backgroundColor: layoutBg }}>
+        <LayoutHeader />
+        <ContentWrapper>{children}</ContentWrapper>
+        <Footer />
+      </AppWrapper>
     );
-}
+  }
 
-export const WithLayout = withApollo(MainLayout);
-export default WithLayout;
+  if (process.browser) {
+    return (
+      <Amplitude
+        eventProperties={(inheritedProps) => ({
+          ...inheritedProps,
+          scope: 'webapp',
+          // eventName,
+        })}
+      >
+        {() => <>
+          <LogOnMount eventType={`WEB:${pathname}`} />
+          <LayoutComponent />
+        </>}
+      </Amplitude>
+    );
+  }
+
+  return <LayoutComponent />
+
+
+};
+
+export default withRouter(Layout);

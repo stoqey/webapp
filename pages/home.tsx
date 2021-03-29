@@ -9,8 +9,6 @@ import Container from '@/components/UiElements/Container/Container';
 import HighlightChart from 'containers/Chart/HighlightChart';
 import CurrencyPill from '@/components/Currency';
 import OrderBookContainer from 'containers/OrderBook';
-import withLayout from 'containers/Layout';
-import WithLayout from 'containers/Layout';
 import MainWrapper from 'containers/MainWrapper';
 // import StqChart from 'containers/Chart/StqChart';
 
