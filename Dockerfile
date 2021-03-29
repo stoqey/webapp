@@ -6,6 +6,8 @@ FROM node:10.23.0-stretch as builder
 ARG FB_SA_KEY
 ARG BACKEND
 ARG PAYPAL_ID
+ARG AMPLITUDE_KEY
+ARG GTAG
 
 # create & set working directory
 RUN mkdir -p /usr/src
@@ -24,6 +26,8 @@ RUN yarn
 ENV NEXT_PUBLIC_API_URL=$BACKEND
 ENV NEXT_PUBLIC_PAYPAL_ID=$PAYPAL_ID
 ENV NODE_ENV=production
+ENV NEXT_PUBLIC_AMPLITUDE_KEY=$AMPLITUDE_KEY
+ENV NEXT_PUBLIC_GTAG=$GTAG
 
 # Save all env to dotenv
 RUN printenv | sed 's/\([^=]*=\)\(.*\)/\1"\2"/' > /usr/src/.env
