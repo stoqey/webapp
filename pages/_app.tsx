@@ -4,6 +4,9 @@ import { Provider as StyletronProvider } from 'styletron-react';
 import { BaseProvider, LightTheme, DarkTheme } from 'baseui';
 import includes from 'lodash/includes';
 import { ApolloProvider } from '@apollo/client';
+import {
+  AmplitudeProvider,
+} from '@amplitude/react-amplitude';
 import dynamic from 'next/dynamic';
 import Layout from 'components/Layout/Layout';
 import { styletron } from '../styletron';
@@ -36,19 +39,20 @@ export default function CustomApp({ Component, pageProps }: AppProps) {
 
   const removeLayout = includes(router.pathname, "embed");
 
-  return (
-    <ApolloProvider client={apolloClient}>
-      <WebsocketSubscription />
-      <AuthChecker />
-      <ThemeSwitcherProvider value={{ theme, setTheme }}>
-        <StyletronProvider value={styletron} debugAfterHydration>
-          <BaseProvider
-            theme={
-              theme === THEME.light
-                ? { ...LightTheme, direction: 'ltr' }
-                : { ...DarkTheme, direction: 'ltr' }
-            }
-          >
+  const WebApp = () => {
+    return (
+      <ApolloProvider client={apolloClient}>
+        <WebsocketSubscription />
+        <AuthChecker />
+        <ThemeSwitcherProvider value={{ theme, setTheme }}>
+          <StyletronProvider value={styletron} debugAfterHydration>
+            <BaseProvider
+              theme={
+                theme === THEME.light
+                  ? { ...LightTheme, direction: 'ltr' }
+                  : { ...DarkTheme, direction: 'ltr' }
+              }
+            >
               {removeLayout ? (
                 <Component {...pageProps} />
               ) : (
@@ -56,10 +60,46 @@ export default function CustomApp({ Component, pageProps }: AppProps) {
                   <Component {...pageProps} />
                 </Layout>
               )}
-          </BaseProvider>
-        </StyletronProvider>
-      </ThemeSwitcherProvider>
-    </ApolloProvider>
-  );
+            </BaseProvider>
+          </StyletronProvider>
+        </ThemeSwitcherProvider>
+      </ApolloProvider>
+    );
+  }
+
+
+  if (process.browser) {
+    const amplitude = require('amplitude-js'); // eslint-disable-line @typescript-eslint/no-var-requires
+    const amplitudeInstance = amplitude.getInstance();
+    // https://help.amplitude.com/hc/en-us/articles/115001361248#settings-configuration-options
+    amplitudeInstance.init(process.env.NEXT_PUBLIC_AMPLITUDE_KEY, null, {
+      // userId,
+      // logLevel: process.env.APP_STAGE === "production" ? "DISABLE" : "WARN",
+      includeGclid: true,
+      includeReferrer: true, // https://help.amplitude.com/hc/en-us/articles/215131888#track-referrers
+      includeUtm: true,
+      // @ts-ignore XXX onError should be allowed, see https://github.com/DefinitelyTyped/DefinitelyTyped/issues/42005
+      onError: (error) => {
+        // Sentry.captureException(error);
+        console.error(error); // eslint-disable-line no-console
+      },
+    });
+
+    // amplitudeInstance.setVersionName(process.env.APP_VERSION); // e.g: 1.0.0
+
+    return (
+      <AmplitudeProvider
+        amplitudeInstance={amplitudeInstance}
+        apiKey={process.env.AMPLITUDE_API_KEY}
+      // userId={userId}
+      >
+        <WebApp />
+      </AmplitudeProvider>
+    );
+  }
+
+  return <WebApp />
+
+
 
 }

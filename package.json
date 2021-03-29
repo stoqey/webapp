@@ -10,6 +10,7 @@
 				"all": "yarn build && yarn export && serve -d out"
 		},
 		"dependencies": {
+				"@amplitude/react-amplitude": "^1.0.0",
 				"@apollo/client": "^3.2.5",
 				"@apollo/react-hooks": "^4.0.0",
 				"@glidejs/glide": "^3.4.1",
