@@ -29,6 +29,7 @@ import { isEmpty } from 'lodash';
 import ResultsDialog from '@/components/Modal/Result.dialog';
 import { TradeEditorState } from './TradeEditor.modal'
 import OrdersListContainer from 'containers/OrderBook/OrdersListContainer';
+import { ANALYTICS } from 'constants/analytics.enum';
 const stoqeyLogo = require('assets/images/STQ.png');
 
 
@@ -299,7 +300,7 @@ const Portfolio: NextPage<{}> = () => {
 
 						{/* Close trade */}
 						<div>
-							<Button shape="round" $style={{ backgroundColor: 'blueviolet' }}
+							<Button eventName={ANALYTICS.USER_TRADE_CLOSE} shape="round" $style={{ backgroundColor: 'blueviolet' }}
 								onClick={() => closeThisPosition()}>
 								<ImCross />
 							</Button>
@@ -317,6 +318,7 @@ const Portfolio: NextPage<{}> = () => {
 				padding: '20px'
 			}}>
 				<Button
+				    eventName={ANALYTICS.USER_TRADE}
 					onClick={() => startPortfolio()}
 					kind="primary"
 					shape="pill"

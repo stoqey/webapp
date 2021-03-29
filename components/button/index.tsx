@@ -3,14 +3,14 @@ import { Button as DefaultButton, ButtonProps } from 'baseui/button'
 import { Amplitude } from '@amplitude/react-amplitude';
 
 interface Analytics {
+  $$typeof?: any;
   eventName?: string;
+  children?: any;
 };
 
-type ButtonType = React.ForwardRefExoticComponent<
-  React.PropsWithoutRef<ButtonProps> & React.RefAttributes<HTMLButtonElement>
-> & ButtonProps & HTMLButtonElement & Analytics;
+type ButtonType = ButtonProps & HTMLButtonElement & Analytics;
 
-export const Button = (props: ButtonType) => {
+export const Button = (props?: Partial<ButtonType>) => {
   const eventName = (props && props.eventName) || 'click';
 
   if (process.browser) {
