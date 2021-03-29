@@ -18,21 +18,16 @@ import {
   FirebaseAuthProvider
 } from "@react-firebase/auth";
 import { H5 } from 'baseui/typography';
-import { useAnalyticsAmplitude } from 'hooks/useAnalytics';
+import { useAnalyticsAmplitude, AmplitudeAnalytics } from 'hooks/useAnalytics';
+import { Amplitude, LogOnMount } from '@amplitude/react-amplitude';
 import {
   useAmplitude
 } from "react-amplitude-hooks";
 import { ANALYTICS } from 'constants/analytics.enum';
 
 
-export const PhoneLogin = () => {
-
-  // const { amplitudeInstance, logEvent } = useAnalyticsAmplitude();
-
-  const { instrument, logEvent, eventProperties, amplitudeInstance } = useAmplitude(inheritedProps => ({
-    ...inheritedProps,
-    scope: "webapp"
-  }));
+const PhoneLoginComponent = (props?: AmplitudeAnalytics) => {
+  const { instrument, logEvent, eventProperties, amplitudeInstance } = props;
 
   const [country, setCountry] = React.useState({ label: "Canada", id: "CA", dialCode: "+1" });
   const [phone, setPhone] = React.useState("");
@@ -133,13 +128,6 @@ export const PhoneLogin = () => {
     setLoading(false);
   }
 
-
-  if(!amplitudeInstance){
-    return null;
-  }
-
-
-
   // @ts-ignore
   return (
     <>
@@ -222,4 +210,18 @@ export const PhoneLogin = () => {
   )
 }
 
-export default PhoneLogin;
+export const PhoneLoginContainer = () => {
+  return (
+    <Amplitude
+      eventProperties={(inheritedProps) => ({
+        ...inheritedProps,
+        scope: 'webapp',
+        // eventName,
+      })}
+    >
+      {(amplitudeProps) => <PhoneLoginComponent {...amplitudeProps} />}
+    </Amplitude>
+  );
+}
+
+export default PhoneLoginContainer;

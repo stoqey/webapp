@@ -2,7 +2,7 @@ import {
   useAmplitude
 } from "react-amplitude-hooks";
 
-interface AmplitudeAnalytics {
+export interface AmplitudeAnalytics {
   logEvent: (eventType: string, eventPropertiesIn?: object, callback?: any) => void;
   instrument: <T extends Function>(eventType: string, func: T) => T;
   eventProperties: any;
