@@ -8,7 +8,7 @@ import {
   AmplitudeProvider,
 } from '@amplitude/react-amplitude';
 import dynamic from 'next/dynamic';
-import Layout from 'components/Layout/Layout';
+import Layout from 'containers/Layout';
 import { styletron } from '../styletron';
 import { ThemeSwitcherProvider, THEME } from '../contexts/theme/theme.provider';
 import { CartProvider } from '../contexts/cart/cart.provider';
@@ -19,11 +19,11 @@ import 'react-toastify/dist/ReactToastify.css';
 import 'assets/css/reset.css';
 import 'react-flexbox-grid/dist/react-flexbox-grid.css';
 import 'typeface-open-sans';
-import AuthChecker from 'containers/AuthChecker';
 import Router, { useRouter } from 'next/router'
 
+import AuthChecker from 'containers/AuthChecker';
+const WebappSubscription = dynamic(() => import('containers/Subscription'), { ssr: false });
 
-const WebsocketSubscription = dynamic(() => import('containers/Subscription'), { ssr: false });
 
 export default function CustomApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
@@ -42,8 +42,8 @@ export default function CustomApp({ Component, pageProps }: AppProps) {
   const WebApp = () => {
     return (
       <ApolloProvider client={apolloClient}>
-        <WebsocketSubscription />
-        <AuthChecker />
+        <WebappSubscription />
+        {!removeLayout && <AuthChecker />}
         <ThemeSwitcherProvider value={{ theme, setTheme }}>
           <StyletronProvider value={styletron} debugAfterHydration>
             <BaseProvider

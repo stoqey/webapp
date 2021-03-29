@@ -19,12 +19,21 @@ import {
 } from "@react-firebase/auth";
 import { H5 } from 'baseui/typography';
 import { useAnalyticsAmplitude } from 'hooks/useAnalytics';
+import {
+  useAmplitude
+} from "react-amplitude-hooks";
 import { ANALYTICS } from 'constants/analytics.enum';
 
 
 export const PhoneLogin = () => {
 
-  const { amplitudeInstance, logEvent } = useAnalyticsAmplitude();
+  // const { amplitudeInstance, logEvent } = useAnalyticsAmplitude();
+
+  const { instrument, logEvent, eventProperties, amplitudeInstance } = useAmplitude(inheritedProps => ({
+    ...inheritedProps,
+    scope: "webapp"
+  }));
+
   const [country, setCountry] = React.useState({ label: "Canada", id: "CA", dialCode: "+1" });
   const [phone, setPhone] = React.useState("");
   const [verificationId, setVerificationId] = React.useState(undefined);
@@ -67,9 +76,12 @@ export const PhoneLogin = () => {
         autoHideDuration: 4000
       });
 
-      // Save with amplitude right now
-      amplitudeInstance.setUserId(fullPhoneNumber)
-      logEvent(ANALYTICS.USER_LOGIN, { phone, country })
+      if (amplitudeInstance) {
+        // Save with amplitude right now
+        amplitudeInstance.setUserId(fullPhoneNumber)
+        logEvent(ANALYTICS.USER_LOGIN, { phone, country })
+      }
+
 
       // save login data in client browser
       await db.updateAuthItem(data);
@@ -119,6 +131,11 @@ export const PhoneLogin = () => {
       })
     }
     setLoading(false);
+  }
+
+
+  if(!amplitudeInstance){
+    return null;
   }
 
 
