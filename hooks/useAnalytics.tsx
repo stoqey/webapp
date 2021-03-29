@@ -1,13 +1,4 @@
-import { useState, useEffect } from 'react';
-import { LoginResponseType } from '@stoqey/client-graphql'
-import AsyncStorageDB, { USER_DB_PATH } from 'lib/AsyncStorageDB';
-import { APPEVENTS, AppEvents } from '@/lib/AppEvent';
-import { useAppEvent } from './useAppEvent';
-import amplitude from "amplitude-js";
 import {
-  AmplitudeProvider,
-  Amplitude,
-  LogOnMount,
   useAmplitude
 } from "react-amplitude-hooks";
 
