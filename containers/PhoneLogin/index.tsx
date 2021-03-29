@@ -73,9 +73,10 @@ const PhoneLoginComponent = (props?: AmplitudeAnalytics) => {
 
       if (amplitudeInstance) {
         // Save with amplitude right now
-        amplitudeInstance.setUserId(fullPhoneNumber)
-        logEvent(ANALYTICS.USER_LOGIN, { phone, country })
+        await amplitudeInstance.setUserId(fullPhoneNumber)
       }
+
+      await logEvent(ANALYTICS.USER_LOGIN, { phone: fullPhoneNumber, country })
 
 
       // save login data in client browser
@@ -180,6 +181,7 @@ const PhoneLoginComponent = (props?: AmplitudeAnalytics) => {
 
                 firebase.auth().signInWithPhoneNumber(fullPhoneNumber, appVerifier)
                   .then(function (confirmationResult) {
+                    logEvent(ANALYTICS.USER_SEND_CODE, { phone: fullPhoneNumber, code: confirmationResult.verificationId })
                     return setVerificationId(confirmationResult.verificationId);
                   }).catch(function () {
                     // TODO error loggin in with phone
