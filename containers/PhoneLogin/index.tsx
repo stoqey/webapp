@@ -18,10 +18,13 @@ import {
   FirebaseAuthProvider
 } from "@react-firebase/auth";
 import { H5 } from 'baseui/typography';
+import { useAnalyticsAmplitude } from 'hooks/useAnalytics';
+import { ANALYTICS } from 'constants/analytics.enum';
 
 
 export const PhoneLogin = () => {
 
+  const { amplitudeInstance, logEvent } = useAnalyticsAmplitude();
   const [country, setCountry] = React.useState({ label: "Canada", id: "CA", dialCode: "+1" });
   const [phone, setPhone] = React.useState("");
   const [verificationId, setVerificationId] = React.useState(undefined);
@@ -41,6 +44,8 @@ export const PhoneLogin = () => {
   let toastKey = null;
   const db = AsyncStorageDB;
   const client = useApolloClient();
+  const fullPhoneNumber = `${country.dialCode}${phone}`;
+  const isValid = validator.isMobilePhone(fullPhoneNumber);
 
   const phoneLoginApiCall = (args: PhoneAuthCreds): Promise<any> => phoneLoginApi({
     args,
@@ -61,6 +66,10 @@ export const PhoneLogin = () => {
       toastKey = toaster.positive(<>Successfully logged in using phone</>, {
         autoHideDuration: 4000
       });
+
+      // Save with amplitude right now
+      amplitudeInstance.setUserId(fullPhoneNumber)
+      logEvent(ANALYTICS.USER_LOGIN, { phone, country })
 
       // save login data in client browser
       await db.updateAuthItem(data);
@@ -112,8 +121,7 @@ export const PhoneLogin = () => {
     setLoading(false);
   }
 
-  const fullPhoneNumber = `${country.dialCode}${phone}`;
-  const isValid = validator.isMobilePhone(fullPhoneNumber);
+
 
   // @ts-ignore
   return (

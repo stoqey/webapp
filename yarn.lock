@@ -842,6 +842,11 @@
     graphql "^15.4.0"
     graphql-tag "^2.11.0"
 
+"@types/amplitude-js@^7.0.1":
+  version "7.0.1"
+  resolved "https://registry.yarnpkg.com/@types/amplitude-js/-/amplitude-js-7.0.1.tgz#c0b1bc6e508faa513a30ece580c300f0738a9449"
+  integrity sha512-xrmhX39GoSBIuOOPWYL5uvVLn6a5Cvea0wb6SkJNW9+2w5GCK6hT0vvMaH1GaaeSqvb1QFjHNsEgXuyQqML0sw==
+
 "@types/firebase@^3.2.1":
   version "3.2.1"
   resolved "https://registry.yarnpkg.com/@types/firebase/-/firebase-3.2.1.tgz#17c1c8fee7485ab09668d2461e34540bdf44b3b1"
