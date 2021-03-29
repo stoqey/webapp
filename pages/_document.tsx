@@ -110,6 +110,23 @@ export default class CustomDocument extends Document<any> {
 
           {/* PayPal script */}
           <script src={`https://www.paypal.com/sdk/js?client-id=${process.env.NEXT_PUBLIC_PAYPAL_ID}`} />
+
+          <script
+            async
+            src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GTAG}`}
+          />
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments)}
+                gtag('js', new Date());
+
+                gtag('config', '${process.env.NEXT_PUBLIC_GTAG}');
+          `,
+            }}
+          ></script>
+          
         </Head>
         <body dir="ltr">
           <Main />
