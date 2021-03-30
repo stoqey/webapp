@@ -163,7 +163,7 @@ const Portfolio: NextPage<{}> = () => {
 		portfolios.map(i => {
 			const profit = getProfitFromTrade(i.action, i.averageCost, price) / 100;
 			const amountSpent = i.size * i.averageCost;
-			const amountProfit = profit * (amountSpent);
+			const amountProfit = profit === 0? 0 : profit * (amountSpent);
 			return amountProfit;
 		}) : 0);
 
@@ -235,13 +235,11 @@ const Portfolio: NextPage<{}> = () => {
 
 			{/* Portfolios */}
 			{portfolios.map((item: PortfolioItem) => {
-				const { action, size } = item
+				const { action, size } = item;
 				const profitPct = getProfitFromTrade(item.action, item.averageCost, price);
 				const amountSpent = item.size * item.averageCost;
 				const amountProfitIfSold = item.size * price;
-				const profitAmount = amountProfitIfSold - amountSpent;
-
-				const pnL = profitAmount;
+				let profitAmount = profitPct === 0 ? 0 : amountProfitIfSold - amountSpent;
 
 				const closeProps: TradeEditorState = {
 					steps: 0,
@@ -318,7 +316,7 @@ const Portfolio: NextPage<{}> = () => {
 				padding: '20px'
 			}}>
 				<Button
-				    eventName={ANALYTICS.USER_TRADE}
+					eventName={ANALYTICS.USER_TRADE}
 					onClick={() => startPortfolio()}
 					kind="primary"
 					shape="pill"
