@@ -1,6 +1,5 @@
 # NextJS + SSR + Couchbase + Apollo Client
 ## Configuration
-
 ### Step 1. Set up a Couchbase database
 
 Set up a Couchbase server either locally or any cloud provider.

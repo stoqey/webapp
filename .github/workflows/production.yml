@@ -20,7 +20,7 @@ env:
 
 jobs:
   setup-build-publish-deploy:
-    name: deploy
+    name: production
     runs-on: ubuntu-latest
 
     steps:
@@ -47,7 +47,7 @@ jobs:
           --tag "gcr.io/$GKE_PROJECT/$IMAGE:${GITHUB_SHA:0:7}" \
           --build-arg BACKEND="$BACKEND" \
           --build-arg AMPLITUDE_KEY="$AMPLITUDE_KEY" \
-          --build-arg GTAG="$GTAG" \          
+          --build-arg GTAG="$GTAG" \
           --build-arg PAYPAL_ID="$PAYPAL_ID" \
           --build-arg FB_SA_KEY="$FB_SA_KEY" \
           --build-arg GITHUB_SHA="$GITHUB_SHA" \
