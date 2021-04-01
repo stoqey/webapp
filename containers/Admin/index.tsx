@@ -46,7 +46,9 @@ const AdminUserCRUD = () => {
 
       const { data }: { data: { users: UserType[] } } = await client.query({
         query: GET_ALL_USERS,
-        variables: {}
+        variables: {
+          limit: 1000
+        }
       });
 
 
