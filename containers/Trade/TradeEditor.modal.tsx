@@ -249,8 +249,8 @@ const TradeEditor = (props: Props) => {
                             style: ({ $theme }) => {
                               return {
                                 width: '50%',
-                                borderTopRightRadius: 0,
-                                borderBottomRightRadius: 0,
+                                // borderTopRightRadius: 0,
+                                // borderBottomRightRadius: 0,
                                 background: '#3AA76D',
                                 color: 'white',
                                 opacity: action === "BUY" ? 1 : 0.2,
@@ -274,8 +274,8 @@ const TradeEditor = (props: Props) => {
                             style: ({ $theme }) => {
                               return {
                                 width: '50%',
-                                borderTopLeftRadius: 0,
-                                borderBottomLeftRadius: 0,
+                                // borderTopLeftRadius: 0,
+                                // borderBottomLeftRadius: 0,
                                 background: 'rgba(216, 33, 33);',
                                 color: 'white',
                                 ":hover": {

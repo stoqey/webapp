@@ -74,6 +74,7 @@ const PayPalPayment = (props: Props) => {
           ...state,
           message: `Successfuly processed payment of $${amount}`,
           success: true,
+          showResults: true,
         });
       },
       error: async (error: Error) => {
@@ -82,6 +83,7 @@ const PayPalPayment = (props: Props) => {
           ...state,
           message: `Error processing payment of $${amount}`,
           success: false,
+          showResults: true,
         });
       }
     });
@@ -113,7 +115,7 @@ const PayPalPayment = (props: Props) => {
           overrides={{
             Root: {
               style: () => {
-                return { width: "100%", fontSize: "20px", borderRadius: "5px", height: "55px", marginBottom: "17px" };
+                return { width: "100%", fontSize: "20px", height: "55px", marginBottom: "17px" };
               },
             },
           }}
