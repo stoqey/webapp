@@ -20,10 +20,11 @@ interface PayPalFormProps {
   userId: string;
   amount: number;
   onSuccess: (orderId: string) => Promise<any>;
+  onError: (error: Error) => Promise<any>;
 };
 
 const PayPalForm = (props: PayPalFormProps) => {
-  const { userId, amount = 30, onSuccess } = props;
+  const { userId, amount = 30, onSuccess, onError } = props;
   const clientId = process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID;
 
   return (
@@ -37,6 +38,10 @@ const PayPalForm = (props: PayPalFormProps) => {
       onSuccess={async (details, data) => {
         console.log('Paypal success', data);
         return await onSuccess(data && data.orderID);
+      }}
+      onError={async (error: Error) => {
+        console.error('PayPal error', error);
+        return await onError(error);
       }}
     />
   );
@@ -118,7 +123,15 @@ const PayPalPayment = (props: Props) => {
         </Button>
       </StatefulPopover>
       {/* PayPal form */}
-      <PayPalForm {...props} onSuccess={paymentApi} />
+      <PayPalForm {...props} onSuccess={paymentApi} onError={async (error) => {
+        const errorMessage = error && error.message;
+        setState({
+          ...state,
+          showResults: true,
+          success: false,
+          message: errorMessage
+        });
+      }} />
 
       {/* Model success */}
       <ResultsDialog title={message} success={success} show={showResults} hide={hide}
