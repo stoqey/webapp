@@ -33,11 +33,11 @@ export const processPayment = async ({
 
     const { data }: { data?: ResType } = dataResponse;
 
-    console.log('payment processing response', JSON.stringify(data));
+    // console.log('payment processing response', JSON.stringify(data));
 
     if (data.success) {
       //   Successful
-      console.log('payment processing successful', JSON.stringify(data));
+      // console.log('payment processing successful', JSON.stringify(data));
       await success(data);
       return;
     }

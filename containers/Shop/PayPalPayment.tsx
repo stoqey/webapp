@@ -20,10 +20,11 @@ interface PayPalFormProps {
   userId: string;
   amount: number;
   onSuccess: (orderId: string) => Promise<any>;
+  onError: (error: Error) => Promise<any>;
 };
 
 const PayPalForm = (props: PayPalFormProps) => {
-  const { userId, amount = 30, onSuccess } = props;
+  const { userId, amount = 30, onSuccess, onError } = props;
   const clientId = process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID;
 
   return (
@@ -35,9 +36,18 @@ const PayPalForm = (props: PayPalFormProps) => {
       amount={amount}
       shippingPreference="NO_SHIPPING" // default is "GET_FROM_FILE"
       onSuccess={async (details, data) => {
-        console.log('Paypal success', data);
+        // console.log('Paypal success', data);
         return await onSuccess(data && data.orderID);
       }}
+      onError={async (error: Error) => {
+        console.error('PayPal error', error);
+        return await onError(error);
+      }}
+      catchError={async (error: Error) => {
+        console.error('PayPal error', error);
+        return await onError(error);
+      }}
+      
     />
   );
 }
@@ -64,19 +74,21 @@ const PayPalPayment = (props: Props) => {
       client,
       args: { orderId, owner: userId, amount: +amount },
       success: async (data: any) => {
-        console.log('successfuly processed payment', data);
+        // console.log('successfuly processed payment', data);
         setState({
           ...state,
-          message: `Successfuly processed payment of $${amount}`,
+          message: `Successfully processed payment of $${amount}`,
           success: true,
+          showResults: true,
         });
       },
       error: async (error: Error) => {
-        console.log('error submitting payment', error);
+        // console.log('error submitting payment', error);
         setState({
           ...state,
           message: `Error processing payment of $${amount}`,
           success: false,
+          showResults: true,
         });
       }
     });
@@ -108,7 +120,16 @@ const PayPalPayment = (props: Props) => {
           overrides={{
             Root: {
               style: () => {
-                return { width: "100%", fontSize: "20px", borderRadius: "5px", height: "55px", marginBottom: "17px" };
+                return { 
+                  width: "100%", 
+                  fontSize: "20px", 
+                  height: "55px", 
+                  marginBottom: "17px",
+                  borderBottomLeftRadius: '5px',
+                  borderTopLeftRadius: '5px',
+                  borderTopRightRadius: '5px',
+                  borderBottomRightRadius: '5px'
+                };
               },
             },
           }}
@@ -118,7 +139,15 @@ const PayPalPayment = (props: Props) => {
         </Button>
       </StatefulPopover>
       {/* PayPal form */}
-      <PayPalForm {...props} onSuccess={paymentApi} />
+      <PayPalForm {...props} onSuccess={paymentApi} onError={async (error) => {
+        const errorMessage = error && error.message;
+        setState({
+          ...state,
+          showResults: true,
+          success: false,
+          message: errorMessage
+        });
+      }} />
 
       {/* Model success */}
       <ResultsDialog title={message} success={success} show={showResults} hide={hide}

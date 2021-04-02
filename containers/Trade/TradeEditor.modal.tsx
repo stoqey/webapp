@@ -15,7 +15,7 @@ import {
   PriceItem,
 } from 'components/PageStyles/Checkout.styled';
 
-import { createOrderMutation } from './portfolios.api'
+import { createOrderMutation } from '../OrderBook/order.api'
 import { niceDec } from 'utils/number';
 import OrderBookContainer from 'containers/OrderBook';
 import { ButtonGroup } from 'baseui/button-group';
@@ -251,12 +251,12 @@ const TradeEditor = (props: Props) => {
                                 width: '50%',
                                 borderTopRightRadius: 0,
                                 borderBottomRightRadius: 0,
-                                background: '#3AA76D',
+                                backgroundColor: '#3AA76D',
                                 color: 'white',
                                 opacity: action === "BUY" ? 1 : 0.2,
 
                                 ":hover": {
-                                  background: '#3AA76D',
+                                  backgroundColor: '#3AA76D',
                                   opacity: 1,
                                 },
                                 ...$theme.typography.font650,
@@ -276,10 +276,10 @@ const TradeEditor = (props: Props) => {
                                 width: '50%',
                                 borderTopLeftRadius: 0,
                                 borderBottomLeftRadius: 0,
-                                background: 'rgba(216, 33, 33);',
+                                backgroundColor: 'rgba(216, 33, 33)',
                                 color: 'white',
                                 ":hover": {
-                                  background: 'rgba(216, 33, 33);',
+                                  backgroundColor: 'rgba(216, 33, 33)',
                                   opacity: 1,
                                 },
                                 opacity: action === "SELL" ? 1 : 0.2,

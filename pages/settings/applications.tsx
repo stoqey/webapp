@@ -71,11 +71,11 @@ const Applications: NextPage<{}> = () => {
 											ControlContainer: {
 												style: () => {
 													return {
-														borderWidth: 0,
-														borderTopLeftRadius: '30px',
-														borderTopRightRadius: '30px',
-														borderBottomRightRadius: '30px',
-														borderBottomLeftRadius: '30px',
+														// borderWidth: 0,
+														// borderTopLeftRadius: '30px',
+														// borderTopRightRadius: '30px',
+														// borderBottomRightRadius: '30px',
+														// borderBottomLeftRadius: '30px',
 														backgroundColor: 'transparent',
 													};
 												},

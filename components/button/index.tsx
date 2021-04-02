@@ -4,14 +4,14 @@ import { Amplitude } from '@amplitude/react-amplitude';
 
 interface Analytics {
   $$typeof?: any;
-  eventName?: string;
+  eventname?: string;
   children?: any;
 };
 
 type ButtonType = ButtonProps & HTMLButtonElement & Analytics;
 
 export const Button = (props?: Partial<ButtonType>) => {
-  const eventName = (props && props.eventName) || 'click';
+  const eventName = (props && props.eventname) || 'click';
 
   if (process.browser) {
     return (

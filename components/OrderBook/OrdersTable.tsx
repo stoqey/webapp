@@ -29,7 +29,7 @@ const OrdersTable: NextPage<Props> = ({ orders, userId, onCancelOrder }: Props) 
 
                 <StyledTable $gridTemplateColumns="max-content auto auto max-content">
                     <StyledTableHeadAlt>State</StyledTableHeadAlt>
-                    <StyledTableHeadAlt>Action {"->"} PriceType </StyledTableHeadAlt>
+                    <StyledTableHeadAlt>Action / PriceType </StyledTableHeadAlt>
                     <StyledTableHeadAlt>Qty</StyledTableHeadAlt>
                     <StyledTableHeadAlt></StyledTableHeadAlt>
                     {!isEmpty(orders) && orders.map((item: OrderType, index) => {
@@ -51,8 +51,8 @@ const OrdersTable: NextPage<Props> = ({ orders, userId, onCancelOrder }: Props) 
                         const cannotBeCanceled = isFilled || canceled;
 
                         return (
-                            <Fragment key={index}>
-                                <StyledTableBodyCell $striped={striped}>
+                            <Fragment key={orderId}>
+                                <StyledTableBodyCell $striped={striped} $isCenter>
                                     <Tag
                                         closeable={false}
                                         variant="outlined"
@@ -62,11 +62,11 @@ const OrdersTable: NextPage<Props> = ({ orders, userId, onCancelOrder }: Props) 
                                     </Tag>
                                 </StyledTableBodyCell>
 
-                                <StyledTableBodyCell $striped={striped}>
-                                    {item.action} {"->"} {item.type}
+                                <StyledTableBodyCell $striped={striped} $isCenter>
+                                    {item.action} / {item.type}
                                 </StyledTableBodyCell>
 
-                                <StyledTableBodyCell $striped={striped}>
+                                <StyledTableBodyCell $striped={striped} $isCenter>
                                     {item.qty} / {item.filledQty}
                                 </StyledTableBodyCell>
 
