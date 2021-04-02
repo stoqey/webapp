@@ -115,7 +115,16 @@ const PayPalPayment = (props: Props) => {
           overrides={{
             Root: {
               style: () => {
-                return { width: "100%", fontSize: "20px", height: "55px", marginBottom: "17px" };
+                return { 
+                  width: "100%", 
+                  fontSize: "20px", 
+                  height: "55px", 
+                  marginBottom: "17px",
+                  borderBottomLeftRadius: '5px',
+                  borderTopLeftRadius: '5px',
+                  borderTopRightRadius: '5px',
+                  borderBottomRightRadius: '5px'
+                };
               },
             },
           }}
