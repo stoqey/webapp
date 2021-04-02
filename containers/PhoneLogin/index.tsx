@@ -120,7 +120,7 @@ const PhoneLoginComponent = (props?: AmplitudeAnalytics) => {
       }
 
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       // Show error from here
       toastKey = toaster.negative(<>Error: {error && error.message}</>, {
         autoHideDuration: 6000

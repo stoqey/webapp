@@ -21,7 +21,7 @@ export const createOrderMutation = async ({
   error?: (error: Error) => Promise<any>;
   success?: (success: boolean) => Promise<any>;
 }) => {
-  console.log('portfolios are', JSON.stringify(args));
+  // console.log('portfolios are', JSON.stringify(args));
 
   try {
 
@@ -45,7 +45,7 @@ export const createOrderMutation = async ({
 
     const { data }: { data?: ResType } = dataResponse;
 
-    console.log(`data response starting portfolio ${JSON.stringify(data)}`);
+    // console.log(`data response starting portfolio ${JSON.stringify(data)}`);
 
     if (data.success) {
       //   Successful

@@ -55,8 +55,8 @@ const OrderBook: NextPage<Props> = (props: Props) => {
 
 						const userId = clientId.slice(0, 6)
 						return (
-							<>
-								<div key={i.id + qty}
+							<div key={i.id + qty}>
+								<div
 									style={{
 										padding: '10px',
 										background: 'rgba(49, 242, 161, 0.39)',
@@ -66,7 +66,7 @@ const OrderBook: NextPage<Props> = (props: Props) => {
 									<H6>${price}</H6>
 								</div>
 								<p>{userId}</p>
-							</>
+							</div>
 
 						)
 					})}
@@ -88,13 +88,13 @@ const OrderBook: NextPage<Props> = (props: Props) => {
 						const qty = totalQty - filledQty;
 						const userId = clientId.slice(0, 6)
 						return (
-							<>
-								<div key={i.id + qty} style={{ padding: '10px', background: 'rgb(216 33 33 / 38%)', display: 'flex', justifyContent: 'space-between', width: '100%' }}>
+							<div key={i.id + qty}>
+								<div style={{ padding: '10px', background: 'rgb(216 33 33 / 38%)', display: 'flex', justifyContent: 'space-between', width: '100%' }}>
 									<H6>${price}</H6>
 									<H6>{qty}</H6>
 								</div>
 								<p>{userId}</p>
-							</>
+							</div>
 
 						)
 					})}
