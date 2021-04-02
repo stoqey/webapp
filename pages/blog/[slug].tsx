@@ -7,7 +7,6 @@ import Head from 'next/head'
 import Link from 'next/link'
 import path from 'path'
 // import CustomLink from '../../components/CustomLink'
-import Layout from 'containers/Layout'
 import { postFilePaths, POSTS_PATH } from '../../utils/mdxUtils'
 
 // Custom components/renderers to pass to MDX.
@@ -26,7 +25,7 @@ const components = {
 export default function PostPage({ source, frontMatter }) {
   const content = hydrate(source, { components })
   return (
-    <Layout>
+    <>
       <header>
         <nav>
           <Link href="/">
@@ -41,20 +40,7 @@ export default function PostPage({ source, frontMatter }) {
         )}
       </div>
       <main>{content}</main>
-
-      <style jsx>{`
-        .post-header h1 {
-          margin-bottom: 0;
-        }
-
-        .post-header {
-          margin-bottom: 2rem;
-        }
-        .description {
-          opacity: 0.6;
-        }
-      `}</style>
-    </Layout>
+    </>
   )
 }
 
