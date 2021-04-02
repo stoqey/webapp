@@ -36,13 +36,18 @@ const PayPalForm = (props: PayPalFormProps) => {
       amount={amount}
       shippingPreference="NO_SHIPPING" // default is "GET_FROM_FILE"
       onSuccess={async (details, data) => {
-        console.log('Paypal success', data);
+        // console.log('Paypal success', data);
         return await onSuccess(data && data.orderID);
       }}
       onError={async (error: Error) => {
         console.error('PayPal error', error);
         return await onError(error);
       }}
+      catchError={async (error: Error) => {
+        console.error('PayPal error', error);
+        return await onError(error);
+      }}
+      
     />
   );
 }
@@ -69,16 +74,16 @@ const PayPalPayment = (props: Props) => {
       client,
       args: { orderId, owner: userId, amount: +amount },
       success: async (data: any) => {
-        console.log('successfuly processed payment', data);
+        // console.log('successfuly processed payment', data);
         setState({
           ...state,
-          message: `Successfuly processed payment of $${amount}`,
+          message: `Successfully processed payment of $${amount}`,
           success: true,
           showResults: true,
         });
       },
       error: async (error: Error) => {
-        console.log('error submitting payment', error);
+        // console.log('error submitting payment', error);
         setState({
           ...state,
           message: `Error processing payment of $${amount}`,

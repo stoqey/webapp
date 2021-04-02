@@ -18,7 +18,7 @@ export const phoneLoginApi = async ({
   error?: (error: Error) => Promise<any>;
   success?: (data: LoginResponseType) => Promise<any>;
 }) => {
-  console.log('phoneLoginApi', JSON.stringify(args));
+  // console.log('phoneLoginApi', JSON.stringify(args));
 
   try {
     const { data: dataResponse }: any = await client.mutate({
@@ -33,11 +33,11 @@ export const phoneLoginApi = async ({
 
     const { data }: { data?: LoginResponseType } = dataResponse;
 
-    console.log('loginApi response', JSON.stringify(data));
+    // console.log('loginApi response', JSON.stringify(data));
 
     if (data.success) {
       //   Successful
-      console.log('Login successful', JSON.stringify(data));
+      // console.log('Login successful', JSON.stringify(data));
       await success(data);
       return;
     }

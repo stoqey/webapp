@@ -15,7 +15,7 @@ import {
   PriceItem,
 } from 'components/PageStyles/Checkout.styled';
 
-import { createOrderMutation } from './portfolios.api'
+import { createOrderMutation } from '../OrderBook/order.api'
 import { niceDec } from 'utils/number';
 import OrderBookContainer from 'containers/OrderBook';
 import { ButtonGroup } from 'baseui/button-group';
