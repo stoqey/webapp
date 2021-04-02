@@ -207,11 +207,6 @@ const Portfolio: NextPage<{}> = () => {
 						ControlContainer: {
 							style: () => {
 								return {
-									borderWidth: 0,
-									// borderTopLeftRadius: '30px',
-									// borderTopRightRadius: '30px',
-									// borderBottomRightRadius: '30px',
-									// borderBottomLeftRadius: '30px',
 									backgroundColor: 'transparent',
 								};
 							},
@@ -300,7 +295,7 @@ const Portfolio: NextPage<{}> = () => {
 
 						{/* Close trade */}
 						<div>
-							<Button eventName={ANALYTICS.USER_TRADE_CLOSE} shape="round" $style={{ backgroundColor: 'blueviolet' }}
+							<Button eventname={ANALYTICS.USER_TRADE_CLOSE} shape="round" $style={{ backgroundColor: 'blueviolet' }}
 								onClick={() => closeThisPosition()}>
 								<ImCross />
 							</Button>
@@ -318,7 +313,7 @@ const Portfolio: NextPage<{}> = () => {
 				padding: '20px'
 			}}>
 				<Button
-				    eventName={ANALYTICS.USER_TRADE}
+				    eventname={ANALYTICS.USER_TRADE}
 					onClick={() => startPortfolio()}
 					kind="primary"
 					shape="pill"

@@ -2,11 +2,11 @@ import { withStyle } from 'baseui';
 import { StyledTable, StyledHeadCell, StyledBodyCell } from 'baseui/table-grid';
 
 export const StyledTableWrapper = withStyle(StyledTable, {
-  borderWidth: 0,
-  borderTopRightRadius: 0,
-  borderTopLeftRadius: 0,
-  borderBottomLeftRadius: 0,
-  borderBottomRightRadius: 0,
+  // borderWidth: 0,
+  // borderTopRightRadius: 0,
+  // borderTopLeftRadius: 0,
+  // borderBottomLeftRadius: 0,
+  // borderBottomRightRadius: 0,
 });
 
 export const StyledTableHead = withStyle(StyledHeadCell, ({ $theme }) => ({
