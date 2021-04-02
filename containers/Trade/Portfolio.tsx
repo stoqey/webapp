@@ -12,7 +12,6 @@ import {
 import { toaster } from 'baseui/toast';
 import applicationsPageData from '../../data/applicationsPage';
 import TradeEditor from './TradeEditor.modal';
-import ClosePortfolio from './ClosePortfolio.modal';
 import { ImCross } from 'react-icons/im';
 import { getPortfoliosPaginationApi } from './portfolios.api';
 import { useApolloClient } from '@apollo/client';
