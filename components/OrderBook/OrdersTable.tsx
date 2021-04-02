@@ -51,7 +51,7 @@ const OrdersTable: NextPage<Props> = ({ orders, userId, onCancelOrder }: Props) 
                         const cannotBeCanceled = isFilled || canceled;
 
                         return (
-                            <Fragment key={index}>
+                            <Fragment key={orderId}>
                                 <StyledTableBodyCell $striped={striped}>
                                     <Tag
                                         closeable={false}
