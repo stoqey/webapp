@@ -7,7 +7,10 @@ import Head from 'next/head'
 import Link from 'next/link'
 import path from 'path'
 // import CustomLink from '../../components/CustomLink'
-import { postFilePaths, POSTS_PATH } from '../../utils/mdxUtils'
+import { postFilePaths, POSTS_PATH } from '../../utils/mdxUtils';
+import { Block } from 'baseui/block';
+import Container from 'components/UiElements/Container/Container';
+import PageTitle from 'components/UiElements/PageTitle/PageTitle';
 
 // Custom components/renderers to pass to MDX.
 // Since the MDX files aren't loaded by webpack, they have no knowledge of how
@@ -26,20 +29,32 @@ export default function PostPage({ source, frontMatter }) {
   const content = hydrate(source, { components })
   return (
     <>
-      <header>
-        <nav>
-          <Link href="/">
-            <a>👈 Go back home</a>
-          </Link>
-        </nav>
-      </header>
-      <div className="post-header">
+      <Head>
+				<title>{frontMatter.title} | Stoqey Blog</title>
+				<meta name="Description" content={frontMatter.description} />
+			</Head>
+
+			<PageTitle title={frontMatter.title} subtitle={frontMatter.description} />
+
+			<Container>
+				<Block paddingBottom="20px">
+					<img
+						src={require('../../assets/images/shop-banner.png')}
+						width="100%"
+						alt="Banner"
+					/>
+				</Block>
+			</Container>
+
+      <main>{content}</main>
+
+      {/* <div className="post-header">
         <h1>{frontMatter.title}</h1>
         {frontMatter.description && (
           <p className="description">{frontMatter.description}</p>
         )}
       </div>
-      <main>{content}</main>
+       */}
     </>
   )
 }
