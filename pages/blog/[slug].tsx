@@ -6,6 +6,7 @@ import dynamic from 'next/dynamic'
 import Head from 'next/head'
 import Link from 'next/link'
 import path from 'path'
+import { Grid, Cell } from 'baseui/layout-grid';
 // import CustomLink from '../../components/CustomLink'
 import { postFilePaths, POSTS_PATH } from '../../utils/mdxUtils';
 import { Block } from 'baseui/block';
@@ -30,23 +31,28 @@ export default function PostPage({ source, frontMatter }) {
   return (
     <>
       <Head>
-				<title>{frontMatter.title} | Stoqey Blog</title>
-				<meta name="Description" content={frontMatter.description} />
-			</Head>
+        <title>{frontMatter.title} | Stoqey Blog</title>
+        <meta name="Description" content={frontMatter.description} />
+      </Head>
 
-			<PageTitle title={frontMatter.title} subtitle={frontMatter.description} />
+      <PageTitle title={frontMatter.title} subtitle={frontMatter.description} />
 
-			<Container>
-				<Block paddingBottom="20px">
-					<img
-						src={require('../../assets/images/shop-banner.png')}
-						width="100%"
-						alt="Banner"
-					/>
-				</Block>
-			</Container>
-
-      <main>{content}</main>
+      <Container>
+        <Block paddingBottom="20px">
+          <img
+            src={require('../../assets/images/shop-banner.png')}
+            width="100%"
+            alt="Banner"
+          />
+        </Block>
+        <Block paddingTop={['0', '0', '0', '40px']}>
+          <Grid gridColumns={12} gridGutters={0} gridMargins={0}>
+            <Cell span={[12, 12, 12]}>
+              <main>{content}</main>
+            </Cell>
+          </Grid>
+        </Block>
+      </Container>
 
       {/* <div className="post-header">
         <h1>{frontMatter.title}</h1>
