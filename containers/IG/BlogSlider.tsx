@@ -54,26 +54,32 @@ type PostsProps = {
 		numberOfView?: string;
 		numberOflike?: string;
 		numberOfcomment: string;
-		onClick?: () => void;
-	}[];
+	};
+	featuredImage: string;
 	avatar: string;
 	username: string;
 };
 
-const Posts = ({ data, avatar, username }: PostsProps) => {
+const ipoData: PostsProps = {
+	data: {
+		id: "ipo",
+		type: "image",
+		image: "https://scontent-ort2-1.cdninstagram.com/v/t51.2885-15/sh0.08/e35/p750x750/167575959_583791149676414_7501016179987055889_n.jpg?tp=1&_nc_ht=scontent-ort2-1.cdninstagram.com&_nc_cat=106&_nc_ohc=exS3XRJz8_gAX-saWYL&edm=AP_V10EAAAAA&ccb=7-4&oh=8995171621293b632e00ca69de894dd9&oe=608EEC2A&_nc_sid=4f375e",
+		numberOfcomment: "0",
+		numberOfView: "0",
+		numberOflike: "0"
+	},
+	featuredImage: "https://www.gravatar.com/avatar/cfd6094081678e8efc4096c323d58a94.jpg?s=500",
+	avatar: "https://www.gravatar.com/avatar/cfd6094081678e8efc4096c323d58a94.jpg?s=500",
+	username: "ceddymuhoza"
+}
+
+const Posts = (props: PostsProps) => {
+	const { data, avatar, username, featuredImage, data: post } = ipoData;
 	const [postLimit, setPostLimit] = useState(9);
 	const [currentPost, setCurrentPost] = useState(1);
 	const [visible, setVisible] = useState(false);
-	const [loading, setLoading] = useState(false);
 	const [direction] = useDirection();
-
-	const handleLoadMore = () => {
-		setLoading(true);
-		setTimeout(() => {
-			setLoading(false);
-			setPostLimit(postLimit + 3);
-		}, 600);
-	};
 
 	const handleModal = (id: number) => {
 		setCurrentPost(id);
@@ -92,61 +98,34 @@ const Posts = ({ data, avatar, username }: PostsProps) => {
 		return { __html: data };
 	};
 
-	let newData: any;
-	data.forEach((item) => {
-		if (parseInt(item.id) === currentPost) {
-			newData = item;
-		}
-	});
+	let newData: any = data;
 
 	return (
 		<Wrapper>
 			<Container>
+
+				{/* Post Image here */}
 				<Row>
-					{data.slice(0, postLimit).map((post) => (
-						<Col sm={6} md={4} key={`post-key${post.id}`}>
-							<InstagramCard
-								style={{ marginBottom: '20px' }}
-								type={post.type}
-								image={post.image}
-								numberOflike={post.numberOflike && post.numberOflike}
-								numberOfView={post.numberOfView && post.numberOfView}
-								numberOfcomment={post.numberOfcomment}
-								onClick={() => handleModal(parseInt(post.id))}
-							/>
-						</Col>
-					))}
+					{/* <img
+						src={featuredImage}
+						width="100%"
+						alt="Banner"
+					/> */}
+
+
+					<Col sm={6} md={4} key={`post-key${post.id}`}>
+						<InstagramCard
+							style={{ marginBottom: '20px' }}
+							type={post.type}
+							image={post.image}
+							numberOflike={post.numberOflike && post.numberOflike}
+							numberOfView={post.numberOfView && post.numberOfView}
+							numberOfcomment={post.numberOfcomment}
+							onClick={() => handleModal(parseInt(post.id))}
+						/>
+					</Col>
 				</Row>
 
-				<Block
-					paddingTop={['10px', '10px', '20px']}
-					display="flex"
-					alignItems="center"
-					justifyContent="center"
-				>
-					{data.length > postLimit ? (
-						<Button
-							isLoading={loading}
-							onClick={handleLoadMore}
-							kind="secondary"
-							size="large"
-							overrides={{
-								BaseButton: {
-									style: ({ $theme }) => {
-										return {
-											height: '48px',
-											...$theme.typography.font250,
-										};
-									},
-								},
-							}}
-						>
-							Check {data.length - postLimit} more posts
-						</Button>
-					) : (
-						'No more post'
-					)}
-				</Block>
 
 				<Modal
 					onClose={() => {
@@ -185,17 +164,16 @@ const Posts = ({ data, avatar, username }: PostsProps) => {
 						},
 					}}
 				>
-					{currentPost > 1 && (
-						<PrevButton onClick={handlePrevPost}>
-							<IoIosArrowBack />
-						</PrevButton>
-					)}
 
-					{currentPost < data.length && (
-						<NextButton onClick={handleNextPost}>
-							<IoIosArrowForward />
-						</NextButton>
-					)}
+					<PrevButton>
+						<IoIosArrowBack />
+					</PrevButton>
+
+
+					<NextButton onClick={handleNextPost}>
+						<IoIosArrowForward />
+					</NextButton>
+
 
 					<ContentWrapper>
 						<Media>
@@ -243,26 +221,26 @@ const Posts = ({ data, avatar, username }: PostsProps) => {
 								<CommentWrapper>
 									{newData.comments !== undefined && newData.comments.length > 0
 										? newData.comments.map((item: any) => (
-												<Comment
-													key={`comment-key${item.id}`}
-													role={item.role}
-													avatar={item.avatar}
-													name={item.username}
-													content={item.comment}
-													handleLike={() =>
-														console.log(
-															'Write like function for post.',
-															newData.id
-														)
-													}
-													handleReply={() =>
-														console.log(
-															'Write reply function for post.',
-															newData.id
-														)
-													}
-												/>
-										  ))
+											<Comment
+												key={`comment-key${item.id}`}
+												role={item.role}
+												avatar={item.avatar}
+												name={item.username}
+												content={item.comment}
+												handleLike={() =>
+													console.log(
+														'Write like function for post.',
+														newData.id
+													)
+												}
+												handleReply={() =>
+													console.log(
+														'Write reply function for post.',
+														newData.id
+													)
+												}
+											/>
+										))
 										: ''}
 								</CommentWrapper>
 							</Body>
@@ -284,7 +262,7 @@ const Posts = ({ data, avatar, username }: PostsProps) => {
 								</SocialList>
 								<ActivityInfo>
 									<NumberOFLike>{newData.numberOflike} likes</NumberOFLike>
-									<PostTime>AUGUST 31</PostTime>
+									<PostTime>APRIL 4th</PostTime>
 								</ActivityInfo>
 							</Footer>
 						</Content>

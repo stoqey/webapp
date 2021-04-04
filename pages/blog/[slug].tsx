@@ -12,7 +12,8 @@ import { postFilePaths, POSTS_PATH } from '../../utils/mdxUtils';
 import { Block } from 'baseui/block';
 import Container from 'components/UiElements/Container/Container';
 import PageTitle from 'components/UiElements/PageTitle/PageTitle';
-import { ParagraphMedium, ParagraphLarge, H3, H6, LabelLarge} from 'baseui/typography'
+import { ParagraphMedium, ParagraphLarge, H3, H6, LabelLarge } from 'baseui/typography'
+import BlogSlider from 'containers/IG/BlogSlider';
 
 // Custom components/renderers to pass to MDX.
 // Since the MDX files aren't loaded by webpack, they have no knowledge of how
@@ -44,11 +45,17 @@ export default function PostPage({ source, frontMatter }) {
 
       <Container>
         <Block paddingBottom="20px">
-          <img
-            src={require('assets/images/' + frontMatter.image)}
-            width="100%"
-            alt="Banner"
-          />
+          {frontMatter.ipo ? (
+            <BlogSlider />
+          ) :
+            (<img
+              src={require('assets/images/' + frontMatter.image)}
+              width="100%"
+              alt="Banner"
+            />
+            )
+          }
+
         </Block>
         <Block paddingTop={['0', '0', '0', '40px']}>
           <Grid gridColumns={12} gridGutters={0} gridMargins={0}>
