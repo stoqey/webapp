@@ -12,19 +12,22 @@ import { postFilePaths, POSTS_PATH } from '../../utils/mdxUtils';
 import { Block } from 'baseui/block';
 import Container from 'components/UiElements/Container/Container';
 import PageTitle from 'components/UiElements/PageTitle/PageTitle';
-import { ParagraphMedium } from 'baseui/typography'
+import { ParagraphMedium, ParagraphLarge, H3, H6, LabelLarge} from 'baseui/typography'
 
 // Custom components/renderers to pass to MDX.
 // Since the MDX files aren't loaded by webpack, they have no knowledge of how
 // to handle import statements. Instead, you must include components in scope
 // here.
 const components = {
-  p: ParagraphMedium,
+  p: ParagraphLarge,
+  strong: LabelLarge,
+  // li: H6,
   // a: CustomLink,
   // It also works with dynamically-imported components, which is especially
   // useful for conditionally loading components for certain routes.
   // See the notes in README.md for more details.
   // TestComponent: dynamic(() => import('../../components/TestComponent')),
+  Title: H3,
   Head,
 }
 
@@ -42,7 +45,7 @@ export default function PostPage({ source, frontMatter }) {
       <Container>
         <Block paddingBottom="20px">
           <img
-            src={require('../../assets/images/shop-banner.png')}
+            src={require('assets/images/' + frontMatter.image)}
             width="100%"
             alt="Banner"
           />
@@ -55,14 +58,6 @@ export default function PostPage({ source, frontMatter }) {
           </Grid>
         </Block>
       </Container>
-
-      {/* <div className="post-header">
-        <h1>{frontMatter.title}</h1>
-        {frontMatter.description && (
-          <p className="description">{frontMatter.description}</p>
-        )}
-      </div>
-       */}
     </>
   )
 }
