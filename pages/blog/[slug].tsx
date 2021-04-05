@@ -39,10 +39,12 @@ export default function PostPage({ source, frontMatter }) {
       <Head>
         <title>{frontMatter.title} | Stoqey Blog</title>
         <meta name="description" content={frontMatter.description} />
+        <meta name="og:description" content={frontMatter.description} />
         <meta property="og:image" content={frontMatter.image} />
+        <meta property="twitter:image" content={frontMatter.image} />
       </Head>
 
-      <PageTitle title={frontMatter.title} subtitle={frontMatter.description} />
+      <PageTitle title={frontMatter.title} />
 
       <Container>
         <Block paddingBottom="20px">

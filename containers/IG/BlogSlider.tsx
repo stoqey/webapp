@@ -106,7 +106,7 @@ const ipoData: PostsProps = {
 		{
 			id: 2,
 			type: "gallery",
-			image: "/dance_ipo.GIF",
+			image: "/ipo_g.GIF",
 			numberOfcomment: "0",
 			numberOfView: "0",
 			numberOflike: "0",
