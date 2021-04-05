@@ -187,7 +187,7 @@ export const Body = styled('main', ({ $theme }) => ({
 
 export const VideoDiv = styled('div', ({ $theme }) => ({
 	position: 'relative',
-	backgroundColor: $theme.colors.primary,
+	backgroundColor: "white",
 	height: '100%',
 	display: 'flex',
 	flexDirection: 'column',

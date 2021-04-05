@@ -79,11 +79,29 @@ const ipoData: PostsProps = {
 		},
 		{
 			id: 1,
-			type: "image",
+			type: "gallery",
 			image: "/ceddy_tr.jpeg",
 			numberOfcomment: "0",
 			numberOfView: "0",
-			numberOflike: "0"
+			numberOflike: "0",
+			gallery: [
+				{
+					id: 3,
+					type: "image",
+					image: "/ceddy_tr.jpeg",
+					numberOfcomment: "0",
+					numberOfView: "0",
+					numberOflike: "0",
+				},
+				{
+					id: 4,
+					type: "video",
+					video: "/ipo_dance_03.MP4",
+					numberOfcomment: "0",
+					numberOfView: "0",
+					numberOflike: "0"
+				},
+			]
 		},
 		{
 			id: 2,
@@ -94,29 +112,22 @@ const ipoData: PostsProps = {
 			numberOflike: "0",
 			gallery: [
 				{
-					id: 0,
-					type: "video",
-					video: "/ipo_dance_03.MP4",
-					numberOfcomment: "0",
-					numberOfView: "0",
-					numberOflike: "0"
-				},
-				{
-					id: 1,
-					type: "image",
-					image: "/ceddy_nice.jpeg",
-					numberOfcomment: "0",
-					numberOfView: "0",
-					numberOflike: "0"
-				},
-				{
 					id: 2,
 					type: "image",
 					image: "/dance_ipo.GIF",
 					numberOfcomment: "0",
 					numberOfView: "0",
 					numberOflike: "0",
-				}
+				},
+				{
+					id: 0,
+					type: "video",
+					video: "/ipo_dance_02.MP4",
+					numberOfcomment: "0",
+					numberOfView: "0",
+					numberOflike: "0"
+				},
+
 			]
 		}
 
@@ -163,7 +174,7 @@ const Posts = (props: PostsProps) => {
 		if (item.video) {
 			return (
 				<VideoDiv>
-					<ReactPlayer url={item.video} playing loop light controls/>
+					<ReactPlayer url={item.video} playing loop light controls />
 				</VideoDiv>
 			)
 		};
