@@ -65,10 +65,10 @@ export default class CustomDocument extends Document<any> {
           <meta property="twitter:site" content="@stoqey_" />
           <meta property="og:url" content="https://app.stoqey.com" />
           <meta property="og:type" content="website" />
-          <meta
+          {/* <meta
             property="og:title"
             content="Stupid simple investing | Online Investment Services | Stoqey"
-          />
+          /> */}
           <meta property="og:image" content={appleTouchIcon180} />
           {/* <meta
             property="og:description"
@@ -90,13 +90,10 @@ export default class CustomDocument extends Document<any> {
           <link rel="icon" type="image/png" sizes="32x32" href={icon32} />
           <link rel="icon" type="image/png" sizes="96x96" href={icon96} />
           <link rel="icon" type="image/png" sizes="16x16" href={icon16} />
-          {/* 
-              // @ts-ignore */}
-          {/* <link rel="manifest" href={manifestFile} /> */}
+
+          <link rel="manifest" href={"/manifest.json"} />
           <meta name="msapplication-TileColor" content="#ffffff" />
-          <meta name="msapplication-TileImage" content={msapplicationTileImage} />
-
-
+          <meta name="msapplication-TileImage" content={"/manifest.json"} />
 
           {this.props.stylesheets.map((sheet, i) => (
             <style

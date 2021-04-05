@@ -38,6 +38,14 @@ export default function PostPage({ source, frontMatter }) {
     <>
       <Head>
         <title>{frontMatter.title} | Stoqey Blog</title>
+        <meta
+          property="og:title"
+          content={frontMatter.title}
+        />
+        <meta
+          property="title"
+          content={frontMatter.title}
+        />
         <meta name="description" content={frontMatter.description} />
         <meta name="og:description" content={frontMatter.description} />
         <meta property="image" content={frontMatter.image} />
