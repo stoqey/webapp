@@ -46,16 +46,17 @@ import Wrapper, {
 	MoreButton,
 } from './Posts.styled';
 
+type MediaContent = {
+	id: number;
+	type: string;
+	image: string;
+	numberOfView?: string;
+	numberOflike?: string;
+	numberOfcomment: string;
+};
+
 type PostsProps = {
-	data: {
-		id: number;
-		type: string;
-		image: string;
-		numberOfView?: string;
-		numberOflike?: string;
-		numberOfcomment: string;
-	}[];
-	featuredImage: string;
+	data: MediaContent[];
 	avatar: string;
 	username: string;
 };
@@ -88,13 +89,12 @@ const ipoData: PostsProps = {
 		}
 
 	],
-	featuredImage: "https://www.gravatar.com/avatar/cfd6094081678e8efc4096c323d58a94.jpg?s=500",
 	avatar: "https://www.gravatar.com/avatar/cfd6094081678e8efc4096c323d58a94.jpg?s=500",
 	username: "ceddymuhoza"
 }
 
 const Posts = (props: PostsProps) => {
-	const { data, avatar, username, featuredImage } = ipoData;
+	const { data, avatar, username } = ipoData;
 	const postsLength = data.length;
 	const [selectedId, setSelectedId] = useState<number>(0);
 	const [visible, setVisible] = useState(false);
@@ -106,14 +106,14 @@ const Posts = (props: PostsProps) => {
 	};
 
 	const handlePrevPost = () => {
-		if(selectedId - 1 >= 0){
+		if (selectedId - 1 >= 0) {
 			setSelectedId(selectedId - 1);
 		}
-		
+
 	};
 
 	const handleNextPost = () => {
-		if(selectedId + 1 <= postsLength - 1){
+		if (selectedId + 1 <= postsLength - 1) {
 			setSelectedId(selectedId + 1);
 		}
 	};
@@ -121,6 +121,43 @@ const Posts = (props: PostsProps) => {
 	const renderHtml = (data: string) => {
 		return { __html: data };
 	};
+
+	const GetComponent = (item: MediaContent) => {
+
+		if (item.type === 'image') {
+			return <Image src={selectedPost.image} alt="Thumbnail" />
+		};
+
+		if (item.type === 'video') {
+			return (
+				<Video
+					className="video-container"
+					dangerouslySetInnerHTML={renderHtml(selectedPost.video)}
+				/>
+			)
+		};
+
+		if (item.type === 'gallery') {
+			return (
+				<Carousel
+					bullets={true}
+					options={{ direction }}
+					numberOfBullets={selectedPost.gallery.length}
+					carouselSelector="gallery"
+					prevButton={<IoIosArrowDropleftCircle />}
+					nextButton={<IoIosArrowDroprightCircle />}
+				>
+					{selectedPost.gallery.map((ite: MediaContent, index: number) => (
+						<Slide key={`gallery-key${index}`}>
+							<GetComponent {...ite} />
+						</Slide>
+					))}
+				</Carousel>
+			)
+		};
+
+		return null;
+	}
 
 	const selectedPost: any = data[selectedId];
 
@@ -205,31 +242,7 @@ const Posts = (props: PostsProps) => {
 
 					<ContentWrapper>
 						<Media>
-							{selectedPost.type === 'image' && (
-								<Image src={selectedPost.image} alt="Thumbnail" />
-							)}
-							{selectedPost.type === 'video' && (
-								<Video
-									className="video-container"
-									dangerouslySetInnerHTML={renderHtml(selectedPost.video)}
-								></Video>
-							)}
-							{selectedPost.type === 'gallery' && (
-								<Carousel
-									bullets={true}
-									options={{ direction }}
-									numberOfBullets={selectedPost.gallery.length}
-									carouselSelector="gallery"
-									prevButton={<IoIosArrowDropleftCircle />}
-									nextButton={<IoIosArrowDroprightCircle />}
-								>
-									{selectedPost.gallery.map((item: string, index: number) => (
-										<Slide key={`gallery-key${index}`}>
-											<img src={item} alt={'post'} />
-										</Slide>
-									))}
-								</Carousel>
-							)}
+							<GetComponent {...selectedPost} />
 						</Media>
 
 						<Content>
