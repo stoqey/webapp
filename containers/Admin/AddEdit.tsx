@@ -55,7 +55,7 @@ const AddEditModal = ({
             {/* Firstname */}
             <FlexGridItem>
               <FormControl
-                label="Title"
+                label="Firstname"
                 error={error && !user.firstname ? 'Please fill out firstname' : null}
                 overrides={{
                   Label: {
@@ -84,7 +84,7 @@ const AddEditModal = ({
             {/* Lastname */}
             <FlexGridItem>
               <FormControl
-                label="Title"
+                label="Lastname"
                 error={error && !user.lastname ? 'Please fill out lastname' : null}
                 overrides={{
                   Label: {
@@ -95,7 +95,7 @@ const AddEditModal = ({
                 }}
               >
                 <Input
-                  name="title"
+                  name="lastname"
                   value={user.lastname}
                   error={error && !user.lastname}
                   onChange={handleOnChange('lastname')}
@@ -110,10 +110,39 @@ const AddEditModal = ({
               </FormControl>
             </FlexGridItem>
 
+            {/* Phone */}
+            <FlexGridItem>
+              <FormControl
+                label="Phone"
+                error={error && !user.phone ? 'Please fill out Phone' : null}
+                overrides={{
+                  Label: {
+                    style: ({ $theme }) => {
+                      return { ...$theme.typography.font200 };
+                    },
+                  },
+                }}
+              >
+                <Input
+                  name="phone"
+                  value={user.phone}
+                  error={error && !user.phone}
+                  onChange={handleOnChange('phone')}
+                  overrides={{
+                    InputContainer: {
+                      style: () => {
+                        return { backgroundColor: 'transparent' };
+                      },
+                    },
+                  }}
+                />
+              </FormControl>
+            </FlexGridItem>
+
             {/* Balance */}
             <FlexGridItem>
               <FormControl
-                label="Description"
+                label="Balance"
                 error={
                   error && !user.balance
                     ? 'Please fill out balance'
