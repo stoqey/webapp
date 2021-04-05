@@ -48,57 +48,81 @@ import Wrapper, {
 
 type PostsProps = {
 	data: {
-		id: string;
+		id: number;
 		type: string;
 		image: string;
 		numberOfView?: string;
 		numberOflike?: string;
 		numberOfcomment: string;
-	};
+	}[];
 	featuredImage: string;
 	avatar: string;
 	username: string;
 };
 
 const ipoData: PostsProps = {
-	data: {
-		id: "ipo",
-		type: "image",
-		image: "https://scontent-ort2-1.cdninstagram.com/v/t51.2885-15/sh0.08/e35/p750x750/167575959_583791149676414_7501016179987055889_n.jpg?tp=1&_nc_ht=scontent-ort2-1.cdninstagram.com&_nc_cat=106&_nc_ohc=exS3XRJz8_gAX-saWYL&edm=AP_V10EAAAAA&ccb=7-4&oh=8995171621293b632e00ca69de894dd9&oe=608EEC2A&_nc_sid=4f375e",
-		numberOfcomment: "0",
-		numberOfView: "0",
-		numberOflike: "0"
-	},
+	data: [
+		{
+			id: 0,
+			type: "image",
+			image: "https://scontent-ort2-1.cdninstagram.com/v/t51.2885-15/e35/s1080x1080/168625100_116477223757374_5209574625375935213_n.jpg?tp=1&_nc_ht=scontent-ort2-1.cdninstagram.com&_nc_cat=106&_nc_ohc=txEdmwhNvlcAX_WtvVP&edm=AP_V10EAAAAA&ccb=7-4&oh=d98633d8c35c8885c88730995b8fe328&oe=60909F5B&_nc_sid=4f375e",
+			numberOfcomment: "0",
+			numberOfView: "0",
+			numberOflike: "0"
+		},
+		{
+			id: 1,
+			type: "image",
+			image: "https://scontent-ort2-1.cdninstagram.com/v/t51.2885-15/sh0.08/e35/p750x750/167575959_583791149676414_7501016179987055889_n.jpg?tp=1&_nc_ht=scontent-ort2-1.cdninstagram.com&_nc_cat=106&_nc_ohc=exS3XRJz8_gAX-saWYL&edm=AP_V10EAAAAA&ccb=7-4&oh=8995171621293b632e00ca69de894dd9&oe=608EEC2A&_nc_sid=4f375e",
+			numberOfcomment: "0",
+			numberOfView: "0",
+			numberOflike: "0"
+		},
+		{
+			id: 2,
+			type: "image",
+			image: "https://scontent-ort2-1.cdninstagram.com/v/t51.2885-15/sh0.08/e35/p750x750/167575959_583791149676414_7501016179987055889_n.jpg?tp=1&_nc_ht=scontent-ort2-1.cdninstagram.com&_nc_cat=106&_nc_ohc=exS3XRJz8_gAX-saWYL&edm=AP_V10EAAAAA&ccb=7-4&oh=8995171621293b632e00ca69de894dd9&oe=608EEC2A&_nc_sid=4f375e",
+			numberOfcomment: "0",
+			numberOfView: "0",
+			numberOflike: "0"
+		}
+
+	],
 	featuredImage: "https://www.gravatar.com/avatar/cfd6094081678e8efc4096c323d58a94.jpg?s=500",
 	avatar: "https://www.gravatar.com/avatar/cfd6094081678e8efc4096c323d58a94.jpg?s=500",
 	username: "ceddymuhoza"
 }
 
 const Posts = (props: PostsProps) => {
-	const { data, avatar, username, featuredImage, data: post } = ipoData;
-	const [postLimit, setPostLimit] = useState(9);
-	const [currentPost, setCurrentPost] = useState(1);
+	const { data, avatar, username, featuredImage } = ipoData;
+	const postsLength = data.length;
+	const [selectedId, setSelectedId] = useState<number>(0);
 	const [visible, setVisible] = useState(false);
 	const [direction] = useDirection();
 
-	const handleModal = (id: number) => {
-		setCurrentPost(id);
+	const handleModal = (selectedP: number) => {
+		setSelectedId(selectedP);
 		setVisible(true);
 	};
 
 	const handlePrevPost = () => {
-		setCurrentPost(currentPost - 1);
+		if(selectedId - 1 >= 0){
+			setSelectedId(selectedId - 1);
+		}
+		
 	};
 
 	const handleNextPost = () => {
-		setCurrentPost(currentPost + 1);
+		if(selectedId + 1 <= postsLength - 1){
+			setSelectedId(selectedId + 1);
+		}
 	};
 
 	const renderHtml = (data: string) => {
 		return { __html: data };
 	};
 
-	let newData: any = data;
+	const selectedPost: any = data[selectedId];
 
 	return (
 		<Wrapper>
@@ -113,17 +137,21 @@ const Posts = (props: PostsProps) => {
 					/> */}
 
 
-					<Col sm={6} md={4} key={`post-key${post.id}`}>
-						<InstagramCard
-							style={{ marginBottom: '20px' }}
-							type={post.type}
-							image={post.image}
-							numberOflike={post.numberOflike && post.numberOflike}
-							numberOfView={post.numberOfView && post.numberOfView}
-							numberOfcomment={post.numberOfcomment}
-							onClick={() => handleModal(parseInt(post.id))}
-						/>
-					</Col>
+					{data.map((post, index) => {
+						return (
+							<Col key={post.id} sm={6} md={4} key={`post-key${post.id}`}>
+								<InstagramCard
+									style={{ marginBottom: '20px' }}
+									type={post.type}
+									image={post.image}
+									numberOflike={post.numberOflike && post.numberOflike}
+									numberOfView={post.numberOfView && post.numberOfView}
+									numberOfcomment={post.numberOfcomment}
+									onClick={() => handleModal(post.id)}
+								/>
+							</Col>
+						)
+					})}
 				</Row>
 
 
@@ -165,7 +193,7 @@ const Posts = (props: PostsProps) => {
 					}}
 				>
 
-					<PrevButton>
+					<PrevButton onClick={handlePrevPost}>
 						<IoIosArrowBack />
 					</PrevButton>
 
@@ -177,25 +205,25 @@ const Posts = (props: PostsProps) => {
 
 					<ContentWrapper>
 						<Media>
-							{newData.type === 'image' && (
-								<Image src={newData.image} alt="Thumbnail" />
+							{selectedPost.type === 'image' && (
+								<Image src={selectedPost.image} alt="Thumbnail" />
 							)}
-							{newData.type === 'video' && (
+							{selectedPost.type === 'video' && (
 								<Video
 									className="video-container"
-									dangerouslySetInnerHTML={renderHtml(newData.video)}
+									dangerouslySetInnerHTML={renderHtml(selectedPost.video)}
 								></Video>
 							)}
-							{newData.type === 'gallery' && (
+							{selectedPost.type === 'gallery' && (
 								<Carousel
 									bullets={true}
 									options={{ direction }}
-									numberOfBullets={newData.gallery.length}
+									numberOfBullets={selectedPost.gallery.length}
 									carouselSelector="gallery"
 									prevButton={<IoIosArrowDropleftCircle />}
 									nextButton={<IoIosArrowDroprightCircle />}
 								>
-									{newData.gallery.map((item: string, index: number) => (
+									{selectedPost.gallery.map((item: string, index: number) => (
 										<Slide key={`gallery-key${index}`}>
 											<img src={item} alt={'post'} />
 										</Slide>
@@ -219,8 +247,8 @@ const Posts = (props: PostsProps) => {
 
 							<Body>
 								<CommentWrapper>
-									{newData.comments !== undefined && newData.comments.length > 0
-										? newData.comments.map((item: any) => (
+									{selectedPost.comments !== undefined && selectedPost.comments.length > 0
+										? selectedPost.comments.map((item: any) => (
 											<Comment
 												key={`comment-key${item.id}`}
 												role={item.role}
@@ -230,13 +258,13 @@ const Posts = (props: PostsProps) => {
 												handleLike={() =>
 													console.log(
 														'Write like function for post.',
-														newData.id
+														selectedPost.id
 													)
 												}
 												handleReply={() =>
 													console.log(
 														'Write reply function for post.',
-														newData.id
+														selectedPost.id
 													)
 												}
 											/>
@@ -261,7 +289,7 @@ const Posts = (props: PostsProps) => {
 									</ListItem>
 								</SocialList>
 								<ActivityInfo>
-									<NumberOFLike>{newData.numberOflike} likes</NumberOFLike>
+									<NumberOFLike>{selectedPost.numberOflike} likes</NumberOFLike>
 									<PostTime>APRIL 4th</PostTime>
 								</ActivityInfo>
 							</Footer>
