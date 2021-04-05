@@ -6,7 +6,7 @@ import { Modal, ModalBody } from 'baseui/modal';
 import { PayPalButton } from "react-paypal-button-v2";
 import { processPayment } from './api';
 import { useApolloClient } from '@apollo/client';
-import { FaHandHoldingUsd } from 'react-icons/fa';
+import { FaHandHoldingUsd, FaStripe } from 'react-icons/fa';
 import { StatefulPopover } from "baseui/popover";
 import { H6 } from 'baseui/typography';
 import ResultsDialog from '@/components/Modal/Result.dialog';
@@ -47,7 +47,7 @@ const PayPalForm = (props: PayPalFormProps) => {
         console.error('PayPal error', error);
         return await onError(error);
       }}
-      
+
     />
   );
 }
@@ -106,6 +106,29 @@ const PayPalPayment = (props: Props) => {
   return (
     <Block marginLeft="-16px" marginRight="-16px">
 
+      <Button
+        shape="square"
+        overrides={{
+          Root: {
+            style: () => {
+              return {
+                width: "100%",
+                fontSize: "20px",
+                height: "55px",
+                marginBottom: "17px",
+                borderBottomLeftRadius: '5px',
+                borderTopLeftRadius: '5px',
+                borderTopRightRadius: '5px',
+                borderBottomRightRadius: '5px'
+              };
+            },
+          },
+        }}
+      >
+        <FaStripe size={30} style={{ margin: "10px" }} />
+        <h4>Credit/Debit Cards</h4>
+      </Button>
+
       <StatefulPopover
         content={() => (
           <Block padding="15px" $style={{ textAlign: "center" }}>
@@ -115,15 +138,16 @@ const PayPalPayment = (props: Props) => {
         returnFocus
         autoFocus
       >
+
         <Button
           shape="square"
           overrides={{
             Root: {
               style: () => {
-                return { 
-                  width: "100%", 
-                  fontSize: "20px", 
-                  height: "55px", 
+                return {
+                  width: "100%",
+                  fontSize: "20px",
+                  height: "55px",
                   marginBottom: "17px",
                   borderBottomLeftRadius: '5px',
                   borderTopLeftRadius: '5px',
