@@ -7,7 +7,7 @@ import Toaster from '../../components/UiElements/Toaster/Toaster';
 import AddEditModal from './AddEdit';
 import UpdateBalanceModal from './UpdateBalance';
 import { useApolloClient } from '@apollo/client';
-import { GET_ALL_USERS, UserType } from '@stoqey/client-graphql';
+import { GET_ALL_USERS, ADD_USER_MUTATION, UserType } from '@stoqey/client-graphql';
 import { isEmpty } from 'lodash';
 import UserTable from '@/components/admin/UserTable';
 
@@ -169,11 +169,11 @@ const AdminUserCRUD = () => {
   };
 
   const handleOnSubmit = async () => {
-    const errorStatus = checkError();
+    // const errorStatus = checkError();
     const data = user;
     let id = null;
 
-    if (user.id && !errorStatus) {
+    if (user.id) {
       try {
         // TODO update user
         // id = await updateDocument('articles', data);
@@ -188,15 +188,29 @@ const AdminUserCRUD = () => {
       }
       setVisible(false);
 
-    } else if (!user.id && !errorStatus) {
+    } else if (!user.id) {
       try {
-        // TODO create user
-        // id = await addDocument('articles', data);
-        toastKey = toaster.info(<>{'Successful!'}</>, {
+        const { data }: { data?: { data: { success: boolean, message: string } } } = await client.mutate({
+          mutation: ADD_USER_MUTATION,
+          variables: {
+            user: {
+              ...user,
+              balance: +user.balance
+            }
+          },
+          fetchPolicy: "no-cache"
+        });
+
+        if (!data.data.success) {
+          throw new Error('Error create new user');
+        }
+
+        id = data.data;
+        toastKey = toaster.info(<>{'Successfully created a new user!'}</>, {
           autoHideDuration: 2000,
         });
       } catch (error) {
-        toastKey = toaster.negative(<>{'Failed!'}</>, {
+        toastKey = toaster.negative(<>{'Failed!' + error && error.message}</>, {
           autoHideDuration: 2000,
         });
         console.log(error);
@@ -209,8 +223,8 @@ const AdminUserCRUD = () => {
     }
   };
 
-  const handleUpdateBalance = (success:  boolean) => {
-    if(success){
+  const handleUpdateBalance = (success: boolean) => {
+    if (success) {
       handleBalanceModdalClose();
       fetchData();
     }
@@ -295,13 +309,13 @@ const AdminUserCRUD = () => {
         {loading ? (
           <Loader />
         ) : (
-            <UserTable
-              data={users}
-              onUpdateUserBalance={handleUpdateUserBalance}
-              onUpdate={() => { }}
-              onDelete={() => { }}
-            />
-          )}
+          <UserTable
+            data={users}
+            onUpdateUserBalance={handleUpdateUserBalance}
+            onUpdate={() => { }}
+            onDelete={() => { }}
+          />
+        )}
       </Block>
 
       <AddEditModal
