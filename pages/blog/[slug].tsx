@@ -38,7 +38,8 @@ export default function PostPage({ source, frontMatter }) {
     <>
       <Head>
         <title>{frontMatter.title} | Stoqey Blog</title>
-        <meta name="Description" content={frontMatter.description} />
+        <meta name="description" content={frontMatter.description} />
+        <meta property="og:image" content={frontMatter.image} />
       </Head>
 
       <PageTitle title={frontMatter.title} subtitle={frontMatter.description} />
@@ -46,10 +47,11 @@ export default function PostPage({ source, frontMatter }) {
       <Container>
         <Block paddingBottom="20px">
           {frontMatter.ipo ? (
+            // @ts-ignore
             <BlogSlider />
           ) :
             (<img
-              src={require('assets/images/' + frontMatter.image)}
+              src={frontMatter.image}
               width="100%"
               alt="Banner"
             />
