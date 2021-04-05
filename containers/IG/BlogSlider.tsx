@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import ReactPlayer from 'react-player';
 import {
 	IoIosArrowBack,
 	IoIosArrowForward,
@@ -28,7 +29,7 @@ import Wrapper, {
 	ContentWrapper,
 	Media,
 	Image,
-	Video,
+	VideoDiv,
 	Content,
 	Header,
 	AvatarWrapper,
@@ -49,14 +50,19 @@ import Wrapper, {
 type MediaContent = {
 	id: number;
 	type: string;
-	image: string;
+	image?: string;
+	video?: string;
 	numberOfView?: string;
 	numberOflike?: string;
 	numberOfcomment: string;
 };
 
+interface PostContent extends MediaContent {
+	gallery?: MediaContent[]
+};
+
 type PostsProps = {
-	data: MediaContent[];
+	data: PostContent[];
 	avatar: string;
 	username: string;
 };
@@ -81,11 +87,37 @@ const ipoData: PostsProps = {
 		},
 		{
 			id: 2,
-			type: "image",
+			type: "gallery",
 			image: "/dance_ipo.GIF",
 			numberOfcomment: "0",
 			numberOfView: "0",
-			numberOflike: "0"
+			numberOflike: "0",
+			gallery: [
+				{
+					id: 0,
+					type: "video",
+					video: "/ipo_dance_03.MP4",
+					numberOfcomment: "0",
+					numberOfView: "0",
+					numberOflike: "0"
+				},
+				{
+					id: 1,
+					type: "image",
+					image: "/ceddy_nice.jpeg",
+					numberOfcomment: "0",
+					numberOfView: "0",
+					numberOflike: "0"
+				},
+				{
+					id: 2,
+					type: "image",
+					image: "/dance_ipo.GIF",
+					numberOfcomment: "0",
+					numberOfView: "0",
+					numberOflike: "0",
+				}
+			]
 		}
 
 	],
@@ -125,15 +157,14 @@ const Posts = (props: PostsProps) => {
 	const GetComponent = (item: MediaContent) => {
 
 		if (item.type === 'image') {
-			return <Image src={selectedPost.image} alt="Thumbnail" />
+			return <Image src={item.image} alt="Thumbnail" />
 		};
 
-		if (item.type === 'video') {
+		if (item.video) {
 			return (
-				<Video
-					className="video-container"
-					dangerouslySetInnerHTML={renderHtml(selectedPost.video)}
-				/>
+				<VideoDiv>
+					<ReactPlayer url={item.video} playing loop light controls/>
+				</VideoDiv>
 			)
 		};
 
@@ -149,6 +180,7 @@ const Posts = (props: PostsProps) => {
 				>
 					{selectedPost.gallery.map((ite: MediaContent, index: number) => (
 						<Slide key={`gallery-key${index}`}>
+							{/* Recursive */}
 							<GetComponent {...ite} />
 						</Slide>
 					))}
@@ -167,13 +199,6 @@ const Posts = (props: PostsProps) => {
 
 				{/* Post Image here */}
 				<Row>
-					{/* <img
-						src={featuredImage}
-						width="100%"
-						alt="Banner"
-					/> */}
-
-
 					{data.map((post, index) => {
 						return (
 							<Col key={post.id} sm={6} md={4} key={`post-key${post.id}`}>
