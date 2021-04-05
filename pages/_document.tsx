@@ -55,10 +55,10 @@ export default class CustomDocument extends Document<any> {
             sndl, gold, aphria stock, stock market, ethereum price, sndl stock,
             scr stock, scr stock, zom stock, gme stock price, penny stocks,  investing services, invest service, trading services, trade service, trading account services, trade account, invest account, business account, stocks, stocks investing, crypto, crypto investing, bitcoin, ico, contracts, ethereum, dogecoin, stoqey, STQ"
           />
-          <meta
+          {/* <meta
             name="description"
             content="Investing sucks, let bots do it for you? then share profits"
-          />
+          /> */}
 
           <link rel="canonical" href="https://app.stoqey.com" />
           <meta property="twitter:card" content="summary" />
@@ -70,10 +70,10 @@ export default class CustomDocument extends Document<any> {
             content="Stupid simple investing | Online Investment Services | Stoqey"
           />
           <meta property="og:image" content={appleTouchIcon180} />
-          <meta
+          {/* <meta
             property="og:description"
             content="Investing sucks, let bots do it for you? then share profits"
-          />
+          /> */}
 
           {/* Icon */}
           <link rel="icon" href={favicon} type="image/png" sizes="16x16" />
