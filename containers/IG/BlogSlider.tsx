@@ -81,7 +81,7 @@ const ipoData: PostsProps = {
 		{
 			id: 2,
 			type: "image",
-			image: "https://scontent-ort2-1.cdninstagram.com/v/t51.2885-15/sh0.08/e35/p750x750/167575959_583791149676414_7501016179987055889_n.jpg?tp=1&_nc_ht=scontent-ort2-1.cdninstagram.com&_nc_cat=106&_nc_ohc=exS3XRJz8_gAX-saWYL&edm=AP_V10EAAAAA&ccb=7-4&oh=8995171621293b632e00ca69de894dd9&oe=608EEC2A&_nc_sid=4f375e",
+			image: "/dance_ipo.GIF",
 			numberOfcomment: "0",
 			numberOfView: "0",
 			numberOflike: "0"
