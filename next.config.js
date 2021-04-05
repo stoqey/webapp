@@ -13,6 +13,10 @@ const nextConfiguration = {
   env: {
     paypalId: process.env.PAYPAL_CLIENT,
   },
+  publicRuntimeConfig: {
+    // Will be available on both server and client
+    staticFolder: '/public',
+  },
   // assetPrefix: isProd ? 'web/' : '',
 };
 

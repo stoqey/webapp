@@ -65,7 +65,7 @@ const ipoData: PostsProps = {
 		{
 			id: 0,
 			type: "image",
-			image: "https://scontent-ort2-1.cdninstagram.com/v/t51.2885-15/e35/s1080x1080/168625100_116477223757374_5209574625375935213_n.jpg?tp=1&_nc_ht=scontent-ort2-1.cdninstagram.com&_nc_cat=106&_nc_ohc=txEdmwhNvlcAX_WtvVP&edm=AP_V10EAAAAA&ccb=7-4&oh=d98633d8c35c8885c88730995b8fe328&oe=60909F5B&_nc_sid=4f375e",
+			image: "/ceddy_nice.jpeg",
 			numberOfcomment: "0",
 			numberOfView: "0",
 			numberOflike: "0"
@@ -73,7 +73,7 @@ const ipoData: PostsProps = {
 		{
 			id: 1,
 			type: "image",
-			image: "https://scontent-ort2-1.cdninstagram.com/v/t51.2885-15/sh0.08/e35/p750x750/167575959_583791149676414_7501016179987055889_n.jpg?tp=1&_nc_ht=scontent-ort2-1.cdninstagram.com&_nc_cat=106&_nc_ohc=exS3XRJz8_gAX-saWYL&edm=AP_V10EAAAAA&ccb=7-4&oh=8995171621293b632e00ca69de894dd9&oe=608EEC2A&_nc_sid=4f375e",
+			image: "/ceddy_tr.jpeg",
 			numberOfcomment: "0",
 			numberOfView: "0",
 			numberOflike: "0"
