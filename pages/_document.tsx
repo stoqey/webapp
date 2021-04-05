@@ -55,25 +55,25 @@ export default class CustomDocument extends Document<any> {
             sndl, gold, aphria stock, stock market, ethereum price, sndl stock,
             scr stock, scr stock, zom stock, gme stock price, penny stocks,  investing services, invest service, trading services, trade service, trading account services, trade account, invest account, business account, stocks, stocks investing, crypto, crypto investing, bitcoin, ico, contracts, ethereum, dogecoin, stoqey, STQ"
           />
-          <meta
+          {/* <meta
             name="description"
             content="Investing sucks, let bots do it for you? then share profits"
-          />
+          /> */}
 
           <link rel="canonical" href="https://app.stoqey.com" />
           <meta property="twitter:card" content="summary" />
           <meta property="twitter:site" content="@stoqey_" />
           <meta property="og:url" content="https://app.stoqey.com" />
           <meta property="og:type" content="website" />
-          <meta
+          {/* <meta
             property="og:title"
             content="Stupid simple investing | Online Investment Services | Stoqey"
-          />
+          /> */}
           <meta property="og:image" content={appleTouchIcon180} />
-          <meta
+          {/* <meta
             property="og:description"
             content="Investing sucks, let bots do it for you? then share profits"
-          />
+          /> */}
 
           {/* Icon */}
           <link rel="icon" href={favicon} type="image/png" sizes="16x16" />
@@ -90,13 +90,10 @@ export default class CustomDocument extends Document<any> {
           <link rel="icon" type="image/png" sizes="32x32" href={icon32} />
           <link rel="icon" type="image/png" sizes="96x96" href={icon96} />
           <link rel="icon" type="image/png" sizes="16x16" href={icon16} />
-          {/* 
-              // @ts-ignore */}
-          {/* <link rel="manifest" href={manifestFile} /> */}
+
+          <link rel="manifest" href={"/manifest.json"} />
           <meta name="msapplication-TileColor" content="#ffffff" />
-          <meta name="msapplication-TileImage" content={msapplicationTileImage} />
-
-
+          <meta name="msapplication-TileImage" content={"/manifest.json"} />
 
           {this.props.stylesheets.map((sheet, i) => (
             <style
