@@ -212,7 +212,7 @@ const Posts = (props: PostsProps) => {
 				<Row>
 					{data.map((post, index) => {
 						return (
-							<Col key={post.id} sm={6} md={4} key={`post-key${post.id}`}>
+							<Col sm={6} md={4} key={`post-key${post.id}`}>
 								<InstagramCard
 									style={{ marginBottom: '20px' }}
 									type={post.type}
