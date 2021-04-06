@@ -30,7 +30,7 @@ export const StripeCheckoutForm = ({ children, userId, amount }: any) => {
         const query = querystring.stringify(params)
 
         // Call your backend to create the Checkout Session
-        const response = await fetch(`${getBackendHost()}/stripe/create-checkout-session?${query}`, {
+        const response = await fetch(`${getBackendHost()}/rest/stripe/create-checkout-session?${query}`, {
             method: 'POST',
             // @ts-ignore
             body: params
