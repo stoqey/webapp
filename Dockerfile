@@ -8,6 +8,7 @@ ARG BACKEND
 ARG PAYPAL_ID
 ARG AMPLITUDE_KEY
 ARG GTAG
+ARG STRIPE_PUBLIC
 
 # create & set working directory
 RUN mkdir -p /usr/src
@@ -28,6 +29,7 @@ ENV NEXT_PUBLIC_PAYPAL_ID=$PAYPAL_ID
 ENV NODE_ENV=production
 ENV NEXT_PUBLIC_AMPLITUDE_KEY=$AMPLITUDE_KEY
 ENV NEXT_PUBLIC_GTAG=$GTAG
+ENV NEXT_PUBLIC_STRIPE=$STRIPE_PUBLIC
 
 # Save all env to dotenv
 RUN printenv | sed 's/\([^=]*=\)\(.*\)/\1"\2"/' > /usr/src/.env

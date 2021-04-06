@@ -11,6 +11,7 @@ env:
   NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }} 
   FB_SA_KEY: ${{ secrets.CLIENT_FIREBASE_STQNETWORK }}
   PAYPAL_ID: ${{ secrets.PROD_PAYPAL_ID }}
+  STRIPE_PUBLIC: ${{ secrets.DEV_STRIPE_PUBLIC }}
   AMPLITUDE_KEY: ${{ secrets.PROD_WEBAPP_AMPLITUDE_KEY }}
   GTAG:  ${{ secrets.PROD_WEBAPP_GTAG }}
   BACKEND: ${{ secrets.PROD_STQ_BACKEND }} 
@@ -49,6 +50,7 @@ jobs:
           --build-arg AMPLITUDE_KEY="$AMPLITUDE_KEY" \
           --build-arg GTAG="$GTAG" \
           --build-arg PAYPAL_ID="$PAYPAL_ID" \
+          --build-arg STRIPE_PUBLIC="$STRIPE_PUBLIC" \
           --build-arg FB_SA_KEY="$FB_SA_KEY" \
           --build-arg GITHUB_SHA="$GITHUB_SHA" \
           --build-arg GITHUB_REF="$GITHUB_REF" \
