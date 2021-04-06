@@ -2,6 +2,10 @@ import { includes } from "lodash";
 
 const urlFromJson = process.env.NEXT_PUBLIC_API_URL;
 
+/**
+ * GetBackendHost
+ * @returns 
+ */
 export const getBackendHost = () => {
   
     let useHttps = false;
