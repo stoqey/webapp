@@ -1,10 +1,15 @@
 import querystring from 'querystring';
+import dynamic from 'next/dynamic';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { getBackendHost } from 'utils/api.utils';
+
+const SuccessStripe = dynamic(() => import("./Success"), { ssr: false })
 
 export const StripeCheckoutForm = ({ children, userId, amount }: any) => {
     const stripe = useStripe();
     const elements = useElements();
+
+    console.log('StripeCheckoutForm');
 
     const handleSubmit = async (event) => {
         // Block native form submission.
@@ -15,12 +20,6 @@ export const StripeCheckoutForm = ({ children, userId, amount }: any) => {
             // form submission until Stripe.js has loaded.
             return;
         }
-
-        // Use your card Element with other Stripe.js APIs
-        // const {error, paymentMethod} = await stripe.createPaymentMethod({
-        //   type: 'card',
-        //   card: cardElement,
-        // });
 
         const params = {
             userId,
@@ -55,8 +54,12 @@ export const StripeCheckoutForm = ({ children, userId, amount }: any) => {
     };
 
     return (
-        <div onClick={handleSubmit}>
-            {children}
-        </div>
+        <>
+            <SuccessStripe />
+            <div onClick={handleSubmit}>
+                {children}
+            </div>
+        </>
+
     );
 };

@@ -111,6 +111,9 @@ const PayPalPayment = (props: Props) => {
 
   const { message, showResults, success } = state;
 
+  console.log('PayPalPayment');
+
+
   return (
     <Elements stripe={stripePromise}>
       <Block marginLeft="-16px" marginRight="-16px">
