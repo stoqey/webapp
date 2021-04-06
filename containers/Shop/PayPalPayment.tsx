@@ -111,7 +111,7 @@ const PayPalPayment = (props: Props) => {
 
   const { message, showResults, success } = state;
 
-  console.log('PayPalPayment');
+  // console.log('PayPalPayment');
 
 
   return (

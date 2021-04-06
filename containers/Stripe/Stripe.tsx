@@ -9,7 +9,7 @@ export const StripeCheckoutForm = ({ children, userId, amount }: any) => {
     const stripe = useStripe();
     const elements = useElements();
 
-    console.log('StripeCheckoutForm');
+    // console.log('StripeCheckoutForm');
 
     const handleSubmit = async (event) => {
         // Block native form submission.
