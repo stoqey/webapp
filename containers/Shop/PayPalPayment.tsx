@@ -12,7 +12,7 @@ import { H6 } from 'baseui/typography';
 import ResultsDialog from '@/components/Modal/Result.dialog';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
-import { StripeCheckoutForm } from './Stripe';
+import { StripeCheckoutForm } from '../Stripe/Stripe';
 
 // Make sure to call `loadStripe` outside of a component’s render to avoid
 // recreating the `Stripe` object on every render.
@@ -115,7 +115,7 @@ const PayPalPayment = (props: Props) => {
     <Elements stripe={stripePromise}>
       <Block marginLeft="-16px" marginRight="-16px">
 
-        <StripeCheckoutForm >
+        <StripeCheckoutForm userId={userId} amount={amount} >
           <Button
             shape="square"
             overrides={{
