@@ -6,10 +6,18 @@ import { Modal, ModalBody } from 'baseui/modal';
 import { PayPalButton } from "react-paypal-button-v2";
 import { processPayment } from './api';
 import { useApolloClient } from '@apollo/client';
-import { FaHandHoldingUsd } from 'react-icons/fa';
+import { FaHandHoldingUsd, FaStripe } from 'react-icons/fa';
 import { StatefulPopover } from "baseui/popover";
 import { H6 } from 'baseui/typography';
 import ResultsDialog from '@/components/Modal/Result.dialog';
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
+import { StripeCheckoutForm } from '../Stripe/Stripe';
+
+// Make sure to call `loadStripe` outside of a component’s render to avoid
+// recreating the `Stripe` object on every render.
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE);
+
 
 interface Props {
   userId: string;
@@ -47,7 +55,7 @@ const PayPalForm = (props: PayPalFormProps) => {
         console.error('PayPal error', error);
         return await onError(error);
       }}
-      
+
     />
   );
 }
@@ -103,60 +111,95 @@ const PayPalPayment = (props: Props) => {
 
   const { message, showResults, success } = state;
 
+  // console.log('PayPalPayment');
+
+
   return (
-    <Block marginLeft="-16px" marginRight="-16px">
+    <Elements stripe={stripePromise}>
+      <Block marginLeft="-16px" marginRight="-16px" alignContent="center" justifyContent="center" alignItems="center">
 
-      <StatefulPopover
-        content={() => (
-          <Block padding="15px" $style={{ textAlign: "center" }}>
-            <h3>Send any amount to support@stoqey.com, please add your account's phone number as the message</h3>
-          </Block>
-        )}
-        returnFocus
-        autoFocus
-      >
-        <Button
-          shape="square"
-          overrides={{
-            Root: {
-              style: () => {
-                return { 
-                  width: "100%", 
-                  fontSize: "20px", 
-                  height: "55px", 
-                  marginBottom: "17px",
-                  borderBottomLeftRadius: '5px',
-                  borderTopLeftRadius: '5px',
-                  borderTopRightRadius: '5px',
-                  borderBottomRightRadius: '5px'
-                };
+        <StripeCheckoutForm userId={userId} amount={amount} >
+          <Button
+            shape="square"
+            overrides={{
+              Root: {
+                style: () => {
+                  return {
+                    width: "100%",
+                    fontSize: "20px",
+                    height: "55px",
+                    marginBottom: "17px",
+                    borderBottomLeftRadius: '5px',
+                    borderTopLeftRadius: '5px',
+                    borderTopRightRadius: '5px',
+                    borderBottomRightRadius: '5px'
+                  };
+                },
               },
-            },
-          }}
-        >
-          <FaHandHoldingUsd size={30} style={{ margin: "10px" }} />
-          <h4>E-transfer</h4>
-        </Button>
-      </StatefulPopover>
-      {/* PayPal form */}
-      <PayPalForm {...props} onSuccess={paymentApi} onError={async (error) => {
-        const errorMessage = error && error.message;
-        setState({
-          ...state,
-          showResults: true,
-          success: false,
-          message: errorMessage
-        });
-      }} />
+            }}
+          >
+            <FaStripe size={30} style={{ margin: "10px" }} />
+            <h4>Credit/Debit Cards</h4>
+          </Button>
+        </StripeCheckoutForm>
 
-      {/* Model success */}
-      <ResultsDialog title={message} success={success} show={showResults} hide={hide}
-        content={[
-          { title: "Amount", value: +amount },
-        ]}
-      />
-    </Block>
+
+        <StatefulPopover
+          content={() => (
+            <Block padding="15px" $style={{ textAlign: "center" }}>
+              <h3>Send any amount to support@stoqey.com, please add your account's phone number as the message</h3>
+            </Block>
+          )}
+          returnFocus
+          autoFocus
+        >
+          <Button
+            disabled
+            shape="square"
+            overrides={{
+              Root: {
+                style: () => {
+                  return {
+                    width: "100%",
+                    fontSize: "20px",
+                    height: "55px",
+                    marginBottom: "17px",
+                    borderBottomLeftRadius: '5px',
+                    borderTopLeftRadius: '5px',
+                    borderTopRightRadius: '5px',
+                    borderBottomRightRadius: '5px'
+                  };
+                },
+              },
+            }}
+          >
+            <FaHandHoldingUsd size={30} style={{ margin: "10px" }} />
+            <h4>E-transfer (Coming soon...)</h4>
+          </Button>
+        </StatefulPopover>
+
+        {/* PayPal form */}
+        {/* <PayPalForm {...props} onSuccess={paymentApi} onError={async (error) => {
+          const errorMessage = error && error.message;
+          setState({
+            ...state,
+            showResults: true,
+            success: false,
+            message: errorMessage
+          });
+        }} /> */}
+
+        {/* Model success */}
+        <ResultsDialog title={message} success={success} show={showResults} hide={hide}
+          content={[
+            { title: "Amount", value: +amount },
+          ]}
+        />
+      </Block>
+    </Elements>
   );
 };
 
 export default PayPalPayment;
+
+// 
