@@ -10,6 +10,7 @@ import { useForm } from 'react-hook-form';
 import Container from 'components/UiElements/Container/Container';
 import PortfolioMenu from 'components/SideMenu/PortfolioMenu';
 import { ButtonGroup } from 'components/PageStyles/Settings.styled';
+import FundsMenu from '@/components/SideMenu/FundsMenu';
 
 type FormData = {
 	amount: string;
@@ -58,7 +59,7 @@ const Withdraw: NextPage<{}> = () => {
 				<Block paddingTop={['0', '0', '0', '40px']}>
 					<Grid gridColumns={12} gridGutters={0} gridMargins={0}>
 						<Cell span={[12, 12, 3]}>
-							<PortfolioMenu />
+							<FundsMenu />
 						</Cell>
 						<Cell span={[12, 12, 9]}>
 							<Block paddingTop={['10px', '10px', '20px', '0']}>

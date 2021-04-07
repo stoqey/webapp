@@ -30,6 +30,7 @@ import { useAppEvent } from 'hooks/useAppEvent';
 import { APPEVENTS } from '@/lib/AppEvent';
 import { niceDec } from 'utils/number';
 import CurrencyPill from '@/components/Currency';
+import FundsMenu from '@/components/SideMenu/FundsMenu';
 
 const TITLE = 'Add funds';
 const SUB_TITLE = 'Add money to your Stoqey account, then start trading';
@@ -98,59 +99,6 @@ const AddFunds: NextPage<{}> = () => {
 			/>
 
 			<Container>
-				<MenuStep className="step-menu">
-
-
-					<CurrencyPill amount={user && user.balance} name={'account balance'} />
-
-					{/* <ListItem
-						className={step === 1 ? 'active' : ''}
-						onClick={() => handleChange("step")(1)}
-					>
-						<FaDollarSign />
-						<FaMoneyBillWave />
-						<Block
-							overrides={{
-								Block: {
-									style: ({ $theme }) => {
-										return {
-											padding: '10px',
-											color: $theme.colors.primaryA,
-										};
-									},
-								},
-							}}
-						>
-							Amount
-						</Block>
-					</ListItem> */}
-					{/* {totalPrice > 5 && (
-						<ListItem
-							aria-disabled="true"
-							className={step === 2 ? 'active' : ''}
-							onClick={() => handleChange("step")(2)}
-						>
-							<FaCreditCard />
-							<FaPaypal />
-							<FaBitcoin />
-							<Block
-								overrides={{
-									Block: {
-										style: ({ $theme }) => {
-											return {
-												padding: '10px',
-												color: $theme.colors.primaryA,
-											};
-										},
-									},
-								}}
-							>
-								Payment
-						</Block>
-						</ListItem>
-					)} */}
-
-				</MenuStep>
 
 				<Block marginLeft={[0, 0, 0, '-25px']} marginRight={[0, 0, 0, '-25px']}>
 					<Grid
@@ -159,12 +107,18 @@ const AddFunds: NextPage<{}> = () => {
 						gridGutters={[0, 0, 50]}
 						gridMargins={0}
 					>
-						{step !== 3 && (
-							<Cell span={[12, 12, 5]}>
 
-							</Cell>
-						)}
+						<Cell span={[12, 12, 3]}>
+							<FundsMenu />
+						</Cell>
+
 						<Cell span={[12, 12, 6]}>
+
+							<MenuStep className="step-menu">
+								<CurrencyPill amount={user && user.balance} name={'account balance'} />
+							</MenuStep>
+
+
 							<Block paddingTop={['30px', '40px', '0']}>
 								<Title>Payment Details</Title>
 								{/* <div style={{ display: "flex", justifyContent: "center" }}>
