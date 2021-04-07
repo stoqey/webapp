@@ -161,50 +161,54 @@ const AddFunds: NextPage<{}> = () => {
 					>
 						{step !== 3 && (
 							<Cell span={[12, 12, 5]}>
-								<Block paddingTop={['30px', '40px', '0']}>
-									<Title>Payment Details</Title>
-									{/* <div style={{ display: "flex", justifyContent: "center" }}>
+
+							</Cell>
+						)}
+						<Cell span={[12, 12, 6]}>
+							<Block paddingTop={['30px', '40px', '0']}>
+								<Title>Payment Details</Title>
+								{/* <div style={{ display: "flex", justifyContent: "center" }}>
 										<Button disabled={step !== 1} size="compact" kind={amountType === "amount" ? "primary" : "secondary"} onClick={() => handleChange("amountType")("amount")}>Amount</Button>
 										<Button disabled={step !== 1} size="compact" kind={amountType === "qty" ? "primary" : "secondary"} onClick={() => handleChange("amountType")("qty")}>Quantity</Button>
 									</div> */}
-									{/* {amountType === "amount" ? ( */}
-									<Input
-										// disabled={step !== 1}
-										startEnhancer="$"
-										type={"number"}
-										value={inputAmount}
-										onChange={(e: any) => handleChange("inputAmount")(e.target.value)}
-										placeholder="Amount"
-										overrides={{
-											InputContainer: {
-												style: () => {
-													return { backgroundColor: 'transparent' };
-												},
+								{/* {amountType === "amount" ? ( */}
+								<Input
+									// disabled={step !== 1}
+									startEnhancer="$"
+									type={"number"}
+									value={inputAmount}
+									onChange={(e: any) => handleChange("inputAmount")(e.target.value)}
+									placeholder="Amount"
+									overrides={{
+										InputContainer: {
+											style: () => {
+												return { backgroundColor: 'transparent' };
 											},
-											Input: {
-												style: () => {
-													return { fontSize: "3em" }
-												}
+										},
+										Input: {
+											style: () => {
+												return { fontSize: "3em" }
 											}
-										}}
-									/>
+										}
+									}}
+								/>
 
 
-									<PriceList>
-										{/* <PriceItem>
+								<PriceList>
+									{/* <PriceItem>
 											<span>Per share</span> <span>$ {currencyPrice}</span>
 										</PriceItem> */}
-										<PriceItem>
-											<strong> <span>Total</span></strong>  <strong><span>${totalPrice}</span></strong>
-										</PriceItem>
-										{/* <PriceItem>
+									<PriceItem>
+										<strong> <span>Total</span></strong>  <strong><span>${totalPrice}</span></strong>
+									</PriceItem>
+									{/* <PriceItem>
 											<span>Tax</span> <span> + 0.5%</span>
 										</PriceItem>
 										<PriceItem>
 											<span>Total</span> <span> + 0.5%</span>
 										</PriceItem> */}
-									</PriceList>
-									{/* {step === 1 && (
+								</PriceList>
+								{/* {step === 1 && (
 										<Button
 											disabled={totalPrice < 5}
 											size="large"
@@ -226,10 +230,10 @@ const AddFunds: NextPage<{}> = () => {
 										</Button>
 									)} */}
 
-								</Block>
-							</Cell>
-						)}
-						<Cell span={[12, 12, 6]}><PayPalPayment amount={totalPrice} userId={user && user.id} /></Cell>
+							</Block>
+
+							<PayPalPayment amount={totalPrice} userId={user && user.id} />
+						</Cell>
 					</Grid>
 				</Block>
 			</Container>
