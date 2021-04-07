@@ -116,7 +116,7 @@ const PayPalPayment = (props: Props) => {
 
   return (
     <Elements stripe={stripePromise}>
-      <Block marginLeft="-16px" marginRight="-16px">
+      <Block marginLeft="-16px" marginRight="-16px" alignContent="center" justifyContent="center" alignItems="center">
 
         <StripeCheckoutForm userId={userId} amount={amount} >
           <Button
@@ -144,7 +144,7 @@ const PayPalPayment = (props: Props) => {
         </StripeCheckoutForm>
 
 
-        {/* <StatefulPopover
+        <StatefulPopover
           content={() => (
             <Block padding="15px" $style={{ textAlign: "center" }}>
               <h3>Send any amount to support@stoqey.com, please add your account's phone number as the message</h3>
@@ -154,6 +154,7 @@ const PayPalPayment = (props: Props) => {
           autoFocus
         >
           <Button
+            disabled
             shape="square"
             overrides={{
               Root: {
@@ -173,9 +174,9 @@ const PayPalPayment = (props: Props) => {
             }}
           >
             <FaHandHoldingUsd size={30} style={{ margin: "10px" }} />
-            <h4>E-transfer</h4>
+            <h4>E-transfer (Coming soon...)</h4>
           </Button>
-        </StatefulPopover> */}
+        </StatefulPopover>
 
         {/* PayPal form */}
         {/* <PayPalForm {...props} onSuccess={paymentApi} onError={async (error) => {
