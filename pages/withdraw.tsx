@@ -11,6 +11,7 @@ import Container from 'components/UiElements/Container/Container';
 import PortfolioMenu from 'components/SideMenu/PortfolioMenu';
 import { ButtonGroup } from 'components/PageStyles/Settings.styled';
 import FundsMenu from '@/components/SideMenu/FundsMenu';
+import { FaStripe } from 'react-icons/fa';
 
 type FormData = {
 	amount: string;
@@ -35,9 +36,9 @@ const Withdraw: NextPage<{}> = () => {
 
 	const handleOnSubmit = handleSubmit((data) => {
 		// if (state.newPassword === state.confirmPassword) {
-			setFeedback(false);
-			console.log('Form data: ', data);
-			alert(JSON.stringify(data, null, 4));
+		setFeedback(false);
+		console.log('Form data: ', data);
+		alert(JSON.stringify(data, null, 4));
 		// } else {
 		// 	setFeedback(true);
 		// }
@@ -62,75 +63,28 @@ const Withdraw: NextPage<{}> = () => {
 							<FundsMenu />
 						</Cell>
 						<Cell span={[12, 12, 9]}>
-							<Block paddingTop={['10px', '10px', '20px', '0']}>
-								<form onSubmit={handleOnSubmit}>
-									<Block marginBottom="30px">
-										<FormControl
-											label="Amount"
-											caption="Please enter amount to withdraw"
-											error={feedback && 'Amount is invalid'}
-											overrides={{
-												Label: {
-													style: ({ $theme }) => {
-														return { ...$theme.typography.font350 };
-													},
-												},
-											}}
-										>
-											<Input
-												type="number"
-												name="amount"
-												value={state.amount}
-												onChange={handleOnChange}
-												inputRef={register({ required: true, maxLength: 20 })}
-												overrides={{
-													InputContainer: {
-														style: () => {
-															return { backgroundColor: 'transparent' };
-														},
-													},
-												}}
-											/>
-										</FormControl>
-									</Block>
+							<Block paddingTop={['10px', '10px', '20px', '0']} justifyContent="center" display="flex">
+								<Button
+									type="button"
+									size="default"
+									shape="pill"
+									onClick={() => {
+										
+									}}
+									overrides={{
+										BaseButton: {
+											style: ({ $theme }) => {
+												return {
+													width: '75%',
+													...$theme.typography.font450,
+												};
+											},
+										},
+									}}
+								>
+									{"Get paid with "}	<FaStripe style={{ marginLeft: 10 }} size={60} />
+								</Button>
 
-									<ButtonGroup>
-										<Button
-											type="submit"
-											size="large"
-											overrides={{
-												BaseButton: {
-													style: ({ $theme }) => {
-														return {
-															width: '131px',
-															...$theme.typography.font250,
-														};
-													},
-												},
-											}}
-										>
-											Submit
-										</Button>
-										<Button
-											type="reset"
-											kind="tertiary"
-											size="large"
-											onClick={handleOnReset}
-											overrides={{
-												BaseButton: {
-													style: ({ $theme }) => {
-														return {
-															width: '131px',
-															...$theme.typography.font250,
-														};
-													},
-												},
-											}}
-										>
-											Cancel
-										</Button>
-									</ButtonGroup>
-								</form>
 							</Block>
 						</Cell>
 					</Grid>
