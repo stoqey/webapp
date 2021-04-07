@@ -144,7 +144,7 @@ const PayPalPayment = (props: Props) => {
         </StripeCheckoutForm>
 
 
-        <StatefulPopover
+        {/* <StatefulPopover
           content={() => (
             <Block padding="15px" $style={{ textAlign: "center" }}>
               <h3>Send any amount to support@stoqey.com, please add your account's phone number as the message</h3>
@@ -153,7 +153,6 @@ const PayPalPayment = (props: Props) => {
           returnFocus
           autoFocus
         >
-
           <Button
             shape="square"
             overrides={{
@@ -176,9 +175,10 @@ const PayPalPayment = (props: Props) => {
             <FaHandHoldingUsd size={30} style={{ margin: "10px" }} />
             <h4>E-transfer</h4>
           </Button>
-        </StatefulPopover>
+        </StatefulPopover> */}
+
         {/* PayPal form */}
-        <PayPalForm {...props} onSuccess={paymentApi} onError={async (error) => {
+        {/* <PayPalForm {...props} onSuccess={paymentApi} onError={async (error) => {
           const errorMessage = error && error.message;
           setState({
             ...state,
@@ -186,7 +186,7 @@ const PayPalPayment = (props: Props) => {
             success: false,
             message: errorMessage
           });
-        }} />
+        }} /> */}
 
         {/* Model success */}
         <ResultsDialog title={message} success={success} show={showResults} hide={hide}
