@@ -15,7 +15,7 @@ export const StripeConnectForm = ({ children }: any) => {
         // Block native form submission.
         event.preventDefault();
 
-        const params = {
+        const params: any = {
             userId,
             host: window.location.origin,
         }
@@ -25,7 +25,6 @@ export const StripeConnectForm = ({ children }: any) => {
         // Call your backend to create the Checkout Session
         const response = await fetch(`${getBackendHost()}/rest/stripe/onboard-user?${query}`, {
             method: 'POST',
-            // @ts-ignore
             body: params
         });
 
