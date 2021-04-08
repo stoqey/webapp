@@ -8,18 +8,18 @@ const menuItems = [
 	
 	{
 		id: 1,
-		label: 'Trades',
-		path: '/trade',
+		label: 'Add funds',
+		path: '/funds',
 	},
-	// {
-	// 	id: 3,
-	// 	label: 'Transactions',
-	// 	path: '/history',
-	// },
+	{
+		id: 3,
+		label: 'Transactions',
+		path: '/history',
+	},
 	{
 		id: 4,
-		label: 'Orders',
-		path: '/order',
+		label: 'Withdraw',
+		path: '/withdraw',
 	}
 ];
 
@@ -28,7 +28,7 @@ type MenuProps = {
 	onClick?: () => void;
 };
 
-const PortfolioMenu = ({ className = '', onClick }: MenuProps) => {
+const FundsMenu = ({ className = '', onClick }: MenuProps) => {
 	const { pathname } = useRouter();
 
 	return (
@@ -50,4 +50,4 @@ const PortfolioMenu = ({ className = '', onClick }: MenuProps) => {
 	);
 };
 
-export default PortfolioMenu;
+export default FundsMenu;

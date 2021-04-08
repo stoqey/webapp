@@ -30,6 +30,7 @@ import { useAppEvent } from 'hooks/useAppEvent';
 import { APPEVENTS } from '@/lib/AppEvent';
 import { niceDec } from 'utils/number';
 import CurrencyPill from '@/components/Currency';
+import FundsMenu from '@/components/SideMenu/FundsMenu';
 
 const TITLE = 'Add funds';
 const SUB_TITLE = 'Add money to your Stoqey account, then start trading';
@@ -98,59 +99,6 @@ const AddFunds: NextPage<{}> = () => {
 			/>
 
 			<Container>
-				<MenuStep className="step-menu">
-
-
-					<CurrencyPill amount={user && user.balance} name={'account balance'} />
-
-					{/* <ListItem
-						className={step === 1 ? 'active' : ''}
-						onClick={() => handleChange("step")(1)}
-					>
-						<FaDollarSign />
-						<FaMoneyBillWave />
-						<Block
-							overrides={{
-								Block: {
-									style: ({ $theme }) => {
-										return {
-											padding: '10px',
-											color: $theme.colors.primaryA,
-										};
-									},
-								},
-							}}
-						>
-							Amount
-						</Block>
-					</ListItem> */}
-					{/* {totalPrice > 5 && (
-						<ListItem
-							aria-disabled="true"
-							className={step === 2 ? 'active' : ''}
-							onClick={() => handleChange("step")(2)}
-						>
-							<FaCreditCard />
-							<FaPaypal />
-							<FaBitcoin />
-							<Block
-								overrides={{
-									Block: {
-										style: ({ $theme }) => {
-											return {
-												padding: '10px',
-												color: $theme.colors.primaryA,
-											};
-										},
-									},
-								}}
-							>
-								Payment
-						</Block>
-						</ListItem>
-					)} */}
-
-				</MenuStep>
 
 				<Block marginLeft={[0, 0, 0, '-25px']} marginRight={[0, 0, 0, '-25px']}>
 					<Grid
@@ -159,52 +107,62 @@ const AddFunds: NextPage<{}> = () => {
 						gridGutters={[0, 0, 50]}
 						gridMargins={0}
 					>
-						{step !== 3 && (
-							<Cell span={[12, 12, 5]}>
-								<Block paddingTop={['30px', '40px', '0']}>
-									<Title>Payment Details</Title>
-									{/* <div style={{ display: "flex", justifyContent: "center" }}>
+
+						<Cell span={[12, 12, 3]}>
+							<FundsMenu />
+						</Cell>
+
+						<Cell span={[12, 12, 6]}>
+
+							<MenuStep className="step-menu">
+								<CurrencyPill amount={user && user.balance} name={'account balance'} />
+							</MenuStep>
+
+
+							<Block paddingTop={['30px', '40px', '0']}>
+								<Title>Payment Details</Title>
+								{/* <div style={{ display: "flex", justifyContent: "center" }}>
 										<Button disabled={step !== 1} size="compact" kind={amountType === "amount" ? "primary" : "secondary"} onClick={() => handleChange("amountType")("amount")}>Amount</Button>
 										<Button disabled={step !== 1} size="compact" kind={amountType === "qty" ? "primary" : "secondary"} onClick={() => handleChange("amountType")("qty")}>Quantity</Button>
 									</div> */}
-									{/* {amountType === "amount" ? ( */}
-									<Input
-										// disabled={step !== 1}
-										startEnhancer="$"
-										type={"number"}
-										value={inputAmount}
-										onChange={(e: any) => handleChange("inputAmount")(e.target.value)}
-										placeholder="Amount"
-										overrides={{
-											InputContainer: {
-												style: () => {
-													return { backgroundColor: 'transparent' };
-												},
+								{/* {amountType === "amount" ? ( */}
+								<Input
+									// disabled={step !== 1}
+									startEnhancer="$"
+									type={"number"}
+									value={inputAmount}
+									onChange={(e: any) => handleChange("inputAmount")(e.target.value)}
+									placeholder="Amount"
+									overrides={{
+										InputContainer: {
+											style: () => {
+												return { backgroundColor: 'transparent' };
 											},
-											Input: {
-												style: () => {
-													return { fontSize: "3em" }
-												}
+										},
+										Input: {
+											style: () => {
+												return { fontSize: "3em" }
 											}
-										}}
-									/>
+										}
+									}}
+								/>
 
 
-									<PriceList>
-										{/* <PriceItem>
+								<PriceList>
+									{/* <PriceItem>
 											<span>Per share</span> <span>$ {currencyPrice}</span>
 										</PriceItem> */}
-										<PriceItem>
-											<strong> <span>Total</span></strong>  <strong><span>${totalPrice}</span></strong>
-										</PriceItem>
-										{/* <PriceItem>
+									<PriceItem>
+										<strong> <span>Total</span></strong>  <strong><span>${totalPrice}</span></strong>
+									</PriceItem>
+									{/* <PriceItem>
 											<span>Tax</span> <span> + 0.5%</span>
 										</PriceItem>
 										<PriceItem>
 											<span>Total</span> <span> + 0.5%</span>
 										</PriceItem> */}
-									</PriceList>
-									{/* {step === 1 && (
+								</PriceList>
+								{/* {step === 1 && (
 										<Button
 											disabled={totalPrice < 5}
 											size="large"
@@ -226,10 +184,10 @@ const AddFunds: NextPage<{}> = () => {
 										</Button>
 									)} */}
 
-								</Block>
-							</Cell>
-						)}
-						<Cell span={[12, 12, 6]}><PayPalPayment amount={totalPrice} userId={user && user.id} /></Cell>
+							</Block>
+
+							<PayPalPayment amount={totalPrice} userId={user && user.id} />
+						</Cell>
 					</Grid>
 				</Block>
 			</Container>
