@@ -11,11 +11,11 @@ const menuItems = [
 		label: 'Trades',
 		path: '/trade',
 	},
-	{
-		id: 3,
-		label: 'Transactions',
-		path: '/history',
-	},
+	// {
+	// 	id: 3,
+	// 	label: 'Transactions',
+	// 	path: '/history',
+	// },
 	{
 		id: 4,
 		label: 'Orders',
