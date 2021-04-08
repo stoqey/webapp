@@ -62,7 +62,7 @@ const TradeEditor = (props: Props) => {
   const close = quote && quote.close;
   const [state, setState] = useState<TradeEditorState>({
     steps: 0,
-    type: IOrderType.MARKET,
+    type: IOrderType.LIMIT,
     action: ActionType.BUY,
     price: close,
     qty: 1,
