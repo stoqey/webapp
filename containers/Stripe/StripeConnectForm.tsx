@@ -1,10 +1,15 @@
+import React from 'react';
 import querystring from 'querystring';
 import dynamic from 'next/dynamic';
 import { getBackendHost } from 'utils/api.utils';
+import { useUserInfo } from 'hooks/useUserInfo';
 
 const SuccessStripe = dynamic(() => import("./Success"), { ssr: false })
 
-export const StripeConnectForm = ({ children, userId }: any) => {
+export const StripeConnectForm = ({ children }: any) => {
+
+    const { user } = useUserInfo();
+    const userId = user && user.id;
 
     const handleSubmit = async (event) => {
         // Block native form submission.
@@ -36,12 +41,17 @@ export const StripeConnectForm = ({ children, userId }: any) => {
         return window.open(url, "_blank"); // redirect to stripe
     };
 
+    // const childrenWithProps = React.Children.map(children, child => {
+    //     // checking isValidElement is the safe way and avoids a typescript error too
+    //     React.cloneElement(child, { onClick: handleSubmit });
+    // });
+
+    const Component = () => React.cloneElement(children, { onClick: handleSubmit });
+
     return (
         <>
             {/* <SuccessStripe /> */}
-            <div onClick={handleSubmit}>
-                {children}
-            </div>
+            <Component />
         </>
 
     );

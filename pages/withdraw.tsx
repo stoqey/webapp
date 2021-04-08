@@ -12,6 +12,7 @@ import PortfolioMenu from 'components/SideMenu/PortfolioMenu';
 import { ButtonGroup } from 'components/PageStyles/Settings.styled';
 import FundsMenu from '@/components/SideMenu/FundsMenu';
 import { FaStripe } from 'react-icons/fa';
+import { StripeConnectForm } from 'containers/Stripe/StripeConnectForm';
 
 type FormData = {
 	amount: string;
@@ -64,26 +65,29 @@ const Withdraw: NextPage<{}> = () => {
 						</Cell>
 						<Cell span={[12, 12, 9]}>
 							<Block paddingTop={['10px', '10px', '20px', '0']} justifyContent="center" display="flex">
-								<Button
-									type="button"
-									size="default"
-									shape="pill"
-									onClick={() => {
-										
-									}}
-									overrides={{
-										BaseButton: {
-											style: ({ $theme }) => {
-												return {
-													width: '75%',
-													...$theme.typography.font450,
-												};
+								<StripeConnectForm userId={null}>
+									<Button
+										type="button"
+										size="default"
+										shape="pill"
+										onClick={() => {
+
+										}}
+										overrides={{
+											BaseButton: {
+												style: ({ $theme }) => {
+													return {
+														width: '75%',
+														...$theme.typography.font450,
+													};
+												},
 											},
-										},
-									}}
-								>
-									{"Get paid with "}	<FaStripe style={{ marginLeft: 10 }} size={60} />
-								</Button>
+										}}
+									>
+										{"Get paid with "}	<FaStripe style={{ marginLeft: 10 }} size={60} />
+									</Button>
+								</StripeConnectForm>
+
 
 							</Block>
 						</Cell>
