@@ -19,6 +19,7 @@ const PitchDeck: NextPage<{}> = () => {
           title={"Stoqey Pitch Deck"}
           subtitle={"Updated: 2021/04/14"}
           backdrop={false}
+          style={{ textAlign: "center" }}
         />
         <Block height="90vh">
           <iframe src="https://slides.com/patrickmuhire/deck-3c2aa1/embed" width="100%" height="100%" scrolling="no" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
