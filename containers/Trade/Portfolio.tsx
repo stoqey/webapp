@@ -112,7 +112,7 @@ const Portfolio: NextPage<{}> = () => {
 			...state,
 			editor: {
 				steps: 0,
-				type: IOrderType.MARKET,
+				type: IOrderType.LIMIT,
 				action: ActionType.BUY,
 				price,
 				qty: 1,
