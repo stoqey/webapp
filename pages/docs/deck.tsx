@@ -17,7 +17,7 @@ const PitchDeck: NextPage<{}> = () => {
       <Container>
         <PageTitle
           title={"Stoqey Pitch Deck"}
-          subtitle={"Updated: 2021/04/14"}
+          subtitle={"Updated: 2021/04/19"}
           backdrop={false}
           style={{ textAlign: "center" }}
         />
