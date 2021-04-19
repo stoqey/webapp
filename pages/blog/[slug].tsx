@@ -12,7 +12,7 @@ import { postFilePaths, POSTS_PATH } from '../../utils/mdxUtils';
 import { Block } from 'baseui/block';
 import Container from 'components/UiElements/Container/Container';
 import PageTitle from 'components/UiElements/PageTitle/PageTitle';
-import { ParagraphMedium, ParagraphLarge, H3, H6, LabelLarge } from 'baseui/typography'
+import { ParagraphMedium, ParagraphLarge, H3, H6, LabelLarge, H1, H2, H4, H5, DisplayLarge } from 'baseui/typography'
 import BlogSlider from 'containers/IG/BlogSlider';
 
 // Custom components/renderers to pass to MDX.
@@ -29,6 +29,13 @@ const components = {
   // See the notes in README.md for more details.
   // TestComponent: dynamic(() => import('../../components/TestComponent')),
   Title: H3,
+  h1: H1,
+  h2: H2,
+  h3: H3,
+  h4: H4,
+  h5: H5,
+  h6: H6,
+  // strong: DisplayLarge,
   Head,
 }
 
@@ -53,7 +60,7 @@ export default function PostPage({ source, frontMatter }) {
         <meta property="twitter:image" content={frontMatter.image} />
       </Head>
 
-      <PageTitle title={frontMatter.title} />
+      <PageTitle title={frontMatter.title} style={{ textAlign: "center" }} subtitle={frontMatter.description} />
 
       <Container>
         <Block paddingBottom="20px">
