@@ -63,8 +63,11 @@ const Withdraw: NextPage<{}> = () => {
 						<Cell span={[12, 12, 3]}>
 							<FundsMenu />
 						</Cell>
-						<Cell span={[12, 12, 9]}>
-							<Block paddingTop={['10px', '10px', '20px', '0']} justifyContent="center" display="flex">
+						<Cell span={[12, 12, 3]}>
+
+						</Cell>
+						<Cell span={[12, 12, 3]}>
+							<Block justifyContent="center" display="flex">
 								<StripeConnectForm userId={null}>
 									<Button
 										type="button"
@@ -77,20 +80,21 @@ const Withdraw: NextPage<{}> = () => {
 											BaseButton: {
 												style: ({ $theme }) => {
 													return {
-														width: '75%',
-														...$theme.typography.font450,
+														width: '100%',
+														...$theme.typography.font350,
 													};
 												},
 											},
 										}}
 									>
-										{"Get paid with "}	<FaStripe style={{ marginLeft: 10 }} size={60} />
+										{"Get paid with "}	<FaStripe style={{ marginLeft: 10 }} size={40} />
 									</Button>
 								</StripeConnectForm>
 
 
 							</Block>
 						</Cell>
+						
 					</Grid>
 				</Block>
 			</Container>
