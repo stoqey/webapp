@@ -13,6 +13,7 @@ import { ButtonGroup } from 'components/PageStyles/Settings.styled';
 import WithdrawRequestMenu from '@/components/SideMenu/WithdrawRequestMenu';
 import { FaStripe } from 'react-icons/fa';
 import { StripeConnectForm } from 'containers/Stripe/StripeConnectForm';
+import { WithdrawForm } from 'containers/Withdraw/Withdraw.form';
 
 type FormData = {
 	amount: string;
@@ -64,7 +65,7 @@ const Withdraw: NextPage<{}> = () => {
 							<WithdrawRequestMenu />
 						</Cell>
 						<Cell span={[12, 12, 3]}>
-
+							<WithdrawForm />
 						</Cell>
 						<Cell span={[12, 12, 3]}>
 							<Block justifyContent="center" display="flex">
