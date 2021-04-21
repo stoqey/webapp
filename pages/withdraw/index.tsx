@@ -10,7 +10,7 @@ import { useForm } from 'react-hook-form';
 import Container from 'components/UiElements/Container/Container';
 import PortfolioMenu from 'components/SideMenu/PortfolioMenu';
 import { ButtonGroup } from 'components/PageStyles/Settings.styled';
-import FundsMenu from '@/components/SideMenu/FundsMenu';
+import WithdrawRequestMenu from '@/components/SideMenu/WithdrawRequestMenu';
 import { FaStripe } from 'react-icons/fa';
 import { StripeConnectForm } from 'containers/Stripe/StripeConnectForm';
 
@@ -54,14 +54,14 @@ const Withdraw: NextPage<{}> = () => {
 		<>
 			<Head>
 				<title>Withdraw | Stoqey.</title>
-				<meta name="Description" content="Stoqey withdraw money page" />
+				<meta name="Description" content="Withdraw | Stoqey" />
 			</Head>
 
 			<Container>
 				<Block paddingTop={['0', '0', '0', '40px']}>
 					<Grid gridColumns={12} gridGutters={0} gridMargins={0}>
 						<Cell span={[12, 12, 3]}>
-							<FundsMenu />
+							<WithdrawRequestMenu />
 						</Cell>
 						<Cell span={[12, 12, 3]}>
 
