@@ -14,13 +14,13 @@ const menuItems = [
 	{
 		id: 3,
 		label: 'Transactions',
-		path: '/history',
+		path: '/funds/history',
 	},
-	{
-		id: 4,
-		label: 'Withdraw',
-		path: '/withdraw',
-	}
+	// {
+	// 	id: 4,
+	// 	label: 'Withdraw',
+	// 	path: '/withdraw',
+	// }
 ];
 
 type MenuProps = {
