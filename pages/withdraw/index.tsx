@@ -13,7 +13,7 @@ import { ButtonGroup } from 'components/PageStyles/Settings.styled';
 import WithdrawRequestMenu from '@/components/SideMenu/WithdrawRequestMenu';
 import { FaStripe } from 'react-icons/fa';
 import { StripeConnectForm } from 'containers/Stripe/StripeConnectForm';
-import { WithdrawForm } from 'containers/Withdraw/Withdraw.form';
+import { WithdrawForm } from 'containers/Withdraw/WithdrawRequest.form';
 
 type FormData = {
 	amount: string;
