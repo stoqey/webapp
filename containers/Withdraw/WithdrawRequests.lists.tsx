@@ -5,6 +5,8 @@ export const WithdrawRequestList = () => {
     return (
         <div>
             <WithdrawRequestItem />
+            <WithdrawRequestItem />
+            <WithdrawRequestItem />
         </div>
     )
 }
