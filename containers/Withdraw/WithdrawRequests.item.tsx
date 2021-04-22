@@ -14,7 +14,6 @@ const getStatusText = (status: StatusType): any[] => {
         case StatusType.PROCESSING:
             return ["Processing transaction", "green", BsArrowClockwise];
         case StatusType.REJECTED:
-            return ["Processing transaction", "green", BsArrowClockwise];
         case StatusType.FAIL:
             return ["Processing transaction", "red", BsArrowClockwise];
         case StatusType.DRAFT:
@@ -29,7 +28,7 @@ const getStatusText = (status: StatusType): any[] => {
 };
 
 export const WithdrawRequestItem = (props: WithdrawRequestType) => {
-    const { status, amount } = props;
+    const { status, amount, notes = "" } = props;
 
     const [statusText, color, Icon] = getStatusText(status);
 
@@ -55,7 +54,7 @@ export const WithdrawRequestItem = (props: WithdrawRequestType) => {
 
         </Block>
 
-        <Paragraph3>{statusText}</Paragraph3>
+        <Paragraph3>{notes} + {statusText}</Paragraph3>
 
     </div>
 }
