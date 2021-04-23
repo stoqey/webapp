@@ -6,24 +6,28 @@ import React from 'react';
 import { ImCross } from 'react-icons/im';
 import { TiArrowSyncOutline } from 'react-icons/ti';
 import { BsArrowClockwise } from 'react-icons/bs';
-import { FaCheck } from 'react-icons/fa';
+import { FaCheck, FaEdit } from 'react-icons/fa';
 
 
 const getStatusText = (status: StatusType): any[] => {
     switch (status) {
+
         case StatusType.PROCESSING:
             return ["Processing transaction", "green", BsArrowClockwise];
+
         case StatusType.REJECTED:
         case StatusType.FAIL:
             return ["Processing transaction", "red", BsArrowClockwise];
-        case StatusType.DRAFT:
-            return ["Processing transaction", "red", BsArrowClockwise];
+
         case StatusType.PENDING:
             return ["some success string", "orange", BsArrowClockwise];
+
         case StatusType.SUCCESS:
             return ["successfully processed", "green", FaCheck];
+
         default:
-            return ["some default string", "blue", ImCross];
+        case StatusType.DRAFT:
+            return ["Processing transaction", "grey", FaEdit];
     }
 };
 
