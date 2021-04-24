@@ -4,38 +4,23 @@ import { Button } from 'baseui/button';
 import { H3, Paragraph3 } from 'baseui/typography';
 import React from 'react';
 import { ImCross } from 'react-icons/im';
-import { TiArrowSyncOutline } from 'react-icons/ti';
 import { BsArrowClockwise } from 'react-icons/bs';
 import { FaCheck, FaEdit } from 'react-icons/fa';
 
-
-const getStatusText = (status: StatusType): any[] => {
-    switch (status) {
-
-        case StatusType.PROCESSING:
-            return ["Processing transaction", "green", BsArrowClockwise];
-
-        case StatusType.REJECTED:
-        case StatusType.FAIL:
-            return ["Processing transaction", "red", BsArrowClockwise];
-
-        case StatusType.PENDING:
-            return ["some success string", "orange", BsArrowClockwise];
-
-        case StatusType.SUCCESS:
-            return ["successfully processed", "green", FaCheck];
-
-        default:
-        case StatusType.DRAFT:
-            return ["Processing transaction", "grey", FaEdit];
-    }
+const statusObject = {
+    [StatusType.DRAFT]: ["Draft", "grey", FaEdit],
+    [StatusType.PENDING]: ["Pending", "orange", BsArrowClockwise],
+    [StatusType.PROCESSING]: ["Processing", "gold", BsArrowClockwise],
+    [StatusType.SUCCESS]: ["Successfully processed", "green", FaCheck],
+    [StatusType.FAIL]: ["Failed request", "red", BsArrowClockwise],
+    [StatusType.REJECTED]: ["Rejected request", "red", BsArrowClockwise],
 };
 
 export const WithdrawRequestItem = (props: WithdrawRequestType) => {
     const { status, amount, notes = "" } = props;
 
-    const [statusText, color, Icon] = getStatusText(status);
-
+    const [statusText, color, Icon] = statusObject[status];
+    
     const cannotBeCanceled = [StatusType.REJECTED, StatusType.FAIL, StatusType.SUCCESS].includes(status);
 
     return <div style={{ textAlign: "center", border: "black solid 0.5px", margin: "2px", padding: "10px" }}>
