@@ -1,8 +1,14 @@
-import { ApolloClient } from '@apollo/react-hooks';
-import isEmpty from 'lodash/isEmpty';
-import _get from 'lodash/get';
-import { ResType, CREATE_WITHDRAWREQUEST_MUTATION, GET_WITHDRAW_REQUESTS, ActionType, WithdrawRequestType } from '@stoqey/client-graphql';
-import AsyncStorageDB from '@/lib/AsyncStorageDB';
+import { ApolloClient } from "@apollo/react-hooks";
+import isEmpty from "lodash/isEmpty";
+import _get from "lodash/get";
+import {
+  ResType,
+  CREATE_WITHDRAWREQUEST_MUTATION,
+  GET_WITHDRAW_REQUESTS,
+  ActionType,
+  WithdrawRequestType,
+} from "@stoqey/client-graphql";
+import AsyncStorageDB from "@/lib/AsyncStorageDB";
 
 export const getWithdrawRequestsPaginationApi = async ({
   args,
@@ -18,9 +24,8 @@ export const getWithdrawRequestsPaginationApi = async ({
   // console.log('portfolios are', JSON.stringify(args));
 
   try {
-
     const user = await AsyncStorageDB.getAuthItem();
-    const userId = _get(user, 'user.id', '');
+    const userId = _get(user, "user.id", "");
 
     const argsToPass = {
       // filter: TradingStatusType.LIVE,
@@ -28,15 +33,15 @@ export const getWithdrawRequestsPaginationApi = async ({
       owner: userId,
       ...args,
     };
-    
+
     const { data: dataResponse }: any = await client.query({
       query: GET_WITHDRAW_REQUESTS,
       variables: argsToPass,
-      fetchPolicy: 'network-only',
+      fetchPolicy: "network-only",
     });
 
     if (!dataResponse) {
-      throw new Error('error getting portfolio data');
+      throw new Error("error getting portfolio data");
     }
 
     const { data }: { data?: WithdrawRequestType[] } = dataResponse;
@@ -46,12 +51,14 @@ export const getWithdrawRequestsPaginationApi = async ({
     if (!isEmpty(data)) {
       //   Successful
       await success(data);
-      return console.log(`portfolios data is successful ${data && data.length}`);
+      return console.log(
+        `portfolios data is successful ${data && data.length}`
+      );
     }
-    throw new Error('error getting portfolios data, please try again later');
+    throw new Error("error getting portfolios data, please try again later");
   } catch (err) {
     console.error(err);
-    error && await error(err);
+    error && (await error(err));
   }
 };
 
@@ -66,17 +73,17 @@ export const createUpdateWithdrawRequestMutation = async ({
   error?: (error: Error) => Promise<any>;
   success?: (data: any) => Promise<any>;
 }) => {
-  console.log('processPayment', JSON.stringify(args));
+  console.log("processPayment", JSON.stringify(args));
 
   try {
     const { data: dataResponse }: any = await client.mutate({
       mutation: CREATE_WITHDRAWREQUEST_MUTATION,
-      variables: args,
-      fetchPolicy: 'no-cache',
+      variables: { args },
+      fetchPolicy: "no-cache",
     });
 
     if (!dataResponse) {
-      throw new Error('error processing payment data');
+      throw new Error("error processing payment data");
     }
 
     const { data }: { data?: ResType } = dataResponse;
@@ -85,7 +92,7 @@ export const createUpdateWithdrawRequestMutation = async ({
       return;
     }
 
-    throw new Error('error processing payment, please try again later');
+    throw new Error("error processing payment, please try again later");
   } catch (err) {
     console.error(err);
     await error(err);
