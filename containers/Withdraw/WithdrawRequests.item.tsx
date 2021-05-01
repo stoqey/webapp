@@ -17,10 +17,11 @@ const statusObject = {
 };
 
 export const WithdrawRequestItem = (props: WithdrawRequestType) => {
-    const { status, amount, notes = "" } = props;
+    const { amount, notes = "" } = props;
 
+    const status = props && props.status || "draft";
     const [statusText, color, Icon] = statusObject[status];
-    
+
     const cannotBeCanceled = [StatusType.REJECTED, StatusType.FAIL, StatusType.SUCCESS].includes(status);
 
     return <div style={{ textAlign: "center", border: "black solid 0.5px", margin: "2px", padding: "10px" }}>
