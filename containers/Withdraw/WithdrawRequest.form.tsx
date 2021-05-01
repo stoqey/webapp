@@ -62,7 +62,7 @@ export const WithdrawForm = () => {
                         name="amount"
                         value={amount}
                         error={+amount < 0 || balance < 0}
-                        onChange={(event: any) => setState({ amount: event.target.value})}
+                        onChange={(event: any) => setState({...state, amount: event.target.value})}
                         overrides={{
                             InputContainer: {
                                 style: () => {
@@ -79,7 +79,7 @@ export const WithdrawForm = () => {
                 overrides={{ Block: { style: { marginTop: '10px', justifyContent: "center", display: "flex" } } }}
             >
                 <Button
-                    // onClick={updateUserBalance}
+                    onClick={createWithdraw}
                     shape="pill"
                     overrides={{
                         BaseButton: {
