@@ -12,7 +12,7 @@ export const WithdrawRequestList = () => {
 
     const getDataApi = () => getWithdrawRequestsPaginationApi({
         client,
-        args: {},
+        // args: {},
         error: async () => {
 
         },

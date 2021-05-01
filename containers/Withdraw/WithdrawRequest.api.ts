@@ -81,7 +81,7 @@ export const createUpdateWithdrawRequestMutation = async ({
 
     const argsToPass = {
       owner: userId,
-      ...args,
+      amount: +((args && args.amount) || 0),
     };
 
     const { data: dataResponse }: any = await client.mutate({
