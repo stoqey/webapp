@@ -76,9 +76,17 @@ export const createUpdateWithdrawRequestMutation = async ({
   console.log("processPayment", JSON.stringify(args));
 
   try {
+    const user = await AsyncStorageDB.getAuthItem();
+    const userId = _get(user, "user.id", "");
+
+    const argsToPass = {
+      owner: userId,
+      ...args,
+    };
+
     const { data: dataResponse }: any = await client.mutate({
       mutation: CREATE_WITHDRAWREQUEST_MUTATION,
-      variables: { args },
+      variables: { args: argsToPass },
       fetchPolicy: "no-cache",
     });
 
