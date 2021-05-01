@@ -10,7 +10,7 @@ import { H4 } from 'baseui/typography';
 import { niceDec } from 'utils/number';
 
 import { createUpdateWithdrawRequestMutation } from './WithdrawRequest.api'
-import { useApolloClient } from '@apollo/react-hooks';
+import { useApolloClient } from '@apollo/client';
 
 interface State {
     amount: number;

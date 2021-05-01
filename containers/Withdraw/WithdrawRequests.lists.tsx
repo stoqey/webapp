@@ -1,15 +1,14 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import WithdrawRequestItem from './WithdrawRequests.item';
 import { WithdrawRequestType, StatusType } from '@stoqey/client-graphql';
 import { getWithdrawRequestsPaginationApi } from './WithdrawRequest.api'
-import { useApolloClient } from '@apollo/react-hooks';
+import { useApolloClient } from '@apollo/client';
 
 
 export const WithdrawRequestList = () => {
 
-    const [requests, setRequests] = React.useState<WithdrawRequestType[]>();
-
     const client = useApolloClient();
+    const [requests, setRequests] = React.useState<WithdrawRequestType[]>();
 
     const getDataApi = () => getWithdrawRequestsPaginationApi({
         client,
@@ -20,10 +19,12 @@ export const WithdrawRequestList = () => {
         success: async (data) => setRequests(data)
     })
 
+    useEffect(() => { getDataApi() }, [])
+
 
     return (
         <div>
-            {requests.map((i, index) => <WithdrawRequestItem key={`${index}-${i.id}`} {...i} />)}
+            {(requests || []).map((i, index) => <WithdrawRequestItem key={`${index}-${i.id}`} {...i} />)}
         </div>
     )
 }

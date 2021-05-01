@@ -21,6 +21,7 @@ type FormData = {
 };
 
 const Withdraw: NextPage<{}> = () => {
+
 	const { register, setValue, handleSubmit, reset, errors } = useForm<
 		FormData
 	>();
