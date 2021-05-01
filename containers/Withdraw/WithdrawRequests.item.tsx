@@ -19,7 +19,7 @@ const statusObject = {
 export const WithdrawRequestItem = (props: WithdrawRequestType) => {
     const { amount, notes = "" } = props;
 
-    const status = props && props.status || "draft";
+    const status = props && props.status || "pending";
     const [statusText, color, Icon] = statusObject[status];
 
     const cannotBeCanceled = [StatusType.REJECTED, StatusType.FAIL, StatusType.SUCCESS].includes(status);
