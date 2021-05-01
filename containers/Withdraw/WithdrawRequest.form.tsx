@@ -9,16 +9,32 @@ import { useUserInfo } from 'hooks/useUserInfo';
 import { H4 } from 'baseui/typography';
 import { niceDec } from 'utils/number';
 
+import { createUpdateWithdrawRequestMutation } from './WithdrawRequest.api'
+import { useApolloClient } from '@apollo/react-hooks';
+
 interface State {
     amount: number;
+    status: any;
 }
 
 export const WithdrawForm = () => {
+    const client = useApolloClient();
     const { user } = useUserInfo();
     const balance = user && user.balance || 0;
-    const [state, setState] = useState<State>({ amount: 1 });
+    const [state, setState] = useState<State>({ amount: 1, status: false });
 
     const { amount } = state;
+
+    const createWithdraw = () => createUpdateWithdrawRequestMutation({
+        client,
+        args: { amount },
+        success: async (res) => {
+            setState({
+                ...state,
+                status: true,
+            })
+        }
+    })
 
 
     return (<>

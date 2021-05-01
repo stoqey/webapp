@@ -68,7 +68,7 @@ export const createUpdateWithdrawRequestMutation = async ({
   error,
   success,
 }: {
-  args: WithdrawRequestType;
+  args?: Partial<WithdrawRequestType>;
   client: ApolloClient<any>;
   error?: (error: Error) => Promise<any>;
   success?: (data: any) => Promise<any>;
