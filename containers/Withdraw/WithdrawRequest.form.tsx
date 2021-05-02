@@ -120,7 +120,7 @@ export const WithdrawForm = () => {
                 showModal({
                     dialogMessage: `You're about to delete your request of a withdraw of $${niceDec(+itemAmount)}`,
                     dialogTitle: `Delete request fro ${niceDec(+itemAmount)}`,
-                    dialogType: StatusType.PROCESSING,
+                    dialogType: StatusType.FAIL,
                     dialogActions: {
                         cancel: {
                             onPress: () => hideModal(),

@@ -1,11 +1,12 @@
 import React from 'react';
 import { Block } from 'baseui/block';
-import { Toast, KIND, toaster } from 'baseui/toast';
 import { Modal, ModalBody } from 'baseui/modal';
 import { Button } from 'baseui/button';
-import { MdWarning } from 'react-icons/md';
-import { H6, Paragraph2 } from 'baseui/typography';
+import { MdWarning, MdCheck } from 'react-icons/md';
+import { Paragraph2 } from 'baseui/typography';
 import { StatusType } from '@stoqey/client-graphql';
+import { BsArrowClockwise } from 'react-icons/bs';
+import { FaEdit } from 'react-icons/fa';
 
 export interface ModalActions {
     confirm: {
@@ -29,29 +30,25 @@ interface Props {
     // TODO add api
 };
 
+const statusObject = {
+    [StatusType.DRAFT]: ["grey", FaEdit],
+    [StatusType.PENDING]: ["orange", BsArrowClockwise],
+    [StatusType.PROCESSING]: ["orange", MdWarning],
+    [StatusType.SUCCESS]: ["green", MdCheck],
+    [StatusType.FAIL]: ["red", MdWarning],
+    [StatusType.REJECTED]: ["red", MdWarning],
+};
+
 
 const ConfirmModal = (props: Props) => {
     const { show, hide, title, description, status, actions, loading = false } = props;
 
     const { cancel, confirm } = actions || { cancel: null, confirm: null };
 
-    let toastKey = null;
-
-    const onSuccess = (message: string) => {
-        toastKey = toaster.positive(<>{message}</>, {
-            autoHideDuration: 4000
-        })
-    }
-
-    const onError = (message: string) => {
-        toastKey = toaster.negative(<>{message}</>, {
-            autoHideDuration: 5000
-        })
-    }
+    const [statusColor, StatusIcon] = statusObject[status || "draft"]
 
     return (
         <>
-            {/* <Toaster toastKey={toastKey} /> */}
             {/* Model success */}
             <Modal
                 onClose={() => hide()}
@@ -84,9 +81,9 @@ const ConfirmModal = (props: Props) => {
                         }}
                     >
 
-                        <MdWarning
+                        <StatusIcon
                             size="4em"
-                            color="red"
+                            color={statusColor as any}
                             style={{ marginBottom: '20px' }}
                         />
 
