@@ -41,16 +41,7 @@ export const WithdrawForm = () => {
         dialogMessage: "",
         dialogTitle: "",
         dialogType: StatusType.DRAFT,
-        dialogActions: {
-            cancel: {
-                onPress: null,
-                title: null,
-            },
-            confirm: {
-                onPress: null,
-                title: null,
-            }
-        },
+        dialogActions: null,
     });
 
 
@@ -79,7 +70,11 @@ export const WithdrawForm = () => {
             setState({
                 ...state,
                 status: true,
-                dialogShow: false,
+                dialogShow: true,
+                dialogMessage: "Withdraw request submited",
+                dialogTitle: "Success",
+                dialogType: StatusType.SUCCESS,
+                dialogActions: null,
             })
         },
         error: async (err) => {
@@ -91,6 +86,7 @@ export const WithdrawForm = () => {
                 dialogMessage: err && err.message,
                 dialogTitle: "Error",
                 dialogType: StatusType.FAIL,
+                dialogActions: null,
             })
         }
     });
@@ -121,24 +117,24 @@ export const WithdrawForm = () => {
         {(requests || []).map((i, index) => <WithdrawRequestItem
             deleteItem={(item) => {
                 const { amount: itemAmount } = item;
-                const actionsModalActions = {
-                    cancel: {
-                        onPress: () => hideModal(),
-                        title: "Cancel"
-                    },
-                    confirm: {
-                        title: "Delete request",
-                        onPress: () => {
-                            console.log("can we delete this item")
-                        }
-                    }
-                };
                 showModal({
                     dialogMessage: `You're about to delete your request of a withdraw of $${niceDec(+itemAmount)}`,
                     dialogTitle: `Delete request fro ${niceDec(+itemAmount)}`,
                     dialogType: StatusType.PROCESSING,
-                    dialogActions: actionsModalActions
+                    dialogActions: {
+                        cancel: {
+                            onPress: () => hideModal(),
+                            title: "Cancel"
+                        },
+                        confirm: {
+                            title: "Delete request",
+                            onPress: () => {
+                                console.log("can we delete this item")
+                            }
+                        }
+                    }
                 });
+
             }}
             key={`${index}-${i.id}`} {...i} />)}
 
@@ -184,26 +180,23 @@ export const WithdrawForm = () => {
             >
                 <Button
                     onClick={() => {
-
-                        const createWithdrawActions: ModalActions = {
-                            confirm: {
-                                onPress: () => {
-                                    createWithdraw();
-                                    // TODO hide modal with status
-                                },
-                                title: "Submit"
-                            },
-                            cancel: {
-                                onPress: () => hideModal(),
-                                title: "Cancel"
-                            }
-                        };
-
                         showModal({
                             dialogMessage: `You're about to request a withdraw of $${niceDec(+amount)}`,
                             dialogTitle: `Withdraw ${niceDec(+amount)}`,
                             dialogType: StatusType.PROCESSING,
-                            dialogActions: createWithdrawActions
+                            dialogActions: {
+                                confirm: {
+                                    onPress: () => {
+                                        createWithdraw();
+                                        // TODO hide modal with status
+                                    },
+                                    title: "Submit"
+                                },
+                                cancel: {
+                                    onPress: () => hideModal(),
+                                    title: "Cancel"
+                                }
+                            }
                         });
 
                     }}

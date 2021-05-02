@@ -31,8 +31,9 @@ interface Props {
 
 
 const ConfirmModal = (props: Props) => {
-    const { show, hide, title, description, status, actions = { cancel: null, confirm: null }, loading = false } = props;
-    const { cancel, confirm } = actions;
+    const { show, hide, title, description, status, actions, loading = false } = props;
+
+    const { cancel, confirm } = actions || { cancel: null, confirm: null };
 
     let toastKey = null;
 
@@ -117,44 +118,48 @@ const ConfirmModal = (props: Props) => {
                             <Paragraph2>{description}</Paragraph2>
 
                             {/* Confirm */}
-                            <p style={{ display: 'flex', padding: "20px" }}>
-                                <Button
-                                    isLoading={loading}
-                                    shape="pill"
-                                    size="default"
-                                    onClick={() => confirm.onPress()}
-                                    overrides={{
-                                        BaseButton: {
-                                            style: ({ $theme }) => {
-                                                return {
-                                                    width: '50%',
-                                                    ...$theme.typography.font250,
-                                                };
+                            {actions && (
+                                <p style={{ display: 'flex', padding: "20px" }}>
+                                    <Button
+                                        isLoading={loading}
+                                        shape="pill"
+                                        size="default"
+                                        onClick={() => confirm.onPress()}
+                                        overrides={{
+                                            BaseButton: {
+                                                style: ({ $theme }) => {
+                                                    return {
+                                                        width: '50%',
+                                                        ...$theme.typography.font250,
+                                                    };
+                                                },
                                             },
-                                        },
-                                    }}
-                                > {confirm.title} </Button>
+                                        }}
+                                    > {confirm.title} </Button>
 
-                                <div style={{ width: '10px' }} />
+                                    <div style={{ width: '10px' }} />
 
-                                <Button
-                                    isLoading={loading}
-                                    shape="pill"
-                                    kind="secondary"
-                                    size="default"
-                                    onClick={() => hide()}
-                                    overrides={{
-                                        BaseButton: {
-                                            style: ({ $theme }) => {
-                                                return {
-                                                    width: '50%',
-                                                    ...$theme.typography.font250,
-                                                };
+                                    <Button
+                                        isLoading={loading}
+                                        shape="pill"
+                                        kind="secondary"
+                                        size="default"
+                                        onClick={() => hide()}
+                                        overrides={{
+                                            BaseButton: {
+                                                style: ({ $theme }) => {
+                                                    return {
+                                                        width: '50%',
+                                                        ...$theme.typography.font250,
+                                                    };
+                                                },
                                             },
-                                        },
-                                    }}
-                                > {cancel.title} </Button>
-                            </p>
+                                        }}
+                                    > {cancel.title} </Button>
+                                </p>
+                            )}
+
+
                         </Block>
                     </Block>
                 </ModalBody>
