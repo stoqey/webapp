@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Button } from 'baseui/button';
 import { toaster } from 'baseui/toast';
 import { Modal, ModalHeader, ModalBody } from 'baseui/modal';
+import { StatusType } from '@stoqey/client-graphql';
 import { FlexGrid, FlexGridItem } from 'baseui/flex-grid';
 import { FormControl } from 'baseui/form-control';
 import { Input } from 'baseui/input';
@@ -14,21 +15,51 @@ import WithdrawRequestItem from './WithdrawRequests.item';
 
 import { useApolloClient } from '@apollo/client';
 import { WithdrawRequestType } from '@stoqey/client-graphql';
+import ConfirmModal, { ModalActions } from '@/components/Confirm.modal';
 
 interface State {
     amount: number;
     status: any;
-    requests: WithdrawRequestType[]
+    requests: WithdrawRequestType[],
+
+    dialogShow: boolean;
+    dialogMessage: string;
+    dialogTitle: string;
+    dialogType: StatusType;
 }
 
 export const WithdrawForm = () => {
     const client = useApolloClient();
     const { user } = useUserInfo();
     const balance = user && user.balance || 0;
-    const [state, setState] = useState<State>({ amount: 1, status: false, requests: [] });
+    const [state, setState] = useState<State>({
+        amount: 1,
+        status: false,
+        requests: [],
+        dialogShow: false,
+        dialogMessage: "",
+        dialogTitle: "",
+        dialogType: StatusType.DRAFT,
+    });
 
 
-    const { amount, requests } = state;
+    const { amount, requests, dialogShow, dialogTitle, dialogMessage, dialogType } = state;
+
+    const hideModal = () => {
+        setState({
+            ...state,
+            dialogShow: false,
+        })
+    };
+
+    const showModal = (newState: Partial<State>) => {
+        setState({
+            ...state,
+            ...newState,
+            dialogShow: true,
+        })
+    };
+
 
     const createWithdraw = () => createUpdateWithdrawRequestMutation({
         client,
@@ -37,12 +68,35 @@ export const WithdrawForm = () => {
             setState({
                 ...state,
                 status: true,
+                dialogShow: false,
             })
         },
         error: async (err) => {
             console.log("error creating withdraw", err);
+            setState({
+                ...state,
+                status: true,
+                dialogShow: true,
+                dialogMessage: err && err.message,
+                dialogTitle: "Error",
+                dialogType: StatusType.FAIL,
+            })
         }
-    })
+    });
+
+    const createWithdrawActions: ModalActions = {
+        confirm: {
+            onPress: () => {
+                createWithdraw();
+                // TODO hide modal with status
+            },
+            title: "Submit"
+        },
+        cancel: {
+            onPress: () => hideModal(),
+            title: "Cancel"
+        }
+    };
 
     const getDataApi = () => getWithdrawRequestsPaginationApi({
         client,
@@ -53,10 +107,20 @@ export const WithdrawForm = () => {
         success: async (data) => setState({ ...state, requests: data })
     })
 
-    React.useEffect(() => { getDataApi() }, [])
+    React.useEffect(() => { getDataApi() }, [dialogShow])
 
+    let modalActions: ModalActions = createWithdrawActions;
 
     return (<>
+
+        <ConfirmModal
+            hide={hideModal}
+            title={dialogTitle}
+            description={dialogMessage}
+            show={dialogShow}
+            actions={modalActions}
+            status={dialogType}
+        />
 
         {/* Pending requests here */}
         {(requests || []).map((i, index) => <WithdrawRequestItem key={`${index}-${i.id}`} {...i} />)}
@@ -102,7 +166,14 @@ export const WithdrawForm = () => {
                 overrides={{ Block: { style: { marginTop: '10px', justifyContent: "center", display: "flex" } } }}
             >
                 <Button
-                    onClick={createWithdraw}
+                    onClick={() => {
+                        modalActions = createWithdrawActions;
+                        showModal({
+                            dialogMessage: `You're about to request a withdraw of $${niceDec(+amount)}`,
+                            dialogTitle: `Withdraw ${niceDec(+amount)}`,
+                            dialogType: StatusType.PROCESSING
+                        });
+                    }}
                     shape="pill"
                     overrides={{
                         BaseButton: {

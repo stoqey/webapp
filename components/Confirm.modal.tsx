@@ -5,7 +5,18 @@ import { Modal, ModalBody } from 'baseui/modal';
 import { Button } from 'baseui/button';
 import { MdWarning } from 'react-icons/md';
 import { H6, Paragraph2 } from 'baseui/typography';
+import { StatusType } from '@stoqey/client-graphql';
 
+export interface ModalActions {
+    confirm: {
+        onPress: () => void;
+        title: string;
+    },
+    cancel: {
+        onPress: () => void;
+        title: string;
+    },
+}
 interface Props {
     show: boolean;
     hide?: () => void;
@@ -13,18 +24,8 @@ interface Props {
     loading?: boolean;
     title: string;
     description: string;
-    status: "success" | "warn" | "fail";
-    actions: {
-        confirm: {
-            onPress: () => void;
-            title: string;
-        },
-        cancel: {
-            onPress: () => void;
-            title: string;
-        },
-    };
-
+    status: StatusType;
+    actions: ModalActions;
     // TODO add api
 };
 
@@ -112,7 +113,7 @@ const ConfirmModal = (props: Props) => {
                         {/* Confirm amount for trade */}
                         <Block paddingTop={['30px', '40px', '0']}>
                             {/* Confirm  amount */}
-                            <H6>{title}</H6>
+                            {/* <H6>{title}</H6> */}
                             <Paragraph2>{description}</Paragraph2>
 
                             {/* Confirm */}
