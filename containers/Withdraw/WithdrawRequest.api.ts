@@ -107,5 +107,49 @@ export const createUpdateWithdrawRequestMutation = async ({
   }
 };
 
+export const cancelWithdrawRequestMutation = async ({
+  args,
+  client,
+  error,
+  success,
+}: {
+  args: { id: string };
+  client: ApolloClient<any>;
+  error?: (error: Error) => Promise<any>;
+  success?: (data: any) => Promise<any>;
+}) => {
+
+  try {
+    const user = await AsyncStorageDB.getAuthItem();
+    const userId = _get(user, "user.id", "");
+
+    const argsToPass = {
+      owner: userId,
+      id: args.id
+    };
+
+    const { data: dataResponse }: any = await client.mutate({
+      mutation: CREATE_WITHDRAWREQUEST_MUTATION,
+      variables: { args: argsToPass },
+      fetchPolicy: "no-cache",
+    });
+
+    if (!dataResponse) {
+      throw new Error("error canceling withdraw request");
+    }
+
+    const { data }: { data?: ResType } = dataResponse;
+    if (data.success) {
+      await success(data);
+      return;
+    }
+
+    throw new Error("error canceling withdraw request, please try again later");
+  } catch (err) {
+    console.error(err);
+    await error(err);
+  }
+};
+
 // TODO accept/reject
 // TODO delete
