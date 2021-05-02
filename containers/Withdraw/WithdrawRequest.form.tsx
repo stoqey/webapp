@@ -9,21 +9,26 @@ import { useUserInfo } from 'hooks/useUserInfo';
 import { H4 } from 'baseui/typography';
 import { niceDec } from 'utils/number';
 
-import { createUpdateWithdrawRequestMutation } from './WithdrawRequest.api'
+import { createUpdateWithdrawRequestMutation, getWithdrawRequestsPaginationApi } from './WithdrawRequest.api';
+import WithdrawRequestItem from './WithdrawRequests.item';
+
 import { useApolloClient } from '@apollo/client';
+import { WithdrawRequestType } from '@stoqey/client-graphql';
 
 interface State {
     amount: number;
     status: any;
+    requests: WithdrawRequestType[]
 }
 
 export const WithdrawForm = () => {
     const client = useApolloClient();
     const { user } = useUserInfo();
     const balance = user && user.balance || 0;
-    const [state, setState] = useState<State>({ amount: 1, status: false });
+    const [state, setState] = useState<State>({ amount: 1, status: false, requests: [] });
 
-    const { amount } = state;
+
+    const { amount, requests } = state;
 
     const createWithdraw = () => createUpdateWithdrawRequestMutation({
         client,
@@ -33,11 +38,29 @@ export const WithdrawForm = () => {
                 ...state,
                 status: true,
             })
+        },
+        error: async (err) => {
+            console.log("error creating withdraw", err);
         }
     })
 
+    const getDataApi = () => getWithdrawRequestsPaginationApi({
+        client,
+        // args: {},
+        error: async () => {
+
+        },
+        success: async (data) => setState({ ...state, requests: data })
+    })
+
+    React.useEffect(() => { getDataApi() }, [])
+
 
     return (<>
+
+        {/* Pending requests here */}
+        {(requests || []).map((i, index) => <WithdrawRequestItem key={`${index}-${i.id}`} {...i} />)}
+
         <FlexGrid flexGridColumnCount={1}>
             <FlexGridItem>
                 <H4>${niceDec(balance - +amount)}</H4>
@@ -62,7 +85,7 @@ export const WithdrawForm = () => {
                         name="amount"
                         value={amount}
                         error={+amount < 0 || balance < 0}
-                        onChange={(event: any) => setState({...state, amount: event.target.value})}
+                        onChange={(event: any) => setState({ ...state, amount: event.target.value })}
                         overrides={{
                             InputContainer: {
                                 style: () => {
