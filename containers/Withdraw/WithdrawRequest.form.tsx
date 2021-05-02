@@ -93,7 +93,7 @@ export const WithdrawForm = () => {
 
     const getDataApi = () => getWithdrawRequestsPaginationApi({
         client,
-        // args: {},
+        args: { filter: "active" },
         error: async () => {
 
         },
