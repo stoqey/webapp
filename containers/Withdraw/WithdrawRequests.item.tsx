@@ -16,8 +16,8 @@ const statusObject = {
     [StatusType.REJECTED]: ["Rejected request", "red", BsArrowClockwise],
 };
 
-export const WithdrawRequestItem = (props: WithdrawRequestType) => {
-    const { amount, notes = "" } = props;
+export const WithdrawRequestItem = (props: WithdrawRequestType & { deleteItem: (item: Partial<WithdrawRequestType>) => void }) => {
+    const { amount, notes = "", deleteItem } = props;
 
     const status = props && props.status || "pending";
     const [statusText, color, Icon] = statusObject[status];
@@ -38,7 +38,7 @@ export const WithdrawRequestItem = (props: WithdrawRequestType) => {
             <H3>{amount}</H3>
 
             <Button disabled={cannotBeCanceled} shape="round" $style={{ backgroundColor: 'red' }}
-                onClick={() => { }}>
+                onClick={() => deleteItem(props)}>
                 <ImCross />
             </Button>
 

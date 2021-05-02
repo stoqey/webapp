@@ -31,7 +31,7 @@ interface Props {
 
 
 const ConfirmModal = (props: Props) => {
-    const { show, hide, title, description, status, actions, loading = false } = props;
+    const { show, hide, title, description, status, actions = { cancel: null, confirm: null }, loading = false } = props;
     const { cancel, confirm } = actions;
 
     let toastKey = null;

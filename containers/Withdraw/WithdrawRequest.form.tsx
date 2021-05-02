@@ -26,6 +26,7 @@ interface State {
     dialogMessage: string;
     dialogTitle: string;
     dialogType: StatusType;
+    dialogActions: ModalActions;
 }
 
 export const WithdrawForm = () => {
@@ -40,10 +41,20 @@ export const WithdrawForm = () => {
         dialogMessage: "",
         dialogTitle: "",
         dialogType: StatusType.DRAFT,
+        dialogActions: {
+            cancel: {
+                onPress: null,
+                title: null,
+            },
+            confirm: {
+                onPress: null,
+                title: null,
+            }
+        },
     });
 
 
-    const { amount, requests, dialogShow, dialogTitle, dialogMessage, dialogType } = state;
+    const { amount, requests, dialogShow, dialogTitle, dialogMessage, dialogType, dialogActions } = state;
 
     const hideModal = () => {
         setState({
@@ -84,20 +95,6 @@ export const WithdrawForm = () => {
         }
     });
 
-    const createWithdrawActions: ModalActions = {
-        confirm: {
-            onPress: () => {
-                createWithdraw();
-                // TODO hide modal with status
-            },
-            title: "Submit"
-        },
-        cancel: {
-            onPress: () => hideModal(),
-            title: "Cancel"
-        }
-    };
-
     const getDataApi = () => getWithdrawRequestsPaginationApi({
         client,
         // args: {},
@@ -107,9 +104,7 @@ export const WithdrawForm = () => {
         success: async (data) => setState({ ...state, requests: data })
     })
 
-    React.useEffect(() => { getDataApi() }, [dialogShow])
-
-    let modalActions: ModalActions = createWithdrawActions;
+    React.useEffect(() => { getDataApi() }, [dialogShow]);
 
     return (<>
 
@@ -118,12 +113,34 @@ export const WithdrawForm = () => {
             title={dialogTitle}
             description={dialogMessage}
             show={dialogShow}
-            actions={modalActions}
+            actions={dialogActions}
             status={dialogType}
         />
 
         {/* Pending requests here */}
-        {(requests || []).map((i, index) => <WithdrawRequestItem key={`${index}-${i.id}`} {...i} />)}
+        {(requests || []).map((i, index) => <WithdrawRequestItem
+            deleteItem={(item) => {
+                const { amount: itemAmount } = item;
+                const actionsModalActions = {
+                    cancel: {
+                        onPress: () => hideModal(),
+                        title: "Cancel"
+                    },
+                    confirm: {
+                        title: "Delete request",
+                        onPress: () => {
+                            console.log("can we delete this item")
+                        }
+                    }
+                };
+                showModal({
+                    dialogMessage: `You're about to delete your request of a withdraw of $${niceDec(+itemAmount)}`,
+                    dialogTitle: `Delete request fro ${niceDec(+itemAmount)}`,
+                    dialogType: StatusType.PROCESSING,
+                    dialogActions: actionsModalActions
+                });
+            }}
+            key={`${index}-${i.id}`} {...i} />)}
 
         <FlexGrid flexGridColumnCount={1}>
             <FlexGridItem>
@@ -167,12 +184,28 @@ export const WithdrawForm = () => {
             >
                 <Button
                     onClick={() => {
-                        modalActions = createWithdrawActions;
+
+                        const createWithdrawActions: ModalActions = {
+                            confirm: {
+                                onPress: () => {
+                                    createWithdraw();
+                                    // TODO hide modal with status
+                                },
+                                title: "Submit"
+                            },
+                            cancel: {
+                                onPress: () => hideModal(),
+                                title: "Cancel"
+                            }
+                        };
+
                         showModal({
                             dialogMessage: `You're about to request a withdraw of $${niceDec(+amount)}`,
                             dialogTitle: `Withdraw ${niceDec(+amount)}`,
-                            dialogType: StatusType.PROCESSING
+                            dialogType: StatusType.PROCESSING,
+                            dialogActions: createWithdrawActions
                         });
+
                     }}
                     shape="pill"
                     overrides={{
