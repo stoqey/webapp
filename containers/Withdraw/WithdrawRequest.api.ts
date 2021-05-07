@@ -131,7 +131,7 @@ export const cancelWithdrawRequestMutation = async ({
 
     const { data: dataResponse }: any = await client.mutate({
       mutation: CANCEL_WITHDRAWREQUEST_MUTATION,
-      variables: { args: argsToPass },
+      variables: argsToPass,
       fetchPolicy: "no-cache",
     });
 

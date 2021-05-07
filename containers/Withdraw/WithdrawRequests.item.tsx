@@ -5,14 +5,16 @@ import { H3, Paragraph3 } from 'baseui/typography';
 import React from 'react';
 import { ImCross } from 'react-icons/im';
 import { BsArrowClockwise } from 'react-icons/bs';
-import { FaCheck, FaEdit } from 'react-icons/fa';
+import { FaArrowCircleRight, FaCheck, FaEdit } from 'react-icons/fa';
 
 const statusObject = {
     [StatusType.DRAFT]: ["Draft", "grey", FaEdit],
     [StatusType.PENDING]: ["Pending", "orange", BsArrowClockwise],
+    [StatusType.SUBMITTED]: ["Submitted", "orange", FaArrowCircleRight],
     [StatusType.PROCESSING]: ["Processing", "gold", BsArrowClockwise],
     [StatusType.SUCCESS]: ["Successfully processed", "green", FaCheck],
     [StatusType.FAIL]: ["Failed request", "red", BsArrowClockwise],
+    [StatusType.CANCELED]: ["Canceled request", "red", BsArrowClockwise],
     [StatusType.REJECTED]: ["Rejected request", "red", BsArrowClockwise],
 };
 

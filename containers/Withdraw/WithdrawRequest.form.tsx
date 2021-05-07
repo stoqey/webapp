@@ -16,6 +16,7 @@ import WithdrawRequestItem from './WithdrawRequests.item';
 import { useApolloClient } from '@apollo/client';
 import { WithdrawRequestType } from '@stoqey/client-graphql';
 import ConfirmModal, { ModalActions } from '@/components/Confirm.modal';
+import { isEmpty } from 'lodash';
 
 interface State {
     amount: number;
@@ -125,7 +126,7 @@ export const WithdrawForm = () => {
         error: async () => {
 
         },
-        success: async (data) => setState({ ...state, requests: data })
+        success: async (data) => setState({ ...state, requests: data.filter(o => !isEmpty(o.status)) })
     })
 
     React.useEffect(() => { getDataApi() }, [dialogShow]);
