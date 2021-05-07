@@ -10,7 +10,7 @@ import { useUserInfo } from 'hooks/useUserInfo';
 import { H4 } from 'baseui/typography';
 import { niceDec } from 'utils/number';
 
-import { createUpdateWithdrawRequestMutation, getWithdrawRequestsPaginationApi } from './WithdrawRequest.api';
+import { createUpdateWithdrawRequestMutation, getWithdrawRequestsPaginationApi, cancelWithdrawRequestMutation } from './WithdrawRequest.api';
 import WithdrawRequestItem from './WithdrawRequests.item';
 
 import { useApolloClient } from '@apollo/client';
@@ -91,6 +91,34 @@ export const WithdrawForm = () => {
         }
     });
 
+    const cancelWithdraw = (id: string) => cancelWithdrawRequestMutation({
+        client,
+        args: { id },
+        success: async (res) => {
+            setState({
+                ...state,
+                status: true,
+                dialogShow: true,
+                dialogMessage: "Successfully deleted Withdraw request",
+                dialogTitle: "Success",
+                dialogType: StatusType.SUCCESS,
+                dialogActions: null,
+            })
+        },
+        error: async (err) => {
+            console.log("error deleting withdraw", err);
+            setState({
+                ...state,
+                status: true,
+                dialogShow: true,
+                dialogMessage: err && err.message,
+                dialogTitle: "Error",
+                dialogType: StatusType.FAIL,
+                dialogActions: null,
+            })
+        }
+    });
+
     const getDataApi = () => getWithdrawRequestsPaginationApi({
         client,
         args: { filter: "active" },
@@ -116,7 +144,7 @@ export const WithdrawForm = () => {
         {/* Pending requests here */}
         {(requests || []).map((i, index) => <WithdrawRequestItem
             deleteItem={(item) => {
-                const { amount: itemAmount } = item;
+                const { amount: itemAmount, id } = item;
                 showModal({
                     dialogMessage: `You're about to delete your request of a withdraw of $${niceDec(+itemAmount)}`,
                     dialogTitle: `Delete request fro ${niceDec(+itemAmount)}`,
@@ -127,10 +155,8 @@ export const WithdrawForm = () => {
                             title: "Cancel"
                         },
                         confirm: {
-                            title: "Delete request",
-                            onPress: () => {
-                                console.log("can we delete this item")
-                            }
+                            title: "Delete withdraw request",
+                            onPress: () => cancelWithdraw(id)
                         }
                     }
                 });
