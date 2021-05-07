@@ -4,6 +4,7 @@ import _get from "lodash/get";
 import {
   ResType,
   CREATE_WITHDRAWREQUEST_MUTATION,
+  CANCEL_WITHDRAWREQUEST_MUTATION,
   GET_WITHDRAW_REQUESTS,
   ActionType,
   WithdrawRequestType,
@@ -129,7 +130,7 @@ export const cancelWithdrawRequestMutation = async ({
     };
 
     const { data: dataResponse }: any = await client.mutate({
-      mutation: CREATE_WITHDRAWREQUEST_MUTATION,
+      mutation: CANCEL_WITHDRAWREQUEST_MUTATION,
       variables: { args: argsToPass },
       fetchPolicy: "no-cache",
     });
@@ -150,6 +151,7 @@ export const cancelWithdrawRequestMutation = async ({
     await error(err);
   }
 };
+
 
 // TODO accept/reject
 // TODO delete
