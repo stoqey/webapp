@@ -77,6 +77,7 @@ export const WithdrawForm = () => {
                 dialogType: StatusType.SUCCESS,
                 dialogActions: null,
             })
+            getDataApi(); // refresh
         },
         error: async (err) => {
             console.log("error creating withdraw", err);
@@ -105,6 +106,7 @@ export const WithdrawForm = () => {
                 dialogType: StatusType.SUCCESS,
                 dialogActions: null,
             })
+            getDataApi(); // call api for refresh
         },
         error: async (err) => {
             console.log("error deleting withdraw", err);
@@ -129,7 +131,7 @@ export const WithdrawForm = () => {
         success: async (data) => setState({ ...state, requests: data.filter(o => !isEmpty(o.status)) })
     })
 
-    React.useEffect(() => { getDataApi() }, [dialogShow]);
+    React.useEffect(() => { getDataApi() }, []);
 
     return (<>
 
@@ -148,7 +150,7 @@ export const WithdrawForm = () => {
                 const { amount: itemAmount, id } = item;
                 showModal({
                     dialogMessage: `You're about to delete your request of a withdraw of $${niceDec(+itemAmount)}`,
-                    dialogTitle: `Delete request fro ${niceDec(+itemAmount)}`,
+                    dialogTitle: `Delete request of ${niceDec(+itemAmount)}`,
                     dialogType: StatusType.FAIL,
                     dialogActions: {
                         cancel: {
