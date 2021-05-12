@@ -16,7 +16,7 @@ const WithdrawRequestsTable: NextPage<{}> = () => {
 
     const getDataApi = () => getWithdrawRequestsPaginationApi({
         client,
-        args: { filter: "active" },
+        args: {},
         error: async () => {
 
         },

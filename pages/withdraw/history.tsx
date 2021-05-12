@@ -7,6 +7,7 @@ import Container from 'components/UiElements/Container/Container';
 import WithdrawRequestMenu from '@/components/SideMenu/WithdrawRequestMenu';
 import TransactionsTable from 'containers/Transactions'
 import FundsMenu from '@/components/SideMenu/FundsMenu';
+import WithdrawRequestsTable from 'containers/Withdraw/WithdrawRequests.lists';
 
 
 const TransactionsHistory: NextPage<{}> = () => {
@@ -24,7 +25,7 @@ const TransactionsHistory: NextPage<{}> = () => {
 							<WithdrawRequestMenu />
 						</Cell>
 						<Cell span={[12, 12, 9]}>
-							<TransactionsTable />
+							<WithdrawRequestsTable />
 						</Cell>
 					</Grid>
 				</Block>

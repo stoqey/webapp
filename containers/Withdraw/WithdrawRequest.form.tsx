@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button } from 'baseui/button';
 import { toaster } from 'baseui/toast';
 import { Modal, ModalHeader, ModalBody } from 'baseui/modal';
-import { StatusType } from '@stoqey/client-graphql';
+import { StatusType, PaymentMethodType } from '@stoqey/client-graphql';
 import { FlexGrid, FlexGridItem } from 'baseui/flex-grid';
 import { FormControl } from 'baseui/form-control';
 import { Input } from 'baseui/input';
@@ -22,7 +22,7 @@ interface State {
     amount: number;
     status: any;
     requests: WithdrawRequestType[],
-
+    paymentMethod: PaymentMethodType,
     dialogShow: boolean;
     dialogMessage: string;
     dialogTitle: string;
@@ -38,6 +38,7 @@ export const WithdrawForm = () => {
         amount: 1,
         status: false,
         requests: [],
+        paymentMethod: null,
         dialogShow: false,
         dialogMessage: "",
         dialogTitle: "",
