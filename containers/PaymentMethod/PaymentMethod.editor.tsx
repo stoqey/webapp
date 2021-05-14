@@ -1,8 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ConfirmModal, { ModalActions } from '@/components/Confirm.modal';
 
+interface State {
+    hideModal: boolean;
+}
+
+interface Props {
+    onChangeMethod: () => void;
+}
 
 export const PaymentMethodEditor = () => {
+    const [] = useState();
     return (<>
         <ConfirmModal
             hide={hideModal}
