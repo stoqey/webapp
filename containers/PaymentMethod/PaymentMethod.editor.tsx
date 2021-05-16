@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { FlexGrid, FlexGridItem } from 'baseui/flex-grid';
 import { FormControl } from 'baseui/form-control';
+import { Select } from "baseui/select";
 import { Input } from 'baseui/input';
 import ConfirmModal, { ModalActions } from '@/components/Confirm.modal';
 import { PaymentMethodType, StatusType } from '@stoqey/client-graphql';
@@ -35,6 +36,10 @@ export const PaymentMethodEditor = () => {
         dialogType: StatusType.DRAFT,
         dialogActions: null,
     });
+
+    const [value, setValue] = React.useState([
+        { label: "Aqua", id: "#00FFFF" }
+    ]);
 
     const { name, type, info, dialogTitle, dialogMessage, dialogShow, dialogActions, dialogType } = state;
 
@@ -87,7 +92,41 @@ export const PaymentMethodEditor = () => {
                     }}
                 />
             </FormControl>
+
+            <FormControl
+                label="Payment method name"
+                // error={error && 'Please fill out balance'}
+                overrides={{
+                    Label: {
+                        style: ({ $theme }) => {
+                            return {
+                                textAlign: 'center',
+                                ...$theme.typography.font200
+                            };
+                        },
+                    },
+                }}
+            >
+                <Select
+                    options={[
+                        { label: "Bank account", id: "bank" },
+                        { label: "E-transfer", id: "etransfer" },
+                        { label: "Mobile money", id: "mobilemoney" }
+                    ]}
+
+                    labelKey="label"
+                    valueKey="id"
+                    onChange={({ value }) => handleChange("type")(value)}
+                    value={type as any}
+                    placeholder="Select color"
+                />
+            </FormControl>
+
+
+
         </FlexGridItem>
 
     </>)
 }
+
+export default PaymentMethodEditor;

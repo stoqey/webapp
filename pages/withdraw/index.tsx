@@ -14,6 +14,7 @@ import WithdrawRequestMenu from '@/components/SideMenu/WithdrawRequestMenu';
 import { FaStripe } from 'react-icons/fa';
 import { StripeConnectForm } from 'containers/Stripe/StripeConnectForm';
 import { WithdrawForm } from 'containers/Withdraw/WithdrawRequest.form';
+import PaymentMethodEditor from 'containers/PaymentMethod/PaymentMethod.editor';
 // import { WithdrawRequestList } from 'containers/Withdraw/WithdrawRequests.lists';
 
 type FormData = {
@@ -72,7 +73,8 @@ const Withdraw: NextPage<{}> = () => {
 						</Cell>
 						<Cell span={[12, 12, 3]}>
 							<Block justifyContent="center" display="flex">
-								<StripeConnectForm userId={null}>
+								<PaymentMethodEditor />
+								{/* <StripeConnectForm userId={null}>
 									<Button
 										type="button"
 										size="default"
@@ -93,7 +95,8 @@ const Withdraw: NextPage<{}> = () => {
 									>
 										{"Get paid with "}	<FaStripe style={{ marginLeft: 10 }} size={40} />
 									</Button>
-								</StripeConnectForm>
+								</StripeConnectForm> */}
+
 
 
 							</Block>
