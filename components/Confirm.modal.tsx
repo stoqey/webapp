@@ -21,7 +21,7 @@ export interface ModalActions {
 interface Props {
     show: boolean;
     hide?: () => void;
-    children: ReactNode | ReactNode[];
+    children?: ReactNode | ReactNode[];
     loading?: boolean;
     title: string;
     description: string;
