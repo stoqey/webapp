@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { Block } from 'baseui/block';
 import { Modal, ModalBody } from 'baseui/modal';
 import { Button } from 'baseui/button';
@@ -21,7 +21,7 @@ export interface ModalActions {
 interface Props {
     show: boolean;
     hide?: () => void;
-
+    children: ReactNode | ReactNode[];
     loading?: boolean;
     title: string;
     description: string;
@@ -41,7 +41,7 @@ const statusObject = {
 
 
 const ConfirmModal = (props: Props) => {
-    const { show, hide, title, description, status, actions, loading = false } = props;
+    const { show, hide, title, description, status, actions, loading = false, children } = props;
 
     const { cancel, confirm } = actions || { cancel: null, confirm: null };
 
@@ -113,7 +113,7 @@ const ConfirmModal = (props: Props) => {
                             {/* Confirm  amount */}
                             {/* <H6>{title}</H6> */}
                             <Paragraph2>{description}</Paragraph2>
-
+                            {children && children}
                             {/* Confirm */}
                             {actions && (
                                 <p style={{ display: 'flex', padding: "20px" }}>
