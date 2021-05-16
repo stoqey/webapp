@@ -94,7 +94,7 @@ export const PaymentMethodEditor = () => {
             </FormControl>
 
             <FormControl
-                label="Payment method name"
+                // label="Payment method name"
                 // error={error && 'Please fill out balance'}
                 overrides={{
                     Label: {
@@ -118,7 +118,7 @@ export const PaymentMethodEditor = () => {
                     valueKey="id"
                     onChange={({ value }) => handleChange("type")(value)}
                     value={type as any}
-                    placeholder="Select color"
+                    placeholder="Payment method type"
                 />
             </FormControl>
 
