@@ -113,7 +113,7 @@ const ConfirmModal = (props: Props) => {
                             {/* Confirm  amount */}
                             {/* <H6>{title}</H6> */}
                             <Paragraph2>{description}</Paragraph2>
-                            {children && children}
+    
                             {/* Confirm */}
                             {actions && (
                                 <p style={{ display: 'flex', padding: "20px" }}>
@@ -159,6 +159,7 @@ const ConfirmModal = (props: Props) => {
 
                         </Block>
                     </Block>
+                    {children && children}
                 </ModalBody>
             </Modal>
         </>
