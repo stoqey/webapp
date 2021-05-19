@@ -37,10 +37,6 @@ export const PaymentMethodEditor = () => {
         dialogActions: null,
     });
 
-    const [value, setValue] = React.useState([
-        { label: "Aqua", id: "#00FFFF" }
-    ]);
-
     const { name, type, info, dialogTitle, dialogMessage, dialogShow, dialogActions, dialogType } = state;
 
     const handleChange = (field: string) => {
@@ -54,6 +50,8 @@ export const PaymentMethodEditor = () => {
 
     const hideModal = () => handleChange("dialogShow")(false);
 
+    console.log("selected payment method", type);
+
     return (<>
         <ConfirmModal
             hide={hideModal}
@@ -64,35 +62,6 @@ export const PaymentMethodEditor = () => {
             status={dialogType}
         />
         <FlexGridItem>
-            <FormControl
-                label="Payment method name"
-                // error={error && 'Please fill out balance'}
-                overrides={{
-                    Label: {
-                        style: ({ $theme }) => {
-                            return {
-                                textAlign: 'center',
-                                ...$theme.typography.font200
-                            };
-                        },
-                    },
-                }}
-            >
-                <Input
-                    // TODO type 
-                    name="name"
-                    value={name}
-                    onChange={(event: any) => handleChange("name")(event.target.value)}
-                    overrides={{
-                        InputContainer: {
-                            style: () => {
-                                return { backgroundColor: 'transparent' };
-                            },
-                        },
-                    }}
-                />
-            </FormControl>
-
             <FormControl
                 // label="Payment method name"
                 // error={error && 'Please fill out balance'}
@@ -122,7 +91,34 @@ export const PaymentMethodEditor = () => {
                 />
             </FormControl>
 
-
+            <FormControl
+                label="Payment method name"
+                // error={error && 'Please fill out balance'}
+                overrides={{
+                    Label: {
+                        style: ({ $theme }) => {
+                            return {
+                                textAlign: 'center',
+                                ...$theme.typography.font200
+                            };
+                        },
+                    },
+                }}
+            >
+                <Input
+                    // TODO type 
+                    name="name"
+                    value={name}
+                    onChange={(event: any) => handleChange("name")(event.target.value)}
+                    overrides={{
+                        InputContainer: {
+                            style: () => {
+                                return { backgroundColor: 'transparent' };
+                            },
+                        },
+                    }}
+                />
+            </FormControl>
 
         </FlexGridItem>
 
