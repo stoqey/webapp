@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { FlexGrid, FlexGridItem } from 'baseui/flex-grid';
 import { FormControl } from 'baseui/form-control';
+import { Button } from 'baseui/button';
 import { Select } from "baseui/select";
 import { Input } from 'baseui/input';
 import ConfirmModal, { ModalActions } from '@/components/Confirm.modal';
@@ -63,7 +64,7 @@ export const PaymentMethodEditor = () => {
         />
         <FlexGridItem>
             <FormControl
-                // label="Payment method name"
+                label="Payment method type"
                 // error={error && 'Please fill out balance'}
                 overrides={{
                     Label: {
@@ -119,6 +120,52 @@ export const PaymentMethodEditor = () => {
                     }}
                 />
             </FormControl>
+
+            <FormControl
+                label="Payment method info"
+                // error={error && 'Please fill out balance'}
+                overrides={{
+                    Label: {
+                        style: ({ $theme }) => {
+                            return {
+                                textAlign: 'center',
+                                ...$theme.typography.font200
+                            };
+                        },
+                    },
+                }}
+            >
+                <Input
+                    // TODO type 
+                    name="info"
+                    value={info}
+                    onChange={(event: any) => handleChange("info")(event.target.value)}
+                    overrides={{
+                        InputContainer: {
+                            style: () => {
+                                return { backgroundColor: 'transparent' };
+                            },
+                        },
+                    }}
+                />
+            </FormControl>
+
+            <Button
+                // isLoading={loading}
+                shape="pill"
+                size="default"
+                // onClick={() => confirm.onPress()}
+                overrides={{
+                    BaseButton: {
+                        style: ({ $theme }) => {
+                            return {
+                                width: '100%',
+                                ...$theme.typography.font250,
+                            };
+                        },
+                    },
+                }}
+            > Add payment method </Button>
 
         </FlexGridItem>
 
