@@ -71,7 +71,7 @@ export const PaymentMethodEditor = () => {
                     ...state,
                     dialogAdd: true,
                     dialogShow: true,
-                    dialogMessage: "Add Payment method",
+                    dialogMessage: "",
                     dialogTitle: "Add payment method",
                     dialogType: StatusType.DRAFT,
                     dialogActions: null,

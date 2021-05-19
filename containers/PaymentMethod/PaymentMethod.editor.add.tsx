@@ -47,7 +47,7 @@ export const PaymentMethodEditor = () => {
 
 
             <FormControl
-                label="Payment method type"
+                label="Select payment method type"
                 // error={error && 'Please fill out balance'}
                 overrides={{
                     Label: {
@@ -73,7 +73,7 @@ export const PaymentMethodEditor = () => {
 
 
             <FormControl
-                label="Payment method name"
+                label="Give it a name"
                 // error={error && 'Please fill out balance'}
                 overrides={{
                     Label: {
@@ -102,7 +102,7 @@ export const PaymentMethodEditor = () => {
             </FormControl>
 
             <FormControl
-                label="Payment method info"
+                label="Enter full details here"
                 // error={error && 'Please fill out balance'}
                 overrides={{
                     Label: {
