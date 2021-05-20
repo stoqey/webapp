@@ -19,6 +19,8 @@ interface State {
     type?: string;
     info?: string;
 
+    loading?: boolean;
+
 }
 
 export const paymentMethods = [
@@ -35,10 +37,11 @@ export const PaymentMethodEditor = (props: Props) => {
     const [state, setState] = useState<State>({
         type: "bank",
         info: "",
-        name: ""
+        name: "",
+        loading: false,
     });
 
-    const { name, type, info } = state;
+    const { name, type, info, loading } = state;
 
     const handleChange = (field: string) => {
         return (val: any) => {
@@ -49,16 +52,18 @@ export const PaymentMethodEditor = (props: Props) => {
         }
     };
 
+    const setLoading = (val: boolean) => handleChange("loading")(val);
+
     const handleSubmit = () => createUpdatePaymentMethodMutation({
         args: {
             name, type, info
         },
         client,
         success: async (data) => {
-
+            setLoading(false)
         },
         error: async () => {
-            
+            setLoading(false)
         }
 
     })
@@ -67,7 +72,7 @@ export const PaymentMethodEditor = (props: Props) => {
         <FlexGridItem>
             <FormControl
                 label="Select payment method type"
-                // error={error && 'Please fill out balance'}
+                error={error && 'Please fill out balance'}
                 overrides={{
                     Label: {
                         style: ({ $theme }) => {
@@ -80,7 +85,7 @@ export const PaymentMethodEditor = (props: Props) => {
                     },
                 }}
             >
-                <p style={{ textAlign: "center"}}>
+                <p style={{ textAlign: "center" }}>
                     {paymentMethods.map((i) => {
                         return <Button size="compact" kind={type === i.id ? "primary" : "secondary"} key={i.id} onClick={() => handleChange("type")(i.id)}>
                             {type === i.id ? "✅" : ""} {i.label}
@@ -93,7 +98,7 @@ export const PaymentMethodEditor = (props: Props) => {
 
             <FormControl
                 label="Give it a name"
-                // error={error && 'Please fill out balance'}
+                // error={!name.length}
                 overrides={{
                     Label: {
                         style: ({ $theme }) => {
@@ -150,10 +155,11 @@ export const PaymentMethodEditor = (props: Props) => {
             </FormControl>
 
             <Button
-                // isLoading={loading}
+                isLoading={loading}
                 shape="pill"
                 size="default"
                 onClick={() => {
+                    setLoading(true)
                     setState({
                         ...state,
                     })
