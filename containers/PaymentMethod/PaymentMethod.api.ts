@@ -1,7 +1,7 @@
 import { ApolloClient } from '@apollo/react-hooks';
 import isEmpty from 'lodash/isEmpty';
 import _get from 'lodash/get';
-import { ResType, ActionType, PortfolioType, GET_PAYMENT_METHODS, TradingStatusType } from '@stoqey/client-graphql';
+import { ResType, ActionType, PortfolioType, GET_PAYMENT_METHODS, CREATE_PAYMENTMETHOD_MUTATION, TradingStatusType, PaymentMethodType } from '@stoqey/client-graphql';
 import AsyncStorageDB from '@/lib/AsyncStorageDB';
 
 export const getPaymentMethodsPaginationApi = async ({
@@ -52,5 +52,50 @@ export const getPaymentMethodsPaginationApi = async ({
   } catch (err) {
     console.error(err);
     error && await error(err);
+  }
+};
+
+export const createUpdatePaymentMethodMutation = async ({
+  args,
+  client,
+  error,
+  success,
+}: {
+  args?: Partial<PaymentMethodType>;
+  client: ApolloClient<any>;
+  error?: (error: Error) => Promise<any>;
+  success?: (data: any) => Promise<any>;
+}) => {
+  console.log("add payment method", JSON.stringify(args));
+
+  try {
+    const user = await AsyncStorageDB.getAuthItem();
+    const userId = _get(user, "user.id", "");
+
+    const argsToPass = {
+      owner: userId,
+      ...args
+    };
+
+    const { data: dataResponse }: any = await client.mutate({
+      mutation: CREATE_PAYMENTMETHOD_MUTATION,
+      variables: { args: argsToPass },
+      fetchPolicy: "no-cache",
+    });
+
+    if (!dataResponse) {
+      throw new Error("error adding payment method data");
+    }
+
+    const { data }: { data?: ResType } = dataResponse;
+    if (data.success) {
+      await success(data);
+      return;
+    }
+
+    throw new Error("error adding payment method, please try again later");
+  } catch (err) {
+    console.error(err);
+    await error(err);
   }
 };
