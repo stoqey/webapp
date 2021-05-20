@@ -43,9 +43,6 @@ export const PaymentMethodEditor = () => {
 
     return (<>
         <FlexGridItem>
-
-
-
             <FormControl
                 label="Select payment method type"
                 // error={error && 'Please fill out balance'}
