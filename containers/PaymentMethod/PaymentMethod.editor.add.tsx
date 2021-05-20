@@ -5,7 +5,13 @@ import { Button } from 'baseui/button';
 import { ButtonGroup } from "baseui/button-group";
 import { Select } from "baseui/select";
 import { Input } from 'baseui/input';
+import { createUpdatePaymentMethodMutation } from './PaymentMethod.api';
+import { useApolloClient } from '@apollo/react-hooks';
 
+
+interface Props {
+    hide: () => void;
+}
 interface State {
 
     // Editor state for creating new
@@ -23,7 +29,9 @@ export const paymentMethods = [
 ];
 
 
-export const PaymentMethodEditor = () => {
+export const PaymentMethodEditor = (props: Props) => {
+    const client = useApolloClient();
+    const { hide } = props;
     const [state, setState] = useState<State>({
         type: "bank",
         info: "",
@@ -40,6 +48,20 @@ export const PaymentMethodEditor = () => {
             })
         }
     };
+
+    const handleSubmit = () => createUpdatePaymentMethodMutation({
+        args: {
+            name, type, info
+        },
+        client,
+        success: async (data) => {
+
+        },
+        error: async () => {
+            
+        }
+
+    })
 
     return (<>
         <FlexGridItem>
