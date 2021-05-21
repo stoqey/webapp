@@ -23,7 +23,7 @@ interface State {
 
 }
 
-export const paymentMethods = [
+const paymentMethods = [
     { label: "Bank account", id: "bank", hint: "Bank account, swift, country" },
     { label: "E-transfer", id: "etransfer", hint: "email or phone" },
     { label: "Mobile money", id: "mobilemoney", hint: "phone" },

@@ -8,6 +8,7 @@ interface Props {
 };
 
 export const PaymentMethodLists = (props: Props) => {
+    const { items, setSelected }  = props;
     return (
         <>
 

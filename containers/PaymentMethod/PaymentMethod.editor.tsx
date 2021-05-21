@@ -5,6 +5,7 @@ import { PaymentMethodType, StatusType } from '@stoqey/client-graphql';
 import AddPaymentMethod from './PaymentMethod.editor.add';
 import { getPaymentMethodsPaginationApi } from './PaymentMethod.api';
 import { useApolloClient } from '@apollo/client';
+import { PaymentMethodLists } from './PaymentMethod.editor.list';
 
 
 interface State {
@@ -42,7 +43,7 @@ export const PaymentMethodEditor = () => {
         dialogAdd: false,
     });
 
-    const { dialogTitle, dialogMessage, dialogShow, dialogActions, dialogType, dialogAdd } = state;
+    const { dialogTitle, dialogMessage, dialogShow, dialogActions, dialogType, dialogAdd, paymentMethods } = state;
 
     const handleChange = (field: string) => {
         return (val: any) => {
@@ -81,6 +82,9 @@ export const PaymentMethodEditor = () => {
         >
             {dialogAdd && (<AddPaymentMethod hide={hideModal} />)}
         </ConfirmModal>
+
+        {/* PaymentMethod List */}
+        <PaymentMethodLists items={paymentMethods} setSelected={handleChange("paymentMethod")} />
 
         <Button
             // isLoading={loading}
