@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button } from 'baseui/button';
 import ConfirmModal, { ModalActions } from '@/components/Confirm.modal';
 import { PaymentMethodType, StatusType } from '@stoqey/client-graphql';
 import AddPaymentMethod from './PaymentMethod.editor.add';
+import { getPaymentMethodsPaginationApi } from './PaymentMethod.api';
+import { useApolloClient } from '@apollo/client';
 
 
 interface State {
@@ -28,6 +30,7 @@ interface Props {
 
 export const PaymentMethodEditor = () => {
 
+    const client = useApolloClient();
     const [state, setState] = useState<State>({
         paymentMethod: null,
         paymentMethods: [],
@@ -51,6 +54,21 @@ export const PaymentMethodEditor = () => {
     };
 
     const hideModal = () => handleChange("dialogShow")(false);
+
+    const fetchPaymentMethods = () => getPaymentMethodsPaginationApi({
+        client,
+        args: {},
+        success: async (data: any[]) => {
+            handleChange("paymentMethods")(data);
+        },
+        error: async () => {
+
+        }
+    });
+
+    useEffect(() => {
+        fetchPaymentMethods();
+    }, [dialogShow])
 
     return (<>
         <ConfirmModal

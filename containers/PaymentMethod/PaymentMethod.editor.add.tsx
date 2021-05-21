@@ -61,10 +61,12 @@ export const PaymentMethodEditor = (props: Props) => {
         },
         client,
         success: async (data) => {
-            setLoading(false)
+            setLoading(false);
+            hide();
         },
         error: async () => {
-            setLoading(false)
+            setLoading(false);
+            hide();
         }
 
     })
