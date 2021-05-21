@@ -163,6 +163,7 @@ export const PaymentMethodEditor = (props: Props) => {
                     setState({
                         ...state,
                     })
+                    handleSubmit();
                 }}
                 overrides={{
                     BaseButton: {

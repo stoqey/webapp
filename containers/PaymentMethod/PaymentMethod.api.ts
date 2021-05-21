@@ -79,7 +79,7 @@ export const createUpdatePaymentMethodMutation = async ({
 
     const { data: dataResponse }: any = await client.mutate({
       mutation: CREATE_PAYMENTMETHOD_MUTATION,
-      variables: { args: argsToPass },
+      variables: argsToPass,
       fetchPolicy: "no-cache",
     });
 
