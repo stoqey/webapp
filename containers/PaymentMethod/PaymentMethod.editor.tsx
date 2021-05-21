@@ -4,6 +4,7 @@ import ConfirmModal, { ModalActions } from '@/components/Confirm.modal';
 import { PaymentMethodType, StatusType } from '@stoqey/client-graphql';
 import AddPaymentMethod from './PaymentMethod.editor.add';
 
+
 interface State {
 
     // Editor state for creating new
@@ -26,6 +27,7 @@ interface Props {
 }
 
 export const PaymentMethodEditor = () => {
+
     const [state, setState] = useState<State>({
         paymentMethod: null,
         paymentMethods: [],
@@ -59,7 +61,7 @@ export const PaymentMethodEditor = () => {
             actions={dialogActions}
             status={dialogType}
         >
-            {dialogAdd && (<AddPaymentMethod />)}
+            {dialogAdd && (<AddPaymentMethod hide={hideModal} />)}
         </ConfirmModal>
 
         <Button

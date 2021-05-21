@@ -6,7 +6,7 @@ import { ButtonGroup } from "baseui/button-group";
 import { Select } from "baseui/select";
 import { Input } from 'baseui/input';
 import { createUpdatePaymentMethodMutation } from './PaymentMethod.api';
-import { useApolloClient } from '@apollo/react-hooks';
+import { useApolloClient, ApolloClient } from '@apollo/client';
 
 
 interface Props {
@@ -32,6 +32,7 @@ export const paymentMethods = [
 
 
 export const PaymentMethodEditor = (props: Props) => {
+ 
     const client = useApolloClient();
     const { hide } = props;
     const [state, setState] = useState<State>({
@@ -72,7 +73,6 @@ export const PaymentMethodEditor = (props: Props) => {
         <FlexGridItem>
             <FormControl
                 label="Select payment method type"
-                error={error && 'Please fill out balance'}
                 overrides={{
                     Label: {
                         style: ({ $theme }) => {
