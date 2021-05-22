@@ -15,7 +15,7 @@
 				"@apollo/react-hooks": "^4.0.0",
 				"@glidejs/glide": "^3.4.1",
 				"@react-firebase/auth": "^0.2.10",
-				"@stoqey/client-graphql": "^0.4.3",
+				"@stoqey/client-graphql": "^0.4.4",
 				"@stripe/react-stripe-js": "^1.4.0",
 				"@stripe/stripe-js": "^1.13.2",
 				"amplitude-js": "^8.1.0",
