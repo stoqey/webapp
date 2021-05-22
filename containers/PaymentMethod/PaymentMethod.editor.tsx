@@ -56,6 +56,19 @@ export const PaymentMethodEditor = () => {
 
     const hideModal = () => handleChange("dialogShow")(false);
 
+
+    // TODO 
+    const deletePaymentMethods = (id: string) => getPaymentMethodsPaginationApi({
+        client,
+        args: {},
+        success: async (data: any[]) => {
+            handleChange("paymentMethods")(data);
+        },
+        error: async () => {
+
+        }
+    });
+
     const fetchPaymentMethods = () => getPaymentMethodsPaginationApi({
         client,
         args: {},
