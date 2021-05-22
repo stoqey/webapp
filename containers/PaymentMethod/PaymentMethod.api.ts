@@ -1,7 +1,7 @@
 import { ApolloClient } from '@apollo/react-hooks';
 import isEmpty from 'lodash/isEmpty';
 import _get from 'lodash/get';
-import { ResType, ActionType, PortfolioType, GET_PAYMENT_METHODS, CREATE_PAYMENTMETHOD_MUTATION, TradingStatusType, PaymentMethodType } from '@stoqey/client-graphql';
+import { ResType, ActionType, PortfolioType, GET_PAYMENT_METHODS, CREATE_PAYMENTMETHOD_MUTATION, TradingStatusType, PaymentMethodType, DELETE_PAYMENTMETHOD_MUTATION } from '@stoqey/client-graphql';
 import AsyncStorageDB from '@/lib/AsyncStorageDB';
 
 export const getPaymentMethodsPaginationApi = async ({
@@ -79,7 +79,7 @@ export const createUpdatePaymentMethodMutation = async ({
 
     const { data: dataResponse }: any = await client.mutate({
       mutation: CREATE_PAYMENTMETHOD_MUTATION,
-      variables: argsToPass,
+      variables: { args: argsToPass},
       fetchPolicy: "no-cache",
     });
 
@@ -94,6 +94,50 @@ export const createUpdatePaymentMethodMutation = async ({
     }
 
     throw new Error("error adding payment method, please try again later");
+  } catch (err) {
+    console.error(err);
+    await error(err);
+  }
+};
+
+export const deletePaymentMethodMutation = async ({
+  args,
+  client,
+  error,
+  success,
+}: {
+  args: { id: string };
+  client: ApolloClient<any>;
+  error?: (error: Error) => Promise<any>;
+  success?: (data: any) => Promise<any>;
+}) => {
+
+  try {
+    const user = await AsyncStorageDB.getAuthItem();
+    const userId = _get(user, "user.id", "");
+
+    const argsToPass = {
+      owner: userId,
+      id: args.id
+    };
+
+    const { data: dataResponse }: any = await client.mutate({
+      mutation: DELETE_PAYMENTMETHOD_MUTATION,
+      variables: argsToPass,
+      fetchPolicy: "no-cache",
+    });
+
+    if (!dataResponse) {
+      throw new Error("error deleting payment method");
+    }
+
+    const { data }: { data?: ResType } = dataResponse;
+    if (data.success) {
+      await success(data);
+      return;
+    }
+
+    throw new Error("error deleting payment method, please try again later");
   } catch (err) {
     console.error(err);
     await error(err);
