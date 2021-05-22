@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Button } from 'baseui/button';
+import { Block } from 'baseui/block'
 import ConfirmModal, { ModalActions } from '@/components/Confirm.modal';
 import { PaymentMethodType, StatusType } from '@stoqey/client-graphql';
 import AddPaymentMethod from './PaymentMethod.editor.add';
-import { getPaymentMethodsPaginationApi } from './PaymentMethod.api';
+import { deletePaymentMethodMutation, getPaymentMethodsPaginationApi } from './PaymentMethod.api';
 import { useApolloClient } from '@apollo/client';
 import { PaymentMethodLists } from './PaymentMethod.editor.list';
 
@@ -57,12 +58,14 @@ export const PaymentMethodEditor = () => {
     const hideModal = () => handleChange("dialogShow")(false);
 
 
-    // TODO 
-    const deletePaymentMethods = (id: string) => getPaymentMethodsPaginationApi({
+    const deletePaymentMethods = (id: string) => deletePaymentMethodMutation({
         client,
-        args: {},
+        args: {
+            id
+        },
         success: async (data: any[]) => {
-            handleChange("paymentMethods")(data);
+            // handleChange("paymentMethods")(data);
+            fetchPaymentMethods();
         },
         error: async () => {
 
@@ -73,6 +76,7 @@ export const PaymentMethodEditor = () => {
         client,
         args: {},
         success: async (data: any[]) => {
+            console.log("payment methods are", data.length);
             handleChange("paymentMethods")(data);
         },
         error: async () => {
@@ -97,34 +101,42 @@ export const PaymentMethodEditor = () => {
         </ConfirmModal>
 
         {/* PaymentMethod List */}
-        <PaymentMethodLists items={paymentMethods} setSelected={handleChange("paymentMethod")} />
 
-        <Button
-            // isLoading={loading}
-            shape="pill"
-            size="default"
-            onClick={() => {
-                setState({
-                    ...state,
-                    dialogAdd: true,
-                    dialogShow: true,
-                    dialogMessage: "",
-                    dialogTitle: "Add payment method",
-                    dialogType: StatusType.DRAFT,
-                    dialogActions: null,
-                })
-            }}
-            overrides={{
-                BaseButton: {
-                    style: ({ $theme }) => {
-                        return {
-                            width: '100%',
-                            ...$theme.typography.font250,
-                        };
+        <Block>
+            <PaymentMethodLists deleteItem={deletePaymentMethods} items={paymentMethods} setSelected={handleChange("paymentMethod")} />¸
+        </Block>
+
+        <Block>
+            <Button
+                // isLoading={loading}
+                shape="pill"
+                size="default"
+                onClick={() => {
+                    setState({
+                        ...state,
+                        dialogAdd: true,
+                        dialogShow: true,
+                        dialogMessage: "",
+                        dialogTitle: "Add payment method",
+                        dialogType: StatusType.DRAFT,
+                        dialogActions: null,
+                    })
+                }}
+                overrides={{
+                    BaseButton: {
+                        style: ({ $theme }) => {
+                            return {
+                                width: '100%',
+                                ...$theme.typography.font250,
+                            };
+                        },
                     },
-                },
-            }}
-        > Add payment method </Button>
+                }}
+            > Add payment method </Button>
+
+        </Block>
+
+        <br />
 
     </>)
 }

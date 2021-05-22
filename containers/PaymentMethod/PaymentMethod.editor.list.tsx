@@ -17,8 +17,8 @@ const withdrawPaymentTypeObject = {
 
 interface Props {
     items: PaymentMethodType[];
-    setSelected: (selected: PaymentMethodType) => void
-    deleteItem: (selected: PaymentMethodType) => void
+    setSelected?: (selected: PaymentMethodType) => void
+    deleteItem: (id: string) => void
 };
 
 export const PaymentMethodLists = (props: Props) => {
@@ -43,8 +43,8 @@ export const PaymentMethodLists = (props: Props) => {
 
                         <H3>{name}</H3>
 
-                        <Button disabled={cannotBeCanceled} shape="round" $style={{ backgroundColor: 'red' }}
-                            onClick={() => deleteItem(i)}>
+                        <Button shape="round" $style={{ backgroundColor: 'red' }}
+                            onClick={() => deleteItem(i.id)}>
                             <ImCross />
                         </Button>
 
