@@ -21,7 +21,7 @@ const withdrawPaymentTypeObject = {
 interface Props {
     items: PaymentMethodType[];
     setSelected?: (selected: PaymentMethodType) => void
-    deleteItem: (id: string) => void
+    deleteItem: (paymentMethod: PaymentMethodType) => void
 };
 
 export const PaymentMethodLists = (props: Props) => {
@@ -42,7 +42,7 @@ export const PaymentMethodLists = (props: Props) => {
 
                     <p style={{ display: "flex", justifyContent: "space-between" }}>
                         <Paragraph3> {isSelected ? "✅" : ""} <Icon size={15} /> {type.toLocaleUpperCase()}</Paragraph3>
-                        <ParagraphMedium $style={{ color: "red" }} onClick={() => deleteItem(i.id)}> <ImCross size={15} /></ParagraphMedium>
+                        <ParagraphMedium $style={{ color: "red" }} onClick={() => deleteItem(i)}> <ImCross size={15} /></ParagraphMedium>
                     </p>
 
                     <p style={{ textAlign: "center" }}>

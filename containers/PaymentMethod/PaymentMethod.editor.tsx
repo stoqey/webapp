@@ -124,7 +124,7 @@ export const PaymentMethodEditor = () => {
         {/* PaymentMethod List */}
 
         <Block>
-            <PaymentMethodLists deleteItem={deletePaymentMethods} items={paymentMethods} setSelected={handleChange("paymentMethod")} />¸
+            <PaymentMethodLists deleteItem={deletePaymentMethod} items={paymentMethods} setSelected={handleChange("paymentMethod")} />¸
         </Block>
 
         <Block>
