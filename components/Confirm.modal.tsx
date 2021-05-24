@@ -18,7 +18,7 @@ export interface ModalActions {
         title: string;
     },
 }
-interface Props {
+export interface ConfirmModelProps {
     show: boolean;
     hide?: () => void;
     children?: ReactNode | ReactNode[];
@@ -40,7 +40,7 @@ const statusObject = {
 };
 
 
-const ConfirmModal = (props: Props) => {
+const ConfirmModal = (props: ConfirmModelProps) => {
     const { show, hide, title, description, status, actions, loading = false, children } = props;
 
     const { cancel, confirm } = actions || { cancel: null, confirm: null };
