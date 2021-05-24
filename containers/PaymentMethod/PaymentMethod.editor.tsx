@@ -7,6 +7,8 @@ import AddPaymentMethod from './PaymentMethod.editor.add';
 import { deletePaymentMethodMutation, getPaymentMethodsPaginationApi } from './PaymentMethod.api';
 import { useApolloClient } from '@apollo/client';
 import { PaymentMethodLists } from './PaymentMethod.editor.list';
+import { PaymentMethodItem } from './PaymentMethod.editor.item';
+import { isEmpty } from 'lodash';
 
 
 interface State {
@@ -44,7 +46,7 @@ export const PaymentMethodEditor = () => {
         dialogAdd: false,
     });
 
-    const { dialogTitle, dialogMessage, dialogShow, dialogActions, dialogType, dialogAdd, paymentMethods } = state;
+    const { dialogTitle, dialogMessage, dialogShow, dialogActions, dialogType, dialogAdd, paymentMethods, paymentMethod = paymentMethods[0] } = state;
 
     const handleChange = (field: string) => {
         return (val: any) => {
@@ -135,7 +137,9 @@ export const PaymentMethodEditor = () => {
         {/* PaymentMethod List */}
 
         <Block>
-            <PaymentMethodLists deleteItem={(item) => deletePaymentMethod(item)} items={paymentMethods} setSelected={handleChange("paymentMethod")} />¸
+            {!isEmpty(paymentMethods) && paymentMethods.map((i) => {
+                return <PaymentMethodItem {...i} deleteItem={() => deletePaymentMethod(i)} isSelected={(i && i.id) === (paymentMethod && paymentMethod.id)} setSelected={(val) => handleChange("paymentMethod")(val)} />
+            })}
         </Block>
 
         <Block>

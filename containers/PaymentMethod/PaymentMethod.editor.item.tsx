@@ -20,10 +20,11 @@ const withdrawPaymentTypeObject = {
 interface Props extends PaymentMethodType {
     isSelected?: boolean;
     setSelected: (selected: PaymentMethodType) => void;
+    deleteItem: (selected: PaymentMethodType) => void;
 }
 
 export const PaymentMethodItem = (i: Props) => {
-    const { name, info, type, id, isSelected = false, setSelected } = i;
+    const { name, info, type, id, isSelected = false, setSelected, deleteItem } = i;
     const paymentMethodType: WithdrawPaymentMethodType = i && i.type as WithdrawPaymentMethodType || WithdrawPaymentMethodType.BANK;
     const Icon = withdrawPaymentTypeObject[paymentMethodType] || withdrawPaymentTypeObject["default"];
             return (
