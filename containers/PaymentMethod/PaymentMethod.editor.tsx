@@ -97,7 +97,7 @@ export const PaymentMethodEditor = () => {
 
         setState({
             ...state,
-            dialogAdd: true,
+            // dialogAdd: true,
             dialogShow: true,
             dialogMessage: "",
             dialogTitle: "Add payment method",
@@ -123,22 +123,26 @@ export const PaymentMethodEditor = () => {
     }, [dialogShow])
 
     return (<>
-        <ConfirmModal
-            hide={hideModal}
-            title={dialogTitle}
-            description={dialogMessage}
-            show={dialogShow}
-            actions={dialogActions}
-            status={dialogType}
-        >
-            {dialogAdd && (<AddPaymentMethod hide={hideModal} />)}
-        </ConfirmModal>
+
+        {dialogShow && (
+            <ConfirmModal
+                hide={hideModal}
+                title={dialogTitle}
+                description={dialogMessage}
+                show={dialogShow}
+                actions={dialogActions}
+                status={dialogType}
+            >
+                {dialogAdd && (<AddPaymentMethod hide={hideModal} />)}
+            </ConfirmModal>
+        )}
+
 
         {/* PaymentMethod List */}
 
         <Block>
             {!isEmpty(paymentMethods) && paymentMethods.map((i) => {
-                return <PaymentMethodItem {...i} deleteItem={() => deletePaymentMethod(i)} isSelected={(i && i.id) === (paymentMethod && paymentMethod.id)} setSelected={(val) => handleChange("paymentMethod")(val)} />
+                return <PaymentMethodItem {...i} deleteItem={deletePaymentMethod} isSelected={(i && i.id) === (paymentMethod && paymentMethod.id)} setSelected={(val) => handleChange("paymentMethod")(val)} />
             })}
         </Block>
 
