@@ -42,7 +42,19 @@ export const PaymentMethodLists = (props: Props) => {
 
                     <p style={{ display: "flex", justifyContent: "space-between" }}>
                         <Paragraph3> {isSelected ? "✅" : ""} <Icon size={15} /> {type.toLocaleUpperCase()}</Paragraph3>
-                        <ParagraphMedium $style={{ color: "red" }} onClick={() => deleteItem(i)}> <ImCross size={15} /></ParagraphMedium>
+
+                        <ParagraphMedium $style={{ color: "red" }}>
+
+                            <Button
+                                size="mini"
+                                shape="round"
+                                $style={{ backgroundColor: 'red' }}
+                                onClick={() => deleteItem(i)}
+                            >
+                                <ImCross size={15} />
+                            </Button>
+
+                        </ParagraphMedium>
                     </p>
 
                     <p style={{ textAlign: "center" }}>

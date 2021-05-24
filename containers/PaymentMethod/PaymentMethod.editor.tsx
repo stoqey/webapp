@@ -75,7 +75,7 @@ export const PaymentMethodEditor = () => {
     const deletePaymentMethod = (paymentMethodObj: PaymentMethodType) => {
         setState({
             ...state,
-            dialogAdd: true,
+            dialogAdd: false,
             dialogShow: true,
             dialogMessage: `Are you sure you want to delete ${paymentMethodObj.name}`,
             dialogTitle: `Delete ${paymentMethodObj.name}`,
