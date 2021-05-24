@@ -4,16 +4,17 @@ import { Block } from 'baseui/block';
 import { Button } from 'baseui/button';
 import { H3, H5, Paragraph1, Paragraph3, ParagraphMedium, ParagraphXSmall } from 'baseui/typography';
 import { ImCross } from 'react-icons/im';
-import { BsArrowClockwise } from 'react-icons/bs';
-import { RiBankFill } from 'react-icons/ri';
+import { IoPhonePortraitSharp } from 'react-icons/io5';
+import { RiBankFill, RiMailSendFill } from 'react-icons/ri';
 import { FaArrowCircleRight, FaBitcoin, FaCheck, FaEdit } from 'react-icons/fa';
 
 
 const withdrawPaymentTypeObject = {
+    default: FaEdit,
     [WithdrawPaymentMethodType.CRYPTO]: FaBitcoin,
     [WithdrawPaymentMethodType.BANK]: RiBankFill,
-    [WithdrawPaymentMethodType.MOBILEMONEY]: BsArrowClockwise,
-    [WithdrawPaymentMethodType.ETRANSFER]: FaArrowCircleRight,
+    [WithdrawPaymentMethodType.MOBILEMONEY]: IoPhonePortraitSharp,
+    [WithdrawPaymentMethodType.ETRANSFER]: RiMailSendFill,
 };
 
 
@@ -32,7 +33,7 @@ export const PaymentMethodLists = (props: Props) => {
         items.map((i) => {
             const { name, info, type, id } = i;
             const paymentMethodType: WithdrawPaymentMethodType = i && i.type as WithdrawPaymentMethodType || WithdrawPaymentMethodType.BANK;
-            const Icon = withdrawPaymentTypeObject[paymentMethodType] || withdrawPaymentTypeObject[WithdrawPaymentMethodType.BANK];
+            const Icon = withdrawPaymentTypeObject[paymentMethodType] || withdrawPaymentTypeObject["default"];
 
 
             const isSelected = selected && selected.id === id;
@@ -40,8 +41,8 @@ export const PaymentMethodLists = (props: Props) => {
                 <div onClick={() => { setSelected(i); handleSelected(i) }} key={i.id} style={{ border: !isSelected ? "grey solid 0.5px" : "black solid 0.5px", margin: "2px", padding: "6px" }}>
 
                     <p style={{ display: "flex", justifyContent: "space-between" }}>
-                        <Paragraph3> {isSelected? "✅": ""} <Icon size={15} /> {type.toLocaleUpperCase()}</Paragraph3>
-                        <ParagraphMedium $style={{ color: "red" }}><ImCross size={15} /></ParagraphMedium>
+                        <Paragraph3> {isSelected ? "✅" : ""} <Icon size={15} /> {type.toLocaleUpperCase()}</Paragraph3>
+                        <ParagraphMedium $style={{ color: "red" }} onClick={() => deleteItem(i.id)}> <ImCross size={15} /></ParagraphMedium>
                     </p>
 
                     <p style={{ textAlign: "center" }}>

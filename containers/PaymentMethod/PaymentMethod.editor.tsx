@@ -58,7 +58,7 @@ export const PaymentMethodEditor = () => {
     const hideModal = () => handleChange("dialogShow")(false);
 
 
-    const deletePaymentMethods = (id: string) => deletePaymentMethodMutation({
+    const deletePaymentMethodsApi = (id: string) => deletePaymentMethodMutation({
         client,
         args: {
             id
@@ -71,6 +71,27 @@ export const PaymentMethodEditor = () => {
 
         }
     });
+
+    const deletePaymentMethod = (paymentMethodObj: PaymentMethodType) => {
+        setState({
+            ...state,
+            dialogAdd: true,
+            dialogShow: true,
+            dialogMessage: `Are you sure you want to delete ${paymentMethodObj.name}`,
+            dialogTitle: `Delete ${paymentMethodObj.name}`,
+            dialogType: StatusType.REJECTED,
+            dialogActions: {
+                cancel: {
+                    onPress: () => hideModal(),
+                    title: "Cancel"
+                },
+                confirm: {
+                    title: "Delete payment method",
+                    onPress: () => deletePaymentMethodsApi(paymentMethodObj.id)
+                }
+            },
+        })
+    }
 
     const fetchPaymentMethods = () => getPaymentMethodsPaginationApi({
         client,
