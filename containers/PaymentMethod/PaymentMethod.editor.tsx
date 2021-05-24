@@ -73,23 +73,34 @@ export const PaymentMethodEditor = () => {
     });
 
     const deletePaymentMethod = (paymentMethodObj: PaymentMethodType) => {
+        console.log('delete item', paymentMethodObj);
+        // setState({
+        //     ...state,
+        //     dialogAdd: true,
+        //     dialogShow: true,
+        //     dialogMessage: `Are you sure you want to delete ${paymentMethodObj.name}`,
+        //     dialogTitle: `Delete ${paymentMethodObj.name}`,
+        //     dialogType: StatusType.DRAFT,
+        //     dialogActions: {
+        //         cancel: {
+        //             onPress: () => hideModal(),
+        //             title: "Cancel"
+        //         },
+        //         confirm: {
+        //             title: "Delete payment method",
+        //             onPress: () => deletePaymentMethodsApi(paymentMethodObj.id)
+        //         }
+        //     },
+        // })
+
         setState({
             ...state,
-            dialogAdd: false,
+            dialogAdd: true,
             dialogShow: true,
-            dialogMessage: `Are you sure you want to delete ${paymentMethodObj.name}`,
-            dialogTitle: `Delete ${paymentMethodObj.name}`,
-            dialogType: StatusType.REJECTED,
-            dialogActions: {
-                cancel: {
-                    onPress: () => hideModal(),
-                    title: "Cancel"
-                },
-                confirm: {
-                    title: "Delete payment method",
-                    onPress: () => deletePaymentMethodsApi(paymentMethodObj.id)
-                }
-            },
+            dialogMessage: "",
+            dialogTitle: "Add payment method",
+            dialogType: StatusType.DRAFT,
+            dialogActions: null,
         })
     }
 
@@ -124,7 +135,7 @@ export const PaymentMethodEditor = () => {
         {/* PaymentMethod List */}
 
         <Block>
-            <PaymentMethodLists deleteItem={deletePaymentMethod} items={paymentMethods} setSelected={handleChange("paymentMethod")} />¸
+            <PaymentMethodLists deleteItem={(item) => deletePaymentMethod(item)} items={paymentMethods} setSelected={handleChange("paymentMethod")} />¸
         </Block>
 
         <Block>
