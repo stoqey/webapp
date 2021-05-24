@@ -5,11 +5,13 @@ import { Button } from 'baseui/button';
 import { H3, H5, Paragraph1, Paragraph3, ParagraphMedium, ParagraphXSmall } from 'baseui/typography';
 import { ImCross } from 'react-icons/im';
 import { BsArrowClockwise } from 'react-icons/bs';
-import { FaArrowCircleRight, FaCheck, FaEdit } from 'react-icons/fa';
+import { RiBankFill } from 'react-icons/ri';
+import { FaArrowCircleRight, FaBitcoin, FaCheck, FaEdit } from 'react-icons/fa';
 
 
 const withdrawPaymentTypeObject = {
-    [WithdrawPaymentMethodType.BANK]: FaEdit,
+    [WithdrawPaymentMethodType.CRYPTO]: FaBitcoin,
+    [WithdrawPaymentMethodType.BANK]: RiBankFill,
     [WithdrawPaymentMethodType.MOBILEMONEY]: BsArrowClockwise,
     [WithdrawPaymentMethodType.ETRANSFER]: FaArrowCircleRight,
 };
@@ -24,7 +26,7 @@ interface Props {
 export const PaymentMethodLists = (props: Props) => {
     const { items, setSelected: handleSelected, deleteItem } = props;
 
-    const [selected, setSelected] = React.useState<PaymentMethodType>(null)
+    const [selected, setSelected] = React.useState<PaymentMethodType>(items[0])
 
     return (
         items.map((i) => {
