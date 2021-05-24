@@ -2,16 +2,16 @@ import React from 'react';
 import { StatusType, PaymentMethodType, WithdrawPaymentMethodType } from '@stoqey/client-graphql';
 import { Block } from 'baseui/block';
 import { Button } from 'baseui/button';
-import { H3, Paragraph3 } from 'baseui/typography';
+import { H3, H5, Paragraph1, Paragraph3, ParagraphMedium, ParagraphXSmall } from 'baseui/typography';
 import { ImCross } from 'react-icons/im';
 import { BsArrowClockwise } from 'react-icons/bs';
 import { FaArrowCircleRight, FaCheck, FaEdit } from 'react-icons/fa';
 
 
 const withdrawPaymentTypeObject = {
-    [WithdrawPaymentMethodType.BANK]: ["Draft", "grey", FaEdit],
-    [WithdrawPaymentMethodType.MOBILEMONEY]: ["Pending", "orange", BsArrowClockwise],
-    [WithdrawPaymentMethodType.ETRANSFER]: ["Submitted", "orange", FaArrowCircleRight],
+    [WithdrawPaymentMethodType.BANK]: FaEdit,
+    [WithdrawPaymentMethodType.MOBILEMONEY]: BsArrowClockwise,
+    [WithdrawPaymentMethodType.ETRANSFER]: FaArrowCircleRight,
 };
 
 
@@ -22,36 +22,31 @@ interface Props {
 };
 
 export const PaymentMethodLists = (props: Props) => {
-    const { items, setSelected, deleteItem } = props;
+    const { items, setSelected: handleSelected, deleteItem } = props;
+
+    const [selected, setSelected] = React.useState<PaymentMethodType>(null)
 
     return (
         items.map((i) => {
-            const { name, info } = i;
-            const paymentMethodType: WithdrawPaymentMethodType  = i && i.type as WithdrawPaymentMethodType || WithdrawPaymentMethodType.BANK;
-            const [label, color, Icon] = withdrawPaymentTypeObject[paymentMethodType];
+            const { name, info, type, id } = i;
+            const paymentMethodType: WithdrawPaymentMethodType = i && i.type as WithdrawPaymentMethodType || WithdrawPaymentMethodType.BANK;
+            const Icon = withdrawPaymentTypeObject[paymentMethodType] || withdrawPaymentTypeObject[WithdrawPaymentMethodType.BANK];
 
+
+            const isSelected = selected && selected.id === id;
             return (
-                <div key={i.id} style={{ textAlign: "center", border: "black solid 0.5px", margin: "2px", padding: "10px" }}>
-                    <Paragraph3>Some status about the transaction</Paragraph3>
+                <div onClick={() => { setSelected(i); handleSelected(i) }} key={i.id} style={{ border: !isSelected ? "grey solid 0.5px" : "black solid 0.5px", margin: "2px", padding: "6px" }}>
 
-                    <Block display="flex" width="100%" justifyContent="space-between">
+                    <p style={{ display: "flex", justifyContent: "space-between" }}>
+                        <Paragraph3> {isSelected? "✅": ""} <Icon size={15} /> {type.toLocaleUpperCase()}</Paragraph3>
+                        <ParagraphMedium $style={{ color: "red" }}><ImCross size={15} /></ParagraphMedium>
+                    </p>
 
-                        <Button shape="round" $style={{ backgroundColor: color }}
-                            onClick={() => { }}>
-                            <Icon />
-                        </Button>
+                    <p style={{ textAlign: "center" }}>
+                        <ParagraphMedium $style={{ textAlign: "center" }}>{name}</ParagraphMedium>
+                    </p>
 
-                        <H3>{name}</H3>
-
-                        <Button shape="round" $style={{ backgroundColor: 'red' }}
-                            onClick={() => deleteItem(i.id)}>
-                            <ImCross />
-                        </Button>
-
-                    </Block>
-
-                    <Paragraph3>{info}</Paragraph3>
-
+                    <ParagraphXSmall $style={{ textAlign: "center" }}>{(info || "").slice(0, 10)}{"..."}</ParagraphXSmall>
                 </div>
             )
         })

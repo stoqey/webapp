@@ -72,36 +72,9 @@ const Withdraw: NextPage<{}> = () => {
 							<WithdrawForm />
 						</Cell>
 						<Cell span={[12, 12, 3]}>
-							<Block justifyContent="center" display="flex">
-								<PaymentMethodEditor />
-								{/* <StripeConnectForm userId={null}>
-									<Button
-										type="button"
-										size="default"
-										shape="pill"
-										onClick={() => {
-
-										}}
-										overrides={{
-											BaseButton: {
-												style: ({ $theme }) => {
-													return {
-														width: '100%',
-														...$theme.typography.font350,
-													};
-												},
-											},
-										}}
-									>
-										{"Get paid with "}	<FaStripe style={{ marginLeft: 10 }} size={40} />
-									</Button>
-								</StripeConnectForm> */}
-
-
-
-							</Block>
+							<PaymentMethodEditor />
 						</Cell>
-						
+
 					</Grid>
 				</Block>
 			</Container>
