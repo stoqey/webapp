@@ -11,7 +11,7 @@ interface Props {
   confirmWithdraw: (status: StatusType) => void;
 };
 
-export default function UserTable({ data, confirmWithdraw }: Props) {
+export function AdminWithdrawTable({ data, confirmWithdraw }: Props) {
   return data.length !== 0 ? (
     <StyledTable $gridTemplateColumns="130px 200px auto max-content max-content">
       <StyledTableHeadAlt>Owner</StyledTableHeadAlt>
@@ -46,3 +46,5 @@ export default function UserTable({ data, confirmWithdraw }: Props) {
     <div>No Data Found</div>
   );
 }
+
+export default AdminWithdrawTable;
