@@ -29,11 +29,12 @@ interface State {
 }
 
 interface Props {
-    onChangeMethod: () => void;
+    onChangeMethod: (paymentMethod: PaymentMethodType) => void;
 }
 
-export const PaymentMethodEditor = () => {
+export const PaymentMethodEditor = (props: Props) => {
 
+    const { onChangeMethod } = props;
     const client = useApolloClient();
     const [state, setState] = useState<State>({
         paymentMethod: null,
@@ -149,7 +150,7 @@ export const PaymentMethodEditor = () => {
 
         <Block>
             {!isEmpty(paymentMethods) && paymentMethods.map((i) => {
-                return <PaymentMethodItem {...i} deleteItem={deletePaymentMethod} isSelected={(i && i.id) === (paymentMethod && paymentMethod.id)} setSelected={(val) => handleChange("paymentMethod")(val)} />
+                return <PaymentMethodItem {...i} deleteItem={deletePaymentMethod} isSelected={(i && i.id) === (paymentMethod && paymentMethod.id)} setSelected={(val) => {handleChange("paymentMethod")(val); onChangeMethod(val)}} />
             })}
         </Block>
 

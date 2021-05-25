@@ -15,6 +15,7 @@ import { FaStripe } from 'react-icons/fa';
 import { StripeConnectForm } from 'containers/Stripe/StripeConnectForm';
 import { WithdrawForm } from 'containers/Withdraw/WithdrawRequest.form';
 import PaymentMethodEditor from 'containers/PaymentMethod/PaymentMethod.editor';
+import { PaymentMethodType } from '@stoqey/client-graphql';
 // import { WithdrawRequestList } from 'containers/Withdraw/WithdrawRequests.lists';
 
 type FormData = {
@@ -23,36 +24,7 @@ type FormData = {
 
 const Withdraw: NextPage<{}> = () => {
 
-	const { register, setValue, handleSubmit, reset, errors } = useForm<
-		FormData
-	>();
-	const [feedback, setFeedback] = useState(false);
-	const [state, setState] = useState<FormData>({
-		amount: '',
-	});
-
-	const handleOnChange = (e: any) => {
-		const { name, value } = e.target;
-		setState({
-			...state,
-			[name]: value,
-		});
-	};
-
-	const handleOnSubmit = handleSubmit((data) => {
-		// if (state.newPassword === state.confirmPassword) {
-		setFeedback(false);
-		console.log('Form data: ', data);
-		alert(JSON.stringify(data, null, 4));
-		// } else {
-		// 	setFeedback(true);
-		// }
-	});
-
-	const handleOnReset = () => {
-		setState({ amount: '' });
-		reset();
-	};
+	const [paymentMethod, setPaymentMethod] = useState<PaymentMethodType>(null);
 
 	return (
 		<>
@@ -69,10 +41,10 @@ const Withdraw: NextPage<{}> = () => {
 						</Cell>
 						<Cell span={[12, 12, 3]}>
 							{/* <WithdrawRequestList /> */}
-							<WithdrawForm />
+							<WithdrawForm paymentMethod={paymentMethod} />
 						</Cell>
 						<Cell span={[12, 12, 3]}>
-							<PaymentMethodEditor />
+							<PaymentMethodEditor onChangeMethod={(method) => setPaymentMethod(method)} />
 						</Cell>
 
 					</Grid>

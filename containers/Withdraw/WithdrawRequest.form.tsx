@@ -22,7 +22,6 @@ interface State {
     amount: number;
     status: any;
     requests: WithdrawRequestType[],
-    paymentMethod: PaymentMethodType,
     dialogShow: boolean;
     dialogMessage: string;
     dialogTitle: string;
@@ -30,7 +29,12 @@ interface State {
     dialogActions: ModalActions;
 }
 
-export const WithdrawForm = () => {
+interface Props {
+    paymentMethod: PaymentMethodType;
+}
+
+export const WithdrawForm = (props: Props) => {
+    const { paymentMethod } = props;
     const client = useApolloClient();
     const { user } = useUserInfo();
     const balance = user && user.balance || 0;
@@ -38,7 +42,6 @@ export const WithdrawForm = () => {
         amount: 1,
         status: false,
         requests: [],
-        paymentMethod: null,
         dialogShow: false,
         dialogMessage: "",
         dialogTitle: "",
@@ -172,6 +175,39 @@ export const WithdrawForm = () => {
             <FlexGridItem>
                 <H4>${niceDec(balance - +amount)}</H4>
             </FlexGridItem>
+
+
+            <FlexGridItem>
+                <FormControl
+                    label="Payment method"
+                    // error={error && 'Please fill out balance'}
+                    overrides={{
+                        Label: {
+                            style: ({ $theme }) => {
+                                return {
+                                    textAlign: 'center',
+                                    ...$theme.typography.font200
+                                };
+                            },
+                        },
+                    }}
+                >
+                    <Input
+                        name="paymentmethod"
+                        value={amount}
+                        disabled={true}
+                        value={paymentMethod ? paymentMethod.name : "Select/Add payment method"}
+                        overrides={{
+                            InputContainer: {
+                                style: () => {
+                                    return { backgroundColor: 'transparent' };
+                                },
+                            },
+                        }}
+                    />
+                </FormControl>
+            </FlexGridItem>
+
             <FlexGridItem>
                 <FormControl
                     label="Enter amount to withdraw"
@@ -210,6 +246,16 @@ export const WithdrawForm = () => {
             >
                 <Button
                     onClick={() => {
+                        if(!paymentMethod){
+                            // show payment method dialog
+                            return showModal({
+                                dialogMessage: `Please add a payment method and select it`,
+                                dialogTitle: `Add a payment method`,
+                                dialogType: StatusType.FAIL,
+                                dialogActions: null,
+                            });
+                        }
+                        
                         showModal({
                             dialogMessage: `You're about to request a withdraw of $${niceDec(+amount)}`,
                             dialogTitle: `Withdraw ${niceDec(+amount)}`,
