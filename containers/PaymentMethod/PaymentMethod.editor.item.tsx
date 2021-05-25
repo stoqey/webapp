@@ -31,7 +31,8 @@ export const PaymentMethodItem = (i: Props) => {
                 <div onClick={() => setSelected(i)} key={i.id} style={{ border: !isSelected ? "grey solid 0.5px" : "black solid 0.5px", margin: "2px", padding: "6px" }}>
 
                     <p style={{ display: "flex", justifyContent: "space-between" }}>
-                        <Paragraph3> {isSelected ? "✅" : ""} <Icon size={15} /> {type.toLocaleUpperCase()}</Paragraph3>
+                        {/* <Paragraph3> {isSelected ? "✅" : ""} <Icon size={15} /> {type.toLocaleUpperCase()}</Paragraph3> */}
+                        <Paragraph3> {isSelected ? "✅" : ""} {type.toLocaleUpperCase()}</Paragraph3>
 
                         {/* <ParagraphMedium $style={{ color: "red" }}>
 
