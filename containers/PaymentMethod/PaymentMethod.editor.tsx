@@ -139,6 +139,13 @@ export const PaymentMethodEditor = () => {
 
 
         {/* PaymentMethod List */}
+        {/* <Block>
+            <PaymentMethodLists 
+            deleteItem={deletePaymentMethod} 
+            items={paymentMethods}
+            setSelected={(val) => handleChange("paymentMethod")(val)}
+             />
+        </Block> */}
 
         <Block>
             {!isEmpty(paymentMethods) && paymentMethods.map((i) => {
