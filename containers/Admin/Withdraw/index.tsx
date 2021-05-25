@@ -10,12 +10,12 @@ import { useApolloClient } from '@apollo/client';
 import { GET_ALL_USERS, ADD_USER_MUTATION, UserType, WithdrawRequestType } from '@stoqey/client-graphql';
 import { isEmpty } from 'lodash';
 import UserTable from '@/components/admin/UserTable';
-import WithdrawRequestsTable from 'containers/Withdraw/WithdrawRequests.lists';
+import AdminWithdrawTable from 'components/admin/AdminWithdrawTable';
 
 const TITLE = 'Stoqey Admin';
 const SUB_TITLE = 'Stoqey';
 
-const AdminWithdrawReuqests = () => {
+const AdminWithdrawRequests = () => {
 
   let toastKey;
   const [withdrawRequests, setWithdrawRequests] = useState<WithdrawRequestType[]>([]);
@@ -54,60 +54,60 @@ const AdminWithdrawReuqests = () => {
   }, []);
 
 
-  const handleOnSubmit = async () => {
-    // const errorStatus = checkError();
-    const data = user;
-    let id = null;
+  // const handleOnSubmit = async () => {
+  //   // const errorStatus = checkError();
+  //   const data = user;
+  //   let id = null;
 
-    if (user.id) {
-      try {
-        // TODO update user
-        // id = await updateDocument('articles', data);
-        toastKey = toaster.info(<>{'Update Successful!'}</>, {
-          autoHideDuration: 2000,
-        });
-      } catch (error) {
-        toastKey = toaster.negative(<>{'Update Failed!'}</>, {
-          autoHideDuration: 2000,
-        });
-        console.log(error);
-      }
-      setVisible(false);
+  //   if (user.id) {
+  //     try {
+  //       // TODO update user
+  //       // id = await updateDocument('articles', data);
+  //       toastKey = toaster.info(<>{'Update Successful!'}</>, {
+  //         autoHideDuration: 2000,
+  //       });
+  //     } catch (error) {
+  //       toastKey = toaster.negative(<>{'Update Failed!'}</>, {
+  //         autoHideDuration: 2000,
+  //       });
+  //       console.log(error);
+  //     }
+  //     setVisible(false);
 
-    } else if (!user.id) {
-      try {
-        const { data }: { data?: { data: { success: boolean, message: string } } } = await client.mutate({
-          mutation: ADD_USER_MUTATION,
-          variables: {
-            user: {
-              ...user,
-              balance: +user.balance
-            }
-          },
-          fetchPolicy: "no-cache"
-        });
+  //   } else if (!user.id) {
+  //     try {
+  //       const { data }: { data?: { data: { success: boolean, message: string } } } = await client.mutate({
+  //         mutation: ADD_USER_MUTATION,
+  //         variables: {
+  //           user: {
+  //             ...user,
+  //             balance: +user.balance
+  //           }
+  //         },
+  //         fetchPolicy: "no-cache"
+  //       });
 
-        if (!data.data.success) {
-          throw new Error('Error create new user');
-        }
+  //       if (!data.data.success) {
+  //         throw new Error('Error create new user');
+  //       }
 
-        id = data.data;
-        toastKey = toaster.info(<>{'Successfully created a new user!'}</>, {
-          autoHideDuration: 2000,
-        });
-      } catch (error) {
-        toastKey = toaster.negative(<>{'Failed!' + error && error.message}</>, {
-          autoHideDuration: 2000,
-        });
-        console.log(error);
-      }
-      setVisible(false);
-    }
-    if (id) {
-      // refresh data from here
-      fetchData();
-    }
-  };
+  //       id = data.data;
+  //       toastKey = toaster.info(<>{'Successfully created a new user!'}</>, {
+  //         autoHideDuration: 2000,
+  //       });
+  //     } catch (error) {
+  //       toastKey = toaster.negative(<>{'Failed!' + error && error.message}</>, {
+  //         autoHideDuration: 2000,
+  //       });
+  //       console.log(error);
+  //     }
+  //     setVisible(false);
+  //   }
+  //   if (id) {
+  //     // refresh data from here
+  //     fetchData();
+  //   }
+  // };
 
   return (
     <>
@@ -190,11 +190,9 @@ const AdminWithdrawReuqests = () => {
           <Loader />
         ) : (
 
-          <WithdrawRequestsTable
+          <AdminWithdrawTable
             data={withdrawRequests}
-            onUpdateUserBalance={handleUpdateUserBalance}
-            onUpdate={() => { }}
-            onDelete={() => { }}
+            confirmWithdraw={() => {}}
           />
 
         )}
@@ -204,4 +202,4 @@ const AdminWithdrawReuqests = () => {
   );
 };
 
-export default AdminWithdrawReuqests;
+export default AdminWithdrawRequests;
