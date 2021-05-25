@@ -19,6 +19,11 @@ const menuItems = [
 		id: 3,
 		label: 'Orders',
 		path: '/admin/orders',
+	},
+	{
+		id: 4,
+		label: 'Withdraw',
+		path: '/admin/withdraw',
 	}
 ];
 
