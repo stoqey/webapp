@@ -5,11 +5,61 @@ import {
   ResType,
   CREATE_WITHDRAWREQUEST_MUTATION,
   CANCEL_WITHDRAWREQUEST_MUTATION,
+  ADMIN_GET_ALL_WITHDRAW_REQUESTS,
   GET_WITHDRAW_REQUESTS,
   ActionType,
   WithdrawRequestType,
+  StatusType,
 } from "@stoqey/client-graphql";
 import AsyncStorageDB from "@/lib/AsyncStorageDB";
+
+
+export const adminGetWithdrawRequestsPaginationApi = async ({
+  args,
+  client,
+  error,
+  success,
+}: {
+  args?: { limit?: number; filter?: StatusType };
+  client: ApolloClient<any>;
+  error?: (error: Error) => Promise<any>;
+  success?: (data: WithdrawRequestType[]) => Promise<any>;
+}) => {
+
+  try {
+
+    const argsToPass = {
+      limit: 1000,
+      ...args,
+    };
+
+    const { data: dataResponse }: any = await client.query({
+      query: ADMIN_GET_ALL_WITHDRAW_REQUESTS,
+      variables: argsToPass,
+      fetchPolicy: "network-only",
+    });
+
+    if (!dataResponse) {
+      throw new Error("error getting portfolio data");
+    }
+
+    const { data }: { data?: WithdrawRequestType[] } = dataResponse;
+
+    console.log(`data response portfolios ${data && data.length}`);
+
+    if (!isEmpty(data)) {
+      //   Successful
+      await success(data);
+      return console.log(
+        `portfolios data is successful ${data && data.length}`
+      );
+    }
+    throw new Error("error getting portfolios data, please try again later");
+  } catch (err) {
+    console.error(err);
+    error && (await error(err));
+  }
+};
 
 export const getWithdrawRequestsPaginationApi = async ({
   args,
