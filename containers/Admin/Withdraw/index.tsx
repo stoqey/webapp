@@ -2,15 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { toaster } from 'baseui/toast';
 import { Block } from 'baseui/block';
 import { Button } from 'baseui/button';
-import Loader from '../../components/UiElements/Loader/Loader';
-import Toaster from '../../components/UiElements/Toaster/Toaster';
-import AddEditModal from './AddEdit';
-import UpdateBalanceModal from './UpdateBalance';
+import Loader from 'components/UiElements/Loader/Loader';
+import Toaster from 'components/UiElements/Toaster/Toaster';
 import { useApolloClient } from '@apollo/client';
-import { GET_ALL_USERS, ADD_USER_MUTATION, UserType, WithdrawRequestType } from '@stoqey/client-graphql';
+import { GET_ALL_USERS, ADD_USER_MUTATION, UserType, WithdrawRequestType, ADMIN_GET_ALL_WITHDRAW_REQUESTS, StatusType } from '@stoqey/client-graphql';
 import { isEmpty } from 'lodash';
 import UserTable from '@/components/admin/UserTable';
 import AdminWithdrawTable from 'components/admin/AdminWithdrawTable';
+import { adminGetWithdrawRequestsPaginationApi } from 'containers/Withdraw/WithdrawRequest.api';
 
 const TITLE = 'Stoqey Admin';
 const SUB_TITLE = 'Stoqey';
@@ -24,33 +23,29 @@ const AdminWithdrawRequests = () => {
   const client = useApolloClient();
 
 
-  const fetchData = async () => {
-    try {
-      setLoading(true);
-
-      const { data }: { data: { users: UserType[] } } = await client.query({
-        query: GET_ALL_USERS,
-        variables: {
-          limit: 1000
-        }
-      });
-
-
-      if (!isEmpty(data && data.users)) {
-        setUsers(data.users);
+  const getWithdrawRequests = () => {
+    setLoading(true);
+    adminGetWithdrawRequestsPaginationApi({
+      args: {
+        filter: StatusType.PENDING,
+        limit: 1000
+      },
+      client,
+      success: async (d) => {
+        setWithdrawRequests(d);
+        setLoading(false);
+      },
+      error: async (d) => {
+        toastKey = toaster.negative(<>{'Data Fetching Failed!'}</>, {
+          autoHideDuration: 1000,
+        });
+        setLoading(false);
       }
-
-      setLoading(false);
-    } catch (error) {
-      toastKey = toaster.negative(<>{'Data Fetching Failed!'}</>, {
-        autoHideDuration: 1000,
-      });
-      setLoading(false);
-    }
-  };
+    });
+  }
 
   useEffect(() => {
-    fetchData();
+    getWithdrawRequests();
   }, []);
 
 
@@ -192,7 +187,7 @@ const AdminWithdrawRequests = () => {
 
           <AdminWithdrawTable
             data={withdrawRequests}
-            confirmWithdraw={() => {}}
+            confirmWithdraw={() => { }}
           />
 
         )}
