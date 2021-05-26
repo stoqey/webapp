@@ -13,7 +13,7 @@ interface Props {
 
 export function AdminWithdrawTable({ data, confirmWithdraw }: Props) {
   return data.length !== 0 ? (
-    <StyledTable $gridTemplateColumns="130px 200px auto max-content max-content">
+    <StyledTable $gridTemplateColumns="130px 200px auto max-content">
       <StyledTableHeadAlt>Owner</StyledTableHeadAlt>
       <StyledTableHeadAlt>Created at</StyledTableHeadAlt>
       <StyledTableHeadAlt>Amount</StyledTableHeadAlt>

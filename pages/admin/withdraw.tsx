@@ -4,12 +4,11 @@ import Head from "next/head";
 import { Grid, Cell } from "baseui/layout-grid";
 import { Block } from "baseui/block";
 import Container from "components/UiElements/Container/Container";
-import FirebaseCrud from "containers/Admin";
+import AdminWithdraw from "containers/Admin/Withdraw";
 import AdminMenu from "components/SideMenu/AdminMenu";
 
 const TITLE = "Admin withdraw requests";
-const SUB_TITLE =
-	"Admin withdraw requests";
+const SUB_TITLE = "Admin withdraw requests";
 
 const FirebaseCRUD: NextPage<{}> = () => {
 	return (
@@ -27,7 +26,7 @@ const FirebaseCRUD: NextPage<{}> = () => {
 						</Cell>
 						<Cell span={[12, 12, 9]}>
 							<Block paddingTop={["10px", "7px", "30px", "0"]}>
-								<FirebaseCrud />
+								<AdminWithdraw />
 							</Block>
 						</Cell>
 					</Grid>

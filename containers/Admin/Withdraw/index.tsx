@@ -21,8 +21,7 @@ const AdminWithdrawRequests = () => {
   const [loading, setLoading] = useState<boolean>(false);
 
   const client = useApolloClient();
-
-
+  
   const getWithdrawRequests = () => {
     setLoading(true);
     adminGetWithdrawRequestsPaginationApi({
