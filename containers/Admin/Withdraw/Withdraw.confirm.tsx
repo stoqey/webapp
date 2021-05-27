@@ -13,20 +13,20 @@ interface Props {
   newStatus: StatusType,
   visible: boolean,
   handleOnSubmit: Function,
-  handleModdalClose: Function
+  hide: Function
 }
-const AddEditModal = ({
+const WithdrawConfirmModal = ({
   withdrawRequest,
   newStatus,
   visible,
   handleOnSubmit,
-  handleModdalClose,
+  hide,
 }: Props) => {
   return (
     <>
       <Modal
         // @ts-ignore
-        onClose={handleModdalClose}
+        onClose={hide}
         closeable
         isOpen={visible}
         animate
@@ -88,4 +88,4 @@ const AddEditModal = ({
   );
 };
 
-export default AddEditModal;
+export default WithdrawConfirmModal;

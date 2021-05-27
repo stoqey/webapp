@@ -10,18 +10,37 @@ import { isEmpty } from 'lodash';
 import UserTable from '@/components/admin/UserTable';
 import AdminWithdrawTable from 'components/admin/AdminWithdrawTable';
 import { adminGetWithdrawRequestsPaginationApi } from 'containers/Withdraw/WithdrawRequest.api';
+import WithdrawConfirmModal from './Withdraw.confirm';
 
 const TITLE = 'Stoqey Admin';
 const SUB_TITLE = 'Stoqey';
 
+interface State {
+  withdrawRequest: WithdrawRequestType;
+  withdrawRequests: WithdrawRequestType[];
+  loading: boolean;
+  showConfirm: boolean;
+  newStatus: StatusType;
+}
 const AdminWithdrawRequests = () => {
 
   let toastKey;
-  const [withdrawRequests, setWithdrawRequests] = useState<WithdrawRequestType[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [state, setState] = useState<State>({
+    withdrawRequest: null,
+    withdrawRequests: [],
+    loading: false,
+    showConfirm: false,
+    newStatus: StatusType.PENDING
+  });
+
+  const { withdrawRequest, withdrawRequests, loading, showConfirm, newStatus } = state;
+
+  const setWithdrawRequests = (val: WithdrawRequestType[]) => setState({ ...state, withdrawRequests: val });
+  const setLoading = (val: boolean) => setState({ ...state, loading: val });
+  const hideConfirm = (val: boolean) => setState({ ...state, showConfirm: val });
 
   const client = useApolloClient();
-  
+
   const getWithdrawRequests = () => {
     setLoading(true);
     adminGetWithdrawRequestsPaginationApi({
@@ -186,11 +205,27 @@ const AdminWithdrawRequests = () => {
 
           <AdminWithdrawTable
             data={withdrawRequests}
-            confirmWithdraw={() => { }}
+            confirmWithdraw={(withdrawReq: WithdrawRequestType, newAction: StatusType) => {
+              setState({
+                ...state,
+                withdrawRequest: withdrawReq,
+                newStatus: newAction,
+                showConfirm: true,
+              })
+             }}
           />
 
         )}
       </Block>
+
+      <WithdrawConfirmModal
+        withdrawRequest={withdrawRequest}
+        newStatus={newStatus}
+        visible={showConfirm}
+        handleOnSubmit={() => { }}
+        hide={() => hideConfirm(!showConfirm)}
+      />
+
 
     </>
   );
