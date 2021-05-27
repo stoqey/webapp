@@ -50,8 +50,7 @@ const AdminWithdrawRequests = () => {
       },
       client,
       success: async (d) => {
-        setWithdrawRequests(d);
-        setLoading(false);
+        setState({ ...state, withdrawRequests: d, loading: false });
       },
       error: async (d) => {
         toastKey = toaster.negative(<>{'Data Fetching Failed!'}</>, {
@@ -121,6 +120,8 @@ const AdminWithdrawRequests = () => {
   //     fetchData();
   //   }
   // };
+
+  console.log("withdraws are", withdrawRequests.length)
 
   return (
     <>
@@ -199,7 +200,7 @@ const AdminWithdrawRequests = () => {
           },
         }}
       >
-        {loading ? (
+        {isEmpty(withdrawRequests) ? (
           <Loader />
         ) : (
 

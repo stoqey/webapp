@@ -67,7 +67,7 @@ const WithdrawConfirmModal = ({
             <Button
               kind="minimal"
               // @ts-ignore
-              onClick={handleModdalClose}
+              onClick={hide}
               overrides={{
                 BaseButton: {
                   style: ({ $theme }) => {

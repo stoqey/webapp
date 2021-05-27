@@ -40,21 +40,21 @@ export const adminGetWithdrawRequestsPaginationApi = async ({
     });
 
     if (!dataResponse) {
-      throw new Error("error getting portfolio data");
+      throw new Error("error getting withdrawrequests data");
     }
 
     const { data }: { data?: WithdrawRequestType[] } = dataResponse;
 
-    console.log(`data response portfolios ${data && data.length}`);
+    console.log(`data response withdrawrequests ${data && data.length}`);
 
     if (!isEmpty(data)) {
       //   Successful
       await success(data);
       return console.log(
-        `portfolios data is successful ${data && data.length}`
+        `withdraw requests data is successful ${data && data.length}`
       );
     }
-    throw new Error("error getting portfolios data, please try again later");
+    throw new Error("error getting withdraw requests data, please try again later");
   } catch (err) {
     console.error(err);
     error && (await error(err));
