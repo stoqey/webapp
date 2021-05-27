@@ -173,11 +173,6 @@ export const WithdrawForm = (props: Props) => {
 
         <FlexGrid flexGridColumnCount={1}>
             <FlexGridItem>
-                <H4>${niceDec(balance - +amount)}</H4>
-            </FlexGridItem>
-
-
-            <FlexGridItem>
                 <FormControl
                     label="Payment method"
                     // error={error && 'Please fill out balance'}

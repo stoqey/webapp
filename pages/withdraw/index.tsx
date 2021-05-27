@@ -16,6 +16,15 @@ import { StripeConnectForm } from 'containers/Stripe/StripeConnectForm';
 import { WithdrawForm } from 'containers/Withdraw/WithdrawRequest.form';
 import PaymentMethodEditor from 'containers/PaymentMethod/PaymentMethod.editor';
 import { PaymentMethodType } from '@stoqey/client-graphql';
+import {
+	MenuStep,
+	ListItem,
+	Title,
+	PriceList,
+	PriceItem,
+} from 'components/PageStyles/Checkout.styled';
+import CurrencyPill from '@/components/Currency';
+import { useUserInfo } from 'hooks/useUserInfo';
 // import { WithdrawRequestList } from 'containers/Withdraw/WithdrawRequests.lists';
 
 type FormData = {
@@ -24,6 +33,7 @@ type FormData = {
 
 const Withdraw: NextPage<{}> = () => {
 
+	const { user } = useUserInfo();
 	const [paymentMethod, setPaymentMethod] = useState<PaymentMethodType>(null);
 
 	return (
@@ -39,8 +49,11 @@ const Withdraw: NextPage<{}> = () => {
 						<Cell span={[12, 12, 3]}>
 							<WithdrawRequestMenu />
 						</Cell>
+
 						<Cell span={[12, 12, 5]}>
-							{/* <WithdrawRequestList /> */}
+							<MenuStep className="step-menu">
+								<CurrencyPill amount={user && user.balance} name={'account balance'} />
+							</MenuStep>
 							<WithdrawForm paymentMethod={paymentMethod} />
 						</Cell>
 						<Cell span={[12, 12, 3]}>
