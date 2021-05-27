@@ -39,7 +39,7 @@ const Withdraw: NextPage<{}> = () => {
 						<Cell span={[12, 12, 3]}>
 							<WithdrawRequestMenu />
 						</Cell>
-						<Cell span={[12, 12, 3]}>
+						<Cell span={[12, 12, 5]}>
 							{/* <WithdrawRequestList /> */}
 							<WithdrawForm paymentMethod={paymentMethod} />
 						</Cell>
