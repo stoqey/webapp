@@ -13,6 +13,11 @@ const menuItems = [
 	},
 	{
 		id: 3,
+		label: 'Withdraw',
+		path: '/funds/withdraw',
+	},
+	{
+		id: 3,
 		label: 'Transactions',
 		path: '/funds/history',
 	},
