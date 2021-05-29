@@ -14,11 +14,11 @@ const menuItems = [
     label: 'Funds',
     path: '/funds',
   },
-  {
-    id: 3,
-    label: 'Withdraw',
-    path: '/withdraw',
-  },
+  // {
+  //   id: 3,
+  //   label: 'Withdraw',
+  //   path: '/withdraw',
+  // },
   {
     id: 4,
     label: 'Trade',

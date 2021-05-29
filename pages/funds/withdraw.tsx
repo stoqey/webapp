@@ -25,6 +25,7 @@ import {
 } from 'components/PageStyles/Checkout.styled';
 import CurrencyPill from '@/components/Currency';
 import { useUserInfo } from 'hooks/useUserInfo';
+import FundsMenu from '@/components/SideMenu/FundsMenu';
 // import { WithdrawRequestList } from 'containers/Withdraw/WithdrawRequests.lists';
 
 type FormData = {
@@ -47,7 +48,7 @@ const Withdraw: NextPage<{}> = () => {
 				<Block paddingTop={['0', '0', '0', '40px']}>
 					<Grid gridColumns={12} gridGutters={0} gridMargins={0}>
 						<Cell span={[12, 12, 3]}>
-							<WithdrawRequestMenu />
+							<FundsMenu />
 						</Cell>
 
 						<Cell span={[12, 12, 5]}>
