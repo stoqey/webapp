@@ -22,7 +22,7 @@ const statusObject = {
 export const WithdrawRequestItem = (props: WithdrawRequestType & { deleteItem: (item: Partial<WithdrawRequestType>) => void }) => {
     const { amount, notes = "", deleteItem, createdAt = new Date() } = props;
 
-    const status = props && props.status || "pending";
+    const status = props && props.status || "pending" as StatusType;
     const [statusText, color, Icon] = statusObject[status];
 
     const createdAtTime = moment(createdAt).fromNow();

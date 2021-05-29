@@ -189,9 +189,9 @@ export const WithdrawForm = (props: Props) => {
                 >
                     <Input
                         name="paymentmethod"
-                        value={amount}
+                        value={paymentMethod && paymentMethod.name}
                         disabled={true}
-                        value={paymentMethod ? paymentMethod.name : "Select/Add payment method"}
+                        placeholder={paymentMethod ? paymentMethod.name : "Select/Add payment method"}
                         overrides={{
                             InputContainer: {
                                 style: () => {
