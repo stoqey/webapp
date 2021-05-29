@@ -8,7 +8,7 @@ import { StatusType, UserType, WithdrawRequestType } from '@stoqey/client-graphq
 
 interface Props {
   data: WithdrawRequestType[]
-  confirmWithdraw: (status: StatusType) => void;
+  confirmWithdraw: (withdrawReq: WithdrawRequestType, newAction: StatusType) => void;
 };
 
 export function AdminWithdrawTable({ data, confirmWithdraw }: Props) {
