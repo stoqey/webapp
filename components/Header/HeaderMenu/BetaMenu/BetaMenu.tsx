@@ -14,21 +14,16 @@ const menuItems = [
     label: 'Funds',
     path: '/funds',
   },
+  // {
+  //   id: 3,
+  //   label: 'Withdraw',
+  //   path: '/withdraw',
+  // },
   {
-    id: 3,
+    id: 4,
     label: 'Trade',
     path: '/trade',
-  },
-  // {
-  //   id: 4,
-  //   label: 'Account',
-  //   path: '/account',
-  // },
-  // {
-  //   id: 5,
-  //   label: 'OrderBook',
-  //   path: '/orderbook',
-  // },
+  }
 ];
 
 type MenuProps = {

@@ -115,7 +115,7 @@ const AddFunds: NextPage<{}> = () => {
 						<Cell span={[12, 12, 6]}>
 
 							<MenuStep className="step-menu">
-								<CurrencyPill amount={user && user.balance} name={'account balance'} />
+								<CurrencyPill warn={false} amount={user && user.balance} name={'account balance'} />
 							</MenuStep>
 
 

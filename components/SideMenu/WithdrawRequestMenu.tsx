@@ -5,27 +5,16 @@ import Sticky from 'react-stickynode';
 import MenuWrapper, { Menu, MenuItem, MenuLink } from './SideMenu.styled';
 
 const menuItems = [
-	
 	{
 		id: 1,
-		label: 'Add funds',
-		path: '/funds',
-	},
-	{
-		id: 3,
 		label: 'Withdraw',
-		path: '/funds/withdraw',
+		path: '/withdraw',
 	},
 	{
-		id: 3,
-		label: 'Transactions',
-		path: '/funds/history',
-	},
-	// {
-	// 	id: 4,
-	// 	label: 'Withdraw',
-	// 	path: '/withdraw',
-	// }
+		id: 2,
+		label: 'Withdraw History',
+		path: '/withdraw/history',
+	}
 ];
 
 type MenuProps = {
@@ -33,7 +22,7 @@ type MenuProps = {
 	onClick?: () => void;
 };
 
-const FundsMenu = ({ className = '', onClick }: MenuProps) => {
+const WithdrawRequestMenu = ({ className = '', onClick }: MenuProps) => {
 	const { pathname } = useRouter();
 
 	return (
@@ -55,4 +44,4 @@ const FundsMenu = ({ className = '', onClick }: MenuProps) => {
 	);
 };
 
-export default FundsMenu;
+export default WithdrawRequestMenu;
