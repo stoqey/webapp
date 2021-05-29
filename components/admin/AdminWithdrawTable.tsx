@@ -33,7 +33,7 @@ export function AdminWithdrawTable({ data, confirmWithdraw }: Props) {
             {/* Confirm button */}
             <StyledBodyCell $striped={striped}>
               <p>
-                <IconButton onClick={() => confirmWithdraw(null)}>
+                <IconButton onClick={() => confirmWithdraw(null, null)}>
                   <AiOutlineEdit />
                 </IconButton>
               </p>
