@@ -12,6 +12,7 @@ interface Props {
     name: string;
     RightButton?: React.FunctionComponent
     LeftButton?: React.FunctionComponent
+    warn?: boolean;
 };
 
 /**
@@ -19,7 +20,9 @@ interface Props {
  * @param props 
  */
 export const CurrencyPill = (props: Props) => {
-    const { amount, change, name, RightButton, LeftButton } = props;
+    const { amount, change, name, RightButton, LeftButton, warn = true } = props;
+
+    const color = warn ? "orangered" : "#3AA76D";
 
     return (
         <Cell span={[12, 12, 12]}>
@@ -31,7 +34,7 @@ export const CurrencyPill = (props: Props) => {
                 {/* Amount and wallet name */}
                 <Block padding="5px">
                     <div style={{ display: 'flex', justifyContent: 'center' }}>
-                        <H1Title $style={{ color: "orangered"}}>{niceDec(amount)}</H1Title>
+                        <H1Title $style={{ color }}>{niceDec(amount)}</H1Title>
                         {change && <h2 style={{ color: change > 0 ? "#3AA76D" : "red" }}>{change}</h2>}
                     </div>
                     <Subtitle style={{ textAlign: 'center' }}>{name}</Subtitle>
