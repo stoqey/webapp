@@ -1,3 +1,4 @@
+import moment from "moment";
 import { WithdrawRequestType, StatusType } from '@stoqey/client-graphql';
 import { Block } from 'baseui/block';
 import { Button } from 'baseui/button';
@@ -19,16 +20,18 @@ const statusObject = {
 };
 
 export const WithdrawRequestItem = (props: WithdrawRequestType & { deleteItem: (item: Partial<WithdrawRequestType>) => void }) => {
-    const { amount, notes = "", deleteItem } = props;
+    const { amount, notes = "", deleteItem, createdAt = new Date() } = props;
 
     const status = props && props.status || "pending";
     const [statusText, color, Icon] = statusObject[status];
+
+    const createdAtTime = moment(createdAt).fromNow();
 
     const cannotBeCanceled = [StatusType.REJECTED, StatusType.FAIL, StatusType.SUCCESS].includes(status);
 
     return <div style={{ textAlign: "center", border: "black solid 0.5px", margin: "2px", padding: "10px" }}>
 
-        <Paragraph3>Some status about the transaction</Paragraph3>
+        <Paragraph3>{createdAtTime}</Paragraph3>
 
         <Block display="flex" width="100%" justifyContent="space-between">
 
