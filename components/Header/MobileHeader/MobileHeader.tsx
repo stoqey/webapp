@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { FiMenu, FiMoreHorizontal } from 'react-icons/fi';
+import { GiHamburgerMenu } from 'react-icons/gi';
 import Sticky from 'react-stickynode';
 import { useRouter } from 'next/router';
 import { Button } from 'baseui/button';
@@ -73,10 +74,15 @@ const MobileHeader: React.FC<{}> = () => {
 						},
 					}}
 				>
-					<StqRoboIcon />
+					<p style={{ padding: 20 }}><GiHamburgerMenu /></p>
+
 				</Button>
 
-				<CurrencyNumberContainer />
+				<p style={{ display: "flex", alignItems: "center"}}>
+					<StqRoboIcon />
+					<CurrencyNumberContainer />
+				</p>
+
 
 				<Block
 					overrides={{
