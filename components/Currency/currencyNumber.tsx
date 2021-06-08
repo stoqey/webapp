@@ -16,7 +16,7 @@ export const CurrencyNumber = (props: Props) => {
 		<div style={{ display: 'flex', justifyContent: 'center' }}>
 			<div style={{ textAlign: 'center', padding: '10px' }}>
 				<div style={{ display: 'flex' }}>
-					<H3>${niceDec(close)}</H3>
+					<H3>{niceDec(close)}</H3>
 					<Paragraph1>USD</Paragraph1>
 				</div>
 

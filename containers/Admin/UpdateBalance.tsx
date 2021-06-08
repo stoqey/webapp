@@ -11,6 +11,7 @@ import { UserType, UPDATE_USER_WALLET } from '@stoqey/client-graphql';
 import { useApolloClient } from '@apollo/client';
 import Toaster from 'components/UiElements/Toaster/Toaster';
 import { isEmpty } from 'lodash';
+import { niceDec } from 'utils/number';
 
 
 interface Props {
@@ -96,7 +97,7 @@ const UpdateBalanceModal = ({
         }}
       >
         <ModalHeader>
-          <p>{`Update ${user.email} `} <strong>{`$${user.balance}`}</strong></p>
+          <p>{`Update ${user.email} `} <strong>{`${niceDec(user.balance)}`}</strong></p>
         </ModalHeader>
 
         <ModalBody style={{ overflow: 'hidden' }}>

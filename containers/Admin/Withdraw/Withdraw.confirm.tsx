@@ -88,7 +88,7 @@ const WithdrawConfirmModal = ({
         }}
       >
         <ModalHeader>
-          {`Confirm withdraw ${user && user.phone} with $${niceDec(userBalance)}`}
+          {`Confirm withdraw ${user && user.phone} with ${niceDec(userBalance)}`}
         </ModalHeader>
 
         <ModalBody style={{ overflow: 'hidden' }}>
