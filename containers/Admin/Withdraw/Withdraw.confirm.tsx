@@ -9,6 +9,7 @@ import { Select } from 'baseui/select';
 import { StatusType, UserType, WithdrawRequestType } from '@stoqey/client-graphql';
 import { adminFetchUsers } from '../admin.api';
 import { ApolloClient, useApolloClient } from '@apollo/react-hooks';
+import { niceDec } from 'utils/number';
 
 interface Props {
   client: ApolloClient<any>;
@@ -87,7 +88,7 @@ const WithdrawConfirmModal = ({
         }}
       >
         <ModalHeader>
-          {`Confirm withdraw ${user && user.phone} with $${userBalance}`}
+          {`Confirm withdraw ${user && user.phone} with $${niceDec(userBalance)}`}
         </ModalHeader>
 
         <ModalBody style={{ overflow: 'hidden' }}>
