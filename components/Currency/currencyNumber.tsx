@@ -20,7 +20,7 @@ export const CurrencyNumber = (props: Props) => {
 					<Paragraph1>USD</Paragraph1>
 				</div>
 
-				<p style={{ color: changeStyleColor }}>{niceDec(change)} ({niceDec(changePct)}%)</p>
+				<p style={{ color: changeStyleColor }}>{niceDec(change)} ({niceDec(changePct, null)}%)</p>
 			</div>
 		</div>
 	)
