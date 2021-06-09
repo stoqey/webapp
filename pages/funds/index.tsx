@@ -153,7 +153,7 @@ const AddFunds: NextPage<{}> = () => {
 											<span>Per share</span> <span>$ {currencyPrice}</span>
 										</PriceItem> */}
 									<PriceItem>
-										<strong> <span>Total</span></strong>  <strong><span>${totalPrice}</span></strong>
+										<strong> <span>Total</span></strong>  <strong><span>{totalPrice}</span></strong>
 									</PriceItem>
 									{/* <PriceItem>
 											<span>Tax</span> <span> + 0.5%</span>

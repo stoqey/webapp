@@ -288,8 +288,8 @@ const Portfolio: NextPage<{}> = () => {
 
 						{/* Percentage / Profit Amount */}
 						<div style={{ textAlign: "center" }}>
-							<H6 $style={{ color: getTradeColor(profitAmount) }}>{niceDec(profitPct)}%</H6>
-							<Paragraph3 $style={{ color: getTradeColor(profitAmount) }}>${niceDec(profitAmount)}</Paragraph3>
+							<H6 $style={{ color: getTradeColor(profitAmount) }}>{niceDec(profitPct, false)}%</H6>
+							<Paragraph3 $style={{ color: getTradeColor(profitAmount) }}>{niceDec(profitAmount)}</Paragraph3>
 						</div>
 
 						{/* Close trade */}

@@ -213,19 +213,26 @@ const AdminWithdrawRequests = () => {
                 newStatus: newAction,
                 showConfirm: true,
               })
-             }}
+            }}
           />
 
         )}
       </Block>
 
       <WithdrawConfirmModal
+        client={client}
         withdrawRequest={withdrawRequest}
         newStatus={newStatus}
         visible={showConfirm}
         handleOnSubmit={() => { }}
         hide={() => hideConfirm(!showConfirm)}
-      />
+      >
+        <>
+          <p>{withdrawRequest && withdrawRequest.amount}</p>
+        </>
+      </WithdrawConfirmModal>
+
+
 
 
     </>

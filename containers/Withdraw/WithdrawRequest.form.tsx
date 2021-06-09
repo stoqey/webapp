@@ -153,7 +153,7 @@ export const WithdrawForm = (props: Props) => {
             deleteItem={(item) => {
                 const { amount: itemAmount, id } = item;
                 showModal({
-                    dialogMessage: `You're about to delete your request of a withdraw of $${niceDec(+itemAmount)}`,
+                    dialogMessage: `You're about to delete your request of a withdraw of ${niceDec(+itemAmount)}`,
                     dialogTitle: `Delete request of ${niceDec(+itemAmount)}`,
                     dialogType: StatusType.FAIL,
                     dialogActions: {
@@ -252,7 +252,7 @@ export const WithdrawForm = (props: Props) => {
                         }
                         
                         showModal({
-                            dialogMessage: `You're about to request a withdraw of $${niceDec(+amount)}`,
+                            dialogMessage: `You're about to request a withdraw of ${niceDec(+amount)}`,
                             dialogTitle: `Withdraw ${niceDec(+amount)}`,
                             dialogType: StatusType.PROCESSING,
                             dialogActions: {

@@ -13,6 +13,7 @@ import ResultsDialog from '@/components/Modal/Result.dialog';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import { StripeCheckoutForm } from '../Stripe/Stripe';
+import { niceDec } from 'utils/number';
 
 // Make sure to call `loadStripe` outside of a component’s render to avoid
 // recreating the `Stripe` object on every render.
@@ -85,7 +86,7 @@ const PayPalPayment = (props: Props) => {
         // console.log('successfuly processed payment', data);
         setState({
           ...state,
-          message: `Successfully processed payment of $${amount}`,
+          message: `Successfully processed payment of ${niceDec(amount)}`,
           success: true,
           showResults: true,
         });
@@ -94,7 +95,7 @@ const PayPalPayment = (props: Props) => {
         // console.log('error submitting payment', error);
         setState({
           ...state,
-          message: `Error processing payment of $${amount}`,
+          message: `Error processing payment of ${niceDec(amount)}`,
           success: false,
           showResults: true,
         });

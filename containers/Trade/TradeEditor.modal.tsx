@@ -363,7 +363,7 @@ const TradeEditor = (props: Props) => {
                     {/* Price list */}
                     <PriceList>
                       <PriceItem>
-                        <span>Market Price</span> <span>${niceDec(close)}</span>
+                        <span>Market Price</span> <span>{niceDec(close)}</span>
                       </PriceItem>
 
                       {/* Limit price */}
