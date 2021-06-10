@@ -220,7 +220,7 @@ const Portfolio: NextPage<{}> = () => {
 
 				{/* Unrealized profit */}
 				<div style={{ textAlign: 'center' }}>
-					<H6 $style={{ color: getTradeColor(totalProfit) }}>${niceDec(totalProfit)}</H6>
+					<H6 $style={{ color: getTradeColor(totalProfit) }}>{niceDec(totalProfit)}</H6>
 					<Paragraph3>unrealized profit</Paragraph3>
 				</div>
 
