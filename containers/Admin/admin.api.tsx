@@ -3,8 +3,6 @@ import { isEmpty } from 'lodash';
 
 export const adminFetchUsers = async ({ args, client, error, success }) => {
   try {
-
-    console.log("args are", args);
     const { data }: { data: { users: UserType[] } } = await client.query({
       query: GET_ALL_USERS,
       variables: {
@@ -24,8 +22,6 @@ export const adminFetchUsers = async ({ args, client, error, success }) => {
 
 export const adminFetchPaymentMethods = async ({ args, client, error, success }) => {
   try {
-
-    console.log("args are", args);
     const { data }: { data: { users: UserType[] } } = await client.query({
       query: GET_PAYMENT_METHODS,
       variables: {

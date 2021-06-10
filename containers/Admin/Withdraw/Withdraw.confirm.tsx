@@ -6,8 +6,8 @@ import { FormControl } from 'baseui/form-control';
 import { Input } from 'baseui/input';
 import { Textarea } from 'baseui/textarea';
 import { Select } from 'baseui/select';
-import { StatusType, UserType, WithdrawRequestType } from '@stoqey/client-graphql';
-import { adminFetchUsers } from '../admin.api';
+import { PaymentMethodType, StatusType, UserType, WithdrawRequestType } from '@stoqey/client-graphql';
+import { adminFetchUsers, adminFetchPaymentMethods } from '../admin.api';
 import { ApolloClient, useApolloClient } from '@apollo/react-hooks';
 import { niceDec } from 'utils/number';
 
@@ -25,6 +25,7 @@ interface State {
   userBalance: number;
   amountRequested: number;
   user?: UserType;
+  method?: PaymentMethodType;
 };
 
 const WithdrawConfirmModal = ({
@@ -41,8 +42,10 @@ const WithdrawConfirmModal = ({
     userBalance: 0,
     amountRequested: withdrawRequest && withdrawRequest.amount || 0,
   });
-  const { owner } = withdrawRequest || {};
-  const { userBalance, amountRequested, user }  = state;
+  const { owner, paymentMethod: paymentMethodId } = withdrawRequest || {};
+  const { userBalance, amountRequested, user, method } = state;
+
+  console.log("payment method is", JSON.stringify(withdrawRequest))
 
   const fetchUser = () =>
     adminFetchUsers({
@@ -54,8 +57,29 @@ const WithdrawConfirmModal = ({
         const user = data.find(i => i.id === owner);
         setState({
           ...state,
-          userBalance: user && user.balance || 0, 
+          userBalance: user && user.balance || 0,
           user,
+        })
+      },
+      error: (error: Error) => {
+
+      }
+
+    })
+
+  const fetchPaymentMethod = () =>
+    adminFetchPaymentMethods({
+      args: {
+        owner,
+        filter: paymentMethodId
+      },
+      client,
+      success: (data: PaymentMethodType[]) => {
+        console.log("Payment methods are", data)
+        const method = data.find(i => i.id === paymentMethodId);
+        setState({
+          ...state,
+          method,
         })
       },
       error: (error: Error) => {
@@ -66,6 +90,7 @@ const WithdrawConfirmModal = ({
 
   React.useEffect(() => {
     fetchUser();
+    fetchPaymentMethod()
   }, [visible])
 
   return (
@@ -93,6 +118,11 @@ const WithdrawConfirmModal = ({
 
         <ModalBody style={{ overflow: 'hidden' }}>
           {children && children}
+
+          {method && (
+            <p>{method.type} === {method.info}</p>
+          )}
+
           <FlexGridItem
             overrides={{ Block: { style: { marginTop: '30px' } } }}
           >

@@ -119,7 +119,7 @@ export const createUpdateWithdrawRequestMutation = async ({
   error,
   success,
 }: {
-  args?: Partial<WithdrawRequestType>;
+  args?: Partial<WithdrawRequestType> & { paymentMethod?: string };
   client: ApolloClient<any>;
   error?: (error: Error) => Promise<any>;
   success?: (data: any) => Promise<any>;
