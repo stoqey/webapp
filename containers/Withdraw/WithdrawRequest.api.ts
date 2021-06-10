@@ -131,9 +131,9 @@ export const createUpdateWithdrawRequestMutation = async ({
     const userId = _get(user, "user.id", "");
 
     const argsToPass = {
+      ...args,
       owner: userId,
       amount: +((args && args.amount) || 0),
-      ...args
     };
 
     const { data: dataResponse }: any = await client.mutate({
