@@ -138,7 +138,7 @@ const WithdrawConfirmModal = ({
         <ModalBody style={{ overflow: 'hidden' }}>
           {children && children}
 
-          {!isEmpty(allPaymentMethods.data) && (
+          {!isEmpty(allPaymentMethods && allPaymentMethods.data) && (
             <ul>
               {allPaymentMethods.data.map((meth, index) => {
                 return <li key={meth.id}>
