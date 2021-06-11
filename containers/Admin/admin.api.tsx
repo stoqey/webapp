@@ -1,4 +1,4 @@
-import { GET_ALL_USERS, GET_PAYMENT_METHODS, UserType } from '@stoqey/client-graphql';
+import { GET_ALL_USERS, GET_PAYMENT_METHODS, PaymentMethodType, UserType } from '@stoqey/client-graphql';
 import { isEmpty } from 'lodash';
 
 export const adminFetchUsers = async ({ args, client, error, success }) => {
@@ -22,7 +22,7 @@ export const adminFetchUsers = async ({ args, client, error, success }) => {
 
 export const adminFetchPaymentMethods = async ({ args, client, error, success }) => {
   try {
-    const { data }: { data: { users: UserType[] } } = await client.query({
+    const { data }: { data?: PaymentMethodType[] } = await client.query({
       query: GET_PAYMENT_METHODS,
       variables: {
         limit: 1000,
@@ -30,8 +30,8 @@ export const adminFetchPaymentMethods = async ({ args, client, error, success })
       }
     });
 
-    if (!isEmpty(data && data.users)) {
-      success(data.users);
+    if (!isEmpty(data)) {
+      success(data);
     }
     throw new Error("error getting users, please try again later")
   } catch (err) {
