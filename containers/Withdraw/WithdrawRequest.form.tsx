@@ -70,7 +70,7 @@ export const WithdrawForm = (props: Props) => {
 
     const createWithdraw = () => createUpdateWithdrawRequestMutation({
         client,
-        args: { amount },
+        args: { amount, paymentMethod: paymentMethod.id },
         success: async (res) => {
             setState({
                 ...state,

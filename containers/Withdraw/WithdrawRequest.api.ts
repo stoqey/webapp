@@ -119,7 +119,7 @@ export const createUpdateWithdrawRequestMutation = async ({
   error,
   success,
 }: {
-  args?: Partial<WithdrawRequestType>;
+  args?: Partial<WithdrawRequestType> & { paymentMethod?: string };
   client: ApolloClient<any>;
   error?: (error: Error) => Promise<any>;
   success?: (data: any) => Promise<any>;
@@ -131,6 +131,7 @@ export const createUpdateWithdrawRequestMutation = async ({
     const userId = _get(user, "user.id", "");
 
     const argsToPass = {
+      ...args,
       owner: userId,
       amount: +((args && args.amount) || 0),
     };
